@@ -24,12 +24,14 @@ public class TestClassController {
         for(int i = 0; i<5;i++){
             TestClass t = new TestClass("user"+i, "user"+i+"@gmail.com");
             repo.save(t);
+            System.out.println("ЗАПРООООООООС");
         }
         return repo.findAll();
     }
 
     @GetMapping("/{name}")
     public TestClass getUser(@PathVariable String name){
+        System.out.println("ЗАПРООООООООС");
         return repo.findByName(name);
     }
 }
