@@ -15,6 +15,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+/client
 *.iws
 *.iml
 *.ipr
