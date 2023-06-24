@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { async } from "q";
 
 const Test = () => {
     const [tests, setTest] = useState([]);
     useEffect(() => {
-        axios.get("192.168.110.62:9005/test/fill-db").then((resp) => {
+        axios.get("http://localhost:9005/test/user1").then((resp) => {
             const testsss = resp.data;
-            console.log(testsss);
+            console.log(resp)
             setTest(testsss);
+        }).catch(e =>{
+            console.log(e)
         });
-        // console.log(tests);
-    }, []);
+    },[]);
     return (
         <div>
-            {tests.map((test) => (
-                <div>{test.name}</div>
-            ))}
+            <div>{tests.id}</div>
+            <div>{tests.name}</div> 
+            <div>{tests.email}</div>
         </div>
     );
 };
