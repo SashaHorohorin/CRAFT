@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { async } from "q";
 
 const Test = () => {
     const [tests, setTest] = useState([]);
-    let func = () => {
+    useEffect(() => {
         axios.get("http://localhost:9005/test/user1").then((resp) => {
             const testsss = resp.data;
+            console.log(resp)
             setTest(testsss);
+        }).catch(e =>{
+            console.log(e)
         });
-        console.log(tests);
-    };
+    },[]);
     return (
         <div>
-            <div onClick={() => func()}>Кнопка</div>
-            {/* {tests.map((test) => (
-                <div>{test.name}</div>
-            ))} */}
+            <div>{tests.id}</div>
+            <div>{tests.name}</div> 
+            <div>{tests.email}</div>
         </div>
     );
 };
