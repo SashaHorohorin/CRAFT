@@ -1,0 +1,81 @@
+
+// <header>================================================
+
+.header {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 90px;
+
+    &__row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__column {}
+
+    &__logo {}
+
+    &__navigation {}
+
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #000000;
+    background: #ffffff;
+    border-radius: 10px;
+
+    &__list {
+        display: flex;
+        align-items: center;
+        padding: 2px 2px 2px 2px;
+        margin-right: 70px;
+    }
+
+    &__link {
+        margin-right: 20px;
+        border-radius: 10px;
+        // background: #FF6969;
+        // color: #ffffff;
+        // font-weight: bold;
+        padding: 13px 9px;
+
+
+        &:last-child {
+            margin: 0;
+        }
+
+        &:hover {
+            border-radius: 10px;
+            background: #FF6969;
+            color: #ffffff;
+            // font-weight: bold;
+        }
+    }
+
+    &__buttons {
+        padding-right: 2px;
+    }
+
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+
+    &__log-in {
+        margin-right: 24px;
+    }
+
+    &__register {
+        border-radius: 10px;
+        background: #FF6969;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 13px 9px;
+    }
+
+}

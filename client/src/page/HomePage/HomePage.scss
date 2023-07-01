@@ -1,4 +1,7 @@
 .home {
+    padding: 40px 0 40px 0;
+    position: relative;
+
     &::before {
         content: ' ';
         display: block;
@@ -15,82 +18,62 @@
         background-position: 50% 0;
         background-size: cover;
     }
-}
 
-.header {
-    position: relative;
-    z-index: 1;
+    &__content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
 
-    &__row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
     }
 
-    &__column {}
+    &__logo {
+        margin: 0 auto 50px auto;
+        // margin-bottom: 50px;
+        max-width: 1000px;
+    }
 
-    &__logo {}
+    &__text {
+        margin-bottom: 52px;
+    }
 
-    &__navigation {}
+    &__button {
+        margin-bottom: 40px;
+        font-size: 24px;
+        padding: 20px 30px;
+    }
 
+    &__social {}
 }
 
-.navigation {
+.text-home {
+    font-size: 27px;
+    font-weight: 300;
+
+    &__title {
+        margin-bottom: 15px;
+    }
+
+    &__subtitle {
+        color: #ED696B;
+
+    }
+}
+
+.social-home {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid #000000;
-    background: #ffffff;
-    border-radius: 10px;
 
-    &__list {
+    &__column {
         display: flex;
         align-items: center;
-        padding: 2px 2px 2px 2px;
-        margin-right: 70px;
-    }
 
-    &__link {
-        margin-right: 20px;
-        border-radius: 10px;
-        // background: #FF6969;
-        // color: #ffffff;
-        // font-weight: bold;
-        padding: 13px 9px;
+        & img {
+            margin-right: 10px;
 
-
-        &:last-child {
-            margin: 0;
-        }
-
-        &:hover {
-            border-radius: 10px;
-            background: #FF6969;
-            color: #ffffff;
-            // font-weight: bold;
+            &:last-child {
+                margin: 0;
+            }
         }
     }
-
-    &__buttons {
-        padding-right: 2px;
-    }
-
-}
-
-.buttons {
-    display: flex;
-    align-items: center;
-
-    &__log-in {
-        margin-right: 24px;
-    }
-
-    &__register {
-        border-radius: 10px;
-        background: #FF6969;
-        color: #ffffff;
-        font-weight: bold;
-        padding: 13px 9px;
-    }
-
 }
