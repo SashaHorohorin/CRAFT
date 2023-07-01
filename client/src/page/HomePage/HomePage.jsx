@@ -1,18 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./HomePage.scss";
 import Header from "../../components/Header/Header";
 import Button from "../../components/UI/Button/Button";
-import fly from "../../script";
 import Shuttlecocks from "../../components/UI/Shuttlecocks/Shuttlecocks";
 
 const HomePage = () => {
-    
-  // если страница зажружена запускаем воланчик
-
+    // если страница зажружена запускаем воланчик
 
     return (
         <div className="home">
-            <Shuttlecocks/>
+            <Shuttlecocks />
             <div className="container">
                 <Header />
                 <div className="home__content">
