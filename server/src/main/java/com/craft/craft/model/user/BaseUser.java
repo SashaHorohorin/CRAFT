@@ -2,67 +2,64 @@ package com.craft.craft.model.user;
 
 
 import com.craft.craft.model.BaseEntity;
-import com.craft.craft.model.info.CraftInfoCard;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
-import org.springframework.util.StringUtils;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 @Entity
-@Table(name="baseuser")
+@Table(name = "baseuser")
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Cacheable(false)
+@Inheritance(
+        strategy = InheritanceType.JOINED
+)
 public class BaseUser extends BaseEntity {
     @NonNull
     @NotNull
-    @NotBlank(message="Please enter your first name")
+    @NotBlank(message = "Please enter your first name")
     public String firstName;
     @NonNull
     @NotNull
-    @NotBlank(message="Please enter your last name")
+    @NotBlank(message = "Please enter your last name")
     public String lastName;
     @NonNull
-    @Email(message="Please provide a valid email address")
+    @Email(message = "Please provide a valid email address")
     @NotNull
-    @NotBlank(message="Please enter your phone number")
-    @Column(name="email",unique = true)
+    @NotBlank(message = "Please enter your phone number")
+    @Column(name = "email", unique = true)
     private String email;
     @NonNull
     @NotNull
-    @NotBlank(message="Please enter your phone number")
+    @NotBlank(message = "Please enter your phone number")
     @Pattern(regexp = "^((8|\\+7)\\(\\d{3}\\)\\d{3}-\\d{2}-\\d{2})$")
-    @Column(name="phoneNumber",unique = true)
+    @Column(name = "phoneNumber", unique = true)
     private String phoneNumber;
     @NonNull
     @NotNull
-    @NotBlank(message="Please enter your password number")
+    @NotBlank(message = "Please enter your password number")
     private String password;
     @Column(unique = true)
     protected String username;
     @Enumerated(EnumType.STRING)
     private Status status;
     @NonNull
-    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> roles;
-    @OneToMany(mappedBy = "author", cascade=CascadeType.ALL)
-    @JsonIgnoreProperties({"author"})
-    private List<CraftInfoCard> infoCards;
-
 
 
     @PrePersist
-    public void generateUsernameAndSetStatus(){
+    public void generateUsernameAndSetStatus() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 10;

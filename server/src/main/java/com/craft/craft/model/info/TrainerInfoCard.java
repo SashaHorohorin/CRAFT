@@ -1,25 +1,30 @@
 package com.craft.craft.model.info;
 
 import com.craft.craft.model.BaseEntity;
-import com.craft.craft.model.user.Admin;
 import com.craft.craft.model.user.BaseUser;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
-public class CraftInfoCard extends BaseEntity {
+public class TrainerInfoCard extends BaseEntity {
+    @NonNull
+    private String name;
+    @NonNull
     private String photoURL;
-    private String header;
+    @NonNull
     private String shortText;
-    private String longText;
+    @NonNull
+    private String backText;
+    @NonNull
     @Enumerated(EnumType.STRING)
     private InfoCardStatus status;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Admin author;
+    private BaseUser author;
 }

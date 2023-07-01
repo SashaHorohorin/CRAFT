@@ -1,7 +1,7 @@
 package com.craft.craft.dto;
 
-import com.craft.craft.model.info.CraftInfoCard;
-import com.craft.craft.model.user.BaseUser;
+import com.craft.craft.model.BaseEntity;
+import com.craft.craft.model.user.Admin;
 import com.craft.craft.model.user.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Data
-public class BaseUserDto {
+public class AdminDto {
 
     public String firstName;
     public String lastName;
@@ -22,9 +22,11 @@ public class BaseUserDto {
     protected String username;
     private Status status;
     private List<String> roles;
+    private List<UUID> infoCards;
+    private List<UUID> infoTrainerCard;
 
-    public static BaseUserDto getDtoFromBaseUser(BaseUser user){
-        return new BaseUserDto (
+    public static AdminDto getDtoFromAdmin(Admin user){
+        return new AdminDto (
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
@@ -32,7 +34,9 @@ public class BaseUserDto {
                 user.getPassword(),
                 user.getUsername(),
                 user.getStatus(),
-                user.getRoles().stream().map((role) -> role.getName().toString()).collect(Collectors.toList())
+                user.getRoles().stream().map((role) -> role.getName().toString()).collect(Collectors.toList()),
+                user.getInfoCards().stream().map(BaseEntity::getId).collect(Collectors.toList()),
+                user.getInfoTrainerCard().stream().map(BaseEntity::getId).collect(Collectors.toList())
         );
     }
 }

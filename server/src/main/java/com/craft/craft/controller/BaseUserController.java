@@ -1,12 +1,15 @@
 package com.craft.craft.controller;
 
+import com.craft.craft.dto.AdminDto;
 import com.craft.craft.dto.BaseUserDto;
 import com.craft.craft.dto.CraftInfoCardDto;
 import com.craft.craft.model.info.CraftInfoCard;
 import com.craft.craft.model.info.InfoCardStatus;
+import com.craft.craft.model.user.Admin;
 import com.craft.craft.model.user.BaseUser;
 import com.craft.craft.model.user.Role;
 import com.craft.craft.model.user.RoleName;
+import com.craft.craft.service.AdminService;
 import com.craft.craft.service.CraftInfoCardService;
 import com.craft.craft.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,8 @@ public class BaseUserController {
     @Autowired
     private UserService baseUserService;
     @Autowired
+    private AdminService adminService;
+    @Autowired
     private CraftInfoCardService craftInfoCardService;
 
     @GetMapping("/fill-db")
@@ -44,12 +49,11 @@ public class BaseUserController {
             );
             baseUserService.save(u);
         }
-        BaseUser admin = new BaseUser("admin",
+        Admin admin = new Admin("admin",
                 "admin",
                 "admin@gmail.com",
                 "8(999)999-99-99",
-                passwordEncoder.encode("admin"),
-                Collections.singletonList(new Role(RoleName.ADMIN))
+                passwordEncoder.encode("admin")
         );
         baseUserService.save(admin);
         CraftInfoCard card = new CraftInfoCard("url.jpg","header","shortText","mainText", InfoCardStatus.ACTIVE, admin);
@@ -73,10 +77,17 @@ public class BaseUserController {
         return users.stream().map(BaseUserDto::getDtoFromBaseUser)
         .collect(Collectors.toList());
     }
+    @GetMapping("/get-all-admins")
+    public List<AdminDto> getAllAdmins(){
+        List<Admin> users =  adminService.findAll();
+        return users.stream().map(AdminDto::getDtoFromAdmin)
+                .collect(Collectors.toList());
+    }
+
 
     @GetMapping("/add-card/{username}")
     public CraftInfoCardDto addCard(@PathVariable String username){
-        BaseUser admin = baseUserService.findByUsername(username);
+        Admin admin = (Admin) baseUserService.findByUsername(username);
         CraftInfoCard card = new CraftInfoCard("test","test","test","test", InfoCardStatus.ACTIVE, admin);
         return CraftInfoCardDto.getDtoFromCraftInfoCard(craftInfoCardService.save(card));
     }

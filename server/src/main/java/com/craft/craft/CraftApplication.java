@@ -16,5 +16,5 @@ public class CraftApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CraftApplication.class, args);
 	}
-
+	//http://localhost:9005/swagger-ui/index.html#/
 }

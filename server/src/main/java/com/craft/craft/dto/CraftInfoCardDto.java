@@ -19,7 +19,6 @@ public class CraftInfoCardDto {
     private String header;
     private String shortText;
     private String longText;
-    private String status;
     private String authorUsername;
 
     public static CraftInfoCardDto getDtoFromCraftInfoCard(CraftInfoCard card){
@@ -28,7 +27,6 @@ public class CraftInfoCardDto {
                 card.getHeader(),
                 card.getShortText(),
                 card.getLongText(),
-                card.getStatus().name(),
                 card.getAuthor().getUsername()
         );
     }
