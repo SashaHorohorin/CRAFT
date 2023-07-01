@@ -2,6 +2,8 @@ package com.craft.craft.model.user;
 
 
 import com.craft.craft.model.BaseEntity;
+import com.craft.craft.model.info.CraftInfoCard;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.util.StringUtils;
 
@@ -10,14 +12,17 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 @Entity
 @Table(name="baseuser")
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-//@AllArgsConstructor
+@Cacheable(false)
 public class BaseUser extends BaseEntity {
     @NonNull
     @NotNull
@@ -47,6 +52,13 @@ public class BaseUser extends BaseEntity {
     protected String username;
     @Enumerated(EnumType.STRING)
     private Status status;
+    @NonNull
+    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    private List<Role> roles;
+    @OneToMany(mappedBy = "author", cascade=CascadeType.ALL)
+    @JsonIgnoreProperties({"author"})
+    private List<CraftInfoCard> infoCards;
+
 
 
     @PrePersist
@@ -64,5 +76,4 @@ public class BaseUser extends BaseEntity {
         this.username = generatedString;
         this.status = Status.ACTIVE;
     }
-
 }
