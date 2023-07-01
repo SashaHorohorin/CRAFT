@@ -10,6 +10,7 @@
 	</parent>
 	<groupId>com.craft</groupId>
 	<artifactId>craft</artifactId>
+	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>craft</name>
 	<description>Demo project for Spring Boot</description>
