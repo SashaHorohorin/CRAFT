@@ -5,8 +5,8 @@ function fly() {
     const container = document.querySelector('.containerBall')
 
     const container_info = {
-        w: container.clientWidth,
-        h: container.clientHeight
+        w: container.clientWidth + 15,
+        h: container.clientHeight + 15
     }
     console.log(container.clientWidth);
     console.log(container.clientHeight);
