@@ -4,7 +4,7 @@ import './Shuttlecocks.scss'
 
 const Shuttlecocks = () => {
     useEffect(() => {
-        window.addEventListener('load', () =>{
+        window.addEventListener('load', function(){
           fly();
         });
     });
