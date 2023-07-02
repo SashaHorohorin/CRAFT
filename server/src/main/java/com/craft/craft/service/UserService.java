@@ -9,16 +9,16 @@ import java.util.List;
 
 @Service
 public class UserService {
+
     @Autowired
     private BaseUserRepo userRepo;
 
     public BaseUser findByUsername(String username){
-        return userRepo.findByUsername(username);
+        return userRepo.findByUsername(username).orElse(null);
     }
     public BaseUser save(BaseUser user){
         return userRepo.save(user);
     }
-
     public List<BaseUser> findAll(){
         return userRepo.findAll();
     }
