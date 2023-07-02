@@ -6,7 +6,7 @@ import Button from "../UI/Button/Button";
 
 const MainPart = () => {
     return (
-        <>
+        <div className="main-part">
             <Shuttlecocks />
             <div className="container">
                 <Header />
@@ -39,7 +39,7 @@ const MainPart = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
