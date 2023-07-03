@@ -3,11 +3,12 @@ import "./MainPart.scss";
 import Header from "../Header/Header";
 import Shuttlecocks from "../UI/Shuttlecocks/Shuttlecocks";
 import Button from "../UI/Button/Button";
+import fly from "../../script";
 
 const MainPart = () => {
     return (
-        <div className="main-part">
-            <Shuttlecocks />
+        <div onLoad={() => fly()} className="main-part">
+            
             <div className="container">
                 <Header />
                 <div className="home__content">
@@ -39,6 +40,7 @@ const MainPart = () => {
                     </div>
                 </div>
             </div>
+            <Shuttlecocks />
         </div>
     );
 };
