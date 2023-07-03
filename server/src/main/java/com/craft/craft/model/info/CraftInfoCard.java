@@ -15,9 +15,10 @@ import javax.persistence.*;
 @Entity
 public class CraftInfoCard extends BaseEntity {
     private String photoURL;
-    private String header;
-    private String shortText;
-    private String longText;
+    private String titleFront;
+    private String titleBack;
+    private String textFront;
+    private String textBack;
     @Enumerated(EnumType.STRING)
     private InfoCardStatus status;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

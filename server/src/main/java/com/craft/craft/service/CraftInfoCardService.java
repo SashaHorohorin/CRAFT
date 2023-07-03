@@ -47,9 +47,10 @@ public class CraftInfoCardService {
         if(admin == null) throw new ModelNotFound("Нет автора");
         return craftInfoCardRepo.save(new CraftInfoCard(
                 cardDto.getPhotoURL(),
-                cardDto.getHeader(),
-                cardDto.getShortText(),
-                cardDto.getLongText(),
+                cardDto.getTitleFront(),
+                cardDto.getTitleBack(),
+                cardDto.getTextFront(),
+                cardDto.getTitleBack(),
                 InfoCardStatus.ACTIVE,
                 admin
         ));
@@ -58,9 +59,10 @@ public class CraftInfoCardService {
     public CraftInfoCard updateCard(UUID id, CraftInfoCardUpdateDto cardDto) throws ModelNotFound {
         CraftInfoCard card = craftInfoCardRepo.findById(id).orElseThrow(() -> new ModelNotFound("Карточка не найдена"));
         card.setPhotoURL(cardDto.getPhotoURL());
-        card.setHeader(cardDto.getHeader());
-        card.setShortText(cardDto.getShortText());
-        card.setLongText(cardDto.getLongText());
+        card.setTitleFront(cardDto.getTitleFront());
+        card.setTitleBack(cardDto.getTitleBack());
+        card.setTextFront(cardDto.getTextFront());
+        card.setTitleBack(cardDto.getTextBack());
         card.setStatus(cardDto.getStatus());
         return craftInfoCardRepo.save(card);
     }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class PlacemarkOnMapService {
+    public class PlacemarkOnMapService {
 
     @Autowired
     private PlacemarkOnMapRepo placemarkOnMapRepo;

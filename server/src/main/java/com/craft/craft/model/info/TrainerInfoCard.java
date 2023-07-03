@@ -19,9 +19,9 @@ public class TrainerInfoCard extends BaseEntity {
     @NonNull
     private String photoURL;
     @NonNull
-    private String shortText;
+    private String textFront;
     @NonNull
-    private String backText;
+    private String textBack;
     @NonNull
     @Enumerated(EnumType.STRING)
     private InfoCardStatus status;

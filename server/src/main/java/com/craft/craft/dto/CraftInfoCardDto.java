@@ -12,19 +12,22 @@ import java.util.UUID;
 public class CraftInfoCardDto {
     private UUID id;
     private String photoURL;
-    private String header;
-    private String shortText;
-    private String longText;
+    private String titleFront;
+    private String titleBack;
+    private String textFront;
+    private String textBack;
     private String authorUsername;
     private InfoCardStatus status;
+
 
     public static CraftInfoCardDto getDtoFromCraftInfoCard(CraftInfoCard card){
         return new CraftInfoCardDto(
                 card.getId(),
                 card.getPhotoURL(),
-                card.getHeader(),
-                card.getShortText(),
-                card.getLongText(),
+                card.getTitleFront(),
+                card.getTitleBack(),
+                card.getTextFront(),
+                card.getTextBack(),
                 card.getAuthor().getUsername(),
                 card.getStatus()
         );

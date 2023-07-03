@@ -56,7 +56,7 @@ public class BaseUserController {
                 passwordEncoder.encode("admin")
         );
         baseUserService.save(admin);
-        CraftInfoCard card = new CraftInfoCard("url.jpg","header","shortText","mainText", InfoCardStatus.ACTIVE, admin);
+        CraftInfoCard card = new CraftInfoCard("url.jpg","titleFront","titleBack","textFront","textBack", InfoCardStatus.ACTIVE, admin);
         craftInfoCardService.save(card);
 
         BaseUser base = new BaseUser("base",
@@ -88,7 +88,7 @@ public class BaseUserController {
     @GetMapping("/add-card/{username}")
     public CraftInfoCardDto addCard(@PathVariable String username){
         Admin admin = (Admin) baseUserService.findByUsername(username);
-        CraftInfoCard card = new CraftInfoCard("test","test","test","test", InfoCardStatus.ACTIVE, admin);
+        CraftInfoCard card = new CraftInfoCard("test","test","test","test","test", InfoCardStatus.ACTIVE, admin);
         return CraftInfoCardDto.getDtoFromCraftInfoCard(craftInfoCardService.save(card));
     }
 }
