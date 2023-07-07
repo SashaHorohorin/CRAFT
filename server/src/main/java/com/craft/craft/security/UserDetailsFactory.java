@@ -6,8 +6,7 @@ import com.craft.craft.model.user.Status;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public final class UserDetailsFactory {
@@ -28,7 +27,7 @@ public final class UserDetailsFactory {
                 mapToGrantedAuthorities(user.getRoles())
         );
     }
-    private static List<GrantedAuthority> mapToGrantedAuthorities(List<Role> userRoles){
+    private static List<GrantedAuthority> mapToGrantedAuthorities(Collection<Role> userRoles){
         return userRoles.stream()
                 .map(role ->
                         new SimpleGrantedAuthority(role.getName().name())

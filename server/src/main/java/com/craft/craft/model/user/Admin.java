@@ -1,12 +1,10 @@
 package com.craft.craft.model.user;
 
 import com.craft.craft.model.info.CraftInfoCard;
-import com.craft.craft.model.info.InfoCardStatus;
-import com.craft.craft.model.info.TrainerInfoCard;
+import com.craft.craft.model.sport.Trainer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -25,11 +23,11 @@ public class Admin extends BaseUser {
 
     @OneToMany(mappedBy = "author", cascade=CascadeType.ALL)
     @JsonIgnoreProperties({"author"})
-    private List<TrainerInfoCard> infoTrainerCard;
+    private List<Trainer> createdTrainers;
 
 
     public Admin(String firstName,String lastName,String email,String phoneNumber,String password){
-        super(firstName, lastName, email, phoneNumber, password, new ArrayList<>());
+        super(firstName, lastName, email, phoneNumber, password);
         Role adminRole = new Role(RoleName.ADMIN);
         Role baseRole = new Role(RoleName.BASE);
         this.getRoles().add(adminRole);

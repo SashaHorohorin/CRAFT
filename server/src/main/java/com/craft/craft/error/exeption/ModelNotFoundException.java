@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @Data
 @RequiredArgsConstructor
-public class ModelNotFound extends Exception {
+public class ModelNotFoundException extends Exception {
     @NonNull
     private String message;
     private HttpStatus status;

@@ -1,6 +1,7 @@
 package com.craft.craft.error.handler;
 
 import com.craft.craft.error.ErrorResponse;
+import com.craft.craft.error.exeption.PasswordNotMatchException;
 import com.craft.craft.error.exeption.TokenInvalidException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,6 +21,12 @@ public class AuthExceptionHandler {
     @ExceptionHandler(TokenInvalidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleError(TokenInvalidException e) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value() , e.getMessage());
+    }
+
+    @ExceptionHandler(PasswordNotMatchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleError(PasswordNotMatchException e) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value() , e.getMessage());
     }
 }

@@ -18,6 +18,11 @@ public class Role extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RoleName name;
     @Transient
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = {@JoinColumn(name = "role_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
     private Set<BaseUser> users;
 }

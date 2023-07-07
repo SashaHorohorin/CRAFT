@@ -1,11 +1,15 @@
 package com.craft.craft.controller;
 
 import com.craft.craft.config.JwtSecurityConfig;
+import com.craft.craft.dto.AuthRegisterDto;
 import com.craft.craft.dto.AuthRequestDto;
 import com.craft.craft.dto.JwtsResponse;
 import com.craft.craft.dto.TokenDto;
+import com.craft.craft.error.exeption.PasswordNotMatchException;
 import com.craft.craft.error.exeption.TokenInvalidException;
 import com.craft.craft.model.user.BaseUser;
+import com.craft.craft.model.user.Role;
+import com.craft.craft.model.user.RoleName;
 import com.craft.craft.security.jwt.JwtTokenProvider;
 import com.craft.craft.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,6 +21,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +37,8 @@ public class AuthRestController {
     private UserService userService;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Operation(
@@ -53,6 +60,26 @@ public class AuthRestController {
             throw new BadCredentialsException("Invalid username or password");
         }
     }
+
+    @Operation(
+            summary = "Регистрация пользователя"
+    )
+    @PostMapping("/register")
+    public void register(@RequestBody AuthRegisterDto requestDto) throws PasswordNotMatchException {
+        if(!requestDto.getPassword().equals(requestDto.getConfirmationPassword()))
+            throw new PasswordNotMatchException("Пароли не совпадают");
+        BaseUser user = new BaseUser(
+                requestDto.getFirstName(),
+                requestDto.getLastName(),
+                requestDto.getEmail(),
+                requestDto.getPhoneNumber(),
+                bCryptPasswordEncoder.encode(requestDto.getPassword())
+        );
+        user.getRoles().add(new Role(RoleName.BASE));
+        userService.save(user);
+    }
+
+
     @Operation(
             summary = "Обновление токена",
             description = "Обновляет access токен по refresh токену"

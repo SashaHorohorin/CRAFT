@@ -13,10 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -41,7 +38,7 @@ public class JwtTokenProvider {
         System.out.println(secretAccess);
     }
 
-    public String createAccessToken(String username, List<Role> roles){
+    public String createAccessToken(String username, Collection<Role> roles){
         log.info("In createAccessToken. Create for user with username: {}",username);
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("roles", getRolesNames(roles));
@@ -118,7 +115,7 @@ public class JwtTokenProvider {
         }
     }
 
-    public List<String> getRolesNames(List<Role> userRoles){
+    public List<String> getRolesNames(Collection<Role> userRoles){
         List<String> res = new ArrayList<>();
         userRoles.forEach(role -> res.add(role.getName().name()));
         return res;

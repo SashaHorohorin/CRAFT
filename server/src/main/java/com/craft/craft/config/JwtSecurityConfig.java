@@ -29,11 +29,12 @@ public class JwtSecurityConfig {
                 .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .antMatchers("/user/**","api/v1/auth/login/**", "/api/v1/auth/**",
+                        .antMatchers("/user/**", "/api/v1/auth/**",
 
                         "/v2/api-docs/**","/swagger-ui.html","/swagger-ui/**", "/v2/api-docs",
                         "/configuration/ui", "/swagger-resources/**", "/configuration/security",
-                        "/swagger-ui.html", "/webjars/**", "/v3/api-docs/swagger-config", "/v3/api-docs/**"
+                        "/swagger-ui.html", "/webjars/**", "/v3/api-docs/swagger-config", "/v3/api-docs/**",
+                                "/api/v1/craft-info-card/trainer/**"
 
                         ).permitAll()
                         .antMatchers("/test/base/**").hasAuthority(RoleName.BASE.name())

@@ -36,7 +36,7 @@ public class AdminDto {
                 user.getStatus(),
                 user.getRoles().stream().map((role) -> role.getName().toString()).collect(Collectors.toList()),
                 user.getInfoCards().stream().map(BaseEntity::getId).collect(Collectors.toList()),
-                user.getInfoTrainerCard().stream().map(BaseEntity::getId).collect(Collectors.toList())
+                user.getCreatedTrainers().stream().map(BaseEntity::getId).collect(Collectors.toList())
         );
     }
 }
