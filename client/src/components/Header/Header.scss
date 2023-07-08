@@ -1,9 +1,8 @@
-
 // <header>================================================
 
 .header {
     position: relative;
-    z-index: 1;
+    z-index: 20;
     margin-bottom: 90px;
 
     &__row {
@@ -11,15 +10,114 @@
         align-items: center;
         justify-content: space-between;
     }
+    &__burger-container {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: none;
+        padding: 15px 10px;
+        background: #ff6969;
+        border-radius: 10px;
+        z-index: 10;
+        transition: all 1s ease 0s;
 
-    &__column {}
+        &.active {
+            .header__burger::after {
+                transform: rotate(45deg);
+                bottom: 9px;
+            }
+            .header__burger::before {
+                transform: rotate(-45deg);
+                top: 9px;
+            }
+            .header__burger span {
+                transform: scale(0);
+            }
+            &{
+                width: 300px;
+                padding-left: 20px;
+                
+            }
+            .menu-burger{
+                display: block;
+            }
+        }
+        @media (max-width: 1200px) {
+            display: inline-block;
+        }
+    }
+    &__burger {
+        // display: block;
+        position: relative;
+        width: 30px;
+        height: 20px;
+        z-index: 3;
+        float: right;
+
+        &::after,
+        &::before {
+            content: "";
+            background: #fff;
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            transition: all 0.3s ease 0s;
+        }
+
+        &::before {
+            top: 0;
+        }
+        &::after {
+            bottom: 0;
+        }
+
+        & span {
+            position: absolute;
+            background: #fff;
+            left: 0;
+            top: 9px;
+            width: 100%;
+            height: 2px;
+            transition: all 0.3s ease 0s;
+        }
+        &.active::after {
+            transform: rotate(45deg);
+            bottom: 9px;
+        }
+
+        &.active::before {
+            transform: rotate(-45deg);
+            top: 9px;
+        }
+
+        &.active span {
+            transform: scale(0);
+        }
+    }
+
+    &__column {
+    }
 
     &__logo {
         cursor: pointer;
     }
 
-    &__navigation {}
+    &__navigation {
+    }
+}
 
+.menu-burger{
+    display: none;
+    padding: 40px 0 20px 0;
+    &__list{
+
+    }
+    &__link{
+        font-size: 20px;
+        font-weight: bold;
+        color: #fff;
+        margin-bottom: 20px;
+    }
 }
 
 .navigation {
@@ -29,6 +127,9 @@
     border: 1px solid #000000;
     background: #ffffff;
     border-radius: 10px;
+    @media (max-width: 1200px) {
+        display: none;
+    }
 
     &__list {
         display: flex;
@@ -46,14 +147,13 @@
         // font-weight: bold;
         padding: 13px 9px;
 
-
         &:last-child {
             margin: 0;
         }
 
         &:hover {
             border-radius: 10px;
-            background: #FF6969;
+            background: #ff6969;
             color: #ffffff;
             // font-weight: bold;
         }
@@ -62,7 +162,6 @@
     &__buttons {
         padding-right: 2px;
     }
-
 }
 
 .buttons {
@@ -77,10 +176,9 @@
     &__register {
         cursor: pointer;
         border-radius: 10px;
-        background: #FF6969;
+        background: #ff6969;
         color: #ffffff;
         font-weight: bold;
         padding: 13px 9px;
     }
-
 }

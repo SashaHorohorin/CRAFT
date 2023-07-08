@@ -16,13 +16,13 @@ const WhyCard = ({ card, classChange }) => {
         >
             <div className={`card__front ${classChange}`}>
                 <div className={`card__img ${classChange}`}>
-                    <img src={card.photoURL} alt="" />
+                    <img src={card?.photoURL} alt="" />
                 </div>
                 <div className={`card__content content-card-${classChange}`}>
                     <div className={`content-card-${classChange}__title`}>
-                        {card.titleFront}
+                        {card?.titleFront}
                     </div>
-                    {classChange === 'left' ? <div className={`content-card-${classChange}__text`}>{card.textFront}</div> : ''}
+                    {classChange === 'left' ? <div className={`content-card-${classChange}__text`}>{card?.textFront}</div> : ''}
                     
                     <Button
                         text="Подробнее"
@@ -31,8 +31,8 @@ const WhyCard = ({ card, classChange }) => {
                 </div>
             </div>
             <div className="card__back back-card">
-                <div className="back-card__title">{card.titleBack}</div>
-                <div className="back-card__text">{card.textBack}</div>
+                <div className="back-card__title">{card?.titleBack}</div>
+                <div className="back-card__text">{card?.textBack}</div>
             </div>
         </div>
     );

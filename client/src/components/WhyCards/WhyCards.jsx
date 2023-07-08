@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./WhyCards.scss";
-import Button from "../UI/Button/Button";
 import WhyCard from "./WhyCard/WhyCard";
+import { useFetching } from "../../hooks/useFetching";
+import DataService from "../../API/DataService";
 
 const WhyCards = () => {
-    const [flagRotate, setFlagRotate] = useState(false);
+    // const [cards, setCards] = useState([]);
+    // const [fetchingCard, isLoading, error] = useFetching(async () => {
+    //     const response = await DataService.getCardWhy();
+    //     setCards(response.data);
+    // });
+
+    // useEffect(() => {
+    //     fetchingCard();
+    // }, []);
 
     const cards = [
         {
@@ -35,22 +44,28 @@ const WhyCards = () => {
     ];
 
     return (
-        <div className="why-club">
-            <div className="container">
-                <div className="why-club__title">
-                    Почему Craft Badminton Club?
-                </div>
-                <div className="why-club__row">
-                    <div className="why-club__column">
-                        <WhyCard card={cards[0]} classChange='left'/>
-                        <WhyCard card={cards[1]} classChange='left'/>
+        <>
+            {/* {isLoading ? (
+                <div>Грузится</div>
+            ) : ( */}
+                <div className="why-club">
+                    <div className="container">
+                        <div className="why-club__title">
+                            Почему Craft Badminton Club?
+                        </div>
+                        <div className="why-club__row">
+                            <div className="why-club__column">
+                                <WhyCard card={cards[0]} classChange="left" />
+                                <WhyCard card={cards[1]} classChange="left" />
+                            </div>
+                            <div className="why-club__column">
+                                <WhyCard card={cards[2]} classChange="right" />
+                            </div>
+                        </div>
                     </div>
-                    <div className="why-club__column">
-                        <WhyCard card={cards[2]} classChange='right'/>
-                    </div>
                 </div>
-            </div>
-        </div>
+            {/* )} */}
+        </>
     );
 };
 
