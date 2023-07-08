@@ -13,7 +13,9 @@ import java.util.*;
 @RequiredArgsConstructor
 @Table(indexes = @Index(columnList = "id"))
 public class Train extends BaseEntity {
+
     @NonNull
+    @Enumerated(EnumType.STRING)
     private TrainType type;
     @NonNull
     private Date startTrain;

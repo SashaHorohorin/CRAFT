@@ -2,18 +2,16 @@ package com.craft.craft.controller;
 
 import com.craft.craft.config.JwtSecurityConfig;
 import com.craft.craft.dto.AuthRegisterDto;
-import com.craft.craft.dto.AuthRequestDto;
+import com.craft.craft.dto.AuthLoginDto;
 import com.craft.craft.dto.JwtsResponse;
 import com.craft.craft.dto.TokenDto;
 import com.craft.craft.error.exeption.PasswordNotMatchException;
 import com.craft.craft.error.exeption.TokenInvalidException;
 import com.craft.craft.model.user.BaseUser;
-import com.craft.craft.model.user.Role;
-import com.craft.craft.model.user.RoleName;
 import com.craft.craft.security.jwt.JwtTokenProvider;
 import com.craft.craft.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,40 +20,42 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Import(JwtSecurityConfig.class)
+
 @RestController
 @RequestMapping(value = "/api/v1/auth/")
+@RequiredArgsConstructor
 public class AuthRestController {
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Operation(
             summary = "Вход пользователя"
     )
     @PostMapping("/login")
-    public JwtsResponse login(@RequestBody AuthRequestDto requestDto){
+    public JwtsResponse login(@Valid @RequestBody AuthLoginDto requestDto){
         try {
-            String username = requestDto.getUsername();
-            BaseUser user = userService.findByUsername(username);
+
+            String email = requestDto.getEmail();
+            BaseUser user = userService.findByEmail(email);
             if(user == null){
-                throw new UsernameNotFoundException("User with username: " + username + " not found.");
+                throw new UsernameNotFoundException("User with email: " + email + " not found.");
             }
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
-            String tokenAccess = jwtTokenProvider.createAccessToken(username, user.getRoles());
-            String tokenRefresh = jwtTokenProvider.createRefreshToken(username);
-            return  new JwtsResponse(tokenAccess, tokenRefresh);
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), requestDto.getPassword()));
+            String tokenAccess = jwtTokenProvider.createAccessToken( user.getUsername(), user.getRoles());
+            String tokenRefresh = jwtTokenProvider.createRefreshToken( user.getUsername());
+            List<String> roles = user.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toList());
+            return  new JwtsResponse( user.getUsername(), roles, tokenAccess, tokenRefresh);
         }catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username or password");
         }
@@ -65,7 +65,7 @@ public class AuthRestController {
             summary = "Регистрация пользователя"
     )
     @PostMapping("/register")
-    public void register(@RequestBody AuthRegisterDto requestDto) throws PasswordNotMatchException {
+    public void register(@Valid @RequestBody AuthRegisterDto requestDto) throws PasswordNotMatchException {
         if(!requestDto.getPassword().equals(requestDto.getConfirmationPassword()))
             throw new PasswordNotMatchException("Пароли не совпадают");
         BaseUser user = new BaseUser(
@@ -75,17 +75,22 @@ public class AuthRestController {
                 requestDto.getPhoneNumber(),
                 bCryptPasswordEncoder.encode(requestDto.getPassword())
         );
-        user.getRoles().add(new Role(RoleName.BASE));
-        userService.save(user);
+        user.setAgreementDataProcessing(requestDto.isAgreementDataProcessing());
+        user.setAgreementMailing(requestDto.isAgreementMailing());
+        userService.createUser(user);
     }
 
+    @GetMapping("/activate/{code}")
+    public boolean activateAccount(@PathVariable String code){
+       return userService.activateUser(code);
+    }
 
     @Operation(
             summary = "Обновление токена",
             description = "Обновляет access токен по refresh токену"
     )
     @PostMapping("/access-token")
-    public TokenDto updateAccessToken(@RequestBody TokenDto tokenDto) throws TokenInvalidException {
+    public TokenDto updateAccessToken(@Valid @RequestBody TokenDto tokenDto) throws TokenInvalidException {
         String refreshToken = tokenDto.getToken();
         if(refreshToken != null && jwtTokenProvider.validateRefreshToken(refreshToken)) {
             BaseUser user = userService.findByUsername(
@@ -98,6 +103,7 @@ public class AuthRestController {
             throw new TokenInvalidException("Refresh token is not valid", HttpStatus.BAD_REQUEST);
 
     }
+
 //
 //    @PostMapping("/refresh-token")
 //    public ResponseEntity updateRefreshToken(@RequestBody TokenDto tokenDto){

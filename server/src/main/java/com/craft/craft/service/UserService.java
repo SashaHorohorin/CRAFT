@@ -1,26 +1,65 @@
 package com.craft.craft.service;
 
 import com.craft.craft.model.user.BaseUser;
+import com.craft.craft.model.user.Role;
+import com.craft.craft.model.user.RoleName;
+import com.craft.craft.model.user.Status;
 import com.craft.craft.repository.user.BaseUserRepo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private BaseUserRepo userRepo;
+    private final BaseUserRepo userRepo;
+    private final MailSender sender;
 
     public BaseUser findByUsername(String username){
         log.info("In findByUsername({})", username);
         return userRepo.findByUsername(username).orElse(null);
     }
-    public BaseUser save(BaseUser user){
+    public BaseUser findByEmail(String email){
+        log.info("In findByEmail({})", email);
+        return userRepo.findByEmail(email).orElse(null);
+    }
+
+    public BaseUser createUser(BaseUser user){
+
+        user.getRoles().add(new Role(RoleName.BASE));
+        user.setStatus(Status.NOT_ACTIVE);
+        user.setActivationCode(UUID.randomUUID().toString());
+        BaseUser ret = userRepo.save(user);
+        String massage = String.format(
+                "Привет, %s \n" +
+                        "Добро пожаловать в CRAFT. Для активации аккаунта пожалуста перейдите по ссылке:" +
+                        "http://localhost:9005/api/v1/auth/activate/%s",
+                ret.getFirstName() + " " + ret.getLastName(),
+                ret.getActivationCode()
+        );
+        sender.send(ret.getEmail(), "CRAFT. Активация аккаунта", massage);
+        return ret;
+    }
+
+    public boolean activateUser(String code){
+        BaseUser user = userRepo.findByActivationCode(code).orElse(null);
+        if(user == null)
+            return false;
+        user.setActivationCode(null);
+        user.setStatus(Status.ACTIVE);
+        userRepo.save(user);
+        return true;
+    }
+
+    public BaseUser updateUser(BaseUser user){
         log.info("In save(user) with userId({})", user.getId());
+
         return userRepo.save(user);
     }
     public List<BaseUser> findAll(){

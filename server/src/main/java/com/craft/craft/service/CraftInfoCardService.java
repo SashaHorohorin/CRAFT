@@ -1,6 +1,5 @@
 package com.craft.craft.service;
 
-import com.craft.craft.dto.CraftInfoCardDto;
 import com.craft.craft.dto.CraftInfoCardUpdateDto;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.info.CraftInfoCard;
@@ -10,6 +9,7 @@ import com.craft.craft.repository.CraftInfoCardRepo;
 import com.craft.craft.repository.user.AdminRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,23 +48,24 @@ public class CraftInfoCardService {
         return card;
     }
 
-    public CraftInfoCard createCard(CraftInfoCardDto cardDto) throws ModelNotFoundException {
-        log.info("createCard(cardDto) with cardDtoID({})", cardDto.getId());
-        Admin admin = adminRepo.findByUsername(cardDto.getAuthorUsername()).orElse(null);
-        if (admin == null) throw new ModelNotFoundException("Нет автора");
+    public CraftInfoCard createCard(CraftInfoCardUpdateDto cardDto) throws ModelNotFoundException {
+        String authorName = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(authorName);
+        Admin admin = adminRepo.findByUsername(authorName).orElse(null);
+        if (admin == null) throw new ModelNotFoundException("Пользователя не существует или пользователь не является администратором");
         return craftInfoCardRepo.save(new CraftInfoCard(
                 cardDto.getPhotoURL(),
                 cardDto.getTitleFront(),
                 cardDto.getTitleBack(),
                 cardDto.getTextFront(),
                 cardDto.getTitleBack(),
-                InfoCardStatus.ACTIVE,
+                cardDto.getStatus(),
                 admin
         ));
     }
 
     public CraftInfoCard updateCard(UUID id, CraftInfoCardUpdateDto cardDto) throws ModelNotFoundException {
-        log.info("In CraftInfoCardService. Method:updateCard({}, cardDto)", id);
+        log.info("In updateCard({}, cardDto)", id);
         CraftInfoCard card = craftInfoCardRepo.findById(id).orElseThrow(() -> new ModelNotFoundException("Карточка не найдена"));
         card.setPhotoURL(cardDto.getPhotoURL());
         card.setTitleFront(cardDto.getTitleFront());
@@ -76,14 +77,14 @@ public class CraftInfoCardService {
     }
 
     public CraftInfoCard changeStatus(UUID id, InfoCardStatus status) throws ModelNotFoundException {
-        log.info("In CraftInfoCardService. Method:changeStatus({}, {})", id, status.name());
+        log.info("In changeStatus({}, {})", id, status.name());
         CraftInfoCard card = craftInfoCardRepo.findById(id).orElseThrow(() -> new ModelNotFoundException("Карточка не найдена"));
         card.setStatus(status);
         return craftInfoCardRepo.save(card);
     }
 
     public List<CraftInfoCard> getAllByAuthorUsername(String username) throws ModelNotFoundException {
-        log.info("In CraftInfoCardService. Method:getAllByAuthorUsername({})", username);
+        log.info("In getAllByAuthorUsername({})", username);
         Admin admin = adminRepo.findByUsername(username).orElse(null);
         if (admin == null) throw new ModelNotFoundException("Нет автора");
         return craftInfoCardRepo.findAllByAuthor(admin).orElse(null);

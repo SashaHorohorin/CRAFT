@@ -2,16 +2,13 @@ package com.craft.craft.controller;
 
 import com.craft.craft.dto.AdminDto;
 import com.craft.craft.dto.BaseUserDataDto;
-import com.craft.craft.dto.CraftInfoCardDto;
+import com.craft.craft.dto.CraftInfoCardRequestDto;
 import com.craft.craft.model.info.CraftInfoCard;
 import com.craft.craft.model.info.InfoCardStatus;
 import com.craft.craft.model.sport.Train;
 import com.craft.craft.model.sport.TrainType;
 import com.craft.craft.model.sport.Trainer;
-import com.craft.craft.model.user.Admin;
-import com.craft.craft.model.user.BaseUser;
-import com.craft.craft.model.user.Role;
-import com.craft.craft.model.user.RoleName;
+import com.craft.craft.model.user.*;
 import com.craft.craft.repository.sport.TrainRepo;
 import com.craft.craft.service.AdminService;
 import com.craft.craft.service.CraftInfoCardService;
@@ -31,7 +28,7 @@ import java.util.stream.Collectors;
 @RestController
 
 @RequestMapping("/user")
-public class BaseUserController {
+public class TestDataController {
 
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
@@ -56,15 +53,17 @@ public class BaseUserController {
                     passwordEncoder.encode("password"+i)
             );
             u.getRoles().add(new Role(RoleName.BASE));
-            baseUserService.save(u);
+            u.setStatus(Status.ACTIVE);
+            baseUserService.updateUser(u);
         }
         Admin admin = new Admin("admin",
                 "admin",
-                "admin@gmail.com",
+                "nikita-pirogov-artur@gmail.com",
                 "8(999)999-99-99",
                 passwordEncoder.encode("admin")
         );
-        baseUserService.save(admin);
+        admin.setStatus(Status.ACTIVE);
+        adminService.save(admin);
 
         CraftInfoCard card1 = new CraftInfoCard(
                 "./images/HomePage/why-club/card-left-1.png",
@@ -79,14 +78,18 @@ public class BaseUserController {
                 "Растим чемпионов!",
                 "Наши воспитанники регулярно играют и выигрывают на любительских турнирах и турнирах от федерации!",
                 "Наши воспитанники регулярно играют и выигрывают на любительских турнирах и турнирах от федерации! Каждой группе тренирующихся по уровню при участии присваивается рейтинг! Наши тренеры помогают при участии в соревнованиях от федерации и регулярно подсказывают прямо во время турниров!Во время тренировок распределяем игроков по уровню, чтобы всем было комфортно!",
-                InfoCardStatus.ACTIVE, admin);
+                InfoCardStatus.ACTIVE,
+                admin
+        );
         CraftInfoCard card3 = new CraftInfoCard(
                 "./images/HomePage/why-club/card-right.png",
                 "Комьюнити единомышлеников",
                 "Растим чемпионов!",
                 "",
                 "Наши воспитанники регулярно играют и выигрывают на любительских турнирах и турнирах от федерации! Каждой группе тренирующихся по уровню при участии присваивается рейтинг! Наши тренеры помогают при участии в соревнованиях от федерации и регулярно подсказывают прямо во время турниров!Во время тренировок распределяем игроков по уровню, чтобы всем было комфортно!",
-                InfoCardStatus.ACTIVE, admin);
+                InfoCardStatus.ACTIVE,
+                admin
+        );
 
         craftInfoCardService.save(card1);
         craftInfoCardService.save(card2);
@@ -99,7 +102,8 @@ public class BaseUserController {
                 passwordEncoder.encode("base")
         );
         base.getRoles().add(new Role(RoleName.BASE));
-        baseUserService.save(base);
+        base.setStatus(Status.ACTIVE);
+        baseUserService.updateUser(base);
 
         Trainer trainer = new Trainer("NAME","URL","textFront", "textBack", InfoCardStatus.ACTIVE);
         Trainer trainer2 = new Trainer("NAME2","URL","textFront", "textBack", InfoCardStatus.ACTIVE);
@@ -127,15 +131,15 @@ public class BaseUserController {
 
 
     @GetMapping("/add-card/{username}")
-    public CraftInfoCardDto addCard(@PathVariable String username){
+    public CraftInfoCardRequestDto addCard(@PathVariable String username){
         Admin admin = (Admin) baseUserService.findByUsername(username);
         CraftInfoCard card = new CraftInfoCard("test","test","test","test","test", InfoCardStatus.ACTIVE, admin);
-        return CraftInfoCardDto.getDtoFromCraftInfoCard(craftInfoCardService.save(card));
+        return CraftInfoCardRequestDto.getDtoFromCraftInfoCard(craftInfoCardService.save(card));
     }
 
     @GetMapping("/get-all-actives-cards")
-    public List<CraftInfoCardDto> getAllCard(){
-        return craftInfoCardService.getAllByStatus(InfoCardStatus.ACTIVE).stream().map(CraftInfoCardDto::getDtoFromCraftInfoCard).collect(Collectors.toList());
+    public List<CraftInfoCardRequestDto> getAllCard(){
+        return craftInfoCardService.getAllByStatus(InfoCardStatus.ACTIVE).stream().map(CraftInfoCardRequestDto::getDtoFromCraftInfoCard).collect(Collectors.toList());
     }
 
 

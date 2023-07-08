@@ -61,6 +61,7 @@ public class BaseUser extends BaseEntity {
     private Set<Role> roles = new HashSet<>();
     private boolean agreementDataProcessing;
     private boolean agreementMailing;
+    private String activationCode;
 
 
     @PrePersist
@@ -74,6 +75,5 @@ public class BaseUser extends BaseEntity {
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
-        this.status = Status.ACTIVE;
     }
 }

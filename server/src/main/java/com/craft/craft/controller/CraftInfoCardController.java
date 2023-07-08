@@ -1,6 +1,6 @@
 package com.craft.craft.controller;
 
-import com.craft.craft.dto.CraftInfoCardDto;
+import com.craft.craft.dto.CraftInfoCardRequestDto;
 import com.craft.craft.dto.CraftInfoCardUpdateDto;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.info.InfoCardStatus;
@@ -25,16 +25,27 @@ public class CraftInfoCardController {
             description = "Возвращает карточки со статусом ACTIVE"
     )
     @GetMapping("/get-active")
-    public List<CraftInfoCardDto> getActiveCards(){
-        return craftInfoCardService.getAllByStatus(InfoCardStatus.ACTIVE).stream().map(CraftInfoCardDto::getDtoFromCraftInfoCard).collect(Collectors.toList());
+    public List<CraftInfoCardRequestDto> getActiveCards(){
+        return craftInfoCardService.getAllByStatus(InfoCardStatus.ACTIVE).stream().map(CraftInfoCardRequestDto::getDtoFromCraftInfoCard).collect(Collectors.toList());
     }
 
     @Operation(
-            summary = "Обновить данные в карточке"
+            summary = "Создать карточку",
+            description ="Статусы: ACTIVE, DISABLE"
+    )
+    @PostMapping("/create")
+    public CraftInfoCardRequestDto createCard(@RequestBody CraftInfoCardUpdateDto cardDto) throws ModelNotFoundException {
+        return CraftInfoCardRequestDto.getDtoFromCraftInfoCard(craftInfoCardService.createCard(cardDto));
+    }
+
+
+    @Operation(
+            summary = "Обновить данные в карточке",
+            description ="Статусы: ACTIVE, DISABLE"
     )
     @PostMapping("/update/{id}")
-    public CraftInfoCardDto updateCard(@PathVariable UUID id, @RequestBody CraftInfoCardUpdateDto cardDto) throws ModelNotFoundException {
-        return CraftInfoCardDto.getDtoFromCraftInfoCard(craftInfoCardService.updateCard(id,cardDto));
+    public CraftInfoCardRequestDto updateCard(@PathVariable UUID id, @RequestBody CraftInfoCardUpdateDto cardDto) throws ModelNotFoundException {
+        return CraftInfoCardRequestDto.getDtoFromCraftInfoCard(craftInfoCardService.updateCard(id, cardDto));
     }
 
     @Operation(
@@ -42,8 +53,8 @@ public class CraftInfoCardController {
             description = "ставит карточке статус DISABLE"
     )
     @GetMapping("/inactivate/{id}")
-    public CraftInfoCardDto disableCart(@PathVariable UUID id) throws ModelNotFoundException {
-        return CraftInfoCardDto.getDtoFromCraftInfoCard(craftInfoCardService.changeStatus(id, InfoCardStatus.DISABLE));
+    public CraftInfoCardRequestDto disableCart(@PathVariable UUID id) throws ModelNotFoundException {
+        return CraftInfoCardRequestDto.getDtoFromCraftInfoCard(craftInfoCardService.changeStatus(id, InfoCardStatus.DISABLE));
     }
 
     @Operation(
@@ -51,15 +62,15 @@ public class CraftInfoCardController {
             description = "ставит карточке статус Active"
     )
     @GetMapping("/activate/{id}")
-    public CraftInfoCardDto activateCart(@PathVariable UUID id) throws ModelNotFoundException {
-        return CraftInfoCardDto.getDtoFromCraftInfoCard(craftInfoCardService.changeStatus(id, InfoCardStatus.ACTIVE));
+    public CraftInfoCardRequestDto activateCart(@PathVariable UUID id) throws ModelNotFoundException {
+        return CraftInfoCardRequestDto.getDtoFromCraftInfoCard(craftInfoCardService.changeStatus(id, InfoCardStatus.ACTIVE));
     }
 
     @Operation(
             summary = "Карточки по имени автора"
     )
     @GetMapping("/get-by-author/{username}")
-    public List<CraftInfoCardDto> getAllByAuthor(@PathVariable String username) throws ModelNotFoundException {
-        return craftInfoCardService.getAllByAuthorUsername(username).stream().map(CraftInfoCardDto::getDtoFromCraftInfoCard).collect(Collectors.toList());
+    public List<CraftInfoCardRequestDto> getAllByAuthor(@PathVariable String username) throws ModelNotFoundException {
+        return craftInfoCardService.getAllByAuthorUsername(username).stream().map(CraftInfoCardRequestDto::getDtoFromCraftInfoCard).collect(Collectors.toList());
     }
 }

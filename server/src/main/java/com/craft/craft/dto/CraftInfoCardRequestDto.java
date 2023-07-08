@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @Data
-public class CraftInfoCardDto {
+public class CraftInfoCardRequestDto {
     private UUID id;
     private String photoURL;
     private String titleFront;
@@ -20,8 +20,8 @@ public class CraftInfoCardDto {
     private InfoCardStatus status;
 
 
-    public static CraftInfoCardDto getDtoFromCraftInfoCard(CraftInfoCard card){
-        return new CraftInfoCardDto(
+    public static CraftInfoCardRequestDto getDtoFromCraftInfoCard(CraftInfoCard card){
+        return new CraftInfoCardRequestDto(
                 card.getId(),
                 card.getPhotoURL(),
                 card.getTitleFront(),

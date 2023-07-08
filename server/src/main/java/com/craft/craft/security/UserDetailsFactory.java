@@ -14,7 +14,7 @@ public final class UserDetailsFactory {
     }
 
     public static UserDetailsImpl create(BaseUser user){
-
+        System.out.println( user.getStatus().equals(Status.ACTIVE));
         return new UserDetailsImpl(
                 user.getId(),
                 user.getUsername(),

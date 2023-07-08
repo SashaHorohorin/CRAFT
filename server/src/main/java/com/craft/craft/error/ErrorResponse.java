@@ -1,19 +1,21 @@
 package com.craft.craft.error;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class ErrorResponse implements Serializable {
-
+    @NonNull
     private int status;
+    @NonNull
     private String message;
+    private List<ValidExceptionBody> validExceptions;
 
     @Override
     public String toString()
