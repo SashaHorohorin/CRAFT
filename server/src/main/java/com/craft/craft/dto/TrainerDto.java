@@ -20,7 +20,7 @@ public class TrainerDto {
     private String name;
     private String photoURL;
     private InfoCardStatus status;
-    private UUID authorId;
+   // private UUID authorId;
     private List<UUID> trainsIds;
 
 
@@ -29,7 +29,7 @@ public class TrainerDto {
                 trainer.getName(),
                 trainer.getPhotoURL(),
                 trainer.getStatus(),
-                trainer.getAuthor().getId(),
+                //trainer.getAuthor().getId(),
                 trainer.getTrains().stream().map(Train::getId).collect(Collectors.toList())
         );
     }

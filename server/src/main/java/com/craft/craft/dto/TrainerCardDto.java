@@ -21,7 +21,7 @@ public class TrainerCardDto {
     private String textFront;
     private String textBack;
     private InfoCardStatus status;
-    private UUID authorId;
+    //private UUID authorId;
 
     public static TrainerCardDto getDtoFromTrainer(Trainer trainer){
         return new TrainerCardDto(
@@ -29,8 +29,8 @@ public class TrainerCardDto {
                 trainer.getPhotoURL(),
                 trainer.getTextFront(),
                 trainer.getTextBack(),
-                trainer.getStatus(),
-                trainer.getAuthor().getId()
+                trainer.getStatus()
+               // trainer.getAuthor().getId()
         );
     }
 }

@@ -10,10 +10,10 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class TokenDto {
     @NotNull(message = "Username не может быть пустым")
-    @NotBlank(message = "Username не может быть пустым")
+    @NotBlank(message = "Нет поля username")
     private String username;
     @NotNull(message = "token не может быть пустым")
-    @NotBlank(message = "token не может быть пустым")
+    @NotBlank(message = "Нет поля token")
     private String token;
 
 }

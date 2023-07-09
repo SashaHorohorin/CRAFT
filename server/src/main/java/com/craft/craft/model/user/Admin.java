@@ -21,9 +21,9 @@ public class Admin extends BaseUser {
     @JsonIgnoreProperties({"author"})
     private List<CraftInfoCard> infoCards;
 
-    @OneToMany(mappedBy = "author", cascade=CascadeType.ALL)
-    @JsonIgnoreProperties({"author"})
-    private List<Trainer> createdTrainers;
+//    @OneToMany(mappedBy = "author", cascade=CascadeType.ALL)
+//    @JsonIgnoreProperties({"author"})
+//    private List<Trainer> createdTrainers;
 
 
     public Admin(String firstName,String lastName,String email,String phoneNumber,String password){

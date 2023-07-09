@@ -28,8 +28,8 @@ public class Trainer extends BaseEntity {
     @NonNull
     @Enumerated(EnumType.STRING)
     private InfoCardStatus status;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    private BaseUser author;
+//    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+//    private BaseUser author;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE/*, CascadeType.REFRESH, CascadeType.DETACH*/})
     @JoinTable(
             name = "trainer_trains",

@@ -23,7 +23,7 @@ public class AdminDto {
     private Status status;
     private List<String> roles;
     private List<UUID> infoCards;
-    private List<UUID> infoTrainerCard;
+    //private List<UUID> infoTrainerCard;
 
     public static AdminDto getDtoFromAdmin(Admin user){
         return new AdminDto (
@@ -35,8 +35,8 @@ public class AdminDto {
                 user.getUsername(),
                 user.getStatus(),
                 user.getRoles().stream().map((role) -> role.getName().toString()).collect(Collectors.toList()),
-                user.getInfoCards().stream().map(BaseEntity::getId).collect(Collectors.toList()),
-                user.getCreatedTrainers().stream().map(BaseEntity::getId).collect(Collectors.toList())
+                user.getInfoCards().stream().map(BaseEntity::getId).collect(Collectors.toList())
+                //user.getCreatedTrainers().stream().map(BaseEntity::getId).collect(Collectors.toList())
         );
     }
 }

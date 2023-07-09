@@ -3,6 +3,8 @@ package com.craft.craft.controller;
 import com.craft.craft.dto.AdminDto;
 import com.craft.craft.dto.BaseUserDataDto;
 import com.craft.craft.dto.CraftInfoCardRequestDto;
+import com.craft.craft.dto.TrainCalendarDto;
+import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.info.CraftInfoCard;
 import com.craft.craft.model.info.InfoCardStatus;
 import com.craft.craft.model.sport.Train;
@@ -10,10 +12,7 @@ import com.craft.craft.model.sport.TrainType;
 import com.craft.craft.model.sport.Trainer;
 import com.craft.craft.model.user.*;
 import com.craft.craft.repository.sport.TrainRepo;
-import com.craft.craft.service.AdminService;
-import com.craft.craft.service.CraftInfoCardService;
-import com.craft.craft.service.TrainerService;
-import com.craft.craft.service.UserService;
+import com.craft.craft.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +41,8 @@ public class TestDataController {
     private TrainerService trainerService;
     @Autowired
     private TrainRepo trainRepo;
+    @Autowired
+    private TrainService trainService;
 
     @GetMapping("/fill-db")
     public String fill(){
@@ -107,8 +108,8 @@ public class TestDataController {
 
         Trainer trainer = new Trainer("NAME","URL","textFront", "textBack", InfoCardStatus.ACTIVE);
         Trainer trainer2 = new Trainer("NAME2","URL","textFront", "textBack", InfoCardStatus.ACTIVE);
-        trainer.setAuthor(admin);
-        trainer2.setAuthor(admin);
+       // trainer.setAuthor(admin);
+       // trainer2.setAuthor(admin);
         Train train = new Train(TrainType.GAME, new Date(), new Date(), 10);
         trainer.getTrains().add(train);
         trainerService.save(trainer);
@@ -147,11 +148,18 @@ public class TestDataController {
     @GetMapping("/test-cascade")
     public String test(){
         //Train train = new Train(new Date(), new Date());
+        Admin admin = new Admin("admins",
+                "admins",
+                "nikita-pirogov-artur@gmail.com",
+                "8(999)999-99-91",
+                passwordEncoder.encode("admins")
+        );
+        admin.setStatus(Status.ACTIVE);
+        adminService.save(admin);
         Trainer trainer = new Trainer("NAME","URL","textFront", "textBack", InfoCardStatus.ACTIVE);
-        Trainer trainer2 = new Trainer("NAME2","URL","textFront", "textBack", InfoCardStatus.ACTIVE);
-        Train train = new Train(TrainType.GAME,new Date(), new Date(),10);
+        //trainer.setAuthor(admin);
+        Train train = new Train(TrainType.GAME, new Date(), new Date(),10);
         train.getTrainers().add(trainer);
-        trainerService.save(trainer2);
         trainRepo.save(train);
         return "YEEES";
     }
@@ -163,5 +171,11 @@ public class TestDataController {
         train.getTrainers().add(t1);
         trainRepo.save(train);
         return "YEEES1";
+    }
+
+
+    @GetMapping("/test-train-calendar")
+    private TrainCalendarDto test3() throws ModelNotFoundException {
+        return trainService.getTrainCalendarOnThisWeek();
     }
 }

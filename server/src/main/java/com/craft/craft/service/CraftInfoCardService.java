@@ -50,9 +50,7 @@ public class CraftInfoCardService {
 
     public CraftInfoCard createCard(CraftInfoCardUpdateDto cardDto) throws ModelNotFoundException {
         String authorName = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println(authorName);
-        Admin admin = adminRepo.findByUsername(authorName).orElse(null);
-        if (admin == null) throw new ModelNotFoundException("Пользователя не существует или пользователь не является администратором");
+        Admin admin = adminRepo.findByUsername(authorName).orElseThrow(() -> new ModelNotFoundException("Пользователя не существует или пользователь не является администратором"));
         return craftInfoCardRepo.save(new CraftInfoCard(
                 cardDto.getPhotoURL(),
                 cardDto.getTitleFront(),

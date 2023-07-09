@@ -1,7 +1,6 @@
 package com.craft.craft.error;
 
 import lombok.*;
-import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,6 +14,7 @@ public class ErrorResponse implements Serializable {
     private int status;
     @NonNull
     private String message;
+
     private List<ValidExceptionBody> validExceptions;
 
     @Override

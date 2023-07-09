@@ -7,7 +7,6 @@ import com.craft.craft.model.user.Status;
 import com.craft.craft.repository.user.BaseUserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +30,6 @@ public class UserService {
     }
 
     public BaseUser createUser(BaseUser user){
-
         user.getRoles().add(new Role(RoleName.BASE));
         user.setStatus(Status.NOT_ACTIVE);
         user.setActivationCode(UUID.randomUUID().toString());
