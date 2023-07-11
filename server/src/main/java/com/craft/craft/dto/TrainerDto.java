@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class TrainerDto {
 
+    private UUID id;
     private String name;
     private String photoURL;
     private InfoCardStatus status;
@@ -26,6 +27,7 @@ public class TrainerDto {
 
     public static TrainerDto getDtoFromTrainer(Trainer trainer){
         return new TrainerDto(
+                trainer.getId(),
                 trainer.getName(),
                 trainer.getPhotoURL(),
                 trainer.getStatus(),

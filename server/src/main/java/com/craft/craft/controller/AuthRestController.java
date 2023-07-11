@@ -65,7 +65,7 @@ public class AuthRestController {
             summary = "Регистрация пользователя"
     )
     @PostMapping("/register")
-    public void register(@Valid @RequestBody AuthRegisterDto requestDto) throws PasswordNotMatchException {
+    public JwtsResponse register(@Valid @RequestBody AuthRegisterDto requestDto) throws PasswordNotMatchException {
         if(!requestDto.getPassword().equals(requestDto.getConfirmationPassword()))
             throw new PasswordNotMatchException("Пароли не совпадают");
         BaseUser user = new BaseUser(
@@ -78,6 +78,10 @@ public class AuthRestController {
         user.setAgreementDataProcessing(requestDto.isAgreementDataProcessing());
         user.setAgreementMailing(requestDto.isAgreementMailing());
         userService.createUser(user);
+        String tokenAccess = jwtTokenProvider.createAccessToken(user.getUsername(), user.getRoles());
+        String tokenRefresh = jwtTokenProvider.createRefreshToken( user.getUsername());
+        List<String> roles = user.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toList());
+        return  new JwtsResponse( user.getUsername(), roles, tokenAccess, tokenRefresh);
     }
 
     @GetMapping("/activate/{code}")

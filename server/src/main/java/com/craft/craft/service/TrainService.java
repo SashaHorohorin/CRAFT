@@ -4,8 +4,10 @@ import com.craft.craft.dto.TrainCalendarDto;
 import com.craft.craft.dto.TrainInfoDto;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.sport.Train;
+import com.craft.craft.model.user.BaseUser;
 import com.craft.craft.repository.sport.TrainRepo;
 import com.craft.craft.repository.user.AdminRepo;
+import com.craft.craft.repository.user.BaseUserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +26,7 @@ import java.util.stream.Collectors;
 public class TrainService {
 
     private final TrainRepo trainRepo;
+    private final BaseUserRepo baseUserRepo;
     private final AdminRepo adminRepo;
 
 
@@ -62,7 +66,6 @@ public class TrainService {
         );
     }
 
-
     private List<Train> getTrainsAtDayOfWeek(int dayOfWeek, List<Train> allTrains){
         return allTrains.stream().filter(train -> {
                     Calendar c = Calendar.getInstance();
@@ -71,5 +74,12 @@ public class TrainService {
                     return day == dayOfWeek;
                 }
         ).collect(Collectors.toList());
+    }
+
+    public Train addUserToTrain(UUID trainId, String username) throws ModelNotFoundException {
+        BaseUser user = baseUserRepo.findByUsername(username).orElseThrow(()->new ModelNotFoundException("Пользователь с таким username не найден"));
+        Train train = trainRepo.findById(trainId).orElseThrow(()->new ModelNotFoundException("Тренировка с таким id не найдена"));
+        train.getSportsmen().add(user);
+        return trainRepo.save(train);
     }
 }

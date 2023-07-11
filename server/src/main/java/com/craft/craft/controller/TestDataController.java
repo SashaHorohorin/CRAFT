@@ -7,6 +7,7 @@ import com.craft.craft.dto.TrainCalendarDto;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.info.CraftInfoCard;
 import com.craft.craft.model.info.InfoCardStatus;
+import com.craft.craft.model.sport.SportComplex;
 import com.craft.craft.model.sport.Train;
 import com.craft.craft.model.sport.TrainType;
 import com.craft.craft.model.sport.Trainer;
@@ -110,7 +111,7 @@ public class TestDataController {
         Trainer trainer2 = new Trainer("NAME2","URL","textFront", "textBack", InfoCardStatus.ACTIVE);
        // trainer.setAuthor(admin);
        // trainer2.setAuthor(admin);
-        Train train = new Train(TrainType.GAME, new Date(), new Date(), 10);
+        Train train = new Train(TrainType.GAME, new Date(), new Date(), 10, SportComplex.DINAMIT);
         trainer.getTrains().add(train);
         trainerService.save(trainer);
         trainerService.save(trainer2);
@@ -158,7 +159,7 @@ public class TestDataController {
         adminService.save(admin);
         Trainer trainer = new Trainer("NAME","URL","textFront", "textBack", InfoCardStatus.ACTIVE);
         //trainer.setAuthor(admin);
-        Train train = new Train(TrainType.GAME, new Date(), new Date(),10);
+        Train train = new Train(TrainType.GAME, new Date(), new Date(),10, SportComplex.IMPULS);
         train.getTrainers().add(trainer);
         trainRepo.save(train);
         return "YEEES";
