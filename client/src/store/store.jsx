@@ -20,7 +20,14 @@ export default class Store{
     async login(obj){
         try {
             const response = await DataService.postLogin(obj);
-            localStorage.setItem('token', response.data.accessToken);
+            console.log(response);
+            let saveObj = ({
+                'accessToken': response.data.accessToken,
+                'refreshToken': response.data.refreshToken,
+                'username': response.data.username,
+                'roles': response.data.roles,
+            })
+            localStorage.setItem(saveObj);
             this.setAuth(true);
             this.setUser(response.data.username);
         } catch (error) {
@@ -30,7 +37,14 @@ export default class Store{
     async registration(obj){
         try {
             const response = await DataService.postRegister(obj);
-            localStorage.setItem('token', response.data.accessToken);
+            console.log(response);
+            let saveObj = ({
+                'accessToken': response.data.accessToken,
+                'refreshToken': response.data.refreshToken,
+                'username': response.data.username,
+                'roles': response.data.roles,
+            })
+            localStorage.setItem(saveObj);
             this.setAuth(true);
             this.setUser(response.data.username);
         } catch (error) {

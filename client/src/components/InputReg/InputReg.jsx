@@ -5,14 +5,14 @@ const PhoneMask = "+{7}(000)000-00-00";
 const EmailMask = /^\S*@?\S*$/;
 
 const InputReg = ({ nameLabel, setData, valueInp, obj, ...arg }) => {
-    let valueData = ''
+    // let valueData = ''
     
     const [value, setValue] = useState('');
     let flag = false;
     if (arg.name === 'agreementMailing'){
         flag = true;
     }
-    console.log(valueInp);
+    // console.log(valueInp);
     const [checked, setChecked] = useState(flag);
 
     useEffect(()=>{
@@ -24,7 +24,7 @@ const InputReg = ({ nameLabel, setData, valueInp, obj, ...arg }) => {
         setValue('');
     }, [valueInp])
 
-    valueData = value;
+    // valueData = value;
 
     
     
@@ -32,7 +32,7 @@ const InputReg = ({ nameLabel, setData, valueInp, obj, ...arg }) => {
     const handleFunction = (e) => {
         const name = e.target.name;
 
-        let newObj = { ...obj };
+        // let newObj = { ...obj };
         if (arg.type == "checkbox") {
             setChecked(!checked);
             let newObj = {

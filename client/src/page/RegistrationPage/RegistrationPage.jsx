@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./RegistrationPage.scss";
 import InputReg from "../../components/InputReg/InputReg";
 import DataService from "../../API/DataService";
@@ -6,8 +6,11 @@ import { useFetching } from "../../hooks/useFetching";
 import { useActionData, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import CustomLink from "../../components/CustomLink";
+import { Context } from "../..";
 
 const RegistrationPage = (props) => {
+    const {store} = useContext(Context)
+
     const { sign } = useParams();
     const [addClass, setAddClass] = useState("");
     const [objReg, setObjReg] = useState({
@@ -31,15 +34,17 @@ const RegistrationPage = (props) => {
     const [fetchingRegister, isLoadingReg, errorReg] = useFetching(
         async (obj) => {
             const response = await DataService.postRegister(obj);
+            console.log(response);
         }
     );
     const [fetchingLogin, isLoadingLog, errorLog] = useFetching(async (obj) => {
         const response = await DataService.postLogin(obj);
+        console.log(response.data.accessToken);
     });
     const postRegister = (obj) => {
         // let jsonReg = JSON.stringify(obj);
         console.log(obj);
-        
+        store.registration(obj)
 
         setObjReg({
             firstName: "",
@@ -51,7 +56,7 @@ const RegistrationPage = (props) => {
             agreementDataProcessing: false,
             agreementMailing: true,
         })
-        fetchingRegister(obj);
+        // fetchingRegister(obj);
     
 
         setRegFlagReset(!regFlagReset)
@@ -59,7 +64,9 @@ const RegistrationPage = (props) => {
     const postLogin = (obj) => {
         // let jsonLog = JSON.stringify(obj);
         console.log(obj);
-        fetchingLogin(obj);
+        // fetchingLogin(obj);
+
+        store.login(obj);
 
         setObjLog({
             email: "",
