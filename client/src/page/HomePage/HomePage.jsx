@@ -11,9 +11,10 @@ import Footer from "../../components/Footer/Footer";
 
 const HomePage = () => {
     // если страница зажружена запускаем воланчик
-
+    
+    
     return (
-        <div className="home">
+        <div  className="home">
             <FollowingBtn />
             <MainPart />
             <Marquee
@@ -30,7 +31,6 @@ const HomePage = () => {
             <Trainers />
             <Marquee classAdd="marquee-third" text="CRAFT" shift={-175} />
             <WhereWe />
-            <Footer/>
         </div>
     );
 };

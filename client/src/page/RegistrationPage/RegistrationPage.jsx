@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import "./RegistrationPage.scss";
 import InputReg from "../../components/InputReg/InputReg";
+import DataService from "../../API/DataService";
+import { useFetching } from "../../hooks/useFetching";
+import { useActionData, useParams } from "react-router";
+import { Link } from "react-router-dom";
+import CustomLink from "../../components/CustomLink";
 
-const RegistrationPage = () => {
+const RegistrationPage = (props) => {
+    const { sign } = useParams();
     const [addClass, setAddClass] = useState("");
     const [objReg, setObjReg] = useState({
         firstName: "",
@@ -12,37 +18,84 @@ const RegistrationPage = () => {
         password: "",
         confirmationPassword: "",
         agreementDataProcessing: false,
-        agreementMailing: false,
+        agreementMailing: true,
     });
     const [objLog, setObjLog] = useState({
         email: "",
         password: "",
     });
 
+    const [regFlagReset, setRegFlagReset] = useState(false);
+    const [logFlagReset, setLogFlagReset] = useState(false);
+
+    const [fetchingRegister, isLoadingReg, errorReg] = useFetching(
+        async (obj) => {
+            const response = await DataService.postRegister(obj);
+        }
+    );
+    const [fetchingLogin, isLoadingLog, errorLog] = useFetching(async (obj) => {
+        const response = await DataService.postLogin(obj);
+    });
+    const postRegister = (obj) => {
+        // let jsonReg = JSON.stringify(obj);
+        console.log(obj);
+        
+
+        setObjReg({
+            firstName: "",
+            lastName: "",
+            email: "",
+            phoneNumber: "",
+            password: "",
+            confirmationPassword: "",
+            agreementDataProcessing: false,
+            agreementMailing: true,
+        })
+        fetchingRegister(obj);
+    
+
+        setRegFlagReset(!regFlagReset)
+    };
+    const postLogin = (obj) => {
+        // let jsonLog = JSON.stringify(obj);
+        console.log(obj);
+        fetchingLogin(obj);
+
+        setObjLog({
+            email: "",
+            password: "",
+        })
+        setLogFlagReset(!logFlagReset)
+    };
+
+    
+
     const logObjLog = () => {
         console.log(objLog);
-    }
+    };
     const logObjReg = () => {
         console.log(objReg);
-    }
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
     };
 
-    // ! Поправить лейблы у чекбоксов и разбить на компоненты
-
+    // ! разбить на компоненты сделать ресет при нажатии
 
     return (
         <div className="registration">
             <div className="container">
                 <div className="registration__wrapper">
                     <div className="registration__logo">
-                        <img
-                            src="./images/HomePage/craft-logo-home.svg"
-                            alt=""
-                        />
+                        <CustomLink to="/">
+                            <img
+                                src="../images/HomePage/craft-logo-home.svg"
+                                alt="CRAFT LOGO"
+                            />
+                        </CustomLink>
                     </div>
+
                     <div className="registration__container">
                         <div className="registration__text">
                             <div className="registration__unregistered unregistered-user">
@@ -83,62 +136,78 @@ const RegistrationPage = () => {
                                     ? "registration__forms forms-registration bounceLeft"
                                     : addClass == "bounceRight"
                                     ? "registration__forms forms-registration bounceRight"
-                                    : "registration__forms forms-registration"
+                                    : sign == "login"
+                                    ? "registration__forms forms-registration bounceRight"
+                                    : "registration__forms forms-registration bounceLeft"
                             }
                         >
                             <div className="forms-registration__singup singup-form">
                                 <div className="singup-form__title">
                                     Зарегистрироваться
                                 </div>
-                                <form onSubmit={handleSubmit} className="singup-form__form form">
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className="singup-form__form form"
+                                >
                                     <div className="form__fieldset">
                                         <InputReg
-                                            type="name"
+                                            type="text"
+                                            valueInp={regFlagReset}
                                             name="firstName"
                                             className="form__input"
                                             obj={objReg}
-                                            setData={(newObj) => setObjReg(newObj)}
+                                            setData={(newObj) =>
+                                                setObjReg(newObj)
+                                            }
                                             required
                                             autoFocus
                                             nameLabel="Имя"
                                         />
                                         <InputReg
-                                            type="lastname"
+                                            type="text"
                                             name="lastName"
-                                            
+                                            valueInp={regFlagReset}
                                             obj={objReg}
-                                            setData={(newObj) => setObjReg(newObj)}                                           
+                                            setData={(newObj) =>
+                                                setObjReg(newObj)
+                                            }
                                             className="form__input"
                                             required
                                             nameLabel="Фамилия"
                                         />
                                         <InputReg
                                             type="text"
+                                            valueInp={regFlagReset}
                                             name="email"
-                                            
                                             obj={objReg}
-                                            setData={(newObj) => setObjReg(newObj)}                                           
+                                            setData={(newObj) =>
+                                                setObjReg(newObj)
+                                            }
                                             className="form__input"
                                             required
                                             nameLabel="Email"
                                         />
                                         <InputReg
                                             type="tel"
+                                            valueInp={regFlagReset}
                                             name="phoneNumber"
-                                            
                                             obj={objReg}
-                                            setData={(newObj) => setObjReg(newObj)}                                           
-                                            pattern="8-[0-9]{3}-[0-9]{3}"
+                                            setData={(newObj) =>
+                                                setObjReg(newObj)
+                                            }
+
                                             className="form__input"
                                             required
                                             nameLabel="Телефон"
                                         />
                                         <InputReg
                                             type="password"
+                                            valueInp={regFlagReset}
                                             name="password"
-                                            
                                             obj={objReg}
-                                            setData={(newObj) => setObjReg(newObj)}                                            
+                                            setData={(newObj) =>
+                                                setObjReg(newObj)
+                                            }
                                             className="form__input"
                                             required
                                             nameLabel="Пароль"
@@ -146,9 +215,11 @@ const RegistrationPage = () => {
                                         <InputReg
                                             type="password"
                                             name="confirmationPassword"
-                                            
                                             obj={objReg}
-                                            setData={(newObj) => setObjReg(newObj)}                                            
+                                            valueInp={regFlagReset}
+                                            setData={(newObj) =>
+                                                setObjReg(newObj)
+                                            }
                                             className="form__input"
                                             required
                                             nameLabel="Повторите &ensp; пароль"
@@ -159,10 +230,13 @@ const RegistrationPage = () => {
                                                 type="checkbox"
                                                 id="confidence"
                                                 name="agreementDataProcessing"
+                                                valueInp={regFlagReset}
                                                 obj={objReg}
-                                                setData={(newObj) => setObjReg(newObj)}                                            
+                                                setData={(newObj) =>
+                                                    setObjReg(newObj)
+                                                }
                                                 className="form__checkbox"
-                                                nameLabel='Согласен на обработку персональных данных'
+                                                nameLabel="Согласен на обработку персональных данных"
                                             />
                                         </div>
                                         <div className="form__field checkbox">
@@ -170,18 +244,21 @@ const RegistrationPage = () => {
                                                 type="checkbox"
                                                 id="newsletter"
                                                 name="agreementMailing"
+                                                valueInp={regFlagReset}
                                                 obj={objReg}
-                                                setData={(newObj) => setObjReg(newObj)}   
-                                                nameLabel='Cогласие на рассылку'
+                                                setData={(newObj) =>
+                                                    setObjReg(newObj)
+                                                }
+                                                checked
+                                                nameLabel="Cогласие на рассылку"
                                                 className="form__checkbox"
                                             />
-                                            
                                         </div>
                                     </div>
 
                                     <input
                                         type="submit"
-                                        onClick={()=> logObjReg()}
+                                        onClick={() => postRegister(objReg)}
                                         value="Зарегистрироваться"
                                         className="form__button"
                                     />
@@ -189,13 +266,19 @@ const RegistrationPage = () => {
                             </div>
                             <div className="forms-registration__login login-form">
                                 <div className="login-form__title">Войти</div>
-                                <form  onSubmit={handleSubmit}className="login-form__form form">
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className="login-form__form form"
+                                >
                                     <div className="form__fieldset">
                                         <InputReg
-                                            type="email"
+                                            type="text"
                                             name="email"
+                                            valueInp={logFlagReset}
                                             obj={objLog}
-                                            setData={(newObj) => setObjLog(newObj)}                                    
+                                            setData={(newObj) =>
+                                                setObjLog(newObj)
+                                            }
                                             className="form__input"
                                             required
                                             nameLabel="Email"
@@ -203,9 +286,11 @@ const RegistrationPage = () => {
                                         <InputReg
                                             type="password"
                                             name="password"
-                                            
+                                            valueInp={logFlagReset}
                                             obj={objLog}
-                                            setData={(newObj) => setObjLog(newObj)}                                            
+                                            setData={(newObj) =>
+                                                setObjLog(newObj)
+                                            }
                                             className="form__input"
                                             required
                                             nameLabel="Пароль"
@@ -219,7 +304,7 @@ const RegistrationPage = () => {
                                             Забыли пароль?
                                         </button>
                                         <input
-                                            onClick={()=> logObjLog()}
+                                            onClick={() => postLogin(objLog)}
                                             type="submit"
                                             value="Войти"
                                             className="form__button"
@@ -234,7 +319,5 @@ const RegistrationPage = () => {
         </div>
     );
 };
-
-
 
 export default RegistrationPage;

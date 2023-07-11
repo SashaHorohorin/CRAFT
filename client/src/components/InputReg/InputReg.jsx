@@ -1,12 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IMaskInput } from "react-imask";
 
 const PhoneMask = "+{7}(000)000-00-00";
 const EmailMask = /^\S*@?\S*$/;
 
-const InputReg = ({ nameLabel, setData, obj, ...arg }) => {
-    const [value, setValue] = useState("");
-    const [checked, setChecked] = useState(false);
+const InputReg = ({ nameLabel, setData, valueInp, obj, ...arg }) => {
+    let valueData = ''
+    
+    const [value, setValue] = useState('');
+    let flag = false;
+    if (arg.name === 'agreementMailing'){
+        flag = true;
+    }
+    console.log(valueInp);
+    const [checked, setChecked] = useState(flag);
+
+    useEffect(()=>{
+        if (arg.name === 'agreementMailing'){
+            setChecked(true)
+        }else{
+            setChecked(false)
+        }
+        setValue('');
+    }, [valueInp])
+
+    valueData = value;
+
+    
+    
 
     const handleFunction = (e) => {
         const name = e.target.name;
@@ -31,7 +52,7 @@ const InputReg = ({ nameLabel, setData, obj, ...arg }) => {
 
     return (
         <div className="form__field">
-            {nameLabel == "Телефон" ? (
+            {arg.name == "phoneNumber" ? (
                 <IMaskInput
                     {...arg}
                     value={value}
@@ -39,7 +60,7 @@ const InputReg = ({ nameLabel, setData, obj, ...arg }) => {
                     mask={PhoneMask}
                     // onAccept={(value, mask) => console.log(value, mask)}
                 />
-            ) : nameLabel == "Email" ? (
+            ) : arg.name == "email" ? (
                 <IMaskInput
                     {...arg}
                     value={value}
@@ -47,7 +68,7 @@ const InputReg = ({ nameLabel, setData, obj, ...arg }) => {
                     mask={EmailMask}
                     // onAccept={(value, mask) => console.log(value, mask)}
                 />
-            ) : nameLabel == "Пароль" || nameLabel == "Повторите пароль" ? (
+            ) : arg.name == "password" || arg.name == "confirmationPassword" ? (
                 <IMaskInput
                     {...arg}
                     value={value}
@@ -78,6 +99,7 @@ const InputReg = ({ nameLabel, setData, obj, ...arg }) => {
                         .split("")
                         .map((latter, index) => (
                             <span
+                                key={index}
                                 style={{ transitionDelay: `${index * 50}ms` }}
                             >
                                 {latter}

@@ -10,7 +10,7 @@ const MainPart = () => {
         <div onLoad={() => fly()} className="main-part">
             
             <div className="container">
-                <Header />
+                
                 <div className="home__content">
                     <div className="home__logo">
                         <img src="./images/HomePage/craft-logo.svg" alt="" />
