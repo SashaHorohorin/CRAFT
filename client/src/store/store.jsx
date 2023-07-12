@@ -28,6 +28,7 @@ export default class Store{
             this.setAuth(true);
             this.setUser(response.data.username);
         } catch (error) {
+            console.log(error);
             console.log(error?.response?.data?.message);
         }
     }
