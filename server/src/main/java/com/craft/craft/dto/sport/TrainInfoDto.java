@@ -1,5 +1,6 @@
-package com.craft.craft.dto;
+package com.craft.craft.dto.sport;
 
+import com.craft.craft.dto.SportsmenDto;
 import com.craft.craft.model.sport.SportComplex;
 import com.craft.craft.model.sport.Train;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -7,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 

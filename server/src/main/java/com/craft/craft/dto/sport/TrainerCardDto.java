@@ -1,15 +1,10 @@
-package com.craft.craft.dto;
+package com.craft.craft.dto.sport;
 
 import com.craft.craft.model.info.InfoCardStatus;
-import com.craft.craft.model.sport.Train;
 import com.craft.craft.model.sport.Trainer;
-import com.craft.craft.model.user.BaseUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor

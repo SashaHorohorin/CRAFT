@@ -36,9 +36,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         } catch (JwtAuthenticationException e) {
+            log.info("error");
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             ObjectMapper objectMapper = new ObjectMapper();
+            response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
             response.getWriter().write(objectMapper.writeValueAsString(new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), "Access token is not valid")));
         }
 

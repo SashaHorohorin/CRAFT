@@ -1,4 +1,4 @@
-package com.craft.craft.dto;
+package com.craft.craft.dto.sport;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

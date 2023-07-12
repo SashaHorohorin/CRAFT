@@ -1,5 +1,6 @@
 package com.craft.craft.dto;
 
+import com.craft.craft.dto.sport.TrainCalendarDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
