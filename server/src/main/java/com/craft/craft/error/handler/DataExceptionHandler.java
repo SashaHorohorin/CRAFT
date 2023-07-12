@@ -3,6 +3,7 @@ package com.craft.craft.error.handler;
 import com.craft.craft.error.ErrorResponse;
 import com.craft.craft.error.ValidExceptionBody;
 import com.craft.craft.error.exeption.ModelNotFoundException;
+import com.craft.craft.error.exeption.UserIsAlreadyExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,4 +32,10 @@ public class DataExceptionHandler {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value() , "Valid exceptions", errors);
     }
 
+
+    @ExceptionHandler(UserIsAlreadyExistException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleConstrainException(UserIsAlreadyExistException e) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+    }
 }

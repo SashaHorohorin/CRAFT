@@ -1,5 +1,7 @@
 package com.craft.craft.service;
 
+import com.craft.craft.error.exeption.ModelNotFoundException;
+import com.craft.craft.error.exeption.UserIsAlreadyExistException;
 import com.craft.craft.model.user.BaseUser;
 import com.craft.craft.model.user.Role;
 import com.craft.craft.model.user.RoleName;
@@ -20,7 +22,7 @@ public class UserService {
     private final BaseUserRepo userRepo;
     private final MailSender sender;
 
-    public BaseUser findByUsername(String username){
+    public BaseUser findByUsername(String username) {
         log.info("In findByUsername({})", username);
         return userRepo.findByUsername(username).orElse(null);
     }
@@ -29,7 +31,12 @@ public class UserService {
         return userRepo.findByEmail(email).orElse(null);
     }
 
-    public BaseUser createUser(BaseUser user){
+    public BaseUser createUser(BaseUser user) throws UserIsAlreadyExistException {
+
+        if(userRepo.findByEmail(user.getEmail()).isPresent()) throw new UserIsAlreadyExistException("Пользователь с таким email уже существует");
+        if(userRepo.findByPhoneNumber(user.getPhoneNumber()).isPresent()) throw new UserIsAlreadyExistException("Пользователь с таким номером телефона уже существует");
+        if(userRepo.findByUsername(user.getUsername()).isPresent()) throw new UserIsAlreadyExistException("Пользователь с таким username телефона уже существует");
+
         user.getRoles().add(new Role(RoleName.BASE));
         user.setStatus(Status.NOT_ACTIVE);
         user.setActivationCode(UUID.randomUUID().toString());

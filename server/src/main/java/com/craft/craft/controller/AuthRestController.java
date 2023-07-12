@@ -5,14 +5,18 @@ import com.craft.craft.dto.AuthRegisterDto;
 import com.craft.craft.dto.AuthLoginDto;
 import com.craft.craft.dto.JwtsResponse;
 import com.craft.craft.dto.TokenDto;
+import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.error.exeption.PasswordNotMatchException;
 import com.craft.craft.error.exeption.TokenInvalidException;
+import com.craft.craft.error.exeption.UserIsAlreadyExistException;
 import com.craft.craft.model.user.BaseUser;
+import com.craft.craft.model.user.Role;
 import com.craft.craft.security.jwt.JwtTokenProvider;
 import com.craft.craft.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -38,14 +42,12 @@ public class AuthRestController {
     private final AuthenticationManager authenticationManager;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
     @Operation(
             summary = "Вход пользователя"
     )
     @PostMapping("/login")
     public JwtsResponse login(@Valid @RequestBody AuthLoginDto requestDto){
         try {
-
             String email = requestDto.getEmail();
             BaseUser user = userService.findByEmail(email);
             if(user == null){
@@ -65,7 +67,7 @@ public class AuthRestController {
             summary = "Регистрация пользователя"
     )
     @PostMapping("/register")
-    public JwtsResponse register(@Valid @RequestBody AuthRegisterDto requestDto) throws PasswordNotMatchException {
+    public JwtsResponse register(@Valid @RequestBody AuthRegisterDto requestDto) throws PasswordNotMatchException, UserIsAlreadyExistException {
         if(!requestDto.getPassword().equals(requestDto.getConfirmationPassword()))
             throw new PasswordNotMatchException("Пароли не совпадают");
         BaseUser user = new BaseUser(
@@ -106,6 +108,17 @@ public class AuthRestController {
         else
             throw new TokenInvalidException("Refresh token is not valid", HttpStatus.BAD_REQUEST);
 
+    }
+
+    @GetMapping("/refresh")
+    public JwtsResponse refresh(@RequestHeader(HttpHeaders.AUTHORIZATION) String bearer) {
+        String token = bearer.substring(7);
+        String username = jwtTokenProvider.getUsernameFromAccessToken(token);
+        BaseUser user = userService.findByUsername(username);
+        String tokenAccess = jwtTokenProvider.createAccessToken(username, user.getRoles());
+        String tokenRefresh = jwtTokenProvider.createRefreshToken( user.getUsername());
+        List<String> roles = user.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toList());
+        return  new JwtsResponse( user.getUsername(), roles, tokenAccess, tokenRefresh);
     }
 
 //

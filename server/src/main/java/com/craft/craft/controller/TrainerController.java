@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/v1/craft-info-card/trainer")
+@RequestMapping("api/v1/trainer")
 public class TrainerController {
 
     @Autowired

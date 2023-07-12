@@ -37,13 +37,13 @@ public class BaseUser extends BaseEntity {
     @Email(message = "Please provide a valid email address")
     @NotNull
     @NotBlank(message = "Please enter your phone number")
-    @Column(name = "email"/*, unique = true*/)//=============================================================================
+    @Column(name = "email", unique = true)
     private String email;
     @NonNull
     @NotNull
     @NotBlank(message = "Please enter your phone number")
     @Pattern(regexp = "^((8|\\+7)\\(\\d{3}\\)\\d{3}-\\d{2}-\\d{2})$")
-    @Column(name = "phoneNumber"/*, unique = true*/)//=============================================================================
+    @Column(name = "phoneNumber", unique = true)
     private String phoneNumber;
     private String photoUrl;
     @NonNull

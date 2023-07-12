@@ -1,9 +1,6 @@
 package com.craft.craft.controller;
 
-import com.craft.craft.dto.AdminDto;
-import com.craft.craft.dto.BaseUserDataDto;
-import com.craft.craft.dto.CraftInfoCardRequestDto;
-import com.craft.craft.dto.TrainCalendarDto;
+import com.craft.craft.dto.*;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.info.CraftInfoCard;
 import com.craft.craft.model.info.InfoCardStatus;
@@ -16,10 +13,7 @@ import com.craft.craft.repository.sport.TrainRepo;
 import com.craft.craft.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -133,7 +127,7 @@ public class TestDataController {
 
 
     @GetMapping("/add-card/{username}")
-    public CraftInfoCardRequestDto addCard(@PathVariable String username){
+    public CraftInfoCardRequestDto addCard(@PathVariable String username) throws ModelNotFoundException {
         Admin admin = (Admin) baseUserService.findByUsername(username);
         CraftInfoCard card = new CraftInfoCard("test","test","test","test","test", InfoCardStatus.ACTIVE, admin);
         return CraftInfoCardRequestDto.getDtoFromCraftInfoCard(craftInfoCardService.save(card));
@@ -174,9 +168,4 @@ public class TestDataController {
         return "YEEES1";
     }
 
-
-    @GetMapping("/test-train-calendar")
-    private TrainCalendarDto test3() throws ModelNotFoundException {
-        return trainService.getTrainCalendarOnThisWeek();
-    }
 }

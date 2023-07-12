@@ -18,6 +18,7 @@ import java.util.Set;
 public class Trainer extends BaseEntity {
 
     @NonNull
+    @Column(name = "name", unique = true)
     private String name;
     @NonNull
     private String photoURL;

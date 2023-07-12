@@ -12,6 +12,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -34,7 +40,8 @@ public class JwtSecurityConfig {
                         "/v2/api-docs/**","/swagger-ui.html","/swagger-ui/**", "/v2/api-docs",
                         "/configuration/ui", "/swagger-resources/**", "/configuration/security",
                         "/swagger-ui.html", "/webjars/**", "/v3/api-docs/swagger-config", "/v3/api-docs/**",
-                                "/api/v1/craft-info-card/trainer/**"
+
+                                "/api/v1/craft-info-card/trainer/**","/api/v1/train/**"
 
                         ).permitAll()
                         .antMatchers("/test/base/**").hasAuthority(RoleName.BASE.name())
@@ -50,5 +57,18 @@ public class JwtSecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
+    }
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        List<String> allowedOriginPatterns = new ArrayList<>();
+        allowedOriginPatterns.add("*");
+        config.setAllowedOriginPatterns(allowedOriginPatterns);
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 }

@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface BaseUserRepo extends AbstractBaseUserRepo<BaseUser> {
     Optional<BaseUser> findByActivationCode(String activationCode);
     Optional<BaseUser> findByEmail(String email);
+    Optional<BaseUser> findByPhoneNumber(String phoneNumber);
 }
