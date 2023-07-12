@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const HOST = "localhost:9005";
+const HOST = "http://localhost:9005";
 
 const $api = axios.create({ 
     withCredentials: true, 
@@ -8,8 +8,11 @@ const $api = axios.create({
 });
 
 $api.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer_${localStorage.getItem('accessToken')}`;
+    if (localStorage?.getItem('accessToken') !== null){
+        config.headers.Authorization = `Bearer_${localStorage.getItem('accessToken')}`;
+    }
     return config;
+    
 })
 
 export default $api;

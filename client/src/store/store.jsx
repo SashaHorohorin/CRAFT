@@ -21,13 +21,10 @@ export default class Store{
         try {
             const response = await DataService.postLogin(obj);
             console.log(response);
-            let saveObj = ({
-                'accessToken': response.data.accessToken,
-                'refreshToken': response.data.refreshToken,
-                'username': response.data.username,
-                'roles': response.data.roles,
-            })
-            localStorage.setItem(saveObj);
+            localStorage.setItem('accessToken', response.data.accessToken);
+            localStorage.setItem('refreshToken', response.data.refreshToken);
+            localStorage.setItem('username', response.data.username);
+            localStorage.setItem('roles', response.data.roles);
             this.setAuth(true);
             this.setUser(response.data.username);
         } catch (error) {
@@ -38,13 +35,10 @@ export default class Store{
         try {
             const response = await DataService.postRegister(obj);
             console.log(response);
-            let saveObj = ({
-                'accessToken': response.data.accessToken,
-                'refreshToken': response.data.refreshToken,
-                'username': response.data.username,
-                'roles': response.data.roles,
-            })
-            localStorage.setItem(saveObj);
+            localStorage.setItem('accessToken', response.data.accessToken);
+            localStorage.setItem('refreshToken', response.data.refreshToken);
+            localStorage.setItem('username', response.data.username);
+            localStorage.setItem('roles', response.data.roles);
             this.setAuth(true);
             this.setUser(response.data.username);
         } catch (error) {
