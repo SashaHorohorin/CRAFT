@@ -7,6 +7,7 @@ import { useActionData, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import CustomLink from "../../components/CustomLink";
 import { Context } from "../..";
+import { observer } from "mobx-react-lite";
 
 const RegistrationPage = (props) => {
     const {store} = useContext(Context)
@@ -102,7 +103,7 @@ const RegistrationPage = (props) => {
                             />
                         </CustomLink>
                     </div>
-
+                    <h1>{store.user ? `пользователь зареган ${store.user}` : 'regaisya'}</h1>
                     <div className="registration__container">
                         <div className="registration__text">
                             <div className="registration__unregistered unregistered-user">
@@ -327,4 +328,4 @@ const RegistrationPage = (props) => {
     );
 };
 
-export default RegistrationPage;
+export default observer(RegistrationPage);

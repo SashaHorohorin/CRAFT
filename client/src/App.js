@@ -11,8 +11,27 @@ import HomePage from "./page/HomePage/HomePage";
 import RegistrationPage from "./page/RegistrationPage/RegistrationPage";
 import Layout from "./components/Layout";
 import TrainingPage from "./page/TrainingPage/TrainingPage";
+import { useContext, useEffect } from "react";
+import { Context } from ".";
+import { observer } from "mobx-react-lite";
 
 function App() {
+    const {store} = useContext(Context);
+
+    const logText = () =>{
+        console.log('-------');
+    }
+
+    const token = localStorage.getItem('accessToken');
+
+    useEffect(() => {
+        logText();
+        if (token){
+            console.log('123');
+            store.checkAuth()
+        }
+    }, [token])
+
     return (
         <BrowserRouter>
             <div className="App">
@@ -30,4 +49,4 @@ function App() {
     );
 }
 
-export default App;
+export default observer(App) ;
