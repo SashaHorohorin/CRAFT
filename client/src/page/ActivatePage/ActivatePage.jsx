@@ -25,7 +25,7 @@ const ActivatePage = () => {
 
     return (
         <div className="container">
-            <Navigate to="auth/login"/>
+            <Navigate to="/auth/login"/>
         </div>
     );
 };
