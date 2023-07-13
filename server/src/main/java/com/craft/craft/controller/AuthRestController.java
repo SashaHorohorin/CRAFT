@@ -62,7 +62,7 @@ public class AuthRestController {
             summary = "Регистрация пользователя"
     )
     @PostMapping("/register")
-    public RegisterResponse register(@Valid @RequestBody AuthRegisterDto requestDto) throws PasswordNotMatchException, UserIsAlreadyExistException {
+    public JwtsResponse register(@Valid @RequestBody AuthRegisterDto requestDto) throws PasswordNotMatchException, UserIsAlreadyExistException {
         if (!requestDto.getPassword().equals(requestDto.getConfirmationPassword()))
             throw new PasswordNotMatchException("Пароли не совпадают");
         BaseUser user = new BaseUser(
@@ -78,7 +78,7 @@ public class AuthRestController {
         String tokenAccess = jwtTokenProvider.createAccessToken(user.getUsername(), user.getRoles());
         String tokenRefresh = jwtTokenProvider.createRefreshToken(user.getUsername());
         List<String> roles = user.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toList());
-        return new RegisterResponse(user.getUsername(), roles, tokenAccess, tokenRefresh, user.getActivationCode());
+        return new JwtsResponse(user.getUsername(), roles, tokenAccess, tokenRefresh);
     }
 
     @GetMapping("/activate/{code}")
