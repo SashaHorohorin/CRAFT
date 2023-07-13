@@ -5,6 +5,7 @@ import com.craft.craft.error.ValidExceptionBody;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.error.exeption.UserIsAlreadyExistException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -38,4 +39,6 @@ public class DataExceptionHandler {
     public ErrorResponse handleConstrainException(UserIsAlreadyExistException e) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
+
+
 }

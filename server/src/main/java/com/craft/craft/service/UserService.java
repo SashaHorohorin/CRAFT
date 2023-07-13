@@ -44,7 +44,7 @@ public class UserService {
         String massage = String.format(
                 "Привет, %s \n" +
                         "Добро пожаловать в CRAFT. Для активации аккаунта пожалуста перейдите по ссылке:" +
-                        "http://localhost:9005/api/v1/auth/activate/%s",
+                        "http://localhost:3000/activate-account/%s",
                 ret.getFirstName() + " " + ret.getLastName(),
                 ret.getActivationCode()
         );

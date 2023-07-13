@@ -6,6 +6,7 @@ import com.craft.craft.error.exeption.PasswordNotMatchException;
 import com.craft.craft.error.exeption.TokenInvalidException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,9 +20,9 @@ import java.util.stream.Collectors;
 public class AuthExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleError(BadCredentialsException e) {
-        return new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
     @ExceptionHandler(TokenInvalidException.class)
@@ -36,5 +37,9 @@ public class AuthExceptionHandler {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value() , e.getMessage());
     }
 
-
+    @ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleConstrainException(UsernameNotFoundException e) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+    }
 }
