@@ -15,4 +15,23 @@ $api.interceptors.request.use((config) => {
     
 })
 
+$api.interceptors.response.use((config) => {
+    return config;
+}, (async (error) => {
+    const originalRequest = error.config;
+    if (error.response.status === 401){
+        try {
+            let objUser = {
+                username: localStorage.getItem('username'),
+                token: localStorage.getItem('refreshToken')
+            }
+            const response = await axios.post(`${HOST}/api/v1/auth/access-token`, objUser);
+            localStorage.setItem('accessToken', response.data.token);
+            return $api.request(originalRequest);
+        } catch (error) {
+            console.log('Не авторизован');
+        }
+    }
+}))
+
 export default $api;
