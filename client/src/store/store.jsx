@@ -47,10 +47,10 @@ export default class Store{
             const response = await DataService.postRegister(obj);
             console.log(response);
             // localStorage.setItem('activateCode', response.data.activateCode)
-            localStorage.setItem('accessToken', response.data.accessToken);
-            localStorage.setItem('refreshToken', response.data.refreshToken);
-            localStorage.setItem('username', response.data.username);
-            localStorage.setItem('roles', response.data.roles);
+            // localStorage.setItem('accessToken', response.data.accessToken);
+            // localStorage.setItem('refreshToken', response.data.refreshToken);
+            // localStorage.setItem('username', response.data.username);
+            // localStorage.setItem('roles', response.data.roles);
             this.setAuth(true);
             this.setUser(response.data.username);
         } catch (error) {

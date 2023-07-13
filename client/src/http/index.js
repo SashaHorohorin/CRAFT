@@ -29,6 +29,9 @@ $api.interceptors.response.use((config) => {
             localStorage.setItem('accessToken', response.data.token);
             return $api.request(originalRequest);
         } catch (error) {
+            if(error.response.status === 400){
+                localStorage.clear();
+            }
             console.log('Не авторизован');
         }
     }
