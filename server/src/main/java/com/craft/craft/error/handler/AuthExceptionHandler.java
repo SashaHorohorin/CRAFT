@@ -2,6 +2,7 @@ package com.craft.craft.error.handler;
 
 import com.craft.craft.error.ErrorResponse;
 import com.craft.craft.error.ValidExceptionBody;
+import com.craft.craft.error.exeption.EmailNotActiveException;
 import com.craft.craft.error.exeption.PasswordNotMatchException;
 import com.craft.craft.error.exeption.TokenInvalidException;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,12 @@ public class AuthExceptionHandler {
     @ExceptionHandler(UsernameNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleConstrainException(UsernameNotFoundException e) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+    }
+
+    @ExceptionHandler(EmailNotActiveException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleConstrainException(EmailNotActiveException e) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 }

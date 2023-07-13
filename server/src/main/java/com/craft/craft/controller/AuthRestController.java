@@ -2,9 +2,7 @@ package com.craft.craft.controller;
 
 import com.craft.craft.config.JwtSecurityConfig;
 import com.craft.craft.dto.*;
-import com.craft.craft.error.exeption.PasswordNotMatchException;
-import com.craft.craft.error.exeption.TokenInvalidException;
-import com.craft.craft.error.exeption.UserIsAlreadyExistException;
+import com.craft.craft.error.exeption.*;
 import com.craft.craft.model.user.BaseUser;
 import com.craft.craft.security.jwt.JwtTokenProvider;
 import com.craft.craft.service.UserService;
@@ -41,12 +39,15 @@ public class AuthRestController {
             summary = "Вход пользователя"
     )
     @PostMapping("/login")
-    public JwtsResponse login(@Valid @RequestBody AuthLoginDto requestDto) {
+    public JwtsResponse login(@Valid @RequestBody AuthLoginDto requestDto) throws EmailNotActiveException{
         try {
             String email = requestDto.getEmail();
             BaseUser user = userService.findByEmail(email);
             if (user == null) {
                 throw new UsernameNotFoundException("User with email: " + email + " not found.");
+            }
+            if(userService.findByEmail(email).getActivationCode() != null){
+                throw new EmailNotActiveException("Необходимо подтвердить почту");
             }
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), requestDto.getPassword()));
             String tokenAccess = jwtTokenProvider.createAccessToken(user.getUsername(), user.getRoles());
@@ -62,7 +63,7 @@ public class AuthRestController {
             summary = "Регистрация пользователя"
     )
     @PostMapping("/register")
-    public JwtsResponse register(@Valid @RequestBody AuthRegisterDto requestDto) throws PasswordNotMatchException, UserIsAlreadyExistException {
+    public void register(@Valid @RequestBody AuthRegisterDto requestDto) throws PasswordNotMatchException, UserIsAlreadyExistException {
         if (!requestDto.getPassword().equals(requestDto.getConfirmationPassword()))
             throw new PasswordNotMatchException("Пароли не совпадают");
         BaseUser user = new BaseUser(
@@ -75,10 +76,6 @@ public class AuthRestController {
         user.setAgreementDataProcessing(requestDto.isAgreementDataProcessing());
         user.setAgreementMailing(requestDto.isAgreementMailing());
         userService.createUser(user);
-        String tokenAccess = jwtTokenProvider.createAccessToken(user.getUsername(), user.getRoles());
-        String tokenRefresh = jwtTokenProvider.createRefreshToken(user.getUsername());
-        List<String> roles = user.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toList());
-        return new JwtsResponse(user.getUsername(), roles, tokenAccess, tokenRefresh);
     }
 
     @GetMapping("/activate/{code}")
@@ -91,12 +88,13 @@ public class AuthRestController {
             description = "Обновляет access токен по refresh токену"
     )
     @PostMapping("/access-token")
-    public TokenDto updateAccessToken(@Valid @RequestBody TokenDto tokenDto) throws TokenInvalidException {
+    public TokenDto updateAccessToken(@Valid @RequestBody TokenDto tokenDto) throws TokenInvalidException, ModelNotFoundException {
         String refreshToken = tokenDto.getToken();
         if (refreshToken != null && jwtTokenProvider.validateRefreshToken(refreshToken)) {
             BaseUser user = userService.findByUsername(
                     jwtTokenProvider.getUsernameFromRefreshToken(refreshToken)
             );
+            if(user == null) throw new ModelNotFoundException("Пользователь по refresh token не найден");
             String newToken = jwtTokenProvider.createAccessToken(user.getUsername(), user.getRoles());
             return new TokenDto(user.getUsername(), newToken);
         } else
