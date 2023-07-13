@@ -14,22 +14,18 @@ import TrainingPage from "./page/TrainingPage/TrainingPage";
 import { useContext, useEffect } from "react";
 import { Context } from ".";
 import { observer } from "mobx-react-lite";
+import ActivatePage from "./page/ActivatePage/ActivatePage";
 
 function App() {
     const {store} = useContext(Context);
 
-    const logText = () =>{
-        console.log('-------');
-    }
-
     const token = localStorage.getItem('accessToken');
 
     useEffect(() => {
-        logText();
         if (token){
-            console.log('123');
-            store.checkAuth()
+            store.checkAuth();
         }
+
     }, [token])
 
     return (
@@ -41,6 +37,7 @@ function App() {
                         <Route path="training" element={<TrainingPage/>}/>
                     </Route>
                     <Route path="auth/:sign" element={<RegistrationPage />} />
+                    <Route path="activate-account/:code" element={<ActivatePage/>}/>
                 </Routes>
                 {/* <HomePage/> */}
                 {/* <RegistrationPage /> */}

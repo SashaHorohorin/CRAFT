@@ -7,6 +7,7 @@ const HOST = "http://localhost:9005";
 export default class Store{
     user = '';
     isAuth = false;
+    isActivate = false;
 
     constructor(){
         makeAutoObservable(this);
@@ -18,6 +19,10 @@ export default class Store{
 
     setUser(user){
         this.user = user;
+    }
+
+    setActivate(bool){
+        this.isActivate = bool;
     }
 
     async login(obj){
@@ -41,6 +46,7 @@ export default class Store{
         try {
             const response = await DataService.postRegister(obj);
             console.log(response);
+            // localStorage.setItem('activateCode', response.data.activateCode)
             localStorage.setItem('accessToken', response.data.accessToken);
             localStorage.setItem('refreshToken', response.data.refreshToken);
             localStorage.setItem('username', response.data.username);
