@@ -1,4 +1,4 @@
-package com.craft.craft.service;
+package com.craft.craft.service.sport;
 
 import com.craft.craft.dto.sport.TrainCalendarBySportComplexDto;
 import com.craft.craft.dto.sport.TrainCalendarDto;
@@ -13,6 +13,7 @@ import com.craft.craft.repository.sport.TrainRepo;
 import com.craft.craft.repository.sport.TrainerRepo;
 import com.craft.craft.repository.user.AdminRepo;
 import com.craft.craft.repository.user.BaseUserRepo;
+import com.craft.craft.service.MailSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

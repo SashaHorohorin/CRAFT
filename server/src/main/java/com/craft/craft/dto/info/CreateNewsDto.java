@@ -14,7 +14,7 @@ import java.util.UUID;
 public class CreateNewsDto {
     private NewsType type;
     private String title;
-    private String smallTitle;
+    private String textUnderTitle;
     private Date eventDate;
     private String textUnderDate;
     private String text;

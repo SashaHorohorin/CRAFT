@@ -5,7 +5,7 @@ import com.craft.craft.dto.sport.TrainInfoDto;
 import com.craft.craft.dto.sport.TrainUpdateDto;
 import com.craft.craft.error.exeption.FullTrainException;
 import com.craft.craft.error.exeption.ModelNotFoundException;
-import com.craft.craft.service.TrainService;
+import com.craft.craft.service.sport.TrainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

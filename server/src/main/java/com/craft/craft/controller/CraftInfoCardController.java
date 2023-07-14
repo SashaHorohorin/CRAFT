@@ -4,7 +4,7 @@ import com.craft.craft.dto.info.CraftInfoCardRequestDto;
 import com.craft.craft.dto.info.CraftInfoCardUpdateDto;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.info.InfoCardStatus;
-import com.craft.craft.service.CraftInfoCardService;
+import com.craft.craft.service.info.CraftInfoCardService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

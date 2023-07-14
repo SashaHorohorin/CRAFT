@@ -1,4 +1,4 @@
-package com.craft.craft.repository;
+package com.craft.craft.repository.info;
 
 import com.craft.craft.model.info.PlacemarkOnMap;
 import org.springframework.data.jpa.repository.JpaRepository;

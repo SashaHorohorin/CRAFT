@@ -28,7 +28,7 @@ public class NewsResponseDto {
                 news.getId(),
                 news.getType(),
                 news.getTitle(),
-                news.getSmallTitle(),
+                news.getTextUnderTitle(),
                 news.getEventDate(),
                 news.getTextUnderDate(),
                 news.getText(),

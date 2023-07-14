@@ -1,7 +1,10 @@
 package com.craft.craft.controller;
 
 import com.craft.craft.config.JwtSecurityConfig;
-import com.craft.craft.dto.*;
+import com.craft.craft.dto.auth.AuthLoginDto;
+import com.craft.craft.dto.auth.AuthRegisterDto;
+import com.craft.craft.dto.auth.JwtsResponse;
+import com.craft.craft.dto.auth.TokenDto;
 import com.craft.craft.error.exeption.*;
 import com.craft.craft.model.user.BaseUser;
 import com.craft.craft.security.jwt.JwtAuthenticationException;
@@ -56,7 +59,7 @@ public class AuthRestController {
             List<String> roles = user.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toList());
             return new JwtsResponse(user.getUsername(), roles, tokenAccess, tokenRefresh);
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid username or password");
+            throw new BadCredentialsException("Неверное имя пользователя или пароль");
         }
     }
 

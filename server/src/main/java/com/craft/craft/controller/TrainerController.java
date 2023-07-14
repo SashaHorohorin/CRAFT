@@ -1,7 +1,7 @@
 package com.craft.craft.controller;
 
 import com.craft.craft.dto.sport.TrainerDto;
-import com.craft.craft.service.TrainerService;
+import com.craft.craft.service.sport.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

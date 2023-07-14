@@ -1,7 +1,7 @@
-package com.craft.craft.service;
+package com.craft.craft.service.info;
 
 import com.craft.craft.model.info.PlacemarkOnMap;
-import com.craft.craft.repository.PlacemarkOnMapRepo;
+import com.craft.craft.repository.info.PlacemarkOnMapRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

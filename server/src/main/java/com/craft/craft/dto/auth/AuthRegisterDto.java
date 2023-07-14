@@ -1,4 +1,4 @@
-package com.craft.craft.dto;
+package com.craft.craft.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

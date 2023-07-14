@@ -1,11 +1,11 @@
-package com.craft.craft.service;
+package com.craft.craft.service.info;
 
 import com.craft.craft.dto.info.CraftInfoCardUpdateDto;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.info.CraftInfoCard;
 import com.craft.craft.model.info.InfoCardStatus;
 import com.craft.craft.model.user.Admin;
-import com.craft.craft.repository.CraftInfoCardRepo;
+import com.craft.craft.repository.info.CraftInfoCardRepo;
 import com.craft.craft.repository.user.AdminRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

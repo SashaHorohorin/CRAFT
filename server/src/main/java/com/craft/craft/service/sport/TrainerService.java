@@ -1,4 +1,4 @@
-package com.craft.craft.service;
+package com.craft.craft.service.sport;
 
 import com.craft.craft.model.sport.Trainer;
 import com.craft.craft.repository.sport.TrainerRepo;

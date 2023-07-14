@@ -1,4 +1,4 @@
-package com.craft.craft.repository;
+package com.craft.craft.repository.info;
 
 import com.craft.craft.model.info.CraftInfoCard;
 import com.craft.craft.model.info.InfoCardStatus;

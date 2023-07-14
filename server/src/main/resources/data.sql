@@ -54,6 +54,20 @@ INSERT INTO sportsmen_train (sportsmen_id, train_id)
     select u.id, t.id from baseuser u join train t on (u.username = 'nikita' and t.max_participant = 15);
 -------------------------------trains---------------------------------------------
 
--------------------------------пока впадлу писать---------------------------------------------
-
--------------------------------пока впадлу писать---------------------------------------------
+-------------------------------News---------------------------------------------
+INSERT INTO news (id, created, updated, type, title,text, photo_url) VALUES
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title1','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title2','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title3','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title4','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title5','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title6','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title7','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title8','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title9','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title10','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title11','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title12','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title13','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title14','text', 'photoUrl');
+-------------------------------News---------------------------------------------

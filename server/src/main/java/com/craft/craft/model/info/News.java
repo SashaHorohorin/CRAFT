@@ -2,10 +2,7 @@ package com.craft.craft.model.info;
 
 
 import com.craft.craft.model.BaseEntity;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +15,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class News extends BaseEntity {
 
     @NotNull
@@ -27,13 +25,15 @@ public class News extends BaseEntity {
     @NotNull
     @NonNull
     private String title;
-    private String smallTitle;
+    private String textUnderTitle;
     private Date eventDate;
     private String textUnderDate;
     @NotNull
     @NonNull
     @Column(length = 2048)
     private String text;
+    @NotNull
+    @NonNull
     private String photoUrl;
 
 }
