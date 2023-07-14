@@ -3,7 +3,7 @@ import "./RegistrationPage.scss";
 import InputReg from "../../components/InputReg/InputReg";
 import DataService from "../../API/DataService";
 import { useFetching } from "../../hooks/useFetching";
-import { Navigate, useActionData, useParams } from "react-router";
+import { Navigate, useActionData, useLocation, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import CustomLink from "../../components/CustomLink";
 import { Context } from "../..";
@@ -13,6 +13,11 @@ import FormLogin from '../../components/FormLogin/FormLogin' ;
 
 const RegistrationPage = (props) => {
     const {store} = useContext(Context)
+
+    const location = useLocation();
+
+    const fromPage = location.state?.from?.pathname || '/';
+    
     
 
     const { sign } = useParams();
@@ -46,7 +51,7 @@ const RegistrationPage = (props) => {
                             />
                         </CustomLink>
                     </div>
-                    <h1>{store.user ? `пользователь зареган ${store.user}` : 'regaisya'}</h1>
+                    {/* <h1>{store.user ? `пользователь зареган ${store.user}` : 'regaisya'}</h1> */}
                     <div className="registration__container">
                         <div className="registration__text">
                             <div className="registration__unregistered unregistered-user">
@@ -93,7 +98,7 @@ const RegistrationPage = (props) => {
                             }
                         >
                             <FormRegistration/>
-                            <FormLogin/>
+                            <FormLogin fromPage={fromPage}/>
                         </div>
                     </div>
                 </div>

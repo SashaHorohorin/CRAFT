@@ -6,7 +6,7 @@ import $api from '../http';
 const HOST = "http://localhost:9005";
 export default class Store{
     user = '';
-    isAuth = false;
+    isAuth = Boolean(localStorage.getItem('username')) || false;
     isActivate = false;    
     messageError = ''
     flagError = false;

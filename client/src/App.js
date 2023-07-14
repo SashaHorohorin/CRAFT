@@ -26,6 +26,7 @@ function App() {
         if (token){
             store.checkAuth();
         }
+        console.log(store.isAuth);
 
     }, [token])
 

@@ -6,8 +6,10 @@ export const useFetching = (callback) => {
 
     const fetching = async (...arg) => {
         try {
+            
             setIsLoading(true);
             await callback(...arg);
+            console.log('fetching');
         } catch (error) {
             setError(error.message);
         } finally {

@@ -11,7 +11,7 @@ const Header = () => {
     const { store } = useContext(Context);
 
     const handleScroll = () => {
-        console.log(window.scrollY);
+        // console.log(window.scrollY);
         setScroll(window.scrollY);
     };
 
@@ -25,12 +25,12 @@ const Header = () => {
             <div className="container">
                 <div className="header__row">
                     <div className="header__column">
-                        <div className="header__logo">
+                        <Link to="/" className="header__logo">
                             <img
                                 src="./images/HomePage/craft-logo-home.svg"
                                 alt="craft"
                             />
-                        </div>
+                        </Link>
                     </div>
                     <div className="header__column">
                         <div

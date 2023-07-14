@@ -4,10 +4,13 @@ import { Context } from "../..";
 import { observer } from "mobx-react-lite";
 import { useFetching } from "../../hooks/useFetching";
 import DataService from "../../API/DataService";
+import { useNavigate } from "react-router";
 
-const FormLogin = () => {
+const FormLogin = ({fromPage}) => {
     const {store} = useContext(Context)
+    const navigate = useNavigate()
 
+    const [flagLog, setFlagLog] = useState(false)
     const [flagExeptionLog, setflagExeptionLog] = useState(false);
     const [objLog, setObjLog] = useState({
         email: "",
@@ -28,7 +31,7 @@ const FormLogin = () => {
         }
     }
 
-    const postLogin = (obj) => {
+    const postLogin = async (obj) => {
         if (validate(obj.email) == false) {
             setflagExeptionLog(true);
             return;
@@ -39,19 +42,26 @@ const FormLogin = () => {
         }
 
         // fetchingLogin(obj);
-        store.login(obj);
+        await store.login(obj);
 
         setObjLog({
             email: "",
             password: "",
         });
         setLogFlagReset(!logFlagReset);
+        // setTimeout(()=>{
+            if(store.isAuth === true){
+                console.log('-----------IsAuth');
+                navigate(fromPage, {replace: true});
+            }
+        // },100)
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
     };
 
+   
     return (
         <div className="forms-registration__login login-form">
             <div className="login-form__title">Войти</div>
