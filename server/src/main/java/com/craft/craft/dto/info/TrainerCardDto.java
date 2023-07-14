@@ -1,4 +1,4 @@
-package com.craft.craft.dto.sport;
+package com.craft.craft.dto.info;
 
 import com.craft.craft.model.info.InfoCardStatus;
 import com.craft.craft.model.sport.Trainer;

@@ -1,4 +1,4 @@
-package com.craft.craft.dto;
+package com.craft.craft.dto.sport;
 
 import com.craft.craft.dto.sport.TrainCalendarDto;
 import lombok.AllArgsConstructor;

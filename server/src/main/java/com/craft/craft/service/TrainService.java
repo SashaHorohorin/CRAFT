@@ -1,6 +1,6 @@
 package com.craft.craft.service;
 
-import com.craft.craft.dto.TrainCalendarBySportComplexDto;
+import com.craft.craft.dto.sport.TrainCalendarBySportComplexDto;
 import com.craft.craft.dto.sport.TrainCalendarDto;
 import com.craft.craft.dto.sport.TrainInfoDto;
 import com.craft.craft.dto.sport.TrainUpdateDto;

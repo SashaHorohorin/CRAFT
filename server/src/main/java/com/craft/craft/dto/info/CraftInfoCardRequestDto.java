@@ -1,4 +1,4 @@
-package com.craft.craft.dto;
+package com.craft.craft.dto.info;
 
 import com.craft.craft.model.info.CraftInfoCard;
 import com.craft.craft.model.info.InfoCardStatus;

@@ -1,7 +1,6 @@
 package com.craft.craft.controller;
 
-import com.craft.craft.dto.sport.AddUserToTrainRequestDto;
-import com.craft.craft.dto.TrainCalendarBySportComplexDto;
+import com.craft.craft.dto.sport.TrainCalendarBySportComplexDto;
 import com.craft.craft.dto.sport.TrainInfoDto;
 import com.craft.craft.dto.sport.TrainUpdateDto;
 import com.craft.craft.error.exeption.FullTrainException;

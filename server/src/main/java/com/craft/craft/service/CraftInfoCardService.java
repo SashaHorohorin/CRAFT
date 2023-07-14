@@ -1,6 +1,6 @@
 package com.craft.craft.service;
 
-import com.craft.craft.dto.CraftInfoCardUpdateDto;
+import com.craft.craft.dto.info.CraftInfoCardUpdateDto;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.info.CraftInfoCard;
 import com.craft.craft.model.info.InfoCardStatus;

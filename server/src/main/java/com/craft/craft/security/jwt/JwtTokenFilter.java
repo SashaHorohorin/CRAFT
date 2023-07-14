@@ -36,7 +36,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         } catch (JwtAuthenticationException e) {
-            log.info("error");
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             ObjectMapper objectMapper = new ObjectMapper();

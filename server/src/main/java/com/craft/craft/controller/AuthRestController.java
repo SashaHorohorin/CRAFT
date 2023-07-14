@@ -4,6 +4,7 @@ import com.craft.craft.config.JwtSecurityConfig;
 import com.craft.craft.dto.*;
 import com.craft.craft.error.exeption.*;
 import com.craft.craft.model.user.BaseUser;
+import com.craft.craft.security.jwt.JwtAuthenticationException;
 import com.craft.craft.security.jwt.JwtTokenProvider;
 import com.craft.craft.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,7 +47,7 @@ public class AuthRestController {
             if (user == null) {
                 throw new UsernameNotFoundException("User with email: " + email + " not found.");
             }
-            if(userService.findByEmail(email).getActivationCode() != null){
+            if(user.getActivationCode() != null){
                 throw new EmailNotActiveException("Необходимо подтвердить почту");
             }
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), requestDto.getPassword()));
@@ -90,15 +91,20 @@ public class AuthRestController {
     @PostMapping("/access-token")
     public TokenDto updateAccessToken(@Valid @RequestBody TokenDto tokenDto) throws TokenInvalidException, ModelNotFoundException {
         String refreshToken = tokenDto.getToken();
-        if (refreshToken != null && jwtTokenProvider.validateRefreshToken(refreshToken)) {
-            BaseUser user = userService.findByUsername(
-                    jwtTokenProvider.getUsernameFromRefreshToken(refreshToken)
-            );
-            if(user == null) throw new ModelNotFoundException("Пользователь по refresh token не найден");
-            String newToken = jwtTokenProvider.createAccessToken(user.getUsername(), user.getRoles());
-            return new TokenDto(user.getUsername(), newToken);
-        } else
-            throw new TokenInvalidException("Refresh token is not valid", HttpStatus.BAD_REQUEST);
+
+        try {
+            if (refreshToken != null && jwtTokenProvider.validateRefreshToken(refreshToken)) {
+                BaseUser user = userService.findByUsername(
+                        jwtTokenProvider.getUsernameFromRefreshToken(refreshToken)
+                );
+                if(user == null) throw new ModelNotFoundException("Пользователь по refresh token не найден");
+                String newToken = jwtTokenProvider.createAccessToken(user.getUsername(), user.getRoles());
+                return new TokenDto(user.getUsername(), newToken);
+            } else
+                throw new TokenInvalidException("Refresh token is not valid", HttpStatus.BAD_REQUEST);
+        } catch (JwtAuthenticationException e){
+            throw new TokenInvalidException("Refresh token is expired", HttpStatus.BAD_REQUEST);
+        }
 
     }
 
@@ -132,6 +138,5 @@ public class AuthRestController {
 //        }
 //        else
 //            return new ResponseEntity("refresh token is not valid", HttpStatus.BAD_REQUEST);
-//
 //    }
 }

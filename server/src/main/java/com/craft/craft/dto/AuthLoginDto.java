@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class AuthLoginDto {
     @Email(message = "Email введен неверно")
     @NotNull(message = "Email не может быть пустым")
-    @NotBlank(message = "Email не может быть пустым")
     private String email;
+    @NotNull(message = "Пароль не может быть пустым")
     private String password;
 }
