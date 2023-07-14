@@ -10,6 +10,9 @@ export default class DataService{
         console.log('uqweruwqr');
         return response;
     }
+    static async getTrainingCalendar(){
+        return await $api.get(`http://${host}api/v1/train/get-calendar-by-sport-complex`);
+    }
     static async postRegister(obj){
         return await $api.post(`/api/v1/auth/register`, obj);
     }

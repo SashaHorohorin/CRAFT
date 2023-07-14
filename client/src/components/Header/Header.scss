@@ -198,4 +198,18 @@
         font-weight: bold;
         padding: 13px 9px;
     }
+    &__exit{
+        cursor: pointer;
+        margin-right: 24px;
+        text-decoration: none;
+        color: #000000;
+        
+    }
+    &__user{
+        cursor: pointer;
+        width: 46px;
+        height: 46px;
+        border-radius: 10px;
+        background: url('../../../public/images/HomePage/user.svg') center no-repeat #ff6969;
+    }
 }

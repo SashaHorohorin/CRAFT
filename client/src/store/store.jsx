@@ -90,14 +90,14 @@ export default class Store{
         }
     }
 
-    // async logout(){
-    //     try {
-    //         const response = await DataService.postRegister(obj);
-    //         localStorage.setItem('token', response.data.accessToken);
-    //         this.setAuth(true);
-    //         this.setUser(response.data.username);
-    //     } catch (error) {
-    //         console.log(error?.message);
-    //     }
-    // }
+    async logout(){
+        try {
+            // const response = await DataService.postRegister(obj);
+            localStorage.clear();
+            this.setAuth(false);
+            this.setUser('');
+        } catch (error) {
+            console.log(error?.message);
+        }
+    }
 }
