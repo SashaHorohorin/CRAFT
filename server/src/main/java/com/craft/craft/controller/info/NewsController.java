@@ -1,4 +1,4 @@
-package com.craft.craft.controller;
+package com.craft.craft.controller.info;
 
 import com.craft.craft.dto.info.CreateNewsDto;
 import com.craft.craft.dto.info.NewsResponseDto;

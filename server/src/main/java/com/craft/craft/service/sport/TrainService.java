@@ -111,6 +111,8 @@ public class TrainService {
         LocalDate now = LocalDate.now();
         LocalDate lastWeekStart = now.minusWeeks(0).with(DayOfWeek.MONDAY);
         LocalDate lastWeekEnd = lastWeekStart.plusDays(7);
+//        LocalDate lastWeekStart = now;
+//        LocalDate lastWeekEnd = now.plusDays(7);
         Date start = Date.from(lastWeekStart.atStartOfDay(ZoneId.of("Europe/Moscow")).toInstant());
         Date end = Date.from(lastWeekEnd.atStartOfDay(ZoneId.of("Europe/Moscow")).toInstant());
 

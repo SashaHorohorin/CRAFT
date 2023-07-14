@@ -19,13 +19,20 @@ INSERT INTO admin (id)
 -------------------------------trains---------------------------------------------
 -- ВЫБОР ОПРЕДЕННОЙ СТРОКИ (SELECT * FROM the_table ORDER BY added DESC LIMIT 1,15)---------------------------------------------
 INSERT INTO train (id, created, updated, end_train, start_train, max_participant, now_participant, type, sport_complex) VALUES
-    (uuid_generate_v4(),now(),now(),now(),now(),10,0,'TRAIN','ALEKSEEVA'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',11,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now(),now(),10,0,'GAME_WITH_TRAINER','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now(),now(),10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',11,0,'GAME_WITH_TRAINER','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',11,0,'GAME_WITH_TRAINER','DINAMIT'),
     (uuid_generate_v4(),now(),now(),now()+INTERVAL '+2 DAYS',now()+INTERVAL '+2 DAYS',11,0,'GAME','DINAMIT'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+3 DAYS',now()+INTERVAL '+3 DAYS',12,0,'GAME','IMPULS'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+4 DAYS',now()+INTERVAL '+4 DAYS',13,0,'GAME','IMPULS'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+5 DAYS',now()+INTERVAL '+5 DAYS',14,0,'GAME','ALEKSEEVA'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+6 DAYS',now()+INTERVAL '+6 DAYS',15,0,'GAME','ALEKSEEVA');
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+2 DAYS',now()+INTERVAL '+2 DAYS',11,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-1 DAYS',now()+INTERVAL '-1 DAYS',12,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-1 DAYS',now()+INTERVAL '-1 DAYS',12,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-2 DAYS',now()+INTERVAL '-2 DAYS',13,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-2 DAYS',now()+INTERVAL '-2 DAYS',13,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-3 DAYS',now()+INTERVAL '-3 DAYS',14,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-3 DAYS',now()+INTERVAL '-3 DAYS',14,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-4 DAYS',now()+INTERVAL '-4 DAYS',15,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-4 DAYS',now()+INTERVAL '-4 DAYS',15,0,'GAME','ALEKSEEVA');
 INSERT INTO trainer (id, created, updated, name, photourl, status, text_back, text_front) VALUES
     (uuid_generate_v4(),now(),now(), 'trainer1', 'photoUrl1', 'ACTIVE', 'textBack1', 'textFront1'),
     (uuid_generate_v4(),now(),now(), 'trainer2', 'photoUrl2', 'ACTIVE', 'textBack2', 'textFront2');

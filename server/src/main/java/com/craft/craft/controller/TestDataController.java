@@ -2,23 +2,29 @@ package com.craft.craft.controller;
 
 import com.craft.craft.dto.*;
 import com.craft.craft.dto.info.CraftInfoCardRequestDto;
+import com.craft.craft.dto.info.CreatePriceDto;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.info.CraftInfoCard;
 import com.craft.craft.model.info.InfoCardStatus;
+import com.craft.craft.model.info.Price;
 import com.craft.craft.model.sport.SportComplex;
 import com.craft.craft.model.sport.Train;
 import com.craft.craft.model.sport.TrainType;
 import com.craft.craft.model.sport.Trainer;
 import com.craft.craft.model.user.*;
+import com.craft.craft.repository.info.PriceRepo;
 import com.craft.craft.repository.sport.TrainRepo;
 import com.craft.craft.service.*;
 import com.craft.craft.service.info.CraftInfoCardService;
+import com.craft.craft.service.info.PriceService;
 import com.craft.craft.service.sport.TrainService;
 import com.craft.craft.service.sport.TrainerService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,6 +48,8 @@ public class TestDataController {
     private TrainRepo trainRepo;
     @Autowired
     private TrainService trainService;
+    @Autowired
+    private PriceService priceService;
 
     @GetMapping("/fill-db")
     public String fill(){
@@ -170,6 +178,11 @@ public class TestDataController {
         train.getTrainers().add(t1);
         trainRepo.save(train);
         return "YEEES1";
+    }
+
+    @PostMapping("/test-create-price")
+    public Price test2(@RequestBody CreatePriceDto priceDto){
+       return priceService.create(priceDto);
     }
 
 }

@@ -3,6 +3,7 @@ package com.craft.craft.dto.sport;
 import com.craft.craft.dto.SportsmenDto;
 import com.craft.craft.model.sport.SportComplex;
 import com.craft.craft.model.sport.Train;
+import com.craft.craft.model.sport.TrainType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class TrainInfoDto {
 
     private UUID id;
-    private String type;
+    private TrainType type;
     private Date startTrain;
     private Date endTrain;
     private SportComplex sportComplex;
@@ -30,7 +31,7 @@ public class TrainInfoDto {
     public static TrainInfoDto getDtoFromTrain(Train train) {
         return new TrainInfoDto(
                 train.getId(),
-                train.getType().name(),
+                train.getType(),
                 train.getStartTrain(),
                 train.getEndTrain(),
                 train.getSportComplex(),

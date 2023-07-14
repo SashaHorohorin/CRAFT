@@ -1,4 +1,4 @@
-package com.craft.craft.controller;
+package com.craft.craft.controller.sport;
 
 import com.craft.craft.dto.sport.TrainCalendarBySportComplexDto;
 import com.craft.craft.dto.sport.TrainInfoDto;
