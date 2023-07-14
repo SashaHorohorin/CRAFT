@@ -7,10 +7,21 @@ const HOST = "http://localhost:9005";
 export default class Store{
     user = '';
     isAuth = false;
-    isActivate = false;
+    isActivate = false;    
+    messageError = ''
+    flagError = false;
+
 
     constructor(){
         makeAutoObservable(this);
+    }
+
+    setFlagError(bool){
+        this.flagError = bool;
+    }
+
+    setMessageError(error){
+        this.messageError = error;
     }
 
     setAuth(bool){
@@ -28,7 +39,7 @@ export default class Store{
     async login(obj){
         try {
             const response = await DataService.postLogin(obj);
-            console.log(response);
+            console.log(response + ' --try');
             localStorage.setItem('accessToken', response.data.accessToken);
             localStorage.setItem('refreshToken', response.data.refreshToken);
             localStorage.setItem('username', response.data.username);
@@ -38,8 +49,13 @@ export default class Store{
 
             console.log(this.user);
         } catch (error) {
-            // console.log(error);
-            console.log(error?.response?.data?.message);
+            console.log(error);
+            this.setFlagError(false)
+            setTimeout(()=> {
+                this.setMessageError(error?.response?.data?.message)
+                this.setFlagError(true);
+            }, 500)
+            
         }
     }
     async registration(obj){

@@ -11,6 +11,10 @@ import { observer } from "mobx-react-lite";
 
 const RegistrationPage = (props) => {
     const {store} = useContext(Context)
+    const [flagExeptionLog, setflagExeptionLog] = useState(false);
+    const [flagExeptionReg, setflagExeptionReg] = useState(false);
+    const [flagExeptionPassword, setflagExeptionPassword] = useState(false);
+    const [flagExeptionDataProcessing, setflagExeptionDataProcessing] = useState(false);
 
     const { sign } = useParams();
     const [addClass, setAddClass] = useState("");
@@ -42,10 +46,43 @@ const RegistrationPage = (props) => {
         const response = await DataService.postLogin(obj);
         console.log(response.data.accessToken);
     });
+
+    // валидация email
+    function validate(email) {
+        let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if(reg.test(email) == false) {
+        //    alert('Введите корректный e-mail');
+           return false;
+        }
+     }
     const postRegister = (obj) => {
         // let jsonReg = JSON.stringify(obj);
         console.log(obj);
+
+        if(validate(obj.email) == false){
+            setflagExeptionReg(true)
+            return;
+        }
+        setflagExeptionReg(false);
+        if(obj.password !== obj.confirmationPassword){
+            setflagExeptionPassword(true)
+            return
+        }
+        setflagExeptionPassword(false)
+        if(obj.agreementDataProcessing === false){
+            setflagExeptionDataProcessing(true)
+            return
+        }
+        setflagExeptionDataProcessing(false)
+        
         store.registration(obj)
+        
+        store.setFlagError(false)
+        setTimeout(()=> {
+            store.setFlagError(true)
+            store.setMessageError('На почту отправленно сообщение для подтверждения почты')
+        }, 500)
+        
 
         setObjReg({
             firstName: "",
@@ -58,17 +95,25 @@ const RegistrationPage = (props) => {
             agreementMailing: true,
         })
         // fetchingRegister(obj);
-    
-
         setRegFlagReset(!regFlagReset)
     };
     const postLogin = (obj) => {
         // let jsonLog = JSON.stringify(obj);
         console.log(obj);
+        console.log(obj.password);
+        if(validate(obj.email) == false){
+            setflagExeptionLog(true)
+            return;
+        }
+        setflagExeptionLog(false)
+        if(obj.password == ''){
+            return
+        }
+        
+        
         // fetchingLogin(obj);
-
         store.login(obj);
-
+        
         setObjLog({
             email: "",
             password: "",
@@ -89,10 +134,22 @@ const RegistrationPage = (props) => {
         event.preventDefault();
     };
 
-    // ! разбить на компоненты сделать ресет при нажатии
+    const closeModalWindow = () => {
+        store.setFlagError(false);
+        store.setMessageError('');
+    }
+
+    // ! разбить на компоненты
 
     return (
         <div className="registration">
+            <div className={store.flagError ? "modal-window active" : "modal-window"}>
+                <div onClick={() => closeModalWindow()} className="modal-window__close">
+                    <span></span>
+                    <span></span>
+                </div>
+                <div className="modal-window__title">{store.messageError}</div>
+            </div>
             <div className="container">
                 <div className="registration__wrapper">
                     <div className="registration__logo">
@@ -114,12 +171,12 @@ const RegistrationPage = (props) => {
                                     Поспешите зарегистрироваться, чтобы как
                                     можно скорее записаться к нам на тренировки!
                                 </div>
-                                <button
+                                {/* <button
                                     onClick={() => setAddClass("bounceLeft")}
                                     className="unregistered-user__singup"
-                                >
-                                    Зарегистрироваться
-                                </button>
+                                > */}
+                                    <Link className="unregistered-user__singup" to="/auth/registration">Зарегистрироваться</Link>
+                                {/* </button> */}
                             </div>
                             <div className="registration__registered registered-user">
                                 <div className="registered-user__title">
@@ -129,12 +186,12 @@ const RegistrationPage = (props) => {
                                     Тогда заходите и регистрируйтесь на
                                     тренировки, будем рады вас видеть!
                                 </div>
-                                <button
+                                {/* <button
                                     onClick={() => setAddClass("bounceRight")}
                                     className="registered-user__singup"
-                                >
-                                    Войти
-                                </button>
+                                > */}
+                                    <Link className="registered-user__singup" to="/auth/login">Войти</Link>
+                                {/* </button> */}
                             </div>
                         </div>
 
@@ -191,10 +248,12 @@ const RegistrationPage = (props) => {
                                             setData={(newObj) =>
                                                 setObjReg(newObj)
                                             }
+                                            classField={flagExeptionReg ? 'email' : ''}
                                             className="form__input"
                                             required
                                             nameLabel="Email"
                                         />
+                                        {flagExeptionReg ? <span className="exeption-email">Введена неверная почта</span> : null}
                                         <InputReg
                                             type="tel"
                                             valueInp={regFlagReset}
@@ -228,11 +287,12 @@ const RegistrationPage = (props) => {
                                             setData={(newObj) =>
                                                 setObjReg(newObj)
                                             }
+                                            classField={flagExeptionPassword ? 'email' : ''}
                                             className="form__input"
                                             required
                                             nameLabel="Повторите &ensp; пароль"
                                         />
-
+                                        {flagExeptionPassword ? <span className="exeption-email">Пароли не совпадают</span> : null}
                                         <div className="form__field checkbox">
                                             <InputReg
                                                 type="checkbox"
@@ -243,9 +303,11 @@ const RegistrationPage = (props) => {
                                                 setData={(newObj) =>
                                                     setObjReg(newObj)
                                                 }
+                                                classField={flagExeptionDataProcessing ? 'email' : ''}
                                                 className="form__checkbox"
                                                 nameLabel="Согласен на обработку персональных данных"
                                             />
+                                           
                                         </div>
                                         <div className="form__field checkbox">
                                             <InputReg
@@ -262,6 +324,7 @@ const RegistrationPage = (props) => {
                                                 className="form__checkbox"
                                             />
                                         </div>
+                                        {flagExeptionDataProcessing ? <span className="exeption-email">Подтвердите согласие на обработку данных</span> : null}
                                     </div>
 
                                     <input
@@ -287,10 +350,13 @@ const RegistrationPage = (props) => {
                                             setData={(newObj) =>
                                                 setObjLog(newObj)
                                             }
-                                            className="form__input"
+                                            classField={flagExeptionLog ? 'login-email' : ''}
+                                            className="form__input email"
                                             required
                                             nameLabel="Email"
                                         />
+                                        {flagExeptionLog ? <span className="exeption-email">Введена неверная почта</span> : null}
+                                        {/* <span className="exeption-email">{}</span> */}
                                         <InputReg
                                             type="password"
                                             name="password"

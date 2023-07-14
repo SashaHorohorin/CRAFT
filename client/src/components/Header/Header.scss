@@ -157,6 +157,8 @@
         // color: #ffffff;
         // font-weight: bold;
         padding: 13px 9px;
+        color: #000000;
+        text-decoration: none;
 
         &:last-child {
             margin: 0;
@@ -178,13 +180,17 @@
 .buttons {
     display: flex;
     align-items: center;
+    text-decoration: none;
 
     &__log-in {
         cursor: pointer;
         margin-right: 24px;
+        text-decoration: none;
+        color: #000000;
     }
 
     &__register {
+        text-decoration: none;
         cursor: pointer;
         border-radius: 10px;
         background: #ff6969;

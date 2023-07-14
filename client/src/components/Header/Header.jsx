@@ -68,9 +68,9 @@ const Header = () => {
 
                         <div className="header__navigation navigation">
                             <div className="navigation__list">
-                                <div className="navigation__link">
-                                    <Link to='training'>Расписание</Link>
-                                </div>
+                                {/* <div > */}
+                                    <Link className="navigation__link" to='training'>Расписание</Link>
+                                {/* </div> */}
                                 <div className="navigation__link">
                                     Соревнования
                                 </div>
@@ -82,12 +82,12 @@ const Header = () => {
                                 <div className="navigation__link">Контакты</div>
                             </div>
                             <div className="navigation__buttons buttons">
-                                <div className="buttons__log-in">
-                                    <Link to="auth/login">Вход</Link>
-                                </div>
-                                <div className="buttons__register">
-                                    <Link to="auth/registration">Регистрация</Link>
-                                </div>
+                                {/* <div > */}
+                                    <Link className="buttons__log-in" to="auth/login">Вход</Link>
+                                {/* </div> */}
+                                {/* <div > */}
+                                    <Link className="buttons__register" to="auth/registration">Регистрация</Link>
+                                {/* </div> */}
                             </div>
                         </div>
                     </div>

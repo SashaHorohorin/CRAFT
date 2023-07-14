@@ -19,6 +19,7 @@ $api.interceptors.response.use((config) => {
     return config;
 }, (async (error) => {
     const originalRequest = error.config;
+    // console.log(error);
     if (error.response.status === 401){
         try {
             let objUser = {
@@ -34,6 +35,8 @@ $api.interceptors.response.use((config) => {
             }
             console.log('Не авторизован');
         }
+    }else{
+        return Promise.reject(error);
     }
 }))
 

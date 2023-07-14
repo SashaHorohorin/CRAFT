@@ -4,7 +4,7 @@ import { IMaskInput } from "react-imask";
 const PhoneMask = "+{7}(000)000-00-00";
 const EmailMask = /^\S*@?\S*$/;
 
-const InputReg = ({ nameLabel, setData, valueInp, obj, ...arg }) => {
+const InputReg = ({ classField, nameLabel, setData, valueInp, obj, ...arg }) => {
     // let valueData = ''
     
     const [value, setValue] = useState('');
@@ -51,7 +51,7 @@ const InputReg = ({ nameLabel, setData, valueInp, obj, ...arg }) => {
     };
 
     return (
-        <div className="form__field">
+        <div className={classField ? `form__field ${classField}` : "form__field"}>
             {arg.name == "phoneNumber" ? (
                 <IMaskInput
                     {...arg}
