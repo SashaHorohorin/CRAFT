@@ -89,6 +89,7 @@ const TrainingPage = () => {
                                         }
                                         date={arrDate[0]}
                                     />
+                                    
                                 ) : null}
                                 {training[activeTabIndex] ? (
                                     <Workouts
