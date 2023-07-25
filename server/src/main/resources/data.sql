@@ -19,46 +19,93 @@ INSERT INTO admin (id)
 -------------------------------trains---------------------------------------------
 -- ВЫБОР ОПРЕДЕННОЙ СТРОКИ (SELECT * FROM the_table ORDER BY added DESC LIMIT 1,15)---------------------------------------------
 INSERT INTO train (id, created, updated, end_train, start_train, max_participant, now_participant, type, sport_complex) VALUES
-    (uuid_generate_v4(),now(),now(),now(),now(),10,0,'GAME_WITH_TRAINER','ALEKSEEVA'),
+
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-7 DAYS',now()+INTERVAL '-7 DAYS',10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-6 DAYS',now()+INTERVAL '-6 DAYS',10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-5 DAYS',now()+INTERVAL '-5 DAYS',10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-4 DAYS',now()+INTERVAL '-4 DAYS',10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-3 DAYS',now()+INTERVAL '-3 DAYS',10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-2 DAYS',now()+INTERVAL '-2 DAYS',10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-1 DAYS',now()+INTERVAL '-1 DAYS',10,0,'GAME','DINAMIT'),
     (uuid_generate_v4(),now(),now(),now(),now(),10,0,'GAME','DINAMIT'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',11,0,'GAME_WITH_TRAINER','DINAMIT'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',11,0,'GAME_WITH_TRAINER','DINAMIT'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+2 DAYS',now()+INTERVAL '+2 DAYS',11,0,'GAME','DINAMIT'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+2 DAYS',now()+INTERVAL '+2 DAYS',11,0,'GAME','ALEKSEEVA'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-1 DAYS',now()+INTERVAL '-1 DAYS',12,0,'GAME','DINAMIT'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-1 DAYS',now()+INTERVAL '-1 DAYS',12,0,'GAME','ALEKSEEVA'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-2 DAYS',now()+INTERVAL '-2 DAYS',13,0,'GAME','DINAMIT'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-2 DAYS',now()+INTERVAL '-2 DAYS',13,0,'GAME','ALEKSEEVA'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-3 DAYS',now()+INTERVAL '-3 DAYS',14,0,'GAME','DINAMIT'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-3 DAYS',now()+INTERVAL '-3 DAYS',14,0,'GAME','ALEKSEEVA'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-4 DAYS',now()+INTERVAL '-4 DAYS',15,0,'GAME','DINAMIT'),
-    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-4 DAYS',now()+INTERVAL '-4 DAYS',15,0,'GAME','ALEKSEEVA');
+    (uuid_generate_v4(),now(),now(),now(),now(),10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now(),now(),10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now(),now(),10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',10,0,'GAME_WITH_TRAINER','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+2 DAYS',now()+INTERVAL '+2 DAYS',10,0,'TRAIN_FOR_LOW_SKILL','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+3 DAYS',now()+INTERVAL '+3 DAYS',10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+4 DAYS',now()+INTERVAL '+4 DAYS',10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+5 DAYS',now()+INTERVAL '+5 DAYS',10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+6 DAYS',now()+INTERVAL '+6 DAYS',10,0,'GAME','DINAMIT'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+7 DAYS',now()+INTERVAL '+7 DAYS',10,0,'GAME','DINAMIT'),
+
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-7 DAYS',now()+INTERVAL '-7 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-6 DAYS',now()+INTERVAL '-6 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-5 DAYS',now()+INTERVAL '-5 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-4 DAYS',now()+INTERVAL '-4 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-4 DAYS',now()+INTERVAL '-4 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-3 DAYS',now()+INTERVAL '-3 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-3 DAYS',now()+INTERVAL '-3 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-2 DAYS',now()+INTERVAL '-2 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-1 DAYS',now()+INTERVAL '-1 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-1 DAYS',now()+INTERVAL '-1 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-1 DAYS',now()+INTERVAL '-1 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now(),now(),10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',10,0,'GAME_WITH_TRAINER','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',10,0,'GAME_WITH_TRAINER','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',10,0,'GAME_WITH_TRAINER','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',10,0,'GAME_WITH_TRAINER','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+2 DAYS',now()+INTERVAL '+2 DAYS',10,0,'TRAIN_FOR_LOW_SKILL','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+3 DAYS',now()+INTERVAL '+3 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+4 DAYS',now()+INTERVAL '+4 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+5 DAYS',now()+INTERVAL '+5 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+6 DAYS',now()+INTERVAL '+6 DAYS',10,0,'GAME','ALEKSEEVA'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+7 DAYS',now()+INTERVAL '+7 DAYS',10,0,'GAME','ALEKSEEVA'),
+
+
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-3 DAYS',now()+INTERVAL '-3 DAYS',10,0,'GAME','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '-1 DAYS',now()+INTERVAL '-1 DAYS',10,0,'GAME','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now(),now(),10,0,'GAME','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',10,0,'GAME_WITH_TRAINER','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',10,0,'GAME_WITH_TRAINER','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',10,0,'GAME_WITH_TRAINER','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',10,0,'GAME_WITH_TRAINER','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+1 DAYS',now()+INTERVAL '+1 DAYS',10,0,'GAME_WITH_TRAINER','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+4 DAYS',now()+INTERVAL '+4 DAYS',10,0,'GAME','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+4 DAYS',now()+INTERVAL '+4 DAYS',10,0,'GAME','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+4 DAYS',now()+INTERVAL '+4 DAYS',10,0,'GAME','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+5 DAYS',now()+INTERVAL '+5 DAYS',10,0,'GAME','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+5 DAYS',now()+INTERVAL '+5 DAYS',10,0,'GAME','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+6 DAYS',now()+INTERVAL '+6 DAYS',10,0,'GAME','IMPULS'),
+    (uuid_generate_v4(),now(),now(),now()+INTERVAL '+7 DAYS',now()+INTERVAL '+7 DAYS',10,0,'GAME','IMPULS');
+
 INSERT INTO trainer (id, created, updated, name, photourl, status, text_back, text_front) VALUES
     (uuid_generate_v4(),now(),now(), 'trainer1', 'photoUrl1', 'ACTIVE', 'textBack1', 'textFront1'),
     (uuid_generate_v4(),now(),now(), 'trainer2', 'photoUrl2', 'ACTIVE', 'textBack2', 'textFront2');
+
 INSERT INTO trainer_trains (trainer_id, train_id)
     select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 10);
-INSERT INTO trainer_trains (trainer_id, train_id)
-    select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 11);
-INSERT INTO trainer_trains (trainer_id, train_id)
-    select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 12);
-INSERT INTO trainer_trains (trainer_id, train_id)
-    select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 13);
-INSERT INTO trainer_trains (trainer_id, train_id)
-    select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 14);
-INSERT INTO trainer_trains (trainer_id, train_id)
-    select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 15);
+-- INSERT INTO trainer_trains (trainer_id, train_id)
+--     select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 11);
+-- INSERT INTO trainer_trains (trainer_id, train_id)
+--     select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 12);
+-- INSERT INTO trainer_trains (trainer_id, train_id)
+--     select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 13);
+-- INSERT INTO trainer_trains (trainer_id, train_id)
+--     select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 14);
+-- INSERT INTO trainer_trains (trainer_id, train_id)
+--     select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 15);
 
-INSERT INTO sportsmen_train (sportsmen_id, train_id)
-    select u.id, t.id from baseuser u join train t on (u.username = 'nikita' and t.max_participant = 11);
-INSERT INTO sportsmen_train (sportsmen_id, train_id)
-    select u.id, t.id from baseuser u join train t on (u.username = 'nikita' and t.max_participant = 12);
-INSERT INTO sportsmen_train (sportsmen_id, train_id)
-    select u.id, t.id from baseuser u join train t on (u.username = 'nikita' and t.max_participant = 13);
-INSERT INTO sportsmen_train (sportsmen_id, train_id)
-    select u.id, t.id from baseuser u join train t on (u.username = 'nikita' and t.max_participant = 14);
-INSERT INTO sportsmen_train (sportsmen_id, train_id)
-    select u.id, t.id from baseuser u join train t on (u.username = 'nikita' and t.max_participant = 15);
+-- INSERT INTO sportsmen_train (sportsmen_id, train_id)
+--     select u.id, t.id from baseuser u join train t on (u.username = 'nikita' and t.max_participant = 11);
+-- INSERT INTO sportsmen_train (sportsmen_id, train_id)
+--     select u.id, t.id from baseuser u join train t on (u.username = 'nikita' and t.max_participant = 12);
+-- INSERT INTO sportsmen_train (sportsmen_id, train_id)
+--     select u.id, t.id from baseuser u join train t on (u.username = 'nikita' and t.max_participant = 13);
+-- INSERT INTO sportsmen_train (sportsmen_id, train_id)
+--     select u.id, t.id from baseuser u join train t on (u.username = 'nikita' and t.max_participant = 14);
+-- INSERT INTO sportsmen_train (sportsmen_id, train_id)
+--     select u.id, t.id from baseuser u join train t on (u.username = 'nikita' and t.max_participant = 15);
 -------------------------------trains---------------------------------------------
 
 -------------------------------News---------------------------------------------
