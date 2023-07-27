@@ -84,9 +84,9 @@ const Header = () => {
                                     Соревнования
                                 </div>
                                 <div className="navigation__link">Команда</div>
-                                <div className="navigation__link">
+                                <Link to="events" className="navigation__link">
                                     Мероприятия
-                                </div>
+                                </Link>
                                 <div className="navigation__link">Цены</div>
                                 <div className="navigation__link">Контакты</div>
                             </div>

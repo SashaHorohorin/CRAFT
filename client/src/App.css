@@ -17,12 +17,19 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;600;700&display=swap");
 
+
+
 body {
     /* padding: 40px 0px 0 0px; */
     margin: 0;
     overflow-x: hidden;
     /* height: 100vh; */
 }
+
+body.stop{
+    overflow: hidden;
+}
+
 body::-webkit-scrollbar {
     width: 10px;
     background-color: #f9f9fd;
@@ -38,6 +45,7 @@ body::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: #f9f9fd;
 }
+
 
 
 

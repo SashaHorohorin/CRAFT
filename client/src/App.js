@@ -16,6 +16,7 @@ import { Context } from ".";
 import { observer } from "mobx-react-lite";
 import ActivatePage from "./page/ActivatePage/ActivatePage";
 import RequierAuth from "./hoc/RequierAuth";
+import EventsPage from "./page/EventsPage/EventsPage";
 
 function App() {
     const {store} = useContext(Context);
@@ -41,6 +42,7 @@ function App() {
                                 <TrainingPage/>
                             </RequierAuth>
                         }/>
+                        <Route path="events" element={<EventsPage />} />
                     </Route>
                     <Route path="auth/:sign" element={<RegistrationPage />} />
                     <Route path="activate-account/:code" element={<ActivatePage/>}/>
