@@ -52,7 +52,7 @@ const Header = () => {
                                         <Link to="training">Расписание</Link>
                                     </div>
                                     <div className="menu-burger__link">
-                                        Соревнования
+                                        <Link to="competitions">Соревнования</Link>
                                     </div>
                                     <div className="menu-burger__link">
                                         Команда
@@ -80,9 +80,7 @@ const Header = () => {
                                     Расписание
                                 </Link>
                                 {/* </div> */}
-                                <div className="navigation__link">
-                                    Соревнования
-                                </div>
+                                <Link className="navigation__link" to="competitions">Соревнования</Link>
                                 <div className="navigation__link">Команда</div>
                                 <Link to="events" className="navigation__link">
                                     Мероприятия

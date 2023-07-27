@@ -45,6 +45,9 @@ body::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: #f9f9fd;
 }
+.App{
+    min-height: 100vh;
+}
 
 
 
