@@ -1,6 +1,7 @@
 package com.craft.craft.dto.info;
 
 import com.craft.craft.model.info.Price;
+import com.craft.craft.model.sport.SportComplex;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ public class PriceResponseDto {
     private int oldPrice;
     private int nowPrice;
     private int discount;
+    private SportComplex sportComplex;
     private String textUnderPrice;
     List<String> services;
 
@@ -24,6 +26,7 @@ public class PriceResponseDto {
                 price.getOldPrice(),
                 price.getNowPrice(),
                 price.getDiscount(),
+                price.getSportComplex(),
                 price.getTextUnderPrice(),
                 price.getServices()
         );

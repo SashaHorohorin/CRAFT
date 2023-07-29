@@ -1,6 +1,7 @@
 package com.craft.craft.service.info;
 
 import com.craft.craft.dto.info.CreateNewsDto;
+import com.craft.craft.dto.info.NewsResponseDto;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.info.News;
 import com.craft.craft.model.info.NewsType;

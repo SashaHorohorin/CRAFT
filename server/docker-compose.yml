@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    container_name: craft1-java-postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=nikita
+      - POSTGRES_DB=craft
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+  app:
+    build: ./
+    container_name: craft1-java-app
+    ports:
+      - "9005:9005"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/craft
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=nikita
+    depends_on:
+      - "db"

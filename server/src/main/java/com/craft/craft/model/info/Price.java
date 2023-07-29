@@ -1,6 +1,7 @@
 package com.craft.craft.model.info;
 
 import com.craft.craft.model.BaseEntity;
+import com.craft.craft.model.sport.SportComplex;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -23,6 +24,8 @@ public class Price extends BaseEntity {
     private int nowPrice;
     private int discount;
     private String textUnderPrice;
+    @Enumerated(EnumType.STRING)
+    private SportComplex sportComplex;
     @ElementCollection
     @CollectionTable(name = "services_price", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "service")
