@@ -9,6 +9,7 @@ import { useFetching } from "../../hooks/useFetching";
 const EventsPage = () => {
     const [events, setEvents] = useState([]);
     const [countPage, setCountPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(1);
     // const [flagOpenModal, setFlagOpenModal] = useState(false);
     const { eventStore } = useContext(Context);
     const [fetchingEvents, isLoadingEvents, errorEvents] = useFetching(
@@ -18,8 +19,9 @@ const EventsPage = () => {
             // console.log(response.data);
             setEvents((current) => {
                 console.log(current);
-                return [...current, ...response.data];
+                return [...current, ...response.data.news];
             })
+            setTotalPages(response.data.totalPages)
             // console.log('saskfhjahfshahfjshfkjshkj');
             // let complex = [...response.data];
         }
@@ -47,11 +49,14 @@ const EventsPage = () => {
                     <div className="events__title">Мероприятия</div>
                     <div className="events__row">
                         {events.map((event, index) => (
-                            <Event key={index}/>
+                            <Event key={index} event={event}/>
                         ))}
                     </div>
                     <div className="container-btn">
-                        <div onClick={() => nextPage()} className="events__button">Показать больше</div>
+                        {totalPages !== countPage ? (
+                            <div onClick={() => nextPage()} className="events__button">Показать больше</div>
+                        ) : null}
+                        
                     </div>
                 </div>
             </div>
