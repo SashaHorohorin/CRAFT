@@ -3,6 +3,7 @@ package com.craft.craft.controller.sport;
 import com.craft.craft.dto.sport.TrainCalendarBySportComplexDto;
 import com.craft.craft.dto.sport.TrainInfoDto;
 import com.craft.craft.dto.sport.TrainUpdateDto;
+import com.craft.craft.dto.sport.UserToTrainRequest;
 import com.craft.craft.error.exeption.FullTrainException;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.service.sport.TrainService;
@@ -24,13 +25,13 @@ public class TrainController {
     }
 
     @PostMapping("/{trainId}/add-user")
-    public TrainInfoDto addUserToTrain(@PathVariable UUID trainId, @RequestBody String username) throws ModelNotFoundException, FullTrainException {
-        return TrainInfoDto.getDtoFromTrain(trainService.addUserToTrain(trainId, username));
+    public TrainInfoDto addUserToTrain(@PathVariable UUID trainId, @RequestBody UserToTrainRequest username) throws ModelNotFoundException, FullTrainException {
+        return TrainInfoDto.getDtoFromTrain(trainService.addUserToTrain(trainId, username.getUsername()));
     }
 
     @PostMapping("/{trainId}/remove-user")
-    public TrainInfoDto removeUserToTrain(@PathVariable UUID trainId, @RequestBody String username) throws ModelNotFoundException {
-        return TrainInfoDto.getDtoFromTrain(trainService.removeUserFromTrain(trainId, username));
+    public TrainInfoDto removeUserToTrain(@PathVariable UUID trainId, @RequestBody UserToTrainRequest username) throws ModelNotFoundException {
+        return TrainInfoDto.getDtoFromTrain(trainService.removeUserFromTrain(trainId, username.getUsername()));
     }
 
     @PostMapping("/create")

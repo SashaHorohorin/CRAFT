@@ -76,7 +76,10 @@ public class TrainService {
     }
 
     public Train addUserToTrain(UUID trainId, String username) throws ModelNotFoundException, FullTrainException {
+        System.out.println(username);
         BaseUser user = baseUserRepo.findByUsername(username).orElseThrow(() -> new ModelNotFoundException("Пользователь с таким username не найден"));
+//        BaseUser user = baseUserRepo.findByUsername(username).orElse(null);
+//        System.out.println(user);
         Train train = trainRepo.findById(trainId).orElseThrow(() -> new ModelNotFoundException("Тренировка с таким id не найдена"));
         if (train.getMaxParticipant() == train.getNowParticipant())
             throw new FullTrainException("Достигнуто максимольное количество записавшихся");

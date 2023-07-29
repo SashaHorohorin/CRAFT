@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/v1/news")
 @RequiredArgsConstructor
-public class NewsController {
+public class  NewsController {
 
     private final NewsService newsService;
 

@@ -17,12 +17,14 @@ public class SportsmenDto {
     private UUID id;
     private String firstName;
     private String lastName;
+    private String photoUrl;
 
     public static SportsmenDto getDtoFromBaseUser(BaseUser user){
         return new SportsmenDto(
                 user.getId(),
                 user.getFirstName(),
-                user.getLastName()
+                user.getLastName(),
+                user.getPhotoUrl()
         );
     }
 }
