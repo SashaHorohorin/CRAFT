@@ -16,8 +16,8 @@ const TrainingPage = () => {
             // console.log('saskfhjahfshahfjshfkjshkj');
             // let complex = [...response.data];
             setTraining(Object.entries(response.data));
-            // console.log(Object.entries(response.data));
-            // console.log(setArrayData()[0].getDate());
+            console.log(Object.entries(response.data));
+            console.log(setArrayData()[0].getDate());
             setArrDate(setArrayData());
         }
     );
@@ -54,6 +54,7 @@ const TrainingPage = () => {
     }, []);
 
     const activate = (index) => {
+        // console.log(activeTabIndex);
         setActiveTabIndex(index);
     };
 
