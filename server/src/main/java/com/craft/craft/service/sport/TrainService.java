@@ -92,6 +92,7 @@ public class TrainService {
         BaseUser user = baseUserRepo.findByUsername(username).orElseThrow(() -> new ModelNotFoundException("Пользователь с таким username не найден"));
         Train train = trainRepo.findById(trainId).orElseThrow(() -> new ModelNotFoundException("Тренировка с таким id не найдена"));
         train.getSportsmen().remove(user);
+        train.setNowParticipant(train.getNowParticipant() - 1);
         return trainRepo.save(train);
     }
 

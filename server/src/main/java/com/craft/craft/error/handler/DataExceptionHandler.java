@@ -2,6 +2,7 @@ package com.craft.craft.error.handler;
 
 import com.craft.craft.error.ErrorResponse;
 import com.craft.craft.error.ValidExceptionBody;
+import com.craft.craft.error.exeption.FullTrainException;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.error.exeption.UserIsAlreadyExistException;
 import org.springframework.http.HttpStatus;
@@ -41,4 +42,9 @@ public class DataExceptionHandler {
     }
 
 
+    @ExceptionHandler(FullTrainException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleConstrainException(FullTrainException e) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+    }
 }
