@@ -16,6 +16,7 @@ import java.util.UUID;
 public class SportsmenDto {
     private UUID id;
     private String firstName;
+    private String username;
     private String lastName;
     private String photoUrl;
 
@@ -23,6 +24,7 @@ public class SportsmenDto {
         return new SportsmenDto(
                 user.getId(),
                 user.getFirstName(),
+                user.getUsername(),
                 user.getLastName(),
                 user.getPhotoUrl()
         );
