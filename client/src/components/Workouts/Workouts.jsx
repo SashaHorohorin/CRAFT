@@ -10,7 +10,7 @@ const Workouts = ({ workouts, date }) => {
 
     useEffect(() => {
         // console.log(workouts);
-        workouts.sort((a, b) => a.startTime < b.startTime ? 1 : -1);
+        workouts.sort((a, b) => (a.startTime < b.startTime ? 1 : -1));
         setWorkoutTrain(workouts);
     }, [workouts]);
 
@@ -43,6 +43,17 @@ const Workouts = ({ workouts, date }) => {
             // console.log(response.data);
         });
 
+        const workLog = (workout) => {
+            console.log(workout.sportsmens.filter(
+                (sportsmen) =>
+                    sportsmen.username ==
+                    localStorage.getItem(
+                        "username"
+                    )
+            ));
+            console.log(workout.sportsmens);
+        }
+
     const followTrain = (trainId) => {
         console.log(workouts);
         let newObj = {
@@ -54,7 +65,7 @@ const Workouts = ({ workouts, date }) => {
         fetchingFollowTrain(newObj, trainId);
     };
 
-    const  unFollowTrain = (trainId) => {
+    const unFollowTrain = (trainId) => {
         console.log(workouts);
         let newObj = {
             username: localStorage.getItem("username"),
@@ -143,27 +154,35 @@ const Workouts = ({ workouts, date }) => {
                                                             workout.sportsmens
                                                         }
                                                     />
-                                                    {workout.sportsmens.filter(sportsmen => sportsmen.username == localStorage.getItem('username')).length == 0 ? (
+                                                    {workout.sportsmens.filter(
+                                                        (sportsmen) =>
+                                                            sportsmen.username ==
+                                                            localStorage.getItem(
+                                                                "username"
+                                                            )
+                                                    ).length == 0 ? (
                                                         <div
-                                                        onClick={() =>
-                                                            followTrain(
-                                                                workout.id
-                                                            )
-                                                        }
-                                                        className="actions-workout__btn btn-workout"
-                                                    >
-                                                        Записаться
-                                                    </div>
-                                                    ) : <div
-                                                        onClick={() =>
-                                                            unFollowTrain(
-                                                                workout.id
-                                                            )
-                                                        }
-                                                    className="actions-workout__btn btn-workout"
-                                                >
-                                                    Выписаться
-                                                </div>}
+                                                            onClick={() =>
+                                                                followTrain(
+                                                                    workout.id
+                                                                )
+                                                            }
+                                                            className="actions-workout__btn btn-workout"
+                                                        >
+                                                            Записаться
+                                                        </div>
+                                                    ) : (
+                                                        <div
+                                                            onClick={() =>
+                                                                unFollowTrain(
+                                                                    workout.id
+                                                                )
+                                                            }
+                                                            className="actions-workout__btn btn-workout"
+                                                        >
+                                                            Выписаться
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -206,7 +225,7 @@ const Workouts = ({ workouts, date }) => {
                                             </div>
                                             <div className="workout__column">
                                                 <div className="workout__trainer trainer-workout">
-                                                    <div className="trainer-workout__label">
+                                                    <div onClick={() => workLog(workout)} className="trainer-workout__label">
                                                         Тренер
                                                     </div>
                                                     <div className="trainer-workout__name">
@@ -224,16 +243,35 @@ const Workouts = ({ workouts, date }) => {
                                                             workout.sportsmens
                                                         }
                                                     />
-                                                    <div
-                                                        onClick={() =>
-                                                            followTrain(
-                                                                workout.id
+                                                    {workout.sportsmens.filter(
+                                                        (sportsmen) =>
+                                                            sportsmen.username ==
+                                                            localStorage.getItem(
+                                                                "username"
                                                             )
-                                                        }
-                                                        className="actions-workout__btn btn-workout"
-                                                    >
-                                                        Записаться
-                                                    </div>
+                                                    ).length == 0 ? (
+                                                        <div
+                                                            onClick={() =>
+                                                                followTrain(
+                                                                    workout.id
+                                                                )
+                                                            }
+                                                            className="actions-workout__btn btn-workout"
+                                                        >
+                                                            Записаться
+                                                        </div>
+                                                    ) : (
+                                                        <div
+                                                            onClick={() =>
+                                                                unFollowTrain(
+                                                                    workout.id
+                                                                )
+                                                            }
+                                                            className="actions-workout__btn btn-workout"
+                                                        >
+                                                            Выписаться
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
