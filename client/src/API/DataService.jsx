@@ -23,4 +23,8 @@ export default class DataService{
         return await $api.post(`api/v1/train/${trainId}/add-user
         `, obj);
     }
+    static async postUnFollowTrain(obj, trainId){
+        return await $api.post(`api/v1/train/${trainId}/remove-user
+        `, obj);
+    }
 }

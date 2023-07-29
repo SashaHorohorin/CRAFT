@@ -10,38 +10,59 @@ const Workouts = ({ workouts, date }) => {
 
     useEffect(() => {
         // console.log(workouts);
-        setWorkoutTrain(workouts)
-    }, [workouts])
+        workouts.sort((a, b) => a.startTime < b.startTime ? 1 : -1);
+        setWorkoutTrain(workouts);
+    }, [workouts]);
 
     const [fetchingFollowTrain, isLoadingFollowTrain, errorFollowTrain] =
         useFetching(async (obj, trainId) => {
             const response = await DataService.postFollowTrain(obj, trainId);
-            console.log(response.data);
+            for (let i = 0; i < workoutTrain.length; i++) {
+                if (workoutTrain[i].id == response.data.id) {
+                    let copy = Object.assign([], workoutTrain);
+                    copy[i] = response.data;
+                    setWorkoutTrain(copy);
+                    break;
+                }
+            }
+
+            // console.log(response.data);
+        });
+    const [unfetchingFollowTrain, isLoadingUnFollowTrain, errorUnFollowTrain] =
+        useFetching(async (obj, trainId) => {
+            const response = await DataService.postUnFollowTrain(obj, trainId);
+            for (let i = 0; i < workoutTrain.length; i++) {
+                if (workoutTrain[i].id == response.data.id) {
+                    let copy = Object.assign([], workoutTrain);
+                    copy[i] = response.data;
+                    setWorkoutTrain(copy);
+                    break;
+                }
+            }
+
+            // console.log(response.data);
         });
 
-    const followTrain = async (trainId) => {
-        // console.log(workouts);
-        // let newObj = {
-        //     username: localStorage.getItem("username"),
-        // };
+    const followTrain = (trainId) => {
+        console.log(workouts);
+        let newObj = {
+            username: localStorage.getItem("username"),
+        };
 
-        // console.log(newObj);
+        console.log(newObj);
 
-        // let response = await fetchingFollowTrain(newObj, trainId).then(function(resp) {
-        //     console.log(resp);
-        // });
-        // // let response = await responseP.data;
+        fetchingFollowTrain(newObj, trainId);
+    };
 
-        // // setTimeout(() => {
-        //     for (let i = 0; i < workoutTrain.length; i++) {
-        //         if (workoutTrain[i].id == response.data.id) {
-        //             let copy = Object.assign([], workoutTrain);
-        //             copy[i] = response.data;
-        //             setWorkoutTrain(copy);
-        //             break;
-        //         }
-        //     }
-        // }, 1000)
+    const  unFollowTrain = (trainId) => {
+        console.log(workouts);
+        let newObj = {
+            username: localStorage.getItem("username"),
+        };
+
+        console.log(newObj);
+
+        unfetchingFollowTrain(newObj, trainId);
     };
 
     const getTime = (date) => {
@@ -68,7 +89,7 @@ const Workouts = ({ workouts, date }) => {
                         }`}</div>
                     </div>
                     <div className="workouts__items">
-                        {workouts.length > 3 ? (
+                        {workoutTrain.length > 3 ? (
                             <Carousel>
                                 {workoutTrain.map((workout, index) => (
                                     <div
@@ -122,7 +143,8 @@ const Workouts = ({ workouts, date }) => {
                                                             workout.sportsmens
                                                         }
                                                     />
-                                                    <div
+                                                    {workout.sportsmens.filter(sportsmen => sportsmen.username == localStorage.getItem('username')).length == 0 ? (
+                                                        <div
                                                         onClick={() =>
                                                             followTrain(
                                                                 workout.id
@@ -132,6 +154,16 @@ const Workouts = ({ workouts, date }) => {
                                                     >
                                                         Записаться
                                                     </div>
+                                                    ) : <div
+                                                        onClick={() =>
+                                                            unFollowTrain(
+                                                                workout.id
+                                                            )
+                                                        }
+                                                    className="actions-workout__btn btn-workout"
+                                                >
+                                                    Выписаться
+                                                </div>}
                                                 </div>
                                             </div>
                                         </div>
