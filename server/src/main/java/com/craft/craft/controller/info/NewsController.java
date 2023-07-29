@@ -2,9 +2,12 @@ package com.craft.craft.controller.info;
 
 import com.craft.craft.dto.info.CreateNewsDto;
 import com.craft.craft.dto.info.NewsResponseDto;
+import com.craft.craft.dto.info.PageNewsResponseDto;
 import com.craft.craft.error.exeption.ModelNotFoundException;
+import com.craft.craft.model.info.News;
 import com.craft.craft.service.info.NewsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +24,15 @@ public class  NewsController {
     private final NewsService newsService;
 
     @GetMapping
-    public List<NewsResponseDto> getAll(
+    public PageNewsResponseDto getAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "3") Integer size,
             @RequestParam(value = "sort", defaultValue = "created") String sortField){
-        return newsService.findAll(PageRequest.of(page,size, Sort.by(Sort.Direction.DESC, sortField)))
-                .stream().map(NewsResponseDto::getDtoFromNews).collect(Collectors.toList());
+        Page<News> news = newsService.findAll(PageRequest.of(page,size, Sort.by(Sort.Direction.DESC, sortField)));
+        return PageNewsResponseDto.builder()
+                .news(news.stream().map(NewsResponseDto::getDtoFromNews).collect(Collectors.toList()))
+                .totalPages(news.getTotalPages())
+                .build();
     }
 
     @PostMapping("/create")
