@@ -18,6 +18,8 @@ import ActivatePage from "./page/ActivatePage/ActivatePage";
 import RequierAuth from "./hoc/RequierAuth";
 import EventsPage from "./page/EventsPage/EventsPage";
 import CompetitionsPage from './page/CompetitionsPage/CompetitionsPage'
+import PricesPage from "./page/PricesPage/PricesPage";
+import PersonalPage from "./page/PersonalPage/PersonalPage";
 
 function App() {
     const {store} = useContext(Context);
@@ -45,6 +47,8 @@ function App() {
                         }/>
                         <Route path="events" element={<EventsPage />} />
                         <Route path="competitions" element={<CompetitionsPage />} />
+                        <Route path="prices" element={<PricesPage/>} />
+                        <Route path="profile" element={<PersonalPage/>} />
                     </Route>
                     <Route path="auth/:sign" element={<RegistrationPage />} />
                     <Route path="activate-account/:code" element={<ActivatePage/>}/>

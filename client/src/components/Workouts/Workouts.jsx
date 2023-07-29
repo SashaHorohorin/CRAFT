@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Carousel from "../Carousel/Carousel";
+import PeopleAction from '../TrainingComponent/PeopleAction/PeopleAction'
 
 const Workouts = ({ workouts, date }) => {
     const workLog = () => {
@@ -24,12 +25,9 @@ const Workouts = ({ workouts, date }) => {
                     }`}</div>
                 </div>
                 <div className="workouts__items">
-                    {/* {
-                workouts.map((workout, index) => (
-                    <div>{workout?.id}</div>
-                ))
-            } */}
+                    
                     <Carousel>
+
                         <div className="workouts__item workout">
                             <div className="workout__row">
                                 <div className="workout__column">
@@ -65,21 +63,7 @@ const Workouts = ({ workouts, date }) => {
                                 </div>
                                 <div className="workout__column">
                                     <div className="workout__actions actions-workout">
-                                        <div className="actions-workout__people people-actions">
-                                            <div className="people-actions__circles">
-                                                <div className="people-actions__circle"></div>
-                                                <div className="people-actions__circle"></div>
-                                                <div className="people-actions__circle"></div>
-                                            </div>
-                                            <div className="people-actions__count count-people">
-                                                <div className="count-people__title">
-                                                    и еще 7 человек
-                                                </div>
-                                                <div className="count-people__text">
-                                                    пойдут на тренировку
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <PeopleAction/>
                                         <div className="actions-workout__btn btn-workout">
                                             Записаться
                                         </div>

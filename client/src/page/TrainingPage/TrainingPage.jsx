@@ -64,6 +64,8 @@ const TrainingPage = () => {
             ) : (
                 <div className="trainingPage">
                     <div className="container">
+                        <div className="trainingPage__title">Расписание</div>
+                        
                         <div className="trainingPage__tabs tabs-info">
                             <ul className="tabs-info__labels">
                                 {training.map((tab, index) => (

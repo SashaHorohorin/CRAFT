@@ -85,7 +85,7 @@ const Header = () => {
                                 <Link to="events" className="navigation__link">
                                     Мероприятия
                                 </Link>
-                                <div className="navigation__link">Цены</div>
+                                <Link to="prices" className="navigation__link">Цены</Link>
                                 <div className="navigation__link">Контакты</div>
                             </div>
                             {!store.isAuth ? (
@@ -106,7 +106,7 @@ const Header = () => {
                             ) : (
                                 <div className="navigation__buttons buttons">
                                     <div onClick={() => store.logout()} className="buttons__exit">Выход</div>
-                                    <div className="buttons__user"></div>
+                                    <Link to='profile'><div className="buttons__user"></div></Link>
                                 </div>
                             )}
                         </div>
