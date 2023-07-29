@@ -26,7 +26,8 @@ const Carousel = ({children}) => {
                 return cloneElement(child)
             })
         )
-    }, [])
+        // console.log(pages);
+    }, [children])
     useEffect(() => {
         setTimeout(()=> {
             const item =  document.querySelector('.item');

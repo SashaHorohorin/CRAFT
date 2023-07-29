@@ -11,7 +11,7 @@ export default class DataService{
         return response;
     }
     static async getTrainingCalendar(){
-        return await $api.get(`http://${host}/api/v1/train/get-calendar-by-sport-complex`);
+        return await $api.get(`api/v1/train/get-calendar-by-sport-complex`);
     }
     static async postRegister(obj){
         return await $api.post(`/api/v1/auth/register`, obj);
@@ -26,5 +26,8 @@ export default class DataService{
     static async postUnFollowTrain(obj, trainId){
         return await $api.post(`api/v1/train/${trainId}/remove-user
         `, obj);
+    }
+    static async getEvents(countPage){
+        return await $api.get(`api/v1/news?page=${countPage}&size=6`);
     }
 }

@@ -1,19 +1,43 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./EventsPage.scss";
 import { Context } from "../..";
 import { observer } from "mobx-react-lite";
+import Event from "../../components/EventComponent/Event/Event";
+import DataService from "../../API/DataService";
+import { useFetching } from "../../hooks/useFetching";
 
 const EventsPage = () => {
+    const [events, setEvents] = useState([]);
+    const [countPage, setCountPage] = useState(0);
     // const [flagOpenModal, setFlagOpenModal] = useState(false);
     const { eventStore } = useContext(Context);
+    const [fetchingEvents, isLoadingEvents, errorEvents] = useFetching(
+        async (pageNum) => {
+            // console.log('saskfhjahfshahfjshfkjshkj');
+            const response = await DataService.getEvents(pageNum);
+            // console.log(response.data);
+            setEvents((current) => {
+                console.log(current);
+                return [...current, ...response.data];
+            })
+            // console.log('saskfhjahfshahfjshfkjshkj');
+            // let complex = [...response.data];
+        }
+    );
 
-    let openModal = () => {
-        document.body.classList.add('stop');
-        eventStore.setFlagOpenModal(true);
-    }
+    useEffect(() => {
+        fetchingEvents(countPage);
+
+        console.log(events);
+    }, [countPage])
+    
     let closeModal = () => {
         document.body.classList.remove('stop');
         eventStore.setFlagOpenModal(false);
+    }
+
+    let nextPage = () => {
+        setCountPage(countPage + 1);
     }
 
     return (
@@ -22,209 +46,12 @@ const EventsPage = () => {
                 <div className="container">
                     <div className="events__title">Мероприятия</div>
                     <div className="events__row">
-                        <div className="events__event event">
-                            <div className="event__content content-event">
-                                <div className="content-event__header">
-                                    <div className="content-event__title">
-                                        Друзья! Приглашаем вас на парный турнир
-                                        CDСК в Динамит.
-                                    </div>
-                                    <div
-                                        onClick={() =>
-                                            openModal()
-                                        }
-                                        className="content-event__button"
-                                    >
-                                        Читать
-                                    </div>
-                                </div>
-                                <div className="content-event__img">
-                                    <img
-                                        src="./images/EventPage/1.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="content-event__time time-event">
-                                    <div className="time-event__time">
-                                        18:23
-                                    </div>
-                                    <div className="time-event__date">
-                                        21.06.23
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="event__info info-event">
-                                <div className="info-event__left left-info">
-                                    <div className="left-info__label">
-                                        Предстоящие соревнования
-                                    </div>
-                                    <div className="left-info__start">
-                                        Начало 20.06 в 18:30
-                                    </div>
-                                </div>
-                                <div className="info-event__right right-info">
-                                    <div className="right-info__date">
-                                        20.06
-                                    </div>
-                                    <div className="right-info__label">
-                                        Дата проведения
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="events__event event">
-                            <div className="event__content content-event">
-                                <div className="content-event__header">
-                                    <div className="content-event__title">
-                                        Друзья! Приглашаем вас на парный турнир
-                                        CDСК в Динамит.
-                                    </div>
-                                    <div
-                                        onClick={() =>
-                                            eventStore.setFlagOpenModal(true)
-                                        }
-                                        className="content-event__button"
-                                    >
-                                        Читать
-                                    </div>
-                                </div>
-                                <div className="content-event__img">
-                                    <img
-                                        src="./images/EventPage/1.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="content-event__time time-event">
-                                    <div className="time-event__time">
-                                        18:23
-                                    </div>
-                                    <div className="time-event__date">
-                                        21.06.23
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="event__info info-event">
-                                <div className="info-event__left left-info">
-                                    <div className="left-info__label">
-                                        Предстоящие соревнования
-                                    </div>
-                                    <div className="left-info__start">
-                                        Начало 20.06 в 18:30
-                                    </div>
-                                </div>
-                                <div className="info-event__right right-info">
-                                    <div className="right-info__date">
-                                        20.06
-                                    </div>
-                                    <div className="right-info__label">
-                                        Дата проведения
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="events__event event">
-                            <div className="event__content content-event">
-                                <div className="content-event__header">
-                                    <div className="content-event__title">
-                                        Друзья! Приглашаем вас на парный турнир
-                                        CDСК в Динамит.
-                                    </div>
-                                    <div
-                                        onClick={() =>
-                                            eventStore.setFlagOpenModal(true)
-                                        }
-                                        className="content-event__button"
-                                    >
-                                        Читать
-                                    </div>
-                                </div>
-                                <div className="content-event__img">
-                                    <img
-                                        src="./images/EventPage/1.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="content-event__time time-event">
-                                    <div className="time-event__time">
-                                        18:23
-                                    </div>
-                                    <div className="time-event__date">
-                                        21.06.23
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="event__info info-event">
-                                <div className="info-event__left left-info">
-                                    <div className="left-info__label">
-                                        Предстоящие соревнования
-                                    </div>
-                                    <div className="left-info__start">
-                                        Начало 20.06 в 18:30
-                                    </div>
-                                </div>
-                                <div className="info-event__right right-info">
-                                    <div className="right-info__date">
-                                        20.06
-                                    </div>
-                                    <div className="right-info__label">
-                                        Дата проведения
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="events__event event">
-                            <div className="event__content content-event">
-                                <div className="content-event__header">
-                                    <div className="content-event__title">
-                                        Друзья! Приглашаем вас на парный турнир
-                                        CDСК в Динамит.
-                                    </div>
-                                    <div
-                                        onClick={() =>
-                                            eventStore.setFlagOpenModal(true)
-                                        }
-                                        className="content-event__button"
-                                    >
-                                        Читать
-                                    </div>
-                                </div>
-                                <div className="content-event__img">
-                                    <img
-                                        src="./images/EventPage/1.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="content-event__time time-event">
-                                    <div className="time-event__time">
-                                        18:23
-                                    </div>
-                                    <div className="time-event__date">
-                                        21.06.23
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="event__info info-event">
-                                <div className="info-event__left left-info">
-                                    <div className="left-info__label">
-                                        Предстоящие соревнования
-                                    </div>
-                                    <div className="left-info__start">
-                                        Начало 20.06 в 18:30
-                                    </div>
-                                </div>
-                                <div className="info-event__right right-info">
-                                    <div className="right-info__date">
-                                        20.06
-                                    </div>
-                                    <div className="right-info__label">
-                                        Дата проведения
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {events.map((event, index) => (
+                            <Event key={index}/>
+                        ))}
                     </div>
                     <div className="container-btn">
-                        <div className="events__button">Показать больше</div>
+                        <div onClick={() => nextPage()} className="events__button">Показать больше</div>
                     </div>
                 </div>
             </div>
