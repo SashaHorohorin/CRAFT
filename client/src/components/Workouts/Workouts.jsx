@@ -136,7 +136,7 @@ const Workouts = ({ workouts, date }) => {
                                             </div>
                                             <div className="workout__column">
                                                 <div className="workout__trainer trainer-workout">
-                                                    <div className="trainer-workout__label">
+                                                    <div onClick={() => workLog(workout)} className="trainer-workout__label">
                                                         Тренер
                                                     </div>
                                                     <div className="trainer-workout__name">
