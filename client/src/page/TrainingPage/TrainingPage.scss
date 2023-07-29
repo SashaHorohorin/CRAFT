@@ -103,6 +103,12 @@
 
     &__item {
     }
+
+    &__container{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+    }
 }
 
 .date-workouts {

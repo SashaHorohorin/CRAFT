@@ -35,7 +35,7 @@ const Carousel = ({children}) => {
             // setMarginRight(parseInt(window.getComputedStyle(item).getPropertyValue("margin-right")))
             // setWidth(parseInt(window.getComputedStyle(windowItems).getPropertyValue("width")))
             setMaxOffset(-((PAGE_WIDTH + marginRight) * pages.length - ((PAGE_WIDTH + marginRight) * (PAGE_WIDTH - SHOW_BLOCK)) - (width - ((PAGE_WIDTH + marginRight) * (PAGE_WIDTH - SHOW_BLOCK))) - marginRight));
-            console.log(-(PAGE_WIDTH * SHOW_BLOCK - marginRight - 20) + ' , ' + (-((PAGE_WIDTH + marginRight) * pages.length - ((PAGE_WIDTH + marginRight) * (PAGE_WIDTH - SHOW_BLOCK)) - (width - ((PAGE_WIDTH + marginRight) * (PAGE_WIDTH - SHOW_BLOCK))) - marginRight)));
+            // console.log(-(PAGE_WIDTH * SHOW_BLOCK - marginRight - 20) + ' , ' + (-((PAGE_WIDTH + marginRight) * pages.length - ((PAGE_WIDTH + marginRight) * (PAGE_WIDTH - SHOW_BLOCK)) - (width - ((PAGE_WIDTH + marginRight) * (PAGE_WIDTH - SHOW_BLOCK))) - marginRight)));
         }, 10)
     }, [pages])
     const heandleRightArrowClick = function () {

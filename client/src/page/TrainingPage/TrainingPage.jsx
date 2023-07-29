@@ -16,8 +16,8 @@ const TrainingPage = () => {
             // console.log('saskfhjahfshahfjshfkjshkj');
             // let complex = [...response.data];
             setTraining(Object.entries(response.data));
-            console.log(Object.entries(response.data));
-            console.log(setArrayData()[0].getDate());
+            // console.log(Object.entries(response.data));
+            // console.log(setArrayData()[0].getDate());
             setArrDate(setArrayData());
         }
     );
@@ -70,7 +70,7 @@ const TrainingPage = () => {
                             <ul className="tabs-info__labels">
                                 {training.map((tab, index) => (
                                     <li
-                                        // key={tab.id}
+                                        key={index}
                                         className={
                                             index === activeTabIndex
                                                 ? "tabs-info__tab active"

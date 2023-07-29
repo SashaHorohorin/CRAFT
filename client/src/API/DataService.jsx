@@ -7,7 +7,7 @@ export default class DataService{
 
     static async getCardWhy(){
         const response = await axios.get(`http://${host}/user/get-all-actives-cards`);
-        console.log('uqweruwqr');
+        // console.log('uqweruwqr');
         return response;
     }
     static async getTrainingCalendar(){
@@ -18,5 +18,9 @@ export default class DataService{
     }
     static async postLogin(obj){
         return await $api.post(`/api/v1/auth/login`, obj);
+    }
+    static async postFollowTrain(obj, trainId){
+        return await $api.post(`api/v1/train/${trainId}/add-user
+        `, obj);
     }
 }

@@ -39,7 +39,7 @@ export default class Store{
     async login(obj){
         try {
             const response = await DataService.postLogin(obj);
-            console.log(response + ' --try');
+            // console.log(response + ' --try');
             localStorage.setItem('accessToken', response.data.accessToken);
             localStorage.setItem('refreshToken', response.data.refreshToken);
             localStorage.setItem('username', response.data.username);
@@ -47,7 +47,7 @@ export default class Store{
             this.setAuth(true);
             this.setUser(response.data.username);
 
-            console.log(this.user);
+            // console.log(this.user);
         } catch (error) {
             console.log(error);
             this.setFlagError(false)
@@ -61,7 +61,7 @@ export default class Store{
     async registration(obj){
         try {
             const response = await DataService.postRegister(obj);
-            console.log(response);
+            // console.log(response);
             // localStorage.setItem('activateCode', response.data.activateCode)
             // localStorage.setItem('accessToken', response.data.accessToken);
             // localStorage.setItem('refreshToken', response.data.refreshToken);
