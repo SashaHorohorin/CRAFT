@@ -30,4 +30,9 @@ export default class DataService{
     static async getEvents(countPage){
         return await $api.get(`api/v1/news?page=${countPage}&size=6`);
     }
+    static async getPrice(sportComplex){
+        return await $api.get(`/api/v1/price/get-by-sportcomplex/${sportComplex}`);
+    }
+
+
 }

@@ -17,6 +17,7 @@ const EventsPage = () => {
             // console.log('saskfhjahfshahfjshfkjshkj');
             const response = await DataService.getEvents(pageNum);
             // console.log(response.data);
+
             setEvents((current) => {
                 console.log(current);
                 return [...current, ...response.data.news];
