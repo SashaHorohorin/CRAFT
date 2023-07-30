@@ -10,7 +10,7 @@ const PeopleAction = ({sportsmens}) => {
                 <div className="people-actions__circle"></div>
             </div>
             <div className="people-actions__count count-people">
-                <div className="count-people__title">{`и еще ${sportsmens.length} человек`}</div>
+                <div className="count-people__title">{`и еще ${sportsmens?.length} человек`}</div>
                 <div className="count-people__text">пойдут на тренировку</div>
             </div>
         </div>

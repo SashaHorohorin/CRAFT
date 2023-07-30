@@ -33,6 +33,9 @@ export default class DataService{
     static async getPrice(sportComplex){
         return await $api.get(`/api/v1/price/get-by-sportcomplex/${sportComplex}`);
     }
+    static async getСompetitions(){
+        return await $api.get(`api/v1/competition/get-all`);
+    }
 
 
 }
