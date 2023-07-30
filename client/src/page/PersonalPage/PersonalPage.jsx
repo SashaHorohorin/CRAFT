@@ -1,9 +1,75 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./PersonalPage.scss";
 import PeopleAction from "../../components/TrainingComponent/PeopleAction/PeopleAction";
 import Competition from "../../components/CompetitionComponent/Competition/Competition";
+import { useFetching } from "../../hooks/useFetching";
+import DataService from "../../API/DataService";
 
 const PersonalPage = () => {
+    const [profileData, setProfileData] = useState({});
+    const [workoutTrain, setWorkoutTrain] = useState([]);
+
+
+    const [fetchingProfile, isLoadingProfile, errorProfile] = useFetching(
+        async (username) => {
+            // console.log('saskfhjahfshahfjshfkjshkj');
+            const response = await DataService.getProfile(username);
+            console.log(response.data);
+            setProfileData(response.data);
+            setWorkoutTrain(response.data.trains)
+            // setСompetitions(response.data)
+            // let complex = [...response.data];
+        }
+    );
+    
+    const [unFetchingFollowTrain, isLoadingUnFollowTrain, errorUnFollowTrain] =
+        useFetching(async (obj, trainId) => {
+            const response = await DataService.postUnFollowTrain(obj, trainId);
+            // console.log(response.data);
+            for (let i = 0; i < workoutTrain.length; i++) {
+                if (workoutTrain[i].id == response.data.id) {
+                    let copy = Object.assign([], workoutTrain);
+                    copy[i] = response.data;
+                    // console.log(copy);
+                    // setWorkoutTrain(null);
+                    // console.log(workoutTrain);
+
+                    setWorkoutTrain(copy);
+
+                    // console.log(workoutTrain);
+                    break;
+                }
+            }
+
+        });
+
+    const unFollowTrain = (trainId) => {
+        // console.log(workouts);
+        let newObj = {
+            username: localStorage.getItem("username"),
+        };
+
+        console.log(newObj);
+
+        unFetchingFollowTrain(newObj, trainId);
+    };
+
+    useEffect(() => {
+        fetchingProfile(localStorage.getItem("username"));
+    }, []);
+
+    const getDateYear = (date) => {
+        let d = new Date(date);
+        let time = `${d.getDate() < 10 ? `0${d.getDate()}` : d.getDate()}.${d.getMonth() < 10 ? `0${d.getMonth()}` : d.getMonth()}.${d.getFullYear()}`;
+        return time;
+    };
+
+    const getTime = (date) => {
+        let d = new Date(date);
+        let time = `${d.getHours()}:${d.getMinutes()}`;
+        return time;
+    };
+
     return (
         <div className="personal">
             <div className="container">
@@ -25,13 +91,15 @@ const PersonalPage = () => {
                                 </div>
                                 <div className="info-profile__info-person info-person">
                                     <div className="info-person__name">
-                                        Никита Пирогов
+                                        {profileData.firstName +
+                                            " " +
+                                            profileData.lastName}
                                     </div>
                                     <div className="info-person__email">
-                                        email: pirogov@gmail.com
+                                        email: {profileData.email}
                                     </div>
                                     <div className="info-person__username">
-                                        id: sdfdsf97asfkl
+                                        id: {profileData.username}
                                     </div>
                                 </div>
                             </div>
@@ -105,28 +173,39 @@ const PersonalPage = () => {
                             <div className="myworkouts-profile__title">
                                 Мои тренировки
                             </div>
-                            <div className="myworkouts-profile__workout workout-profile">
-                                <div className="workout-profile__title">
-                                    Все против всех DE
-                                </div>
-                                <div className="workout-profile__date">
-                                    21.08.2023
-                                </div>
-                                <div className="workout-profile__time">
-                                    20:00
-                                </div>
-                                <PeopleAction />
-                                <button className="workout-profile__follow">
-                                    Выписаться
-                                </button>
-                            </div>
+                            {workoutTrain?.map((train, index) => (
+                                <>
+                                    <div className="myworkouts-profile__workout workout-profile">
+                                        <div className="workout-profile__title">
+                                            {train.type}
+                                        </div>
+                                        <div className="workout-profile__date">
+                                            {getDateYear(train.startTrain)}
+                                        </div>
+                                        <div className="workout-profile__time">
+                                            {getTime(train.startTrain) + ' - ' + getTime(train.endTrain)}
+                                        </div>
+                                        <PeopleAction sportsmens={train.sportsmens}/>
+                                        <button onClick={() => unFollowTrain(train.id)}className="workout-profile__follow">
+                                            Выписаться
+                                        </button>
+                                    </div>
+                                </>
+                            ))}
                         </div>
                         <div className="profile-personal__competitions competitions-profile">
                             <div className="competitions-profile__title">
                                 Соревнования
                             </div>
-
-                            <Competition />
+                            {profileData.competitions?.map(
+                                (competition, index) => (
+                                    <Competition
+                                        key={competition.id}
+                                        competition={competition}
+                                    />
+                                )
+                            )}
+                            {/* <Competition /> */}
                         </div>
                     </div>
                 </div>

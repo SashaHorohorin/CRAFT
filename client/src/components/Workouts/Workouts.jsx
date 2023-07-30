@@ -47,17 +47,7 @@ const Workouts = ({ workouts, date }) => {
                     break;
                 }
             }
-            // setWorkoutTrain([...workoutTrain].map(train => {
-            //     if(train.id == response.data.id){
-            //         return {
-            //             ...train,
-            //             sportsmens: response.data.sportsmens,
-            //         }
-            //     }
-            // }))
-            // console.log(workoutTrain);
 
-            // console.log(response.data);
         });
 
     const workLog = (workout) => {
@@ -207,7 +197,6 @@ const Workouts = ({ workouts, date }) => {
                                 </div>
                             ))}
                         </Carousel>
-
                     ) : (
                         <div className="workouts__container">
                             {workoutTrain.map((workout, index) => (

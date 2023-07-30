@@ -36,6 +36,9 @@ export default class DataService{
     static async getСompetitions(){
         return await $api.get(`api/v1/competition/get-all`);
     }
+    static async getProfile(username){
+        return await $api.get(`api/v1/profile/${username}`);
+    }
 
 
 }
