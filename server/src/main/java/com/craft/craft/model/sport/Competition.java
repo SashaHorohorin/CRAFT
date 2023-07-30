@@ -5,6 +5,8 @@ import com.craft.craft.model.user.BaseUser;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,9 +17,23 @@ import java.util.Set;
 @Data
 public class Competition extends BaseEntity {
     @NonNull
+    @NotNull
     @Enumerated(EnumType.STRING)
     private SportComplex sportComplex;
-    private String title;
+    @NonNull
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private CompetitionType type;
+    @NonNull
+    @NotNull
+    private Date startCompetition;
+    @NonNull
+    @NotNull
+    private Date endCompetition;
+    @NonNull
+    @NotNull
+    private int maxParticipant;
+    private int nowParticipant = 0;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
