@@ -42,7 +42,7 @@ public class JwtSecurityConfig {
                         "/swagger-ui.html", "/webjars/**", "/v3/api-docs/swagger-config", "/v3/api-docs/**",
 
                                 "/api/v1/craft-info-card/trainer/**","/api/v1/train/**","/api/v1/news/**",
-                                "/api/v1/price/**","/api/v1/competition/**"
+                                "/api/v1/price/**","/api/v1/competition/**","/api/v1/profile/**"
 
                         ).permitAll()
                         .antMatchers("/test/base/**").hasAuthority(RoleName.BASE.name())
