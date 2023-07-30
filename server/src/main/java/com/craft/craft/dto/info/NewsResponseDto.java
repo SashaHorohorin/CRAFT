@@ -19,6 +19,7 @@ public class NewsResponseDto {
     private String smallTitle;
     private Date eventDate;
     private String textUnderDate;
+    private String mainTitle;
     private String text;
     private String photoUrl;
     private Date createdDate;
@@ -31,6 +32,7 @@ public class NewsResponseDto {
                 news.getTextUnderTitle(),
                 news.getEventDate(),
                 news.getTextUnderDate(),
+                news.getMainTitle(),
                 news.getText(),
                 news.getPhotoUrl(),
                 news.getCreated()

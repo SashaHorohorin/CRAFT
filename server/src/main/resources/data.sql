@@ -109,19 +109,43 @@ INSERT INTO trainer_trains (trainer_id, train_id)
 -------------------------------trains---------------------------------------------
 
 -------------------------------News---------------------------------------------
-INSERT INTO news (id, created, updated, type, title,text_under_title,event_date,text_under_date, text, photo_url) VALUES
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title1','underTitle1',now(),'underDate1','text', 'photoUrl'),
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title2','underTitle2',now(),'underDate2','text', 'photoUrl'),
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title3','underTitle3',now(),'underDate3','text', 'photoUrl'),
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title4','underTitle4',now(),'underDate4','text', 'photoUrl'),
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title5','underTitle5',now(),'underDate5','text', 'photoUrl'),
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title6','underTitle6',now(),'underDate6','text', 'photoUrl'),
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title7','underTitle7',now(),'underDate7','text', 'photoUrl'),
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title8','underTitle8',now(),'underDate8','text', 'photoUrl'),
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title9','underTitle9',now(),'underDate9','text', 'photoUrl'),
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title10','underTitle10',now(),'underDate10','text', 'photoUrl'),
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title11','underTitle11',now(),'underDate11','text', 'photoUrl'),
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title12','underTitle12',now(),'underDate12','text', 'photoUrl'),
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title13','underTitle13',now(),'underDate13','text', 'photoUrl'),
-    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title14','underTitle14',now(),'underDate14','text', 'photoUrl');
+INSERT INTO news (id, created, updated, type, title,text_under_title,main_title, event_date,text_under_date, text, photo_url) VALUES
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title1','underTitle1','Main title 1', now(),'underDate1','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title2','underTitle2','Main title 1', now(),'underDate2','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title3','underTitle3','Main title 1', now(),'underDate3','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title4','underTitle4','Main title 1', now(),'underDate4','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title5','underTitle5','Main title 1', now(),'underDate5','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title6','underTitle6','Main title 1', now(),'underDate6','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title7','underTitle7','Main title 1', now(),'underDate7','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title8','underTitle8','Main title 1', now(),'underDate8','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title9','underTitle9','Main title 1', now(),'underDate9','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title10','underTitle10','Main title 1', now(),'underDate10','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title11','underTitle11','Main title 1', now(),'underDate11','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title12','underTitle12','Main title 1', now(),'underDate12','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title13','underTitle13','Main title 1', now(),'underDate13','text', 'photoUrl'),
+    (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title14','underTitle14','Main title 1', now(),'underDate14','text', 'photoUrl');
 -------------------------------News---------------------------------------------
+-------------------------------competitions---------------------------------------------
+
+-------------------------------competitions---------------------------------------------
+-------------------------------prices---------------------------------------------
+INSERT INTO price (id, created, updated, title, old_price, now_price, discount, text_under_price, sport_complex, active) VALUES
+    (uuid_generate_v4(),now(),now(),'цена 1', 100, 90, 10,'месяц','IMPULS', true),
+    (uuid_generate_v4(),now(),now(),'цена 2', 110, 90, 11,'месяц','IMPULS', true),
+    (uuid_generate_v4(),now(),now(),'цена 3', 120, 90, 12,'месяц','IMPULS', true),
+    (uuid_generate_v4(),now(),now(),'цена 4', 130, 90, 13,'месяц','IMPULS', true),
+    (uuid_generate_v4(),now(),now(),'цена 5', 140, 90, 14,'месяц','IMPULS', true),
+    (uuid_generate_v4(),now(),now(),'цена 6', 150, 90, 15,'месяц','IMPULS', true),
+    (uuid_generate_v4(),now(),now(),'цена 1', 100, 90, 10,'месяц','ALEKSEEVA', true),
+    (uuid_generate_v4(),now(),now(),'цена 2', 110, 90, 11,'месяц','ALEKSEEVA', true),
+    (uuid_generate_v4(),now(),now(),'цена 3', 120, 90, 12,'месяц','ALEKSEEVA', true),
+    (uuid_generate_v4(),now(),now(),'цена 4', 150, 90, 15,'месяц','ALEKSEEVA', true),
+    (uuid_generate_v4(),now(),now(),'цена 1', 100, 90, 10,'месяц','DINAMIT', true),
+    (uuid_generate_v4(),now(),now(),'цена 2', 110, 90, 11,'месяц','DINAMIT', true),
+    (uuid_generate_v4(),now(),now(),'цена 3', 120, 90, 12,'месяц','DINAMIT', true),
+    (uuid_generate_v4(),now(),now(),'цена 4', 150, 90, 15,'месяц','DINAMIT', true),
+    (uuid_generate_v4(),now(),now(),'цена 5', 150, 90, 15,'месяц','DINAMIT', true);
+
+-------------------------------prices---------------------------------------------
+
+

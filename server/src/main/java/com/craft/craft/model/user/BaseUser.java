@@ -2,6 +2,7 @@ package com.craft.craft.model.user;
 
 
 import com.craft.craft.model.BaseEntity;
+import com.craft.craft.model.sport.Competition;
 import com.craft.craft.model.sport.Train;
 import lombok.*;
 
@@ -68,6 +69,14 @@ public class BaseUser extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "train_id")}
     )
     private Set<Train> trains = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinTable(
+            name = "sportsmen_competition",
+            joinColumns = {@JoinColumn(name = "sportsmen_id")},
+            inverseJoinColumns = {@JoinColumn(name = "competition_id")}
+    )
+    private Set<Competition> competitions = new HashSet<>();
+
     private boolean agreementDataProcessing;
     private boolean agreementMailing;
     private String activationCode;

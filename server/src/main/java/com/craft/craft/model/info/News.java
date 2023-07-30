@@ -26,6 +26,7 @@ public class News extends BaseEntity {
     @NonNull
     private String title;
     private String textUnderTitle;
+    private String mainTitle;
     private Date eventDate;
     private String textUnderDate;
     @NotNull

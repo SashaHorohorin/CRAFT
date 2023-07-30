@@ -30,6 +30,7 @@ public class Price extends BaseEntity {
     @CollectionTable(name = "services_price", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "service")
     List<String> services = new ArrayList<>();
+    private boolean active;
 
     @PrePersist
     public void setDiscount(){
