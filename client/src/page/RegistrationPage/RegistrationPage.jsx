@@ -101,6 +101,28 @@ const RegistrationPage = (props) => {
                             <FormLogin fromPage={fromPage}/>
                         </div>
                     </div>
+                    <div className="registration__mobile">
+                        <div
+                            className={
+                                addClass == "bounceLeft"
+                                    ? "registration__forms forms-registration bounceLeft"
+                                    : addClass == "bounceRight"
+                                    ? "registration__forms forms-registration bounceRight"
+                                    : sign == "login"
+                                    ? "registration__forms forms-registration bounceRight"
+                                    : "registration__forms forms-registration bounceLeft"
+                            }
+                        >
+                            <div className="registration__reg">
+                                <FormRegistration/>
+                                <Link className="registered-user__singup" to="/auth/login">Войти</Link>
+                            </div>
+                            <div className="registration__log">
+                                <FormLogin fromPage={fromPage}/>
+                                <Link className="unregistered-user__singup" to="/auth/registration">Зарегистрироваться</Link>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
