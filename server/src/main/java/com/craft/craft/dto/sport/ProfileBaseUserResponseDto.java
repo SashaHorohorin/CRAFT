@@ -1,4 +1,4 @@
-package com.craft.craft.dto;
+package com.craft.craft.dto.sport;
 
 import com.craft.craft.model.user.BaseUser;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public class ProfileBaseUserResponseDto {
     private String phoneNumber;
     protected String username;
     private List<TrainInProfileResponseDto> trains;
-    private List<CompetitionInProfileResponseDto> competitions;
+    private List<CompetitionPairDto> competitions;
 
     public static ProfileBaseUserResponseDto getDtoFromBaseUser(BaseUser user){
         return new ProfileBaseUserResponseDto(
@@ -28,7 +28,7 @@ public class ProfileBaseUserResponseDto {
                 user.getPhoneNumber(),
                 user.getUsername(),
                 user.getTrains().stream().map(TrainInProfileResponseDto::getDtoFromTrain).collect(Collectors.toList()),
-                user.getCompetitions().stream().map(CompetitionInProfileResponseDto::getDtoFromCompetition).collect(Collectors.toList())
+                user.getCompetitionPairs().stream().map(CompetitionPairDto::getDtoFromCompetitionPair).collect(Collectors.toList())
         );
     }
 }

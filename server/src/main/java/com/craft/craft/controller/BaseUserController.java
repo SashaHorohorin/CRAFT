@@ -1,6 +1,6 @@
 package com.craft.craft.controller;
 
-import com.craft.craft.dto.ProfileBaseUserResponseDto;
+import com.craft.craft.dto.sport.ProfileBaseUserResponseDto;
 import com.craft.craft.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

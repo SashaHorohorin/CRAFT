@@ -1,4 +1,4 @@
-package com.craft.craft.dto;
+package com.craft.craft.dto.sport;
 
 import com.craft.craft.model.sport.Competition;
 import com.craft.craft.model.sport.CompetitionType;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CompetitionInProfileResponseDto {
+public class CompetitionDto {
 
     private UUID id;
     private SportComplex sportComplex;
@@ -24,18 +24,18 @@ public class CompetitionInProfileResponseDto {
     private Date endCompetition;
     private int maxParticipant;
     private int nowParticipant;
-    private Set<SportsmenDto> sportsmen;
+    private Set<CompetitionPairDto> competitionPairs;
 
-    public static CompetitionInProfileResponseDto getDtoFromCompetition(Competition competition){
-        return new CompetitionInProfileResponseDto(
+    public static CompetitionDto getDtoFromCompetition(Competition competition){
+        return new CompetitionDto(
                 competition.getId(),
                 competition.getSportComplex(),
                 competition.getType(),
                 competition.getStartCompetition(),
                 competition.getEndCompetition(),
-                competition.getMaxParticipant(),
-                competition.getNowParticipant(),
-                competition.getSportsmen().stream().map(SportsmenDto::getDtoFromBaseUser).collect(Collectors.toSet())
+                competition.getMaxPair(),
+                competition.getNowPair(),
+                competition.getCompetitionPairs().stream().map(CompetitionPairDto::getDtoFromCompetitionPair).collect(Collectors.toSet())
         );
     }
 }

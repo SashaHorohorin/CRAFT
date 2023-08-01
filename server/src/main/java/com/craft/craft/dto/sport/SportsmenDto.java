@@ -1,13 +1,10 @@
-package com.craft.craft.dto;
+package com.craft.craft.dto.sport;
 
 import com.craft.craft.model.user.BaseUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Data
@@ -21,6 +18,7 @@ public class SportsmenDto {
     private String photoUrl;
 
     public static SportsmenDto getDtoFromBaseUser(BaseUser user){
+        if(user == null) return null;
         return new SportsmenDto(
                 user.getId(),
                 user.getFirstName(),

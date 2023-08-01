@@ -14,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@EqualsAndHashCode(exclude = {"competitionPairs"}, callSuper = true)
 @Data
 public class Competition extends BaseEntity {
     @NonNull
@@ -32,14 +33,18 @@ public class Competition extends BaseEntity {
     private Date endCompetition;
     @NonNull
     @NotNull
-    private int maxParticipant;
-    private int nowParticipant = 0;
+    private int maxPair;
+    private int nowPair = 0;
+//
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+//    @JoinTable(
+//            name = "sportsmen_competition",
+//            joinColumns = {@JoinColumn(name = "competition_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "sportsmen_id")}
+//    )
+//    private Set<BaseUser> sportsmen = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinTable(
-            name = "sportsmen_competition",
-            joinColumns = {@JoinColumn(name = "competition_id")},
-            inverseJoinColumns = {@JoinColumn(name = "sportsmen_id")}
-    )
-    private Set<BaseUser> sportsmen = new HashSet<>();
+    @OneToMany(mappedBy = "competition", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    private Set<CompetitionPair> competitionPairs = new HashSet<>();
+
 }

@@ -3,6 +3,7 @@ package com.craft.craft.model.user;
 
 import com.craft.craft.model.BaseEntity;
 import com.craft.craft.model.sport.Competition;
+import com.craft.craft.model.sport.CompetitionPair;
 import com.craft.craft.model.sport.Train;
 import lombok.*;
 
@@ -18,7 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = "baseuser")
 @Data
-@EqualsAndHashCode(exclude = {"roles", "trains"},callSuper = true)
+@EqualsAndHashCode(exclude = {"roles", "trains", "competitionPairs","requestToJoinCompetition","requestToInviteCompetition"}, callSuper = true)
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Cacheable(false)
@@ -69,13 +70,46 @@ public class BaseUser extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "train_id")}
     )
     private Set<Train> trains = new HashSet<>();
+    //    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+//    @JoinTable(
+//            name = "sportsmen_competition",
+//            joinColumns = {@JoinColumn(name = "sportsmen_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "competition_id")}
+//    )
+//    private Set<Competition> competitions = new HashSet<>();
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+//    @JoinTable(
+//            name = "user_request_join_to_competition_pair",
+//            joinColumns = {@JoinColumn(name = "user_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "competition_pair_id")}
+//    )
+//    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+////    @JoinColumn(name = "competition_id")
+////    private Set<CompetitionPair> competitionPair = new HashSet<>();
+////    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+////    @JoinColumn(name = "competition_id")
+////    private Set<CompetitionPair> competitionPairRequestsToInvite = new HashSet<>();
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
-            name = "sportsmen_competition",
-            joinColumns = {@JoinColumn(name = "sportsmen_id")},
+            name = "competition_players",
+            joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "competition_id")}
     )
-    private Set<Competition> competitions = new HashSet<>();
+    private Set<CompetitionPair> competitionPairs;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinTable(
+            name = "competition_pair_request_to_join",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "competition_id")}
+    )
+    private Set<CompetitionPair> requestToJoinCompetition;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinTable(
+            name = "competition_pair_request_to_invite",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "competition_id")}
+    )
+    private Set<CompetitionPair> requestToInviteCompetition;
 
     private boolean agreementDataProcessing;
     private boolean agreementMailing;
