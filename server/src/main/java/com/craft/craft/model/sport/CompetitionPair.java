@@ -25,7 +25,7 @@ public class CompetitionPair extends BaseEntity {
     )
     @Size(max=2)
     private Set<BaseUser> players = new HashSet<>();
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "competition_pair_request_to_join",
             joinColumns = {@JoinColumn(name = "competition_id")},
@@ -41,6 +41,7 @@ public class CompetitionPair extends BaseEntity {
     private Set<BaseUser> requestToInvite = new HashSet<>();
     @ManyToOne
     private Competition competition;
+    private int rating;
 //    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 //    @JoinTable(
 //            name = "user_request_join_to_competition_pair",
