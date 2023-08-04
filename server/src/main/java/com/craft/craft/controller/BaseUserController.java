@@ -14,7 +14,6 @@ public class BaseUserController {
 
     private final UserService userService;
 
-    //ProfileBaseUserResponseDto
     @GetMapping("/{username}")
     public ProfileBaseUserResponseDto getUserByUsername(@PathVariable String username){
         return  ProfileBaseUserResponseDto.getDtoFromBaseUser(userService.findByUsername(username));

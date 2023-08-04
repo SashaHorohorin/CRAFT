@@ -14,4 +14,5 @@ public class JwtsResponse {
     private Collection<String> roles;
     private String accessToken;
     private String refreshToken;
+    private Integer rating;
 }

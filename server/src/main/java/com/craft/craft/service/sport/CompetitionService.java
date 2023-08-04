@@ -70,6 +70,7 @@ public class CompetitionService {
     public CompetitionPair addSecondUserToPairFromRequestInvite(UUID competitionPairId, String username) throws ModelNotFoundException {
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
         BaseUser player2 = getUserByUsername(username);
+        if(player2.getRating() == null) throw new ModelNotFoundException("Необходимо указать рейтинг ЛАБ");
         player2.setRating(LabService.getUserRating(player2.getLabId()));
         if(!authName.equals(username)) throw new ModelNotFoundException("Вы не можете принять запрос не от своего имени");
         CompetitionPair pair = competitionPairRepo.findById(competitionPairId)
@@ -90,6 +91,7 @@ public class CompetitionService {
     public CompetitionPair requestToJoinIntoPair(UUID competitionPairId) throws ModelNotFoundException {
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
         BaseUser player = getUserByUsername(authName);
+        if(player.getRating() == null) throw new ModelNotFoundException("Необходимо указать рейтинг ЛАБ");
         CompetitionPair pair = competitionPairRepo.findById(competitionPairId)
                 .orElseThrow(()->new ModelNotFoundException("по данному id пара не найдена"));
         pair.getPlayers().forEach(user-> {

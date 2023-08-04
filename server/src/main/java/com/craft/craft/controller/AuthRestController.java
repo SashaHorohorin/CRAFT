@@ -57,7 +57,7 @@ public class AuthRestController {
             String tokenAccess = jwtTokenProvider.createAccessToken(user.getUsername(), user.getRoles());
             String tokenRefresh = jwtTokenProvider.createRefreshToken(user.getUsername());
             List<String> roles = user.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toList());
-            return new JwtsResponse(user.getUsername(), roles, tokenAccess, tokenRefresh);
+            return new JwtsResponse(user.getUsername(), roles, tokenAccess, tokenRefresh, user.getRating());
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Неверное имя пользователя или пароль");
         }
