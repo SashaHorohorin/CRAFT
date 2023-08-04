@@ -21,7 +21,12 @@ public class BaseUserController {
 
     @GetMapping("/{username}/with-rating")
     public ProfileBaseUserResponseDto getProfileWithRating(@PathVariable String username) throws ModelNotFoundException {
-        return ProfileBaseUserResponseDto.getDtoFromBaseUser(userService.getLabId(username));
+        return ProfileBaseUserResponseDto.getDtoFromBaseUser(userService.updateLabId(username));
     }
 
+    @PostMapping("/set-lab-id")
+    public Boolean setLAbId(@RequestBody SetLabIdDto dto) throws ModelNotFoundException {
+        userService.setLabId(dto);
+        return true;
+    }
 }

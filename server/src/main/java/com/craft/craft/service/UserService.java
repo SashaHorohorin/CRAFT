@@ -73,10 +73,16 @@ public class UserService {
         return userRepo.findAll();
     }
 
-    public BaseUser getLabId(String username) throws ModelNotFoundException {
+    public BaseUser updateLabId(String username) throws ModelNotFoundException {
         BaseUser user = userRepo.findByUsername(username).orElseThrow(
                 () -> new ModelNotFoundException("По данному username пользователь не найден"));
         user.setRating(LabService.getUserRating(user.getLabId()));
+        return userRepo.save(user);
+    }
+    public BaseUser setLabId(SetLabIdDto dto) throws ModelNotFoundException {
+        BaseUser user = userRepo.findByUsername(dto.getUsername()).orElseThrow(
+                () -> new ModelNotFoundException("По данному username пользователь не найден"));
+        user.setLabId(dto.getLabID());
         return userRepo.save(user);
     }
 }
