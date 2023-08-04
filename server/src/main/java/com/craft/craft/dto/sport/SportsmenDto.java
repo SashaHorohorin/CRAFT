@@ -1,6 +1,7 @@
 package com.craft.craft.dto.sport;
 
 import com.craft.craft.model.user.BaseUser;
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class SportsmenDto {
     private String username;
     private String lastName;
     private String photoUrl;
+    private Integer rating;
 
     public static SportsmenDto getDtoFromBaseUser(BaseUser user){
         if(user == null) return null;
@@ -24,7 +26,8 @@ public class SportsmenDto {
                 user.getFirstName(),
                 user.getUsername(),
                 user.getLastName(),
-                user.getPhotoUrl()
+                user.getPhotoUrl(),
+                user.getRating()
         );
     }
 }

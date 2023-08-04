@@ -1,5 +1,6 @@
 package com.craft.craft.service;
 
+import com.craft.craft.dto.SetLabIdDto;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.error.exeption.UserIsAlreadyExistException;
 import com.craft.craft.model.user.BaseUser;
@@ -70,5 +71,12 @@ public class UserService {
     public List<BaseUser> findAll(){
         log.info("In findAll()");
         return userRepo.findAll();
+    }
+
+    public BaseUser setLabId(SetLabIdDto dto) throws ModelNotFoundException {
+        BaseUser user = userRepo.findByUsername(dto.getUsername()).orElseThrow(
+                () -> new ModelNotFoundException("По данному id пользователь не найден"));
+        user.setRating(LabService.getUserRating(dto.getLabID()));
+        return userRepo.save(user);
     }
 }

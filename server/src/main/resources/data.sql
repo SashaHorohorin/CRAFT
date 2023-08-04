@@ -2,9 +2,9 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -------------------------------users---------------------------------------------
-INSERT INTO baseuser (id, created, updated, first_name, last_name, email, phone_number, password, username, status, activation_code, agreement_data_processing, agreement_mailing) VALUES
-    (uuid_generate_v4(),now(),now(),'Никита', 'Пирогов', 'nikita-pirogov-artur@mail.ru', '8(111)111-11-11', crypt('123', gen_salt('bf',8)), 'nikita', 'ACTIVE', null, true, true),
-    (uuid_generate_v4(),now(),now(),'ADMIN', 'ADMIN', 'admin@mail.ru', '8(999)999-99-99', crypt('123', gen_salt('bf',8)), 'admin', 'ACTIVE', null, true, true);
+INSERT INTO baseuser (id, created, updated, first_name, last_name, email, phone_number, password, username, status, activation_code, agreement_data_processing, agreement_mailing, lab_id) VALUES
+    (uuid_generate_v4(),now(),now(),'Никита', 'Пирогов', 'nikita-pirogov-artur@mail.ru', '8(111)111-11-11', crypt('123', gen_salt('bf',8)), 'nikita', 'ACTIVE', null, true, true, 19439),
+    (uuid_generate_v4(),now(),now(),'ADMIN', 'ADMIN', 'admin@mail.ru', '8(999)999-99-99', crypt('123', gen_salt('bf',8)), 'admin', 'ACTIVE', null, true, true, 19369);
 INSERT INTO role (id, created, updated, name) VALUES
     (uuid_generate_v4(), now(),now(),'BASE'),
     (uuid_generate_v4(),now(),now(),'ADMIN');

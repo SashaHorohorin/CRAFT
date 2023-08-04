@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 
 @RestController
 
-@RequestMapping("/user")
+@RequestMapping("/test")
 public class TestDataController {
 
     @Autowired

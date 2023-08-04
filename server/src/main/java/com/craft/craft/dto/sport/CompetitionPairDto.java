@@ -18,7 +18,7 @@ public class CompetitionPairDto {
     private Set<SportsmenDto> requestToJoin;
     private Set<SportsmenDto> requestToInvite;
     private UUID competition;
-    private int rating;
+    private Integer ratingOfPair;
 
     public static CompetitionPairDto getDtoFromCompetitionPair(CompetitionPair competitionPair){
         return new CompetitionPairDto(
@@ -27,7 +27,10 @@ public class CompetitionPairDto {
                 competitionPair.getRequestToJoin().stream().map(SportsmenDto::getDtoFromBaseUser).collect(Collectors.toSet()),
                 competitionPair.getRequestToInvite().stream().map(SportsmenDto::getDtoFromBaseUser).collect(Collectors.toSet()),
                 competitionPair.getCompetition().getId(),
-                competitionPair.getRating()
+                competitionPair.getPlayers().stream().mapToInt(player->{
+                    if(player == null) return 0;
+                    return player.getRating();
+                }).sum()
         );
     }
 }

@@ -19,6 +19,8 @@ public class ProfileBaseUserResponseDto {
     protected String username;
     private List<TrainInProfileResponseDto> trains;
     private List<CompetitionPairDto> competitions;
+    private Integer rating;
+    private Integer labId;
 
     public static ProfileBaseUserResponseDto getDtoFromBaseUser(BaseUser user){
         return new ProfileBaseUserResponseDto(
@@ -28,7 +30,9 @@ public class ProfileBaseUserResponseDto {
                 user.getPhoneNumber(),
                 user.getUsername(),
                 user.getTrains().stream().map(TrainInProfileResponseDto::getDtoFromTrain).collect(Collectors.toList()),
-                user.getCompetitionPairs().stream().map(CompetitionPairDto::getDtoFromCompetitionPair).collect(Collectors.toList())
+                user.getCompetitionPairs().stream().map(CompetitionPairDto::getDtoFromCompetitionPair).collect(Collectors.toList()),
+                user.getRating(),
+                user.getLabId()
         );
     }
 }

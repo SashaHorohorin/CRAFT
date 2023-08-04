@@ -19,7 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = "baseuser")
 @Data
-@EqualsAndHashCode(exclude = {"roles", "trains", "competitionPairs","requestToJoinCompetition","requestToInviteCompetition"}, callSuper = true)
+@EqualsAndHashCode(exclude = {"roles", "trains", "competitionPairs","requestToJoinCompetition","requestToInviteCompetition","rating","labId"}, callSuper = true)
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Cacheable(false)
@@ -70,25 +70,7 @@ public class BaseUser extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "train_id")}
     )
     private Set<Train> trains = new HashSet<>();
-    //    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-//    @JoinTable(
-//            name = "sportsmen_competition",
-//            joinColumns = {@JoinColumn(name = "sportsmen_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "competition_id")}
-//    )
-//    private Set<Competition> competitions = new HashSet<>();
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-//    @JoinTable(
-//            name = "user_request_join_to_competition_pair",
-//            joinColumns = {@JoinColumn(name = "user_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "competition_pair_id")}
-//    )
-//    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-////    @JoinColumn(name = "competition_id")
-////    private Set<CompetitionPair> competitionPair = new HashSet<>();
-////    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-////    @JoinColumn(name = "competition_id")
-////    private Set<CompetitionPair> competitionPairRequestsToInvite = new HashSet<>();
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "competition_players",
@@ -111,6 +93,8 @@ public class BaseUser extends BaseEntity {
     )
     private Set<CompetitionPair> requestToInviteCompetition;
 
+    private Integer rating;
+    private Integer labId;
     private boolean agreementDataProcessing;
     private boolean agreementMailing;
     private String activationCode;

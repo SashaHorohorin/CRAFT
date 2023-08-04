@@ -4,15 +4,17 @@ import com.craft.craft.error.exeption.FullTrainException;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.sport.Competition;
 import com.craft.craft.model.sport.CompetitionPair;
-import com.craft.craft.model.user.Admin;
 import com.craft.craft.model.user.BaseUser;
 import com.craft.craft.repository.sport.CompetitionPairRepo;
 import com.craft.craft.repository.sport.CompetitionRepo;
 import com.craft.craft.repository.user.BaseUserRepo;
+import com.craft.craft.service.LabService;
 import com.craft.craft.service.MailSender;
+import com.craft.craft.dto.labApiDto.EntityFromLab;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.mail.MessagingException;
 import java.util.Calendar;
@@ -22,6 +24,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class CompetitionService {
+    private RestTemplate restTemplate = new RestTemplate();
     private final CompetitionRepo competitionRepo;
     private final CompetitionPairRepo competitionPairRepo;
     private final BaseUserRepo baseUserRepo;
@@ -31,25 +34,10 @@ public class CompetitionService {
         return competitionRepo.findAll();
     }
 
-//    public Competition addPairToCompetition(UUID competitionId, String username1, String username2) throws ModelNotFoundException, FullTrainException {
-//        BaseUser player1 = getUserByUsername(username1);
-//        BaseUser player2 =getUserByUsername(username2);
-//        Competition competition = competitionRepo.findById(competitionId)
-//                .orElseThrow(() -> new ModelNotFoundException("Соревнование с таким id не найдена"));
-//        if (competition.getMaxParticipant() == competition.getNowParticipant())
-//            throw new FullTrainException("Достигнуто максимольное количество записавшихся пар");
-//        competition.getSportsmen().add(player1);
-//        competition.getSportsmen().add(player2);
-//        CompetitionPair pair = CompetitionPair.builder().player1(player1).player2(player2).build();
-//        competition.getCompetitionPairs().add(pair);
-//        competition.setNowParticipant(competition.getNowParticipant() + 1);
-//        return competitionRepo.save(competition);
-//    }
-
-
     public CompetitionPair createPair(UUID competitionId) throws ModelNotFoundException, FullTrainException {
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
         BaseUser player1 = getUserByUsername(authName);
+        player1.setRating(LabService.getUserRating(player1.getLabId()));
         Competition competition = competitionRepo.findById(competitionId)
                 .orElseThrow(() -> new ModelNotFoundException("Соревнование с таким id не найдена"));
         if (competition.getMaxPair() == competition.getNowPair())
@@ -64,8 +52,8 @@ public class CompetitionService {
 
     public CompetitionPair addSecondUserToPairFromRequestJoin(UUID competitionPairId, String username) throws ModelNotFoundException, FullTrainException {
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
-        //BaseUser player1 = getUserByUsername(authName);
         BaseUser player2 = getUserByUsername(username);
+        player2.setRating(LabService.getUserRating(player2.getLabId()));
         CompetitionPair pair = competitionPairRepo.findById(competitionPairId)
                 .orElseThrow(() -> new ModelNotFoundException("Пара с таким id не найдена"));
         if(pair.getPlayers().size() >= 2)
@@ -79,9 +67,10 @@ public class CompetitionService {
         }
         return competitionPairRepo.save(pair);
     }
-    public CompetitionPair addSecondUserToPairFromRequestInvite(UUID competitionPairId, String username) throws ModelNotFoundException, FullTrainException {
+    public CompetitionPair addSecondUserToPairFromRequestInvite(UUID competitionPairId, String username) throws ModelNotFoundException {
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
-        BaseUser player = getUserByUsername(username);
+        BaseUser player2 = getUserByUsername(username);
+        player2.setRating(LabService.getUserRating(player2.getLabId()));
         if(!authName.equals(username)) throw new ModelNotFoundException("Вы не можете принять запрос не от своего имени");
         CompetitionPair pair = competitionPairRepo.findById(competitionPairId)
                 .orElseThrow(() -> new ModelNotFoundException("Пара с таким id не найдена"));
@@ -89,7 +78,7 @@ public class CompetitionService {
             throw new ModelNotFoundException("Пара уже создана");
         pair.getRequestToInvite().forEach(user -> {
             if(user.getUsername().equals(username))
-                pair.getPlayers().add(player);
+                pair.getPlayers().add(player2);
         });
         if(pair.getPlayers().size() == 2){
             pair.setRequestToInvite(null);
@@ -98,7 +87,7 @@ public class CompetitionService {
         return competitionPairRepo.save(pair);
     }
 
-    public CompetitionPair requestToJoin(UUID competitionPairId) throws ModelNotFoundException, MessagingException {
+    public CompetitionPair requestToJoinIntoPair(UUID competitionPairId) throws ModelNotFoundException {
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
         BaseUser player = getUserByUsername(authName);
         CompetitionPair pair = competitionPairRepo.findById(competitionPairId)
@@ -128,7 +117,7 @@ public class CompetitionService {
         pair.getRequestToJoin().add(player);
        return competitionPairRepo.save(pair);
     }
-    public CompetitionPair requestToInvite(UUID competitionPairId, String username) throws ModelNotFoundException, MessagingException {
+    public CompetitionPair requestToInviteIntoPair(UUID competitionPairId, String username) throws ModelNotFoundException, MessagingException {
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
         CompetitionPair pair = competitionPairRepo.findById(competitionPairId)
               .orElseThrow(()->new ModelNotFoundException("по данному id пара не найдена"));
@@ -166,4 +155,8 @@ public class CompetitionService {
         return baseUserRepo.findByUsername(username)
                 .orElseThrow(() -> new ModelNotFoundException("Пользователь с username=" + username + " не найден"));
     }
+
+
+
+
 }

@@ -4,6 +4,7 @@ import com.craft.craft.dto.UsernameDto;
 import com.craft.craft.dto.sport.CompetitionDto;
 import com.craft.craft.error.exeption.FullTrainException;
 import com.craft.craft.error.exeption.ModelNotFoundException;
+import com.craft.craft.model.sport.CompetitionPair;
 import com.craft.craft.service.sport.CompetitionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +21,15 @@ public class CompetitionController {
     private final CompetitionService competitionService;
 
     @GetMapping("/get-all")
-    public List<CompetitionDto> getAll(){
-       return competitionService.findAll().stream().map(CompetitionDto::getDtoFromCompetition).collect(Collectors.toList());
+    public List<CompetitionDto> getAll() {
+        return competitionService.findAll().stream().map(CompetitionDto::getDtoFromCompetition).collect(Collectors.toList());
     }
-//
+
+    @PostMapping("/{competitionId}/create-and-invite")
+    public CompetitionDto createPairAndSetInvite(@PathVariable UUID competitionId, @RequestBody UsernameDto secondPlayer) throws ModelNotFoundException, FullTrainException, MessagingException {
+        CompetitionPair pair = competitionService.createPair(competitionId);
+        return CompetitionDto.getDtoFromCompetition(competitionService.requestToInviteIntoPair(pair.getId(), secondPlayer.getUsername()).getCompetition());
+    }
 
     @PostMapping("/{competitionId}/create-pair")
     public CompetitionDto addFirstPlayer(@PathVariable UUID competitionId) throws ModelNotFoundException, FullTrainException {
@@ -45,14 +51,14 @@ public class CompetitionController {
     }
 
     @GetMapping("/pair/{competitionPairId}/request-to-join")
-    public void requestToJoin(@PathVariable UUID competitionPairId) throws ModelNotFoundException, FullTrainException, MessagingException {
-        competitionService.requestToJoin(competitionPairId);
-    }
-    @GetMapping("/pair/{competitionPairId}/request-to-invite/{username}")
-    public void requestToInvite(@PathVariable UUID competitionPairId,@PathVariable String username) throws ModelNotFoundException, FullTrainException, MessagingException {
-        competitionService.requestToInvite(competitionPairId, username);
+    public void requestToJoin(@PathVariable UUID competitionPairId) throws ModelNotFoundException, MessagingException {
+        competitionService.requestToJoinIntoPair(competitionPairId);
     }
 
+    @GetMapping("/pair/{competitionPairId}/request-to-invite/{username}")
+    public void requestToInvite(@PathVariable UUID competitionPairId, @PathVariable String username) throws ModelNotFoundException, MessagingException {
+        competitionService.requestToInviteIntoPair(competitionPairId, username);
+    }
 
 //
 //    @PostMapping("/{trainId}/remove-user")
