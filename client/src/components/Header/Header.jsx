@@ -81,12 +81,12 @@ const Header = () => {
                                 </Link>
                                 {/* </div> */}
                                 <Link className="navigation__link" to="competitions">Соревнования</Link>
-                                <div className="navigation__link">Команда</div>
                                 <Link to="events" className="navigation__link">
                                     Мероприятия
                                 </Link>
                                 <Link to="prices" className="navigation__link">Цены</Link>
                                 <div className="navigation__link">Контакты</div>
+
                             </div>
                             {!store.isAuth ? (
                                 <div className="navigation__buttons buttons">

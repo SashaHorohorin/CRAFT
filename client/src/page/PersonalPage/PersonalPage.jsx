@@ -4,11 +4,12 @@ import PeopleAction from "../../components/TrainingComponent/PeopleAction/People
 import Competition from "../../components/CompetitionComponent/Competition/Competition";
 import { useFetching } from "../../hooks/useFetching";
 import DataService from "../../API/DataService";
+import PersonalTraining from "../../components/PersonalComponent/PersonalTraining";
+import InviteItem from "../../components/PersonalComponent/InviteItem";
 
 const PersonalPage = () => {
     const [profileData, setProfileData] = useState({});
     const [workoutTrain, setWorkoutTrain] = useState([]);
-
 
     const [fetchingProfile, isLoadingProfile, errorProfile] = useFetching(
         async (username) => {
@@ -17,58 +18,14 @@ const PersonalPage = () => {
             console.log(response.data);
             setProfileData(response.data);
             setWorkoutTrain(response.data.trains)
-            // setСompetitions(response.data)
-            // let complex = [...response.data];
         }
     );
     
-    const [unFetchingFollowTrain, isLoadingUnFollowTrain, errorUnFollowTrain] =
-        useFetching(async (obj, trainId) => {
-            const response = await DataService.postUnFollowTrain(obj, trainId);
-            // console.log(response.data);
-            for (let i = 0; i < workoutTrain.length; i++) {
-                if (workoutTrain[i].id == response.data.id) {
-                    let copy = Object.assign([], workoutTrain);
-                    copy[i] = response.data;
-                    // console.log(copy);
-                    // setWorkoutTrain(null);
-                    // console.log(workoutTrain);
-
-                    setWorkoutTrain(copy);
-
-                    // console.log(workoutTrain);
-                    break;
-                }
-            }
-
-        });
-
-    const unFollowTrain = (trainId) => {
-        // console.log(workouts);
-        let newObj = {
-            username: localStorage.getItem("username"),
-        };
-
-        console.log(newObj);
-
-        unFetchingFollowTrain(newObj, trainId);
-    };
 
     useEffect(() => {
         fetchingProfile(localStorage.getItem("username"));
     }, []);
 
-    const getDateYear = (date) => {
-        let d = new Date(date);
-        let time = `${d.getDate() < 10 ? `0${d.getDate()}` : d.getDate()}.${d.getMonth() < 10 ? `0${d.getMonth()}` : d.getMonth()}.${d.getFullYear()}`;
-        return time;
-    };
-
-    const getTime = (date) => {
-        let d = new Date(date);
-        let time = `${d.getHours()}:${d.getMinutes()}`;
-        return time;
-    };
 
     return (
         <div className="personal">
@@ -169,28 +126,32 @@ const PersonalPage = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className="profile-personal__invite-pair invite-pair">
+                            <div className="invite-pair__title">
+                                Приглашения в пару 
+                            </div>
+                            <div className="invite-pair__row">
+                                <InviteItem type='invite'/>
+                                
+                            </div>
+                            
+                        </div>
+                        <div className="profile-personal__invite-pair invite-pair">
+                            <div className="invite-pair__title">
+                                Заявки на вступление в пару  
+                            </div>
+                            <div className="invite-pair__row">
+                                <InviteItem type='join'/>
+                                
+                            </div>
+                            
+                        </div>
                         <div className="profile-personal__myworkouts myworkouts-profile">
                             <div className="myworkouts-profile__title">
                                 Мои тренировки
                             </div>
                             {workoutTrain?.map((train, index) => (
-                                <>
-                                    <div className="myworkouts-profile__workout workout-profile">
-                                        <div className="workout-profile__title">
-                                            {train.type}
-                                        </div>
-                                        <div className="workout-profile__date">
-                                            {getDateYear(train.startTrain)}
-                                        </div>
-                                        <div className="workout-profile__time">
-                                            {getTime(train.startTrain) + ' - ' + getTime(train.endTrain)}
-                                        </div>
-                                        <PeopleAction sportsmens={train.sportsmens}/>
-                                        <button onClick={() => unFollowTrain(train.id)}className="workout-profile__follow">
-                                            Выписаться
-                                        </button>
-                                    </div>
-                                </>
+                                    <PersonalTraining key={index} train={train} setWorkoutTrain={(workout) => setWorkoutTrain(workout)}  workoutTrain={workoutTrain}/>
                             ))}
                         </div>
                         <div className="profile-personal__competitions competitions-profile">

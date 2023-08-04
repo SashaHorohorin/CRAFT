@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Competition = ({competition}) => {
 
@@ -16,11 +17,12 @@ const Competition = ({competition}) => {
 
     return (
         <div className="competitions__event event-competitions">
-            <div className="event-competitions__title">{competition.type}</div>
+            <div className="event-competitions__title">Все против всех DE</div>
+            {/* <div className="event-competitions__title">{competition.type}</div> */}
             <div className="event-competitions__date">{getDateYear(competition.startCompetition)}</div>
             <div className="event-competitions__time">{getTime(competition.startCompetition)}</div>
             <div className="event-competitions__btns">
-                <button className="event-competitions__list">Заявки</button>
+                <Link to='applications' className="event-competitions__list">Заявки</Link>
                 <button className="event-competitions__follow">
                     Записаться
                 </button>

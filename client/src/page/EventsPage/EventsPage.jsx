@@ -6,6 +6,7 @@ import Event from "../../components/EventComponent/Event/Event";
 import DataService from "../../API/DataService";
 import { useFetching } from "../../hooks/useFetching";
 
+
 const EventsPage = () => {
     const [events, setEvents] = useState([]);
     const [countPage, setCountPage] = useState(0);

@@ -62,12 +62,13 @@ const PricesPage = () => {
                                         {cost.oldPrice} ₽
                                     </div>
                                     <div className="card-price__now-price">
-                                        {cost.nowPrice} ₽
-                                    </div>
-                                    <div className="card-price__sale">-{cost.discount}%</div>
-                                    <div className="card-price__label">
+                                        <span>{cost.nowPrice} ₽</span>
+                                        <div className="card-price__label">
                                         / {cost.textUnderPrice}
                                     </div>
+                                    </div>
+                                    <div className="card-price__sale">-{cost.discount}%</div>
+                                    
                                 </div>
 
                                 <div

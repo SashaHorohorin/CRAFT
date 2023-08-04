@@ -20,6 +20,7 @@ import EventsPage from "./page/EventsPage/EventsPage";
 import CompetitionsPage from './page/CompetitionsPage/CompetitionsPage'
 import PricesPage from "./page/PricesPage/PricesPage";
 import PersonalPage from "./page/PersonalPage/PersonalPage";
+import Applications from "./page/Applications/Applications";
 
 function App() {
     const {store} = useContext(Context);
@@ -49,6 +50,7 @@ function App() {
                         <Route path="competitions" element={<CompetitionsPage />} />
                         <Route path="prices" element={<PricesPage/>} />
                         <Route path="profile" element={<PersonalPage/>} />
+                        <Route path="competitions/applications" element={<Applications/>} />
                     </Route>
                     <Route path="auth/:sign" element={<RegistrationPage />} />
                     <Route path="activate-account/:code" element={<ActivatePage/>}/>

@@ -1,9 +1,9 @@
 import React from "react";
 
-const PeopleAction = ({sportsmens}) => {
+const PeopleAction = ({classAdd, sportsmens}) => {
     // console.log(sportsmens);
     return (
-        <div className="actions-workout__people people-actions">
+        <div className={classAdd ? `actions-workout__people people-actions ${classAdd}` : `actions-workout__people people-actions`}>
             <div className="people-actions__circles">
                 <div className="people-actions__circle"></div>
                 <div className="people-actions__circle"></div>
