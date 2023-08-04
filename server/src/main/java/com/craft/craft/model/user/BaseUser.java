@@ -112,4 +112,6 @@ public class BaseUser extends BaseEntity {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }
+
+
 }
