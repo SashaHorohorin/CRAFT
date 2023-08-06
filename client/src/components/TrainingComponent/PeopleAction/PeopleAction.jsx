@@ -1,20 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../../..";
+import { observer } from "mobx-react-lite";
 
-const PeopleAction = ({classAdd, sportsmens}) => {
+const PeopleAction = ({ classAdd, sportsmens }) => {
+    const { eventStore } = useContext(Context);
     // console.log(sportsmens);
     return (
-        <div className={classAdd ? `actions-workout__people people-actions ${classAdd}` : `actions-workout__people people-actions`}>
-            <div className="people-actions__circles">
-                <div className="people-actions__circle"></div>
-                <div className="people-actions__circle"></div>
-                <div className="people-actions__circle"></div>
+        <>
+            <div
+                className={`actions-workout__people people-actions ${classAdd}`}
+                onClick={(event) => eventStore.coord(event, sportsmens)}
+            >
+                <div className="people-actions__circles">
+                    <div className="people-actions__circle"></div>
+                    <div className="people-actions__circle"></div>
+                    <div className="people-actions__circle"></div>
+                </div>
+                <div className="people-actions__count count-people">
+                    <div className="count-people__title">{`и еще ${sportsmens?.length} человек`}</div>
+                    <div className="count-people__text">
+                        пойдут на тренировку
+                    </div>
+                </div>
             </div>
-            <div className="people-actions__count count-people">
-                <div className="count-people__title">{`и еще ${sportsmens?.length} человек`}</div>
-                <div className="count-people__text">пойдут на тренировку</div>
-            </div>
-        </div>
+            
+        </>
     );
 };
 
-export default PeopleAction;
+export default observer(PeopleAction);

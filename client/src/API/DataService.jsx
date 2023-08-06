@@ -27,6 +27,7 @@ export default class DataService{
         return await $api.post(`api/v1/train/${trainId}/remove-user
         `, obj);
     }
+    
     static async getEvents(countPage){
         return await $api.get(`api/v1/news?page=${countPage}&size=6`);
     }
@@ -39,6 +40,8 @@ export default class DataService{
     static async getProfile(username){
         return await $api.get(`api/v1/profile/${username}`);
     }
-
-
+    static async postCreateAndInvite(obj, competitionId){
+        return await $api.post(`api/v1/competition/${competitionId}/create-and-invite
+        `, obj);
+    }
 }

@@ -2,36 +2,100 @@ import React, { useContext, useState } from "react";
 import "./Applications.scss";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
+import { useFetching } from "../../hooks/useFetching";
+import DataService from "../../API/DataService";
 
 const Applications = () => {
     const { eventStore } = useContext(Context);
-    const [flagOpenModalAddPair, setFlagOpenModalAddPair] = useState(false)
+    const [flagOpenModalAddPair, setFlagOpenModalAddPair] = useState(false);
+    const [valueName, setValueName] = useState('');
+    const [valueRating, setValueRating] = useState('');
+
+    const [fetchingCreateAndInvite, isLoadingCreateAndInvite, errorCreateAndInvite] = useFetching(async (obj, competitionId) => {
+        const response = await DataService.postCreateAndInvite(obj, competitionId);
+        console.log(response.data.accessToken);
+    });
+    
     let openModal = () => {
         document.body.classList.add("stop");
         eventStore.setFlagOpenModalAddPair(true);
     };
-    let closeModal = () => {
-        document.body.classList.remove("stop");
-        eventStore.setFlagOpenModalAddPair(false);
+    let closeModal = (event) => {
+        const nameClass = event.target.className;
+        if (
+            !(
+                nameClass.includes("modal-applications") ||
+                nameClass.includes("mine-applications") ||
+                nameClass.includes("item-instruction") ||
+                nameClass.includes("find-person")
+            ) || nameClass.includes("modal-applications__close")
+            || nameClass.includes("modal-applications__bg")
+        ) {
+            document.body.classList.remove("stop");
+            eventStore.setFlagOpenModalAddPair(false);
+        }
     };
     let openModalInst = () => {
         document.body.classList.add("stop");
         eventStore.setFlagOpenModalInstruction(true);
     };
-    let closeModalInst = () => {
-        document.body.classList.remove("stop");
-        eventStore.setFlagOpenModalInstruction(false);
+    let closeModalInst = (event) => {
+        console.log(event.target.className);
+        const nameClass = event.target.className;
+        if (
+            !(
+                nameClass.includes("modal-applications") ||
+                nameClass.includes("mine-applications") ||
+                nameClass.includes("item-instruction") ||
+                nameClass.includes("find-person")
+            ) || nameClass.includes("modal-applications__close")
+            || nameClass.includes("modal-applications__bg")
+        ) {
+            document.body.classList.remove("stop");
+            eventStore.setFlagOpenModalInstruction(false);
+        }
     };
+
+    const sendCreateAndInvite = (competitionId) => {
+    }
+
+    const handleNameChange = (event) => {
+        setValueName(event.target.value)
+        // console.log(valueName);
+
+    }
+    const handleRatingChange = (event) => {
+        setValueRating(event.target.value)
+        // console.log(valueName);
+
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+    };
+
     return (
         <div className="applications">
-            <div onClick={() => closeModal()} className={eventStore.flagOpenModalAddPair ? "modal-applications__bg active" : "modal-applications__bg"}>
+            <div
+                onClick={(event) => closeModal(event)}
+                className={
+                    eventStore.flagOpenModalAddPair
+                        ? "modal-applications__bg active"
+                        : "modal-applications__bg"
+                }
+            >
                 <div className="applications__modal modal-applications">
                     <div className="modal-applications__row">
                         <div className="modal-applications__header">
                             <div className="modal-applications__title">
                                 Запись пары на соревнования
                             </div>
-                            <div onClick={() => closeModal()} className="modal-applications__close"><span>X</span></div>
+                            <div
+                                onClick={(event) => closeModal(event)}
+                                className="modal-applications__close"
+                            >
+                                <span>X</span>
+                            </div>
                         </div>
                         <div className="modal-applications__mine mine-applications">
                             <div className="mine-applications__fitst-time">
@@ -65,7 +129,11 @@ const Applications = () => {
                                         </div>
                                     </li>
                                 </ol>
-                                <form className="mine-applications__form" action="">
+                                <form
+                                    className="mine-applications__form"
+                                    action=""
+                                    onSubmit={handleSubmit}
+                                >
                                     <label
                                         className="mine-applications__label"
                                         htmlFor="idRating"
@@ -77,6 +145,8 @@ const Applications = () => {
                                         type="text"
                                         id="idRating"
                                         name="idRating"
+                                        value={valueRating}
+                                        onChange={handleRatingChange}
                                     />
                                 </form>
                             </div>
@@ -88,23 +158,41 @@ const Applications = () => {
                                     системе)
                                 </div>
                                 <form className="find-person__form">
-                                    <input className="find-person__input" type="text" />
+                                    <input
+                                        value={valueName}
+                                        onChange={handleNameChange}
+                                        className="find-person__input"
+                                        type="text"
+                                    />
                                 </form>
-                                <button className="find-person__button">Записаться</button>
-                                
+                                <button className="find-person__button">
+                                    Записаться
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div onClick={() => closeModalInst()} className={eventStore.flagOpenModalInstruction ? "modal-applications__bg active" : "modal-applications__bg"}>
+            <div
+                onClick={(event) => closeModalInst(event)}
+                className={
+                    eventStore.flagOpenModalInstruction
+                        ? "modal-applications__bg active"
+                        : "modal-applications__bg"
+                }
+            >
                 <div className="applications__modal modal-applications">
                     <div className="modal-applications__row">
                         <div className="modal-applications__header">
                             <div className="modal-applications__title">
                                 Добавление рейтинга
                             </div>
-                            <div onClick={() => closeModalInst()} className="modal-applications__close"><span>X</span></div>
+                            <div
+                                onClick={(event) => closeModalInst(event)}
+                                className="modal-applications__close"
+                            >
+                                <span>X</span>
+                            </div>
                         </div>
                         <div className="modal-applications__mine mine-applications">
                             <div className="mine-applications__fitst-time">
@@ -138,7 +226,10 @@ const Applications = () => {
                                         </div>
                                     </li>
                                 </ol>
-                                <form className="mine-applications__form" action="">
+                                <form
+                                    className="mine-applications__form"
+                                    action=""
+                                >
                                     <label
                                         className="mine-applications__label"
                                         htmlFor="idRating"
@@ -153,7 +244,9 @@ const Applications = () => {
                                     />
                                 </form>
                             </div>
-                            <button className="mine-applications__button">Добавить</button>
+                            <button className="mine-applications__button">
+                                Добавить
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -162,7 +255,10 @@ const Applications = () => {
                 <div className="applications__title">
                     Заявки на соревнование "Все против всех DE"
                 </div>
-                <button onClick={() => openModal()} className="applications__add-pair">
+                <button
+                    onClick={() => openModal()}
+                    className="applications__add-pair"
+                >
                     Записать пару
                 </button>
                 <ol className="applications__row">
@@ -174,7 +270,10 @@ const Applications = () => {
                     <li className="applications__pair">
                         <span>Хорохорин Александр</span>
                         <span> - </span>
-                        <button onClick={() => openModalInst()} className="applications__button">
+                        <button
+                            onClick={() => openModalInst()}
+                            className="applications__button"
+                        >
                             + Предложить сыграть вместе
                         </button>
                     </li>

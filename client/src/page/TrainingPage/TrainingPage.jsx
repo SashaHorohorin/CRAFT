@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./TrainingPage.scss";
 import DataService from "../../API/DataService";
 import { useFetching } from "../../hooks/useFetching";
 import Workouts from "../../components/Workouts/Workouts";
+import { observer } from "mobx-react-lite";
+import { Context } from "../..";
 
 const TrainingPage = () => {
     const [arrDate, setArrDate] = useState([]);
     const [training, setTraining] = useState([]);
     const [activeTabIndex, setActiveTabIndex] = useState(0);
+    const { eventStore } = useContext(Context);
 
     const [fetchingTraining, isLoadingTraining, errorTraining] = useFetching(
         async () => {
@@ -23,30 +26,30 @@ const TrainingPage = () => {
     );
 
     const setArrayData = () => {
-      let arrayDate = [];
-      let date = new Date();
-      var dayNames = [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
-      ];
-      let day =
-          date.getDate() -
-          dayNames.indexOf(
-              date.toLocaleDateString("en-US", { weekday: "long" })
-          );
-      // console.log(day);
-      for(let i = 0; i < 7; i++){
-        let date1 = new Date(date.getFullYear(), date.getMonth(), day + i);
-        arrayDate.push(date1);
-      }
-      
-      // console.log(arrayDate);
-      return arrayDate;
+        let arrayDate = [];
+        let date = new Date();
+        var dayNames = [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+        ];
+        let day =
+            date.getDate() -
+            dayNames.indexOf(
+                date.toLocaleDateString("en-US", { weekday: "long" })
+            );
+        // console.log(day);
+        for (let i = 0; i < 7; i++) {
+            let date1 = new Date(date.getFullYear(), date.getMonth(), day + i);
+            arrayDate.push(date1);
+        }
+
+        // console.log(arrayDate);
+        return arrayDate;
     };
 
     useEffect(() => {
@@ -58,15 +61,19 @@ const TrainingPage = () => {
         setActiveTabIndex(index);
     };
 
+    const coord = (event) => {
+        console.log(event.target);
+    };
+
     return (
         <>
             {isLoadingTraining ? (
                 <div>Грузится</div>
             ) : (
-                <div className="trainingPage">
+                <div onClick={(event) => eventStore.closePlaers(event)} className="trainingPage">
                     <div className="container">
                         <div className="trainingPage__title">Расписание</div>
-                        
+
                         <div className="trainingPage__tabs tabs-info">
                             <ul className="tabs-info__labels">
                                 {training.map((tab, index) => (
@@ -92,7 +99,6 @@ const TrainingPage = () => {
                                         }
                                         date={arrDate[0]}
                                     />
-                                    
                                 ) : null}
                                 {training[activeTabIndex] ? (
                                     <Workouts
@@ -148,10 +154,25 @@ const TrainingPage = () => {
                             </div>
                         </div>
                     </div>
+                    <ul className="people-actions__list">
+                        <div className="people-actions__exit">
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        {eventStore.players.map((sportsmen, index) => (
+                            <li className="people-actions__item item-people">
+                                <div className="item-people__img"></div>
+                                <div className="item-people__name">
+                                    {sportsmen.firstName}
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             )}
         </>
     );
 };
 
-export default TrainingPage;
+export default observer(TrainingPage);
