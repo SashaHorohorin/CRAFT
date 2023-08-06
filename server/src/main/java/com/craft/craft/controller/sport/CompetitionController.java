@@ -44,7 +44,7 @@ public class CompetitionController {
     }
 
     @PostMapping("/pair/{competitionPairId}/accept-invite-request")
-    public CompetitionDto addSecondUserToPairFromRequestInvite(@PathVariable UUID competitionPairId, @RequestBody UsernameDto dto) throws ModelNotFoundException, FullTrainException {
+    public CompetitionDto addSecondUserToPairFromRequestInvite(@PathVariable UUID competitionPairId, @RequestBody UsernameDto dto) throws ModelNotFoundException {
         return CompetitionDto.getDtoFromCompetition(
                 competitionService.addSecondUserToPairFromRequestInvite(competitionPairId, dto.getUsername())
                         .getCompetition());
