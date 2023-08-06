@@ -152,6 +152,11 @@ public class CompetitionService {
         return competitionPairRepo.save(pair);
     }
 
+    public Competition findById(UUID id) throws ModelNotFoundException {
+       return competitionRepo.findById(id).orElseThrow(()->new ModelNotFoundException("Нет соревнования с таким id"));
+    }
+
+
 
     private BaseUser getUserByUsername(String username) throws ModelNotFoundException {
         return baseUserRepo.findByUsername(username)

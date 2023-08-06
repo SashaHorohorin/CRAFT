@@ -60,6 +60,11 @@ public class CompetitionController {
         competitionService.requestToInviteIntoPair(competitionPairId, username);
     }
 
+    @GetMapping("/{id}")
+    public CompetitionDto getById(@PathVariable UUID id) throws ModelNotFoundException {
+        return CompetitionDto.getDtoFromCompetition(competitionService.findById(id));
+    }
+
 //
 //    @PostMapping("/{trainId}/remove-user")
 //    public TrainInfoDto removeUserToTrain(@PathVariable UUID trainId, @RequestBody UserToTrainRequest username) throws ModelNotFoundException {
