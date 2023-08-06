@@ -8,14 +8,32 @@ import DataService from "../../API/DataService";
 const Applications = () => {
     const { eventStore } = useContext(Context);
     const [flagOpenModalAddPair, setFlagOpenModalAddPair] = useState(false);
-    const [valueName, setValueName] = useState('');
-    const [valueRating, setValueRating] = useState('');
+    const [valueName, setValueName] = useState("");
+    const [valueRating, setValueRating] = useState("");
+    const [user, setUser] = useState([]);
 
-    const [fetchingCreateAndInvite, isLoadingCreateAndInvite, errorCreateAndInvite] = useFetching(async (obj, competitionId) => {
-        const response = await DataService.postCreateAndInvite(obj, competitionId);
+    const [
+        fetchingCreateAndInvite,
+        isLoadingCreateAndInvite,
+        errorCreateAndInvite,
+    ] = useFetching(async (obj, competitionId) => {
+        const response = await DataService.postCreateAndInvite(
+            obj,
+            competitionId
+        );
         console.log(response.data.accessToken);
     });
-    
+    const [fetchingUser, isLoadingUser, errorUser] = useFetching(async () => {
+        const response = await DataService.postSetLabId();
+        console.log(response.data);
+    });
+    const [fetchingRating, isLoadingRating, errorRating] = useFetching(
+        async (obj) => {
+            const response = await DataService.postSetLabId(obj);
+            console.log(response.data.accessToken);
+        }
+    );
+
     let openModal = () => {
         document.body.classList.add("stop");
         eventStore.setFlagOpenModalAddPair(true);
@@ -28,8 +46,9 @@ const Applications = () => {
                 nameClass.includes("mine-applications") ||
                 nameClass.includes("item-instruction") ||
                 nameClass.includes("find-person")
-            ) || nameClass.includes("modal-applications__close")
-            || nameClass.includes("modal-applications__bg")
+            ) ||
+            nameClass.includes("modal-applications__close") ||
+            nameClass.includes("modal-applications__bg")
         ) {
             document.body.classList.remove("stop");
             eventStore.setFlagOpenModalAddPair(false);
@@ -48,8 +67,9 @@ const Applications = () => {
                 nameClass.includes("mine-applications") ||
                 nameClass.includes("item-instruction") ||
                 nameClass.includes("find-person")
-            ) || nameClass.includes("modal-applications__close")
-            || nameClass.includes("modal-applications__bg")
+            ) ||
+            nameClass.includes("modal-applications__close") ||
+            nameClass.includes("modal-applications__bg")
         ) {
             document.body.classList.remove("stop");
             eventStore.setFlagOpenModalInstruction(false);
@@ -57,19 +77,23 @@ const Applications = () => {
     };
 
     const sendCreateAndInvite = (competitionId) => {
-    }
+        if (localStorage.getItem("labId") === "null") {
+            let newObjLabId = {
+                username: localStorage.getItem("username"),
+                labID: valueRating,
+            };
+            fetchingRating(newObjLabId);
+        }
+    };
 
     const handleNameChange = (event) => {
-        setValueName(event.target.value)
+        setValueName(event.target.value);
         // console.log(valueName);
-
-    }
+    };
     const handleRatingChange = (event) => {
-        setValueRating(event.target.value)
+        setValueRating(event.target.value);
         // console.log(valueName);
-
-    }
-
+    };
     const handleSubmit = (event) => {
         event.preventDefault();
     };
@@ -98,58 +122,62 @@ const Applications = () => {
                             </div>
                         </div>
                         <div className="modal-applications__mine mine-applications">
-                            <div className="mine-applications__fitst-time">
-                                <div className="mine-applications__title">
-                                    Зполните ваш ID. Инструкция:
-                                </div>
-                                <ol className="mine-applications__instruction">
-                                    <li className="mine-applications__item item-instruction">
-                                        <div className="item-instruction__text">
-                                            Перейдите на сайт и в поиске введите
-                                            фамилию и имя. И выберите себя.
-                                        </div>
-                                        <div className="item-instruction__img">
-                                            <img
-                                                src="../images/CompetitionPage/01.png"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </li>
-                                    <li className="mine-applications__item item-instruction">
-                                        <div className="item-instruction__text">
-                                            В строке поиска браузера скопируйте
-                                            ваш ID и поместите к нам в поле
-                                            ввода.
-                                        </div>
-                                        <div className="item-instruction__img">
-                                            <img
-                                                src="../images/CompetitionPage/02.png"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </li>
-                                </ol>
-                                <form
-                                    className="mine-applications__form"
-                                    action=""
-                                    onSubmit={handleSubmit}
-                                >
-                                    <label
-                                        className="mine-applications__label"
-                                        htmlFor="idRating"
+                            {localStorage.getItem("labId") === "null" ? (
+                                <div className="mine-applications__fitst-time">
+                                    <div className="mine-applications__title">
+                                        Зполните ваш ID. Инструкция:
+                                    </div>
+                                    <ol className="mine-applications__instruction">
+                                        <li className="mine-applications__item item-instruction">
+                                            <div className="item-instruction__text">
+                                                Перейдите на сайт и в поиске
+                                                введите фамилию и имя. И
+                                                выберите себя.
+                                            </div>
+                                            <div className="item-instruction__img">
+                                                <img
+                                                    src="../images/CompetitionPage/01.png"
+                                                    alt=""
+                                                />
+                                            </div>
+                                        </li>
+                                        <li className="mine-applications__item item-instruction">
+                                            <div className="item-instruction__text">
+                                                В строке поиска браузера
+                                                скопируйте ваш ID и поместите к
+                                                нам в поле ввода.
+                                            </div>
+                                            <div className="item-instruction__img">
+                                                <img
+                                                    src="../images/CompetitionPage/02.png"
+                                                    alt=""
+                                                />
+                                            </div>
+                                        </li>
+                                    </ol>
+                                    <form
+                                        className="mine-applications__form"
+                                        action=""
+                                        onSubmit={handleSubmit}
                                     >
-                                        Ваш ID:
-                                    </label>
-                                    <input
-                                        className="mine-applications__input-rating"
-                                        type="text"
-                                        id="idRating"
-                                        name="idRating"
-                                        value={valueRating}
-                                        onChange={handleRatingChange}
-                                    />
-                                </form>
-                            </div>
+                                        <label
+                                            className="mine-applications__label"
+                                            htmlFor="idRating"
+                                        >
+                                            Ваш ID:
+                                        </label>
+                                        <input
+                                            className="mine-applications__input-rating"
+                                            type="text"
+                                            id="idRating"
+                                            name="idRating"
+                                            value={valueRating}
+                                            onChange={handleRatingChange}
+                                        />
+                                    </form>
+                                </div>
+                            ) : null}
+
                             <div className="mine-applications__find find-person">
                                 <div className="find-person__text">
                                     Введите фамилию и имя партнера, если не

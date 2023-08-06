@@ -44,6 +44,8 @@ export default class Store{
             localStorage.setItem('refreshToken', response.data.refreshToken);
             localStorage.setItem('username', response.data.username);
             localStorage.setItem('roles', response.data.roles);
+            localStorage.setItem('labId', response.data.labId);
+
             this.setAuth(true);
             this.setUser(response.data.username);
 
