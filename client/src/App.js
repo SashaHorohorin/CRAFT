@@ -50,7 +50,7 @@ function App() {
                         <Route path="competitions" element={<CompetitionsPage />} />
                         <Route path="prices" element={<PricesPage/>} />
                         <Route path="profile" element={<PersonalPage/>} />
-                        <Route path="competitions/applications" element={<Applications/>} />
+                        <Route path="competitions/applications/:id" element={<Applications/>} />
                     </Route>
                     <Route path="auth/:sign" element={<RegistrationPage />} />
                     <Route path="activate-account/:code" element={<ActivatePage/>}/>

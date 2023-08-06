@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+import { Context } from "../../..";
 
 const Competition = ({competition}) => {
+
+    const { eventStore } = useContext(Context);
 
     const getDateYear = (date) => {
         let d = new Date(date);
@@ -22,7 +26,7 @@ const Competition = ({competition}) => {
             <div className="event-competitions__date">{getDateYear(competition.startCompetition)}</div>
             <div className="event-competitions__time">{getTime(competition.startCompetition)}</div>
             <div className="event-competitions__btns">
-                <Link to='applications' className="event-competitions__list">Заявки</Link>
+                <Link onClick={() => eventStore.setCompetition(competition)} to={`applications/${competition.id}`} className="event-competitions__list">Заявки</Link>
                 <button className="event-competitions__follow">
                     Записаться
                 </button>
@@ -31,4 +35,4 @@ const Competition = ({competition}) => {
     );
 };
 
-export default Competition;
+export default observer(Competition);

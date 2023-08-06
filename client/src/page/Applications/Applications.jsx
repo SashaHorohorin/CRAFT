@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Applications.scss";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 import { useFetching } from "../../hooks/useFetching";
 import DataService from "../../API/DataService";
+import { set } from "mobx";
 
 const Applications = () => {
     const { eventStore } = useContext(Context);
@@ -21,18 +22,23 @@ const Applications = () => {
             obj,
             competitionId
         );
-        console.log(response.data.accessToken);
+        console.log(response.data);
     });
     const [fetchingUser, isLoadingUser, errorUser] = useFetching(async () => {
-        const response = await DataService.postSetLabId();
+        const response = await DataService.getAllUsers();
         console.log(response.data);
+        setUser(response.data);
     });
     const [fetchingRating, isLoadingRating, errorRating] = useFetching(
         async (obj) => {
             const response = await DataService.postSetLabId(obj);
-            console.log(response.data.accessToken);
+            console.log(response.data);
         }
     );
+
+    useEffect(() => {
+        fetchingUser();
+    }, [])
 
     let openModal = () => {
         document.body.classList.add("stop");
@@ -76,13 +82,23 @@ const Applications = () => {
         }
     };
 
-    const sendCreateAndInvite = (competitionId) => {
+    const sendCreateAndInvite = () => {
         if (localStorage.getItem("labId") === "null") {
             let newObjLabId = {
                 username: localStorage.getItem("username"),
                 labID: valueRating,
             };
-            fetchingRating(newObjLabId);
+            let flagSucces = fetchingRating(newObjLabId);
+            if(flagSucces){
+                localStorage.setItem('labId', valueRating);
+            }
+        }
+        for(let i = 0; i < user.length; i++){
+            let fullName = user[i].firstName + ' ' + user[i].lastName;
+            if(fullName === valueName){
+                console.log(eventStore.competition.id);
+                fetchingCreateAndInvite(eventStore.competition.id, {username: user[i].username})
+            }
         }
     };
 
@@ -193,7 +209,7 @@ const Applications = () => {
                                         type="text"
                                     />
                                 </form>
-                                <button className="find-person__button">
+                                <button onClick={() => sendCreateAndInvite()} className="find-person__button">
                                     Записаться
                                 </button>
                             </div>

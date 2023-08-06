@@ -6,10 +6,14 @@ export default class EventStore {
     flagOpenModal = false;
     players = [];
 
+    competition = {}
+
     constructor() {
         makeAutoObservable(this);
     }
-
+    setCompetition(competition){
+        this.competition = competition;
+    }
     setFlagOpenModal(bool) {
         this.flagOpenModal = bool;
     }

@@ -48,7 +48,8 @@ export default class DataService {
     static async getProfile(username) {
         return await $api.get(`api/v1/profile/${username}`);
     }
-    static async postCreateAndInvite(obj, competitionId) {
+    static async postCreateAndInvite(competitionId, obj) {
+        console.log('DataService' + ' : ' + competitionId);
         return await $api.post(
             `api/v1/competition/${competitionId}/create-and-invite
         `,
@@ -63,6 +64,6 @@ export default class DataService {
         );
     }
     static async getAllUsers() {
-        return await $api.get(`api/v1/competition/get-all`);
+        return await $api.get(`api/v1/profile/find-all`);
     }
 }
