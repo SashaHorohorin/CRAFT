@@ -63,6 +63,13 @@ export default class DataService {
             obj
         );
     }
+    static async postAcceptInvitePair(competitionPairId, obj) {
+        return await $api.post(
+            `api/v1/competition/pair/${competitionPairId}/accept-invite-request
+        `,
+            obj
+        );
+    }
     static async getAllUsers() {
         return await $api.get(`api/v1/profile/find-all`);
     }

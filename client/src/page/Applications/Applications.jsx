@@ -26,7 +26,19 @@ const Applications = () => {
             competitionId
         );
         console.log(response.data);
-        setCompetition(response.data)
+        setCompetition(response.data);
+    });
+    const [
+        fetchingAcceptInvitePair,
+        isLoadingAcceptInvitePair,
+        errorAcceptInvitePair,
+    ] = useFetching(async (competitionPairId, obj) => {
+        const response = await DataService.postAcceptInvitePair(
+            competitionPairId, 
+            obj
+        );
+        console.log(response.data);
+        setCompetition(response.data);
     });
     const [fetchingUser, isLoadingUser, errorUser] = useFetching(async () => {
         const response = await DataService.getAllUsers();
@@ -108,11 +120,14 @@ const Applications = () => {
             let fullName = user[i].firstName + " " + user[i].lastName;
             if (fullName === valueName) {
                 console.log();
-                
-                fetchingCreateAndInvite(id, { username: user[i].username })
+
+                fetchingCreateAndInvite(id, { username: user[i].username });
             }
         }
     };
+    const acceptInvite = (pairId) => {
+        fetchingAcceptInvitePair(pairId, { username: localStorage.getItem('username')})
+    }
 
     const handleNameChange = (event) => {
         setValueName(event.target.value);
@@ -325,7 +340,11 @@ const Applications = () => {
                         if (pair.player.length < 2) {
                             return (
                                 <li className="applications__pair">
-                                    <span>{pair.player[0]?.firstName + ' ' + pair.player[0]?.lastName}</span>
+                                    <span>
+                                        {pair.player[0]?.firstName +
+                                            " " +
+                                            pair.player[0]?.lastName}
+                                    </span>
                                     <span> - </span>
                                     {pair.player[0].username ==
                                     localStorage.getItem("username") ? (
@@ -334,6 +353,17 @@ const Applications = () => {
                                             className="applications__button"
                                         >
                                             + Пригласить к себе в пару
+                                        </button>
+                                    ) : pair.requestToInvite.some(
+                                          (u) =>
+                                              u.username ==
+                                              localStorage.getItem("username")
+                                      ) ? (
+                                        <button
+                                            onClick={() => acceptInvite(pair.id)}
+                                            className="applications__button"
+                                        >
+                                            + Принять приглашение
                                         </button>
                                     ) : (
                                         <button
@@ -348,9 +378,17 @@ const Applications = () => {
                         } else {
                             return (
                                 <li className="applications__pair">
-                                    <span>{pair?.player[0]?.firstName + ' ' + pair?.player[0]?.lastName}</span>
+                                    <span>
+                                        {pair?.player[0]?.firstName +
+                                            " " +
+                                            pair?.player[0]?.lastName}
+                                    </span>
                                     <span> - </span>
-                                    <span>{pair?.player[1]?.firstName + ' ' + pair?.player[1]?.lastName}</span>
+                                    <span>
+                                        {pair?.player[1]?.firstName +
+                                            " " +
+                                            pair?.player[1]?.lastName}
+                                    </span>
                                 </li>
                             );
                         }
