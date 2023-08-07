@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class CompetitionDto {
     private Date endCompetition;
     private int maxParticipant;
     private int nowParticipant;
-    private Set<CompetitionPairDto> competitionPairs;
+    private Set<CompetitionPairDto> competitionPairs = new HashSet<>();
 
     public static CompetitionDto getDtoFromCompetition(Competition competition){
         return new CompetitionDto(

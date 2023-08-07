@@ -50,7 +50,7 @@ public class CompetitionController {
         return CompetitionDto.getDtoFromCompetition(
                 competitionService.addSecondUserToPairFromRequestInvite(competitionPairId, dto.getUsername())
                         .getCompetition());
-    }
+}
 
     @GetMapping("/pair/{competitionPairId}/request-to-join")
     public void requestToJoin(@PathVariable UUID competitionPairId) throws ModelNotFoundException {

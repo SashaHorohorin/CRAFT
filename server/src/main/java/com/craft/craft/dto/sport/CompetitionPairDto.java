@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -14,9 +15,9 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class CompetitionPairDto {
     private UUID id;
-    private Set<SportsmenDto> player;
-    private Set<SportsmenDto> requestToJoin;
-    private Set<SportsmenDto> requestToInvite;
+    private Set<SportsmenDto> player = new HashSet<>();
+    private Set<SportsmenDto> requestToJoin = new HashSet<>();
+    private Set<SportsmenDto> requestToInvite = new HashSet<>();
     private UUID competition;
     private Integer ratingOfPair;
 
