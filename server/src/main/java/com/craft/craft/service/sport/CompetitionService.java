@@ -63,8 +63,8 @@ public class CompetitionService {
             pair.getRequestToJoin().remove(player2);
         pair.getPlayers().add(player2);
         if(pair.getPlayers().size() == 2){
-            pair.setRequestToInvite(null);
-            pair.setRequestToJoin(null);
+            pair.getRequestToInvite().clear();
+            pair.getRequestToJoin().clear();
         }
         return competitionPairRepo.save(pair);
     }
@@ -83,8 +83,8 @@ public class CompetitionService {
                 pair.getPlayers().add(player2);
         });
         if(pair.getPlayers().size() == 2){
-            pair.setRequestToInvite(null);
-            pair.setRequestToJoin(null);
+            pair.getRequestToInvite().clear();
+            pair.getRequestToJoin().clear();
         }
         return competitionPairRepo.save(pair);
     }

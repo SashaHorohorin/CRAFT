@@ -22,6 +22,7 @@ public class CompetitionPairDto {
     private Integer ratingOfPair;
 
     public static CompetitionPairDto getDtoFromCompetitionPair(CompetitionPair competitionPair){
+        System.out.println( competitionPair.getRequestToJoin());
         return new CompetitionPairDto(
                 competitionPair.getId(),
                 competitionPair.getPlayers().stream().map(SportsmenDto::getDtoFromBaseUser).collect(Collectors.toSet()),
