@@ -62,6 +62,10 @@ const Applications = () => {
         fetchingUser();
         fetchingCompetition(id);
     }, []);
+    // useEffect(() => {
+    //     fetchingUser();
+    //     fetchingCompetition(id);
+    // }, [user]);
 
     let openModal = () => {
         document.body.classList.add("stop");
@@ -105,13 +109,13 @@ const Applications = () => {
         }
     };
 
-    const sendCreateAndInvite = () => {
+    const sendCreateAndInvite = async () => {
         if (localStorage.getItem("labId") === "null") {
             let newObjLabId = {
                 username: localStorage.getItem("username"),
                 labID: valueRating,
             };
-            let flagSucces = fetchingRating(newObjLabId);
+            let flagSucces =  await fetchingRating(newObjLabId);
             if (flagSucces) {
                 localStorage.setItem("labId", valueRating);
             }
@@ -121,7 +125,7 @@ const Applications = () => {
             if (fullName === valueName) {
                 console.log();
 
-                fetchingCreateAndInvite(id, { username: user[i].username });
+                await fetchingCreateAndInvite(id, { username: user[i].username });
             }
         }
     };
