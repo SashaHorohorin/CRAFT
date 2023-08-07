@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
-@EqualsAndHashCode(exclude={"trainers", "sportsmen"}, callSuper = false)
 @Entity
 @Data
 @NoArgsConstructor

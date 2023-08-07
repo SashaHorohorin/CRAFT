@@ -22,10 +22,8 @@ public class CompetitionController {
 
     @GetMapping("/get-all")
     public List<CompetitionDto> getAll() {
-        return competitionService.findAll().stream().map(CompetitionDto::getDtoFromCompetition).collect(Collectors.toList());
+        return competitionService.findAllActive().stream().map(CompetitionDto::getDtoFromCompetition).collect(Collectors.toList());
     }
-
-
 
     @PostMapping("/{competitionId}/create-and-invite")
     public CompetitionDto createPairAndSetInvite(@PathVariable UUID competitionId, @RequestBody UsernameDto secondPlayer) throws ModelNotFoundException, FullTrainException, MessagingException {
@@ -66,6 +64,7 @@ public class CompetitionController {
     public CompetitionDto getById(@PathVariable UUID id) throws ModelNotFoundException {
         return CompetitionDto.getDtoFromCompetition(competitionService.findById(id));
     }
+
 
 //
 //    @PostMapping("/{trainId}/remove-user")

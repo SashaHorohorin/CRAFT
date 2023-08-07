@@ -126,11 +126,11 @@ INSERT INTO news (id, created, updated, type, title,text_under_title,main_title,
     (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title14','underTitle14','Main title 1', now(),'underDate14','text', 'photoUrl');
 -------------------------------News---------------------------------------------
 -------------------------------competitions---------------------------------------------
-INSERT INTO competition (id, created, updated, sport_complex, type, start_competition, end_competition, max_pair, now_pair) VALUES
-    (uuid_generate_v4(),now(),now(),'IMPULS','ONE', now(),now(),10,0),
-    (uuid_generate_v4(),now(),now(),'IMPULS','ONE', now(),now(),10,0),
-    (uuid_generate_v4(),now(),now(),'IMPULS','ONE', now(),now(),10,0),
-    (uuid_generate_v4(),now(),now(),'IMPULS','ONE', now(),now(),10,0);
+INSERT INTO competition (id, created, updated, sport_complex, type, start_competition, end_competition, max_pair, now_pair,status) VALUES
+    (uuid_generate_v4(),now(),now(),'IMPULS','ONE', now(),now(),10,0, 'ACTIVE'),
+    (uuid_generate_v4(),now(),now(),'IMPULS','ONE', now(),now(),10,0, 'ACTIVE'),
+    (uuid_generate_v4(),now(),now(),'IMPULS','ONE', now(),now(),10,0, 'ACTIVE'),
+    (uuid_generate_v4(),now(),now(),'IMPULS','ONE', now(),now(),10,0, 'ACTIVE');
 -------------------------------competitions---------------------------------------------
 -------------------------------prices---------------------------------------------
 INSERT INTO price (id, created, updated, title, old_price, now_price, discount, text_under_price, sport_complex, active) VALUES

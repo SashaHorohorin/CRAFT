@@ -19,7 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = "baseuser")
 @Data
-@EqualsAndHashCode(exclude = {"roles", "trains", "competitionPairs","requestToJoinCompetition","requestToInviteCompetition","rating","labId"}, callSuper = true)
+//@EqualsAndHashCode(exclude = {"roles", "trains", "competitionPairs","requestToJoinCompetition","requestToInviteCompetition","rating","labId"}, callSuper = true)
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Cacheable(false)

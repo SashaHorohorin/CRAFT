@@ -1,6 +1,7 @@
 package com.craft.craft.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @MappedSuperclass
 @Data
 @EntityListeners(AuditingEntityListener.class)
+@EqualsAndHashCode(of={"id"})
 public abstract class BaseEntity {
     @Id
     @GeneratedValue(generator = "system-uuid")

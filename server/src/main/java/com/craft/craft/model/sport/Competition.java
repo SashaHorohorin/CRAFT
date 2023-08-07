@@ -14,7 +14,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode(exclude = {"competitionPairs"}, callSuper = true)
 @Data
 public class Competition extends BaseEntity {
     @NonNull
@@ -28,13 +27,14 @@ public class Competition extends BaseEntity {
     @NonNull
     @NotNull
     private Date startCompetition;
-    @NonNull
-    @NotNull
     private Date endCompetition;
     @NonNull
     @NotNull
     private int maxPair;
     private int nowPair = 0;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private CompetitionStatus status;
 //
 //    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 //    @JoinTable(
