@@ -25,7 +25,7 @@ public class CompetitionPair extends BaseEntity {
     )
     @Size(max=2)
     private Set<BaseUser> players = new HashSet<>();
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "competition_pair_request_to_join",
             joinColumns = {@JoinColumn(name = "competition_id")},
