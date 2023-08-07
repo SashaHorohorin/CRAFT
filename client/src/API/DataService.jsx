@@ -66,4 +66,7 @@ export default class DataService {
     static async getAllUsers() {
         return await $api.get(`api/v1/profile/find-all`);
     }
+    static async getCompetitionById(id) {
+        return await $api.get(`api/v1/competition/${id}`);
+    }
 }

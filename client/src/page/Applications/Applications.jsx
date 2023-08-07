@@ -5,13 +5,16 @@ import { Context } from "../..";
 import { useFetching } from "../../hooks/useFetching";
 import DataService from "../../API/DataService";
 import { set } from "mobx";
+import { useParams } from "react-router";
 
 const Applications = () => {
     const { eventStore } = useContext(Context);
+    const { id } = useParams();
     const [flagOpenModalAddPair, setFlagOpenModalAddPair] = useState(false);
     const [valueName, setValueName] = useState("");
     const [valueRating, setValueRating] = useState("");
     const [user, setUser] = useState([]);
+    const [competition, setCompetition] = useState({});
 
     const [
         fetchingCreateAndInvite,
@@ -23,12 +26,19 @@ const Applications = () => {
             competitionId
         );
         console.log(response.data);
+        setCompetition(response.data)
     });
     const [fetchingUser, isLoadingUser, errorUser] = useFetching(async () => {
         const response = await DataService.getAllUsers();
         console.log(response.data);
         setUser(response.data);
     });
+    const [fetchingCompetition, isLoadingCompetition, errorCompetition] =
+        useFetching(async (id) => {
+            const response = await DataService.getCompetitionById(id);
+            console.log(response.data);
+            setCompetition(response.data);
+        });
     const [fetchingRating, isLoadingRating, errorRating] = useFetching(
         async (obj) => {
             const response = await DataService.postSetLabId(obj);
@@ -38,7 +48,8 @@ const Applications = () => {
 
     useEffect(() => {
         fetchingUser();
-    }, [])
+        fetchingCompetition(id);
+    }, []);
 
     let openModal = () => {
         document.body.classList.add("stop");
@@ -89,15 +100,16 @@ const Applications = () => {
                 labID: valueRating,
             };
             let flagSucces = fetchingRating(newObjLabId);
-            if(flagSucces){
-                localStorage.setItem('labId', valueRating);
+            if (flagSucces) {
+                localStorage.setItem("labId", valueRating);
             }
         }
-        for(let i = 0; i < user.length; i++){
-            let fullName = user[i].firstName + ' ' + user[i].lastName;
-            if(fullName === valueName){
-                console.log(eventStore.competition.id);
-                fetchingCreateAndInvite(eventStore.competition.id, {username: user[i].username})
+        for (let i = 0; i < user.length; i++) {
+            let fullName = user[i].firstName + " " + user[i].lastName;
+            if (fullName === valueName) {
+                console.log();
+                
+                fetchingCreateAndInvite(id, { username: user[i].username })
             }
         }
     };
@@ -209,7 +221,10 @@ const Applications = () => {
                                         type="text"
                                     />
                                 </form>
-                                <button onClick={() => sendCreateAndInvite()} className="find-person__button">
+                                <button
+                                    onClick={() => sendCreateAndInvite()}
+                                    className="find-person__button"
+                                >
                                     Записаться
                                 </button>
                             </div>
@@ -306,21 +321,40 @@ const Applications = () => {
                     Записать пару
                 </button>
                 <ol className="applications__row">
-                    <li className="applications__pair">
-                        <span>Хорохорин Александр</span>
-                        <span> - </span>
-                        <span>Пирогов Никита</span>
-                    </li>
-                    <li className="applications__pair">
-                        <span>Хорохорин Александр</span>
-                        <span> - </span>
-                        <button
-                            onClick={() => openModalInst()}
-                            className="applications__button"
-                        >
-                            + Предложить сыграть вместе
-                        </button>
-                    </li>
+                    {competition?.competitionPairs?.map((pair, index) => {
+                        if (pair.player.length < 2) {
+                            return (
+                                <li className="applications__pair">
+                                    <span>{pair.player[0]?.firstName + ' ' + pair.player[0]?.lastName}</span>
+                                    <span> - </span>
+                                    {pair.player[0].username ==
+                                    localStorage.getItem("username") ? (
+                                        <button
+                                            onClick={() => openModalInst()}
+                                            className="applications__button"
+                                        >
+                                            + Пригласить к себе в пару
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={() => openModalInst()}
+                                            className="applications__button"
+                                        >
+                                            + Предложить сыграть вместе
+                                        </button>
+                                    )}
+                                </li>
+                            );
+                        } else {
+                            return (
+                                <li className="applications__pair">
+                                    <span>{pair?.player[0]?.firstName + ' ' + pair?.player[0]?.lastName}</span>
+                                    <span> - </span>
+                                    <span>{pair?.player[1]?.firstName + ' ' + pair?.player[1]?.lastName}</span>
+                                </li>
+                            );
+                        }
+                    })}
                 </ol>
             </div>
         </div>
