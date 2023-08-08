@@ -1,9 +1,9 @@
 package com.craft.craft.controller.sport;
 
 import com.craft.craft.dto.sport.TrainCalendarBySportComplexDto;
-import com.craft.craft.dto.sport.TrainInfoDto;
-import com.craft.craft.dto.sport.TrainUpdateDto;
-import com.craft.craft.dto.sport.UserToTrainRequest;
+import com.craft.craft.dto.sport.train.TrainInfoDto;
+import com.craft.craft.dto.sport.train.TrainUpdateDto;
+import com.craft.craft.dto.sport.train.UserToTrainRequest;
 import com.craft.craft.error.exeption.FullTrainException;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.service.sport.TrainService;

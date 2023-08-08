@@ -1,5 +1,7 @@
-package com.craft.craft.dto.sport;
+package com.craft.craft.dto.sport.train;
 
+import com.craft.craft.dto.sport.SportsmenDto;
+import com.craft.craft.dto.sport.TrainerDto;
 import com.craft.craft.model.sport.SportComplex;
 import com.craft.craft.model.sport.Train;
 import com.craft.craft.model.sport.TrainType;

@@ -8,8 +8,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
+
 @Entity
 @Data
+@EqualsAndHashCode(of={"startTrain"}, callSuper = true)
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Table(indexes = @Index(columnList = "id"))
@@ -47,5 +49,7 @@ public class Train extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "sportsmen_id")}
     )
     private Set<BaseUser> sportsmen = new HashSet<>();
+
+
 
 }

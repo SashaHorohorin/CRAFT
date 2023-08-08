@@ -1,6 +1,7 @@
-package com.craft.craft.dto.sport;
+package com.craft.craft.dto.sport.train;
 
 
+import com.craft.craft.dto.sport.SportsmenDto;
 import com.craft.craft.model.sport.Train;
 import com.craft.craft.model.sport.TrainType;
 import lombok.AllArgsConstructor;

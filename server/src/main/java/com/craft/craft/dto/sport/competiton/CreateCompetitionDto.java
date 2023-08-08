@@ -1,5 +1,6 @@
-package com.craft.craft.dto.sport;
+package com.craft.craft.dto.sport.competiton;
 
+import com.craft.craft.model.sport.CompetitionType;
 import com.craft.craft.model.sport.SportComplex;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,4 +19,6 @@ public class CreateCompetitionDto {
     private Date startCompetition;
     @NonNull
     private int maxPair;
+    @NonNull
+    private CompetitionType type;
 }

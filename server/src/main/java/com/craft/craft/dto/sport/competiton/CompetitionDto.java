@@ -1,4 +1,4 @@
-package com.craft.craft.dto.sport;
+package com.craft.craft.dto.sport.competiton;
 
 import com.craft.craft.model.sport.Competition;
 import com.craft.craft.model.sport.CompetitionStatus;

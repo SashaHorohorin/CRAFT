@@ -1,6 +1,7 @@
 package com.craft.craft.service.sport;
 
-import com.craft.craft.dto.sport.CreateCompetitionDto;
+import com.craft.craft.dto.sport.competiton.CreateCompetitionDto;
+import com.craft.craft.dto.sport.competiton.UpdateCompetitionDto;
 import com.craft.craft.error.exeption.FullTrainException;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.sport.Competition;
@@ -13,7 +14,6 @@ import com.craft.craft.repository.user.BaseUserRepo;
 import com.craft.craft.service.LabService;
 import com.craft.craft.service.MailSender;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,9 +44,25 @@ public class CompetitionService {
         competition.setSportComplex(createCompetitionDto.getSportComplex());
         competition.setStartCompetition(createCompetitionDto.getStartCompetition());
         competition.setMaxPair(createCompetitionDto.getMaxPair());
+        competition.setType(createCompetitionDto.getType());
         competition.setStatus(CompetitionStatus.ACTIVE);
         competition.setEndCompetition(new Date(competition.getStartCompetition().getTime() + (1000 * 60 * 60 * 24)));//end на день больше чем start
         return competitionRepo.save(competition);
+    }
+    public Boolean deleteCompetition(UUID id){
+        competitionRepo.deleteById(id);
+        return true;
+    }
+    public Competition updateCompetition(UUID id, UpdateCompetitionDto dto) throws ModelNotFoundException {
+        Competition competition = competitionRepo.findById(id).orElseThrow(
+                ()->new ModelNotFoundException("Сщревнование по такому id не найдено")
+        );
+        competition.setSportComplex(dto.getSportComplex());
+        competition.setStartCompetition(dto.getStartCompetition());
+        competition.setMaxPair(dto.getMaxPair());
+        competition.setType(dto.getType());
+        competition.setEndCompetition(new Date(competition.getStartCompetition().getTime() + (1000 * 60 * 60 * 24)));//end на день больше чем start
+        return competition;
     }
     public CompetitionPair createPair(UUID competitionId) throws ModelNotFoundException, FullTrainException {
         BaseUser player1 = getUserByUsername(getUsernameOfRequester());

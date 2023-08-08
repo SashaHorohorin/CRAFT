@@ -1,5 +1,7 @@
 package com.craft.craft.dto.sport;
 
+import com.craft.craft.dto.sport.competiton.CompetitionPairDto;
+import com.craft.craft.dto.sport.train.TrainInProfileResponseDto;
 import com.craft.craft.model.user.BaseUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;

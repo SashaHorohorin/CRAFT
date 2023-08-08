@@ -12,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@EqualsAndHashCode(of={"name"}, callSuper = true)
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Trainer extends BaseEntity {

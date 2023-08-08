@@ -1,7 +1,9 @@
 package com.craft.craft.controller.sport;
 
 import com.craft.craft.dto.UsernameDto;
-import com.craft.craft.dto.sport.CompetitionDto;
+import com.craft.craft.dto.sport.competiton.CompetitionDto;
+import com.craft.craft.dto.sport.competiton.CreateCompetitionDto;
+import com.craft.craft.dto.sport.competiton.UpdateCompetitionDto;
 import com.craft.craft.error.exeption.FullTrainException;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.sport.CompetitionPair;
@@ -51,8 +53,10 @@ public class CompetitionController {
 }
 
     @GetMapping("/pair/{competitionPairId}/request-to-join")
-    public void requestToJoin(@PathVariable UUID competitionPairId) throws ModelNotFoundException {
-        competitionService.requestToJoinIntoPair(competitionPairId);
+    public CompetitionDto requestToJoin(@PathVariable UUID competitionPairId) throws ModelNotFoundException {
+        return CompetitionDto.getDtoFromCompetition(
+                competitionService.requestToJoinIntoPair(competitionPairId)
+                        .getCompetition());
     }
 
     @GetMapping("/pair/{competitionPairId}/request-to-invite/{username}")
@@ -66,16 +70,26 @@ public class CompetitionController {
     }
 
 
+    @PostMapping("/create")
+    public CompetitionDto createCompetition(@RequestBody CreateCompetitionDto dto) {
+        return CompetitionDto.getDtoFromCompetition(competitionService.createCompetition(dto));
+    }
+    @PostMapping("/update/{id}")
+    public CompetitionDto updateCompetition(@PathVariable UUID id, @RequestBody UpdateCompetitionDto dto) throws ModelNotFoundException {
+        return  CompetitionDto.getDtoFromCompetition(competitionService.updateCompetition(id, dto));
+    }
+    @PostMapping("/delete/{id}")
+    public boolean deleteCompetition(@PathVariable UUID id) {
+        return competitionService.deleteCompetition(id);
+    }
+
 //
 //    @PostMapping("/{trainId}/remove-user")
 //    public TrainInfoDto removeUserToTrain(@PathVariable UUID trainId, @RequestBody UserToTrainRequest username) throws ModelNotFoundException {
 //        return TrainInfoDto.getDtoFromTrain(trainService.removeUserFromTrain(trainId, username.getUsername()));
 //    }
 //
-//    @PostMapping("/create")
-//    public TrainInfoDto createTrain(@RequestBody TrainUpdateDto trainInfoDto) throws ModelNotFoundException {
-//        return TrainInfoDto.getDtoFromTrain(trainService.createTrain(trainInfoDto));
-//    }
+
 //
 //    @PostMapping("/change/{id}")
 //    public TrainInfoDto changeTrain(@RequestBody TrainUpdateDto trainInfoDto, @PathVariable UUID id) throws ModelNotFoundException {

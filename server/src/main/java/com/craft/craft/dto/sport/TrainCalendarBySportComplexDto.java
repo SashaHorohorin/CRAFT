@@ -1,6 +1,6 @@
 package com.craft.craft.dto.sport;
 
-import com.craft.craft.dto.sport.TrainCalendarDto;
+import com.craft.craft.dto.sport.train.TrainCalendarDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
