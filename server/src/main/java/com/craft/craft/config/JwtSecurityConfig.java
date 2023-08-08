@@ -58,19 +58,19 @@ public class JwtSecurityConfig {
                         .antMatchers("/api/v1/price/**").hasAuthority(RoleName.ADMIN.name())
                         //competition-------------------------------------------------------------------------------------
                         .antMatchers(
-                                "api/v1/competition/get-all",
-                                "api/v1/competition/{id}"
+                                "/api/v1/competition/get-all",
+                                "/api/v1/competition/{id}"
 
                         ).permitAll()
                         .antMatchers(
-                                "api/v1/competition/{competitionId}/create-and-invite",
-                                "api/v1/competition/{competitionId}/create-pair",
-                                "api/v1/competition/pair/{competitionPairId}/accept-join-request",
-                                "api/v1/competition/pair/{competitionPairId}/accept-invite-request",
-                                "api/v1/competition/pair/{competitionPairId}/request-to-join",
-                                "api/v1/competition/pair/{competitionPairId}/request-to-invite/{username}"
+                                "/api/v1/competition/{competitionId}/create-and-invite",
+                                "/api/v1/competition/{competitionId}/create-pair",
+                                "/api/v1/competition/pair/{competitionPairId}/accept-join-request",
+                                "/api/v1/competition/pair/{competitionPairId}/accept-invite-request",
+                                "/api/v1/competition/pair/{competitionPairId}/request-to-join",
+                                "/api/v1/competition/pair/{competitionPairId}/request-to-invite/{username}"
                         ).authenticated()
-                        .antMatchers("api/v1/competition/**").hasAuthority(RoleName.ADMIN.name())
+                        .antMatchers("/api/v1/competition/**").hasAuthority(RoleName.ADMIN.name())
                         //trains------------------------------------------------------------------------------------------
                         .antMatchers(
                                 "/api/v1/train/get-calendar-by-sport-complex",
@@ -82,8 +82,8 @@ public class JwtSecurityConfig {
                         ).authenticated()
                         .antMatchers("/api/v1/train/**").hasAuthority(RoleName.ADMIN.name())
                         //trains------------------------------------------------------------------------------------------
-                        .antMatchers(HttpMethod.GET,"api/v1/trainer/**").permitAll()
-                        .antMatchers("api/v1/trainer/**").hasAuthority(RoleName.ADMIN.name())
+                        .antMatchers(HttpMethod.GET,"/api/v1/trainer/**").permitAll()
+                        .antMatchers("/api/v1/trainer/**").hasAuthority(RoleName.ADMIN.name())
                         //------------------------------------------------------------------------------------------------
                         .anyRequest().authenticated()
                 )
