@@ -50,11 +50,14 @@ public class JwtSecurityConfig {
                         .permitAll()
                         //info-card---------------------------------------------------------------------------------------
                         .antMatchers(HttpMethod.GET,   "/api/v1/craft-info-card/**").permitAll()
+                        .antMatchers(HttpMethod.OPTIONS,   "/api/v1/craft-info-card/**").permitAll()
                         //news--------------------------------------------------------------------------------------------
                         .antMatchers(HttpMethod.GET,   "/api/v1/news/**").permitAll()
+                        .antMatchers(HttpMethod.OPTIONS,   "/api/v1/news/**").permitAll()
                         .antMatchers("/api/v1/news/**").hasAuthority(RoleName.ADMIN.name())
                         //price-------------------------------------------------------------------------------------------
                         .antMatchers(HttpMethod.GET,   "/api/v1/price/**").permitAll()
+                        .antMatchers(HttpMethod.OPTIONS,   "/api/v1/price/**").permitAll()
                         .antMatchers("/api/v1/price/**").hasAuthority(RoleName.ADMIN.name())
                         //competition-------------------------------------------------------------------------------------
                         .antMatchers(
@@ -83,6 +86,7 @@ public class JwtSecurityConfig {
                         .antMatchers("/api/v1/train/**").hasAuthority(RoleName.ADMIN.name())
                         //trains------------------------------------------------------------------------------------------
                         .antMatchers(HttpMethod.GET,"/api/v1/trainer/**").permitAll()
+                        .antMatchers(HttpMethod.OPTIONS,"/api/v1/trainer/**").permitAll()
                         .antMatchers("/api/v1/trainer/**").hasAuthority(RoleName.ADMIN.name())
                         //------------------------------------------------------------------------------------------------
                         .anyRequest().authenticated()
