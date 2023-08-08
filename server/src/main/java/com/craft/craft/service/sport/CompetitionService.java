@@ -53,9 +53,16 @@ public class CompetitionService {
         competitionRepo.deleteById(id);
         return true;
     }
+    public Boolean deletePair(UUID pairId) throws ModelNotFoundException {
+        CompetitionPair pair = competitionPairRepo.findById(pairId).orElseThrow(
+                ()->new ModelNotFoundException("Пара по данному id не найдена")
+        );
+        competitionPairRepo.deleteById(pairId);
+        return true;
+    }
     public Competition updateCompetition(UUID id, UpdateCompetitionDto dto) throws ModelNotFoundException {
         Competition competition = competitionRepo.findById(id).orElseThrow(
-                ()->new ModelNotFoundException("Сщревнование по такому id не найдено")
+                ()->new ModelNotFoundException("Соревнование по такому id не найдено")
         );
         competition.setSportComplex(dto.getSportComplex());
         competition.setStartCompetition(dto.getStartCompetition());

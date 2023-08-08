@@ -20,7 +20,7 @@ public class CompetitionPair extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "competition_pair_players",
-            joinColumns = {@JoinColumn(name = "competition_id")},
+            joinColumns = {@JoinColumn(name = "competition_pair_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     @Size(max=2)
@@ -59,5 +59,13 @@ public class CompetitionPair extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode());
+    }
+
+    @PreRemove
+    public void preRemove(){
+        competition.getCompetitionPairs().remove(this);
+        players.forEach(player -> player.getCompetitionPairs().remove(this));
+        requestToJoin.forEach(player -> player.getRequestToJoinCompetition().remove(this));
+        requestToInvite.forEach(player -> player.getRequestToInviteCompetition().remove(this));
     }
 }

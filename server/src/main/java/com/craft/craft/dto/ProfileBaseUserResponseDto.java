@@ -1,5 +1,6 @@
 package com.craft.craft.dto.sport;
 
+import com.craft.craft.dto.sport.competiton.CompetitionDto;
 import com.craft.craft.dto.sport.competiton.CompetitionPairDto;
 import com.craft.craft.dto.sport.train.TrainInProfileResponseDto;
 import com.craft.craft.model.user.BaseUser;
@@ -20,7 +21,7 @@ public class ProfileBaseUserResponseDto {
     private String phoneNumber;
     protected String username;
     private List<TrainInProfileResponseDto> trains;
-    private List<CompetitionPairDto> competitions;
+    private List<CompetitionDto> competitions;
     private Integer rating;
     private Integer labId;
 
@@ -32,7 +33,9 @@ public class ProfileBaseUserResponseDto {
                 user.getPhoneNumber(),
                 user.getUsername(),
                 user.getTrains().stream().map(TrainInProfileResponseDto::getDtoFromTrain).collect(Collectors.toList()),
-                user.getCompetitionPairs().stream().map(CompetitionPairDto::getDtoFromCompetitionPair).collect(Collectors.toList()),
+                user.getCompetitionPairs().stream().map(pair ->
+                     CompetitionDto.getDtoFromCompetition(pair.getCompetition())
+                ).collect(Collectors.toList()),
                 user.getRating(),
                 user.getLabId()
         );

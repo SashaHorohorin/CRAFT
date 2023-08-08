@@ -74,9 +74,9 @@ public class BaseUser extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
-            name = "competition_players",
+            name = "competition_pair_players",
             joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "competition_id")}
+            inverseJoinColumns = {@JoinColumn(name = "competition_pair_id")}
     )
     private Set<CompetitionPair> competitionPairs;
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
