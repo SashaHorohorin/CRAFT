@@ -25,10 +25,16 @@ const PersonalPage = () => {
     const [fetchingDeletePair, isLoadingDeletePair, errorDeletePair] = useFetching(
         async (id) => {
             // console.log('saskfhjahfshahfjshfkjshkj');
-            const response = await DataService.getProfile(id);
+            const response = await DataService.postDeletePair(id);
             console.log(response.data);
+            setCompetitions(response.data.competitions);
         }
     );
+
+    const deletePair = (pairId) => {
+        
+        fetchingDeletePair(pairId);
+    }
     
 
     useEffect(() => {
@@ -171,6 +177,7 @@ const PersonalPage = () => {
                                 (competition, index) => (
                                     <Competition
                                         key={competition.id}
+                                        deletePair={(pairId) => deletePair(pairId)}
                                         competition={competition}
                                         type="delete"
                                     />
