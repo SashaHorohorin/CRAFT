@@ -6,11 +6,13 @@ import { useFetching } from "../../hooks/useFetching";
 import DataService from "../../API/DataService";
 import { set } from "mobx";
 import { useParams } from "react-router";
+import ModalInvitePair from '../../components/ModalInvitePair/ModalInvitePair'
+
 
 const Applications = () => {
     const { eventStore } = useContext(Context);
-    const { id } = useParams();
-    const [flagOpenModalAddPair, setFlagOpenModalAddPair] = useState(false);
+    const { id } = useParams(); 
+    
     const [valueName, setValueName] = useState("");
     const [valueRating, setValueRating] = useState("");
     const [user, setUser] = useState([]);
@@ -28,6 +30,7 @@ const Applications = () => {
         console.log(response.data);
         setCompetition(response.data);
     });
+
     const [
         fetchingAcceptInvitePair,
         isLoadingAcceptInvitePair,
@@ -40,11 +43,21 @@ const Applications = () => {
         console.log(response.data);
         setCompetition(response.data);
     });
+
     const [fetchingUser, isLoadingUser, errorUser] = useFetching(async () => {
         const response = await DataService.getAllUsers();
         console.log(response.data);
         setUser(response.data);
     });
+
+
+    const [fetchingRequestToInvite, isLoadingRequestToInvite, errorRequestToInvite] = useFetching(async (competitionPairId, username) => {
+        const response = await DataService.getRequestToInvite(competitionPairId, username);
+        console.log(response.data);
+        setUser(response.data);
+    });
+
+
     const [fetchingCompetition, isLoadingCompetition, errorCompetition] =
         useFetching(async (id) => {
             const response = await DataService.getCompetitionById(id);
@@ -62,10 +75,7 @@ const Applications = () => {
         fetchingUser();
         fetchingCompetition(id);
     }, []);
-    // useEffect(() => {
-    //     fetchingUser();
-    //     fetchingCompetition(id);
-    // }, [user]);
+    
 
     let openModal = () => {
         document.body.classList.add("stop");
@@ -133,6 +143,18 @@ const Applications = () => {
         fetchingAcceptInvitePair(pairId, { username: localStorage.getItem('username')})
     }
 
+    const requestToInvite = async (pairId) => {
+        for (let i = 0; i < user.length; i++) {
+            let fullName = user[i].firstName + " " + user[i].lastName;
+            if (fullName === valueName) {
+                console.log();
+
+                await fetchingRequestToInvite(pairId, { username: user[i].username });
+            }
+        }
+        
+    }
+
     const handleNameChange = (event) => {
         setValueName(event.target.value);
         // console.log(valueName);
@@ -147,110 +169,7 @@ const Applications = () => {
 
     return (
         <div className="applications">
-            <div
-                onClick={(event) => closeModal(event)}
-                className={
-                    eventStore.flagOpenModalAddPair
-                        ? "modal-applications__bg active"
-                        : "modal-applications__bg"
-                }
-            >
-                <div className="applications__modal modal-applications">
-                    <div className="modal-applications__row">
-                        <div className="modal-applications__header">
-                            <div className="modal-applications__title">
-                                Запись пары на соревнования
-                            </div>
-                            <div
-                                onClick={(event) => closeModal(event)}
-                                className="modal-applications__close"
-                            >
-                                <span>X</span>
-                            </div>
-                        </div>
-                        <div className="modal-applications__mine mine-applications">
-                            {localStorage.getItem("labId") === "null" ? (
-                                <div className="mine-applications__fitst-time">
-                                    <div className="mine-applications__title">
-                                        Зполните ваш ID. Инструкция:
-                                    </div>
-                                    <ol className="mine-applications__instruction">
-                                        <li className="mine-applications__item item-instruction">
-                                            <div className="item-instruction__text">
-                                                Перейдите на сайт и в поиске
-                                                введите фамилию и имя. И
-                                                выберите себя.
-                                            </div>
-                                            <div className="item-instruction__img">
-                                                <img
-                                                    src="../images/CompetitionPage/01.png"
-                                                    alt=""
-                                                />
-                                            </div>
-                                        </li>
-                                        <li className="mine-applications__item item-instruction">
-                                            <div className="item-instruction__text">
-                                                В строке поиска браузера
-                                                скопируйте ваш ID и поместите к
-                                                нам в поле ввода.
-                                            </div>
-                                            <div className="item-instruction__img">
-                                                <img
-                                                    src="../images/CompetitionPage/02.png"
-                                                    alt=""
-                                                />
-                                            </div>
-                                        </li>
-                                    </ol>
-                                    <form
-                                        className="mine-applications__form"
-                                        action=""
-                                        onSubmit={handleSubmit}
-                                    >
-                                        <label
-                                            className="mine-applications__label"
-                                            htmlFor="idRating"
-                                        >
-                                            Ваш ID:
-                                        </label>
-                                        <input
-                                            className="mine-applications__input-rating"
-                                            type="text"
-                                            id="idRating"
-                                            name="idRating"
-                                            value={valueRating}
-                                            onChange={handleRatingChange}
-                                        />
-                                    </form>
-                                </div>
-                            ) : null}
-
-                            <div className="mine-applications__find find-person">
-                                <div className="find-person__text">
-                                    Введите фамилию и имя партнера, если не
-                                    знаете с кем будете играть оставьте поле
-                                    пустым. (он должен быть зарегистрирован в
-                                    системе)
-                                </div>
-                                <form className="find-person__form">
-                                    <input
-                                        value={valueName}
-                                        onChange={handleNameChange}
-                                        className="find-person__input"
-                                        type="text"
-                                    />
-                                </form>
-                                <button
-                                    onClick={() => sendCreateAndInvite()}
-                                    className="find-person__button"
-                                >
-                                    Записаться
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ModalInvitePair sendCreateAndInvite={sendCreateAndInvite}/>
             <div
                 onClick={(event) => closeModalInst(event)}
                 className={

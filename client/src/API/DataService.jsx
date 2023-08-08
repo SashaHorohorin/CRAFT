@@ -76,4 +76,8 @@ export default class DataService {
     static async getCompetitionById(id) {
         return await $api.get(`api/v1/competition/${id}`);
     }
+    static async getRequestToInvite(competitionPairId, username) {
+        return await $api.get(`api/v1/competition/pair/${competitionPairId}/request-to-invite/${username}`);
+    }
+    
 }

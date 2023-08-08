@@ -56,6 +56,9 @@
     background: #ff6969;
     max-height: 170px;
     list-style: none;
+    @media (max-width: 1160px) {
+        display: none;
+    }
 
     &__link {
         color: #fff;
@@ -152,6 +155,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 60px;
+    @media (max-width: 810px) {
+        grid-column-gap: 20px;
+        
+    }
 
     &__card {
     }
@@ -193,10 +200,14 @@
     &__name {
         position: absolute;
         bottom: 35px;
-        right: 65px;
+        right: 56px;
         color: #5b5b5b;
         font-size: 24px;
         font-weight: 700;
+        @media (max-width: 1160px) {
+            bottom: 35px;
+            right: 145px;
+        }
     }
 }
 
@@ -402,6 +413,10 @@
         grid-column-gap: 36px;
         grid-row-gap: 36px;
         margin-bottom: 30px;
+        @media (max-width: 860px) {
+            grid-column-gap: 10px;
+            grid-row-gap: 10px;
+        }
     }
 
     &__item {
@@ -492,6 +507,11 @@
         border-radius: 10px;
         background: #ff6969;
         padding: 16px 0;
+        @media (max-width: 1160px) {
+            font-size: 12px;
+            padding: 10px 5px;
+
+        }
     }
 }
 .btns-join {
@@ -507,5 +527,12 @@
         border-radius: 10px;
         background: #ff6969;
         padding: 16px 20px;
+        @media (max-width: 1160px) {
+            max-width: 100px;
+            width: 100%;
+            font-size: 12px;
+            padding: 10px 5px;
+
+        }
     }
 }
