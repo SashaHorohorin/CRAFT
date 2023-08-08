@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 
 export default class EventStore {
     flagOpenModalAddPair = false;
+    flagOpenModalRequestAddPair= false;
     flagOpenModalInstruction = false;
     flagOpenModal = false;
     players = [];
@@ -10,6 +11,9 @@ export default class EventStore {
 
     constructor() {
         makeAutoObservable(this);
+    }
+    setFlagOpenModalRequestAddPair(bool){
+        this.flagOpenModalRequestAddPair = bool;
     }
     setCompetition(competition){
         this.competition = competition;

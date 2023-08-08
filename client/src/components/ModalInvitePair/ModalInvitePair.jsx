@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
-const ModalInvitePair = ({sendCreateAndInvite}) => {
+const ModalInvitePair = ({text, title, sendFunc, flag, setFlag}) => {
     const [flagOpenModalAddPair, setFlagOpenModalAddPair] = useState(false);
     const [valueName, setValueName] = useState("");
     const [valueRating, setValueRating] = useState("");
@@ -21,7 +21,7 @@ const ModalInvitePair = ({sendCreateAndInvite}) => {
             nameClass.includes("modal-applications__bg")
         ) {
             document.body.classList.remove("stop");
-            eventStore.setFlagOpenModalAddPair(false);
+            setFlag(false);
         }
     };
 
@@ -43,7 +43,7 @@ const ModalInvitePair = ({sendCreateAndInvite}) => {
         <div
             onClick={(event) => closeModal(event)}
             className={
-                eventStore.flagOpenModalAddPair
+                flag
                     ? "modal-applications__bg active"
                     : "modal-applications__bg"
             }
@@ -52,7 +52,7 @@ const ModalInvitePair = ({sendCreateAndInvite}) => {
                 <div className="modal-applications__row">
                     <div className="modal-applications__header">
                         <div className="modal-applications__title">
-                            Запись пары на соревнования
+                            {title ? title : 'Запись пары на соревнования'}
                         </div>
                         <div
                             onClick={(event) => closeModal(event)}
@@ -119,9 +119,7 @@ const ModalInvitePair = ({sendCreateAndInvite}) => {
 
                         <div className="mine-applications__find find-person">
                             <div className="find-person__text">
-                                Введите фамилию и имя партнера, если не знаете с
-                                кем будете играть оставьте поле пустым. (он
-                                должен быть зарегистрирован в системе)
+                                {text ? text : 'Введите фамилию и имя партнера, если не знаете с кем будете играть оставьте поле пустым. (он должен быть зарегистрирован в системе)'}
                             </div>
                             <form className="find-person__form">
                                 <input
@@ -132,7 +130,7 @@ const ModalInvitePair = ({sendCreateAndInvite}) => {
                                 />
                             </form>
                             <button
-                                onClick={() => sendCreateAndInvite()}
+                                onClick={() => sendFunc(valueName, valueRating)}
                                 className="find-person__button"
                             >
                                 Записаться
