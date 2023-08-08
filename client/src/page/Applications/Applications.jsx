@@ -61,7 +61,7 @@ const Applications = () => {
             username
         );
         console.log(response.data);
-        setCompetition(response.data);
+        // setCompetition(response.data);
     });
 
     const [fetchingCompetition, isLoadingCompetition, errorCompetition] =
@@ -349,7 +349,7 @@ const Applications = () => {
                                     ) : isPlayerInCompetititon() ? (
                                         <button
                                             className="applications__button"
-                                            style={{opacity: '0.3'}}
+                                            style={{opacity: '0.3', cursor: 'not-allowed'}}
                                         >
                                             + Предложить сыграть вместе
                                         </button>
