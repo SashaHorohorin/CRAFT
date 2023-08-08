@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -54,4 +55,9 @@ public class CompetitionPair extends BaseEntity {
 //            inverseJoinColumns = {@JoinColumn(name = "user_id")}
 //    )
 //    private Set<BaseUser> requestsToInvites = new HashSet<>();
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode());
+    }
 }

@@ -36,6 +36,7 @@ public class JwtSecurityConfig {
                 .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
+                        .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                         //swagger-----------------------------------------------------------------------------------------
                         .antMatchers(
                         "/v2/api-docs/**","/swagger-ui.html","/swagger-ui/**", "/v2/api-docs",
@@ -50,14 +51,11 @@ public class JwtSecurityConfig {
                         .permitAll()
                         //info-card---------------------------------------------------------------------------------------
                         .antMatchers(HttpMethod.GET,   "/api/v1/craft-info-card/**").permitAll()
-                        .antMatchers(HttpMethod.OPTIONS,   "/api/v1/craft-info-card/**").permitAll()
                         //news--------------------------------------------------------------------------------------------
                         .antMatchers(HttpMethod.GET,   "/api/v1/news/**").permitAll()
-                        .antMatchers(HttpMethod.OPTIONS,   "/api/v1/news/**").permitAll()
                         .antMatchers("/api/v1/news/**").hasAuthority(RoleName.ADMIN.name())
                         //price-------------------------------------------------------------------------------------------
                         .antMatchers(HttpMethod.GET,   "/api/v1/price/**").permitAll()
-                        .antMatchers(HttpMethod.OPTIONS,   "/api/v1/price/**").permitAll()
                         .antMatchers("/api/v1/price/**").hasAuthority(RoleName.ADMIN.name())
                         //competition-------------------------------------------------------------------------------------
                         .antMatchers(
