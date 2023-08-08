@@ -38,4 +38,9 @@ public class BaseUserController {
     public List<FindUserDto> getAll(){
         return userService.findAll().stream().map(FindUserDto::getDtoFromUser).collect(Collectors.toList());
     }
+
+    @GetMapping("/find-all-in-competition-without-pair/{competitionId}")
+    public List<FindUserDto> getAllWithoutPair(){
+        return userService.findAll().stream().map(FindUserDto::getDtoFromUser).collect(Collectors.toList());
+    }
 }

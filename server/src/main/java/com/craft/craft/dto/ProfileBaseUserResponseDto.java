@@ -1,6 +1,9 @@
 package com.craft.craft.dto;
 
+import com.craft.craft.dto.sport.SportsmenDto;
 import com.craft.craft.dto.sport.competiton.CompetitionDto;
+import com.craft.craft.dto.sport.competiton.CompetitionPairDto;
+import com.craft.craft.dto.sport.competiton.CompetitionRequestsInProfileDto;
 import com.craft.craft.dto.sport.train.TrainInProfileResponseDto;
 import com.craft.craft.model.user.BaseUser;
 import lombok.AllArgsConstructor;
@@ -21,6 +24,8 @@ public class ProfileBaseUserResponseDto {
     protected String username;
     private List<TrainInProfileResponseDto> trains;
     private List<CompetitionDto> competitions;
+    private List<CompetitionRequestsInProfileDto> requestToInvite;
+    private List<CompetitionRequestsInProfileDto> requestToJoin;
     private Integer rating;
     private Integer labId;
 
@@ -35,6 +40,8 @@ public class ProfileBaseUserResponseDto {
                 user.getCompetitionPairs().stream().map(pair ->
                      CompetitionDto.getDtoFromCompetition(pair.getCompetition())
                 ).collect(Collectors.toList()),
+                user.getRequestToInviteCompetition().stream().map(CompetitionRequestsInProfileDto::getDtoFromCompetitionPair).collect(Collectors.toList()),
+                user.getRequestToJoinCompetition().stream().map(CompetitionRequestsInProfileDto::getDtoFromCompetitionPair).collect(Collectors.toList()),
                 user.getRating(),
                 user.getLabId()
         );
