@@ -31,7 +31,7 @@ export default class DataService {
             `api/v1/train/${trainId}/remove-user
         `,
             obj
-        );
+        );  
     }
 
     static async getEvents(countPage) {

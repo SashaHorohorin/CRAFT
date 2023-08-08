@@ -6,18 +6,17 @@ import { useFetching } from "../../hooks/useFetching";
 import DataService from "../../API/DataService";
 import { set } from "mobx";
 import { useParams } from "react-router";
-import ModalInvitePair from '../../components/ModalInvitePair/ModalInvitePair'
-
+import ModalInvitePair from "../../components/ModalInvitePair/ModalInvitePair";
 
 const Applications = () => {
     const { eventStore } = useContext(Context);
-    const { id } = useParams(); 
-    
+    const { id } = useParams();
+
     const [valueName, setValueName] = useState("");
     const [valueRating, setValueRating] = useState("");
     const [user, setUser] = useState([]);
     const [competition, setCompetition] = useState({});
-    const [pairId, setPairId] = useState('');
+    const [pairId, setPairId] = useState("");
     const [flagSucces, setFlagSucces] = useState(false);
 
     const [
@@ -39,7 +38,7 @@ const Applications = () => {
         errorAcceptInvitePair,
     ] = useFetching(async (competitionPairId, obj) => {
         const response = await DataService.postAcceptInvitePair(
-            competitionPairId, 
+            competitionPairId,
             obj
         );
         console.log(response.data);
@@ -52,14 +51,18 @@ const Applications = () => {
         setUser(response.data);
     });
 
-
-    const [fetchingRequestToInvite, isLoadingRequestToInvite, errorRequestToInvite] = useFetching(async (competitionPairId, username) => {
-        const response = await DataService.getRequestToInvite(competitionPairId, username);
+    const [
+        fetchingRequestToInvite,
+        isLoadingRequestToInvite,
+        errorRequestToInvite,
+    ] = useFetching(async (competitionPairId, username) => {
+        const response = await DataService.getRequestToInvite(
+            competitionPairId,
+            username
+        );
         console.log(response.data);
         setCompetition(response.data);
-        
     });
-
 
     const [fetchingCompetition, isLoadingCompetition, errorCompetition] =
         useFetching(async (id) => {
@@ -70,13 +73,13 @@ const Applications = () => {
     const [fetchingRequestToJoin, isLoadingRequestToJoin, errorRequestToJoin] =
         useFetching(async (id) => {
             const response = await DataService.getRequestToJoin(id);
-            console.log(response.data); 
+            console.log(response.data);
             setCompetition(response.data);
         });
     const [fetchingRating, isLoadingRating, errorRating] = useFetching(
         async (obj) => {
             const response = await DataService.postSetLabId(obj);
-            setFlagSucces(response.data)
+            setFlagSucces(response.data);
             // console.log();
         }
     );
@@ -85,17 +88,16 @@ const Applications = () => {
         fetchingUser();
         fetchingCompetition(id);
     }, []);
-    
 
     let openModal = () => {
         document.body.classList.add("stop");
         eventStore.setFlagOpenModalAddPair(true);
     };
     let openModalRequestAddPair = (id) => {
-        setPairId(id)
+        setPairId(id);
         document.body.classList.add("stop");
         eventStore.setFlagOpenModalRequestAddPair(true);
-    }
+    };
     let closeModal = (event) => {
         const nameClass = event.target.className;
         if (
@@ -152,14 +154,17 @@ const Applications = () => {
             console.log(valueName);
 
             if (fullName === valueName) {
-
-                await fetchingCreateAndInvite(id, { username: user[i].username });
+                await fetchingCreateAndInvite(id, {
+                    username: user[i].username,
+                });
             }
         }
     };
     const acceptInvite = (pairId) => {
-        fetchingAcceptInvitePair(pairId, { username: localStorage.getItem('username')})
-    }
+        fetchingAcceptInvitePair(pairId, {
+            username: localStorage.getItem("username"),
+        });
+    };
 
     const requestToInvite = async (valueName) => {
         console.log();
@@ -171,8 +176,7 @@ const Applications = () => {
                 await fetchingRequestToInvite(pairId, user[i].username);
             }
         }
-        
-    }
+    };
 
     const handleNameChange = (event) => {
         setValueName(event.target.value);
@@ -184,13 +188,43 @@ const Applications = () => {
     };
     const handleSubmit = (event) => {
         event.preventDefault();
-    };  
+    };
+
+    const isPlayerInCompetititon = () => {
+        for (let i = 0; i < competition.competitionPairs.length; i++) {
+            for (
+                let j = 0;
+                j < competition.competitionPairs[i].player.length;
+                j++
+            ) {
+                if (
+                    competition.competitionPairs[i].player[j].username ==
+                    localStorage.getItem("username")
+                ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
 
     return (
         <div className="applications">
-            <ModalInvitePair setFlag={(bool) => eventStore.setFlagOpenModalAddPair(bool)} flag={eventStore.flagOpenModalAddPair} sendFunc={sendCreateAndInvite}/>
-            <ModalInvitePair title='Приглашение в пару' text='Введите фамилию и имя партнера' setFlag={(bool) => eventStore.setFlagOpenModalRequestAddPair(bool)} flag={eventStore.flagOpenModalRequestAddPair} sendFunc={requestToInvite}/>
-            <div 
+            <ModalInvitePair
+                setFlag={(bool) => eventStore.setFlagOpenModalAddPair(bool)}
+                flag={eventStore.flagOpenModalAddPair}
+                sendFunc={sendCreateAndInvite}
+            />
+            <ModalInvitePair
+                title="Приглашение в пару"
+                text="Введите фамилию и имя партнера"
+                setFlag={(bool) =>
+                    eventStore.setFlagOpenModalRequestAddPair(bool)
+                }
+                flag={eventStore.flagOpenModalRequestAddPair}
+                sendFunc={requestToInvite}
+            />
+            <div
                 onClick={(event) => closeModalInst(event)}
                 className={
                     eventStore.flagOpenModalInstruction
@@ -292,7 +326,9 @@ const Applications = () => {
                                     {pair.player[0].username ==
                                     localStorage.getItem("username") ? (
                                         <button
-                                            onClick={() => openModalRequestAddPair(pair.id)}
+                                            onClick={() =>
+                                                openModalRequestAddPair(pair.id)
+                                            }
                                             className="applications__button"
                                         >
                                             + Пригласить к себе в пару
@@ -303,14 +339,25 @@ const Applications = () => {
                                               localStorage.getItem("username")
                                       ) ? (
                                         <button
-                                            onClick={() => acceptInvite(pair.id)}
+                                            onClick={() =>
+                                                acceptInvite(pair.id)
+                                            }
                                             className="applications__button"
                                         >
                                             + Принять приглашение
                                         </button>
+                                    ) : isPlayerInCompetititon() ? (
+                                        <button
+                                            className="applications__button"
+                                            style={{opacity: '0.3'}}
+                                        >
+                                            + Предложить сыграть вместе
+                                        </button>
                                     ) : (
                                         <button
-                                            onClick={() => fetchingRequestToJoin(pair.id)}
+                                            onClick={() =>
+                                                fetchingRequestToJoin(pair.id)
+                                            }
                                             className="applications__button"
                                         >
                                             + Предложить сыграть вместе
