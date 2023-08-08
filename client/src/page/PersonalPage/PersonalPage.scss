@@ -157,8 +157,12 @@
     grid-column-gap: 60px;
     @media (max-width: 810px) {
         grid-column-gap: 20px;
-        
     }
+    @media (max-width: 760px) {
+        display: flex;
+        flex-direction: column;
+    }
+    
 
     &__card {
     }
@@ -175,6 +179,7 @@
     &__img {
         // width: 100%;
         // height: 100%;
+        
         img {
             // width: 100%;
             // height: 100%;
@@ -200,14 +205,14 @@
     &__name {
         position: absolute;
         bottom: 35px;
-        right: 56px;
+        left: 245px;
         color: #5b5b5b;
         font-size: 24px;
         font-weight: 700;
-        @media (max-width: 1160px) {
-            bottom: 35px;
-            right: 145px;
-        }
+        // @media (max-width: 1160px) {
+        //     bottom: 35px;
+        //     right: 145px;
+        // }
     }
 }
 

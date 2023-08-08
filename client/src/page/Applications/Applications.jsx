@@ -70,7 +70,7 @@ const Applications = () => {
     const [fetchingRequestToJoin, isLoadingRequestToJoin, errorRequestToJoin] =
         useFetching(async (id) => {
             const response = await DataService.getRequestToJoin(id);
-            console.log(response.data);
+            console.log(response.data); 
             setCompetition(response.data);
         });
     const [fetchingRating, isLoadingRating, errorRating] = useFetching(
