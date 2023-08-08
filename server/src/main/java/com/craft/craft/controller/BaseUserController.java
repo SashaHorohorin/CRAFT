@@ -2,7 +2,7 @@ package com.craft.craft.controller;
 
 import com.craft.craft.dto.FindUserDto;
 import com.craft.craft.dto.SetLabIdDto;
-import com.craft.craft.dto.sport.ProfileBaseUserResponseDto;
+import com.craft.craft.dto.ProfileBaseUserResponseDto;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.service.UserService;
 import lombok.RequiredArgsConstructor;

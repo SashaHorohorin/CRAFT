@@ -84,9 +84,8 @@ public class CompetitionController {
     }
 
     @PostMapping("/delete-pair/{pairId}")
-    public boolean deletePair(@PathVariable UUID pairId) throws ModelNotFoundException {
-        competitionService.deletePair(pairId);
-        return true;
+    public CompetitionDto deletePair(@PathVariable UUID pairId) throws ModelNotFoundException {
+        return  CompetitionDto.getDtoFromCompetition(competitionService.deletePair(pairId));
     }
 //
 //    @PostMapping("/{trainId}/remove-user")

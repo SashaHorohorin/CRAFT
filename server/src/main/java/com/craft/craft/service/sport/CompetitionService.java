@@ -53,12 +53,13 @@ public class CompetitionService {
         competitionRepo.deleteById(id);
         return true;
     }
-    public Boolean deletePair(UUID pairId) throws ModelNotFoundException {
+    public Competition deletePair(UUID pairId) throws ModelNotFoundException {
         CompetitionPair pair = competitionPairRepo.findById(pairId).orElseThrow(
                 ()->new ModelNotFoundException("Пара по данному id не найдена")
         );
+        Competition competition = pair.getCompetition();
         competitionPairRepo.deleteById(pairId);
-        return true;
+        return competition;
     }
     public Competition updateCompetition(UUID id, UpdateCompetitionDto dto) throws ModelNotFoundException {
         Competition competition = competitionRepo.findById(id).orElseThrow(
@@ -99,6 +100,9 @@ public class CompetitionService {
                 .orElseThrow(() -> new ModelNotFoundException("Пара с таким id не найдена"));
         if(pair.getPlayers().size() >= 2)
             throw new ModelNotFoundException("Пара уже создана");
+        Competition competition = pair.getCompetition();
+        if(competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(player2)))
+            throw new ModelNotFoundException("Пользователь уже зарегистрирован на соревновании");
 
         if(pair.getPlayers().iterator().next().getUsername().equals(authName))
             pair.getRequestToJoin().remove(player2);
@@ -118,7 +122,9 @@ public class CompetitionService {
                 .orElseThrow(() -> new ModelNotFoundException("Пара с таким id не найдена"));
         if(pair.getPlayers().size() >= 2)
             throw new ModelNotFoundException("Пара уже создана");
-
+        Competition competition = pair.getCompetition();
+        if(competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(player2)))
+            throw new ModelNotFoundException("Вы уже зарегистрирован на соревновании");
         player2.setRating(LabService.getUserRating(player2.getLabId()));
         pair.getRequestToInvite().forEach(user -> {
             if(user.getUsername().equals(username))
@@ -170,7 +176,9 @@ public class CompetitionService {
               .orElseThrow(()->new ModelNotFoundException("по данному id пара не найдена"));
         BaseUser reqTo = baseUserRepo.findByUsername(username)
                 .orElseThrow(()->new ModelNotFoundException("по данному username пользователь не найден"));
-
+        Competition competition = pair.getCompetition();
+        if(competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(reqTo)))
+            throw new ModelNotFoundException("Пользователь уже зарегистрирован на соревновании");
         if(reqTo.getLabId() != null) reqTo.setRating(LabService.getUserRating(reqTo.getLabId()));
         BaseUser creator = pair.getPlayers().iterator().next();
         if(creator.getUsername().equals(getUsernameOfRequester())) {
