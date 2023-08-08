@@ -10,6 +10,7 @@ import InviteItem from "../../components/PersonalComponent/InviteItem";
 const PersonalPage = () => {
     const [profileData, setProfileData] = useState({});
     const [workoutTrain, setWorkoutTrain] = useState([]);
+    const [competitions, setCompetitions] = useState([]);
 
     const [fetchingProfile, isLoadingProfile, errorProfile] = useFetching(
         async (username) => {
@@ -18,6 +19,14 @@ const PersonalPage = () => {
             console.log(response.data);
             setProfileData(response.data);
             setWorkoutTrain(response.data.trains)
+            setCompetitions(response.data.competitions)
+        }
+    );
+    const [fetchingDeletePair, isLoadingDeletePair, errorDeletePair] = useFetching(
+        async (id) => {
+            // console.log('saskfhjahfshahfjshfkjshkj');
+            const response = await DataService.getProfile(id);
+            console.log(response.data);
         }
     );
     
@@ -158,11 +167,12 @@ const PersonalPage = () => {
                             <div className="competitions-profile__title">
                                 Соревнования
                             </div>
-                            {profileData.competitions?.map(
+                            {competitions?.map(
                                 (competition, index) => (
                                     <Competition
                                         key={competition.id}
                                         competition={competition}
+                                        type="delete"
                                     />
                                 )
                             )}

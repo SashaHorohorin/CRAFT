@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Context } from "../../..";
 
-const Competition = ({competition}) => {
+const Competition = ({competition, type}) => {
 
     const { eventStore } = useContext(Context);
 
@@ -21,15 +21,21 @@ const Competition = ({competition}) => {
 
     return (
         <div className="competitions__event event-competitions">
-            <div className="event-competitions__title">Все против всех DE</div>
+            <div className="event-competitions__title">{competition.type}</div>
             {/* <div className="event-competitions__title">{competition.type}</div> */}
             <div className="event-competitions__date">{getDateYear(competition.startCompetition)}</div>
             <div className="event-competitions__time">{getTime(competition.startCompetition)}</div>
             <div className="event-competitions__btns">
                 <Link onClick={() => eventStore.setCompetition(competition)} to={`applications/${competition.id}`} className="event-competitions__list">Заявки</Link>
-                <button className="event-competitions__follow">
-                    Записаться
-                </button>
+                {type == 'delete' ? (
+                    <button className="event-competitions__follow">
+                        Выписаться
+                    </button>
+                ) : (
+                    <button className="event-competitions__follow">
+                        Записаться
+                    </button>
+                )}
             </div>
         </div>
     );

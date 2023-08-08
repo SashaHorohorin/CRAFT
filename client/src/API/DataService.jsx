@@ -63,6 +63,10 @@ export default class DataService {
             obj
         );
     }
+    static async postDeletePair(pairId) {
+        return await $api.post(
+            `api/v1/competition/delete-pair/${pairId}`);
+    }
     static async postAcceptInvitePair(competitionPairId, obj) {
         return await $api.post(
             `api/v1/competition/pair/${competitionPairId}/accept-invite-request
