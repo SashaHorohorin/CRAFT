@@ -11,6 +11,8 @@ const PersonalPage = () => {
     const [profileData, setProfileData] = useState({});
     const [workoutTrain, setWorkoutTrain] = useState([]);
     const [competitions, setCompetitions] = useState([]);
+    const [requestToInvite, setRequestToInvite] = useState([]);
+    const [requestToJoin, setRequestToJoin] = useState([]);
 
     const [fetchingProfile, isLoadingProfile, errorProfile] = useFetching(
         async (username) => {
@@ -18,8 +20,10 @@ const PersonalPage = () => {
             const response = await DataService.getProfile(username);
             console.log(response.data);
             setProfileData(response.data);
-            setWorkoutTrain(response.data.trains)
-            setCompetitions(response.data.competitions)
+            setWorkoutTrain(response.data.trains);
+            setCompetitions(response.data.competitions);
+            setRequestToInvite(response.data.requestToInvite);
+            setRequestToJoin(response.data.requestToJoin);
         }
     );
     const [fetchingDeletePair, isLoadingDeletePair, errorDeletePair] = useFetching(
@@ -31,8 +35,9 @@ const PersonalPage = () => {
         }
     );
 
+
+
     const deletePair = (pairId) => {
-        
         fetchingDeletePair(pairId);
     }
     
@@ -146,7 +151,9 @@ const PersonalPage = () => {
                                 Приглашения в пару 
                             </div>
                             <div className="invite-pair__row">
-                                <InviteItem type='invite'/>
+                                {requestToInvite?.map((request, index) => (
+                                    <InviteItem request={request} type='invite'/>
+                                ))}
                                 
                             </div>
                             
@@ -156,8 +163,9 @@ const PersonalPage = () => {
                                 Заявки на вступление в пару  
                             </div>
                             <div className="invite-pair__row">
-                                <InviteItem type='join'/>
-                                
+                                {requestToJoin?.map((request, index) => (
+                                    <InviteItem request={request} type='join'/>
+                                ))}
                             </div>
                             
                         </div>
