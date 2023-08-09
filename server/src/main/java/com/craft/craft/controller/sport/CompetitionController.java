@@ -44,13 +44,24 @@ public class CompetitionController {
                 competitionService.addSecondUserToPairFromRequestJoin(competitionPairId, dto.getUsername())
                         .getCompetition());
     }
-
+    @PostMapping("/pair/{competitionPairId}/reject-join-request")
+    public CompetitionDto rejectRequestJoin(@PathVariable UUID competitionPairId, @RequestBody UsernameDto dto) throws ModelNotFoundException, FullTrainException {
+        return CompetitionDto.getDtoFromCompetition(
+                competitionService.rejectRequestJoin(competitionPairId, dto.getUsername())
+                        .getCompetition());
+    }
     @PostMapping("/pair/{competitionPairId}/accept-invite-request")
     public CompetitionDto addSecondUserToPairFromRequestInvite(@PathVariable UUID competitionPairId, @RequestBody UsernameDto dto) throws ModelNotFoundException {
         return CompetitionDto.getDtoFromCompetition(
                 competitionService.addSecondUserToPairFromRequestInvite(competitionPairId, dto.getUsername())
                         .getCompetition());
 }
+    @PostMapping("/pair/{competitionPairId}/reject-invite-request")
+    public CompetitionDto rejectRequestInvite(@PathVariable UUID competitionPairId, @RequestBody UsernameDto dto) throws ModelNotFoundException {
+        return CompetitionDto.getDtoFromCompetition(
+                competitionService.rejectRequestInvite(competitionPairId, dto.getUsername())
+                        .getCompetition());
+    }
 
     @GetMapping("/pair/{competitionPairId}/request-to-join")
     public CompetitionDto requestToJoin(@PathVariable UUID competitionPairId) throws ModelNotFoundException {

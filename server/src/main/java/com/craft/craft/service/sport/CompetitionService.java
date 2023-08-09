@@ -36,10 +36,12 @@ public class CompetitionService {
     public List<Competition> findAll() {
         return competitionRepo.findAll();
     }
+
     public List<Competition> findAllActive() {
         return competitionRepo.findAllByStatus(CompetitionStatus.ACTIVE);
     }
-    public Competition createCompetition(CreateCompetitionDto createCompetitionDto){
+
+    public Competition createCompetition(CreateCompetitionDto createCompetitionDto) {
         Competition competition = new Competition();
         competition.setSportComplex(createCompetitionDto.getSportComplex());
         competition.setStartCompetition(createCompetitionDto.getStartCompetition());
@@ -49,21 +51,24 @@ public class CompetitionService {
         competition.setEndCompetition(new Date(competition.getStartCompetition().getTime() + (1000 * 60 * 60 * 24)));//end на день больше чем start
         return competitionRepo.save(competition);
     }
-    public Boolean deleteCompetition(UUID id){
+
+    public Boolean deleteCompetition(UUID id) {
         competitionRepo.deleteById(id);
         return true;
     }
+
     public Competition deletePair(UUID pairId) throws ModelNotFoundException {
         CompetitionPair pair = competitionPairRepo.findById(pairId).orElseThrow(
-                ()->new ModelNotFoundException("Пара по данному id не найдена")
+                () -> new ModelNotFoundException("Пара по данному id не найдена")
         );
         Competition competition = pair.getCompetition();
         competitionPairRepo.deleteById(pairId);
         return competition;
     }
+
     public Competition updateCompetition(UUID id, UpdateCompetitionDto dto) throws ModelNotFoundException {
         Competition competition = competitionRepo.findById(id).orElseThrow(
-                ()->new ModelNotFoundException("Соревнование по такому id не найдено")
+                () -> new ModelNotFoundException("Соревнование по такому id не найдено")
         );
         competition.setSportComplex(dto.getSportComplex());
         competition.setStartCompetition(dto.getStartCompetition());
@@ -72,15 +77,16 @@ public class CompetitionService {
         competition.setEndCompetition(new Date(competition.getStartCompetition().getTime() + (1000 * 60 * 60 * 24)));//end на день больше чем start
         return competition;
     }
+
     public CompetitionPair createPair(UUID competitionId) throws ModelNotFoundException, FullTrainException {
         BaseUser player1 = getUserByUsername(getUsernameOfRequester());
-        if(player1.getLabId() == null) throw new ModelNotFoundException("Необходимо указать id ЛАБ");
+        if (player1.getLabId() == null) throw new ModelNotFoundException("Необходимо указать id ЛАБ");
         Competition competition = competitionRepo.findById(competitionId)
                 .orElseThrow(() -> new ModelNotFoundException("Соревнование с таким id не найдено"));
 
         if (competition.getMaxPair() == competition.getNowPair())
             throw new FullTrainException("Достигнуто максимальное количество записавшихся пар");
-        if(competition.getCompetitionPairs().stream().anyMatch(pair -> pair.getPlayers().contains(player1)))
+        if (competition.getCompetitionPairs().stream().anyMatch(pair -> pair.getPlayers().contains(player1)))
             throw new ModelNotFoundException("Вы уже записаны на соревнование");
 
         CompetitionPair pair = new CompetitionPair();
@@ -91,62 +97,66 @@ public class CompetitionService {
         competition.getCompetitionPairs().add(pair);
         return competitionPairRepo.save(pair);
     }
+
     public CompetitionPair addSecondUserToPairFromRequestJoin(UUID competitionPairId, String username) throws ModelNotFoundException, FullTrainException {
         String authName = getUsernameOfRequester();
         BaseUser player2 = getUserByUsername(username);
 
-        if(player2.getLabId() == null) throw new ModelNotFoundException("Необходимо указать id ЛАБ");
+        if (player2.getLabId() == null) throw new ModelNotFoundException("Необходимо указать id ЛАБ");
         CompetitionPair pair = competitionPairRepo.findById(competitionPairId)
                 .orElseThrow(() -> new ModelNotFoundException("Пара с таким id не найдена"));
-        if(pair.getPlayers().size() >= 2)
+        if (pair.getPlayers().size() >= 2)
             throw new ModelNotFoundException("Пара уже создана");
         Competition competition = pair.getCompetition();
-        if(competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(player2)))
+        if (competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(player2)))
             throw new ModelNotFoundException("Пользователь уже зарегистрирован на соревновании");
 
-        if(pair.getPlayers().iterator().next().getUsername().equals(authName))
+        if (pair.getPlayers().iterator().next().getUsername().equals(authName))
             pair.getRequestToJoin().remove(player2);
         player2.setRating(LabService.getUserRating(player2.getLabId()));
         pair.getPlayers().add(player2);
-        if(pair.getPlayers().size() == 2){
+        if (pair.getPlayers().size() == 2) {
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
         }
         return competitionPairRepo.save(pair);
     }
+
     public CompetitionPair addSecondUserToPairFromRequestInvite(UUID competitionPairId, String username) throws ModelNotFoundException {
-        if(!getUsernameOfRequester().equals(username)) throw new ModelNotFoundException("Вы не можете принять запрос не от своего имени");
-        BaseUser player2 =  getUserByUsername(getUsernameOfRequester());
-        if(player2.getLabId() == null) throw new ModelNotFoundException("Необходимо указать id ЛАБ");
-       CompetitionPair pair = competitionPairRepo.findById(competitionPairId)
+        if (!getUsernameOfRequester().equals(username))
+            throw new ModelNotFoundException("Вы не можете принять запрос не от своего имени");
+        BaseUser player2 = getUserByUsername(getUsernameOfRequester());
+        if (player2.getLabId() == null) throw new ModelNotFoundException("Необходимо указать id ЛАБ");
+        CompetitionPair pair = competitionPairRepo.findById(competitionPairId)
                 .orElseThrow(() -> new ModelNotFoundException("Пара с таким id не найдена"));
-        if(pair.getPlayers().size() >= 2)
+        if (pair.getPlayers().size() >= 2)
             throw new ModelNotFoundException("Пара уже создана");
         Competition competition = pair.getCompetition();
-        if(competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(player2)))
+        if (competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(player2)))
             throw new ModelNotFoundException("Вы уже зарегистрирован на соревновании");
         player2.setRating(LabService.getUserRating(player2.getLabId()));
         pair.getRequestToInvite().forEach(user -> {
-            if(user.getUsername().equals(username))
+            if (user.getUsername().equals(username))
                 pair.getPlayers().add(player2);
         });
-        if(pair.getPlayers().size() == 2){
+        if (pair.getPlayers().size() == 2) {
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
         }
         return competitionPairRepo.save(pair);
     }
+
     public CompetitionPair requestToJoinIntoPair(UUID competitionPairId) throws ModelNotFoundException {
         BaseUser player = getUserByUsername(getUsernameOfRequester());
 
-        if(player.getLabId() == null) throw new ModelNotFoundException("Необходимо указать id ЛАБ");
+        if (player.getLabId() == null) throw new ModelNotFoundException("Необходимо указать id ЛАБ");
         CompetitionPair pair = competitionPairRepo.findById(competitionPairId)
-                .orElseThrow(()->new ModelNotFoundException("по данному id пара не найдена"));
-        if( pair.getCompetition().getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(player)))
+                .orElseThrow(() -> new ModelNotFoundException("по данному id пара не найдена"));
+        if (pair.getCompetition().getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(player)))
             throw new ModelNotFoundException("Вы уже записаны на соревнование");
 
         player.setRating(LabService.getUserRating(player.getLabId()));
-        pair.getPlayers().forEach(user-> {
+        pair.getPlayers().forEach(user -> {
             try {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(pair.getCompetition().getStartCompetition());
@@ -160,8 +170,8 @@ public class CompetitionService {
                         player.getFirstName() + " " + player.getLastName(),
                         pair.getCompetition().getType(),
                         calendar.get(Calendar.DAY_OF_MONTH) + "." +
-                        calendar.get(Calendar.MONTH) + "." +
-                        calendar.get(Calendar.YEAR)
+                                calendar.get(Calendar.MONTH) + "." +
+                                calendar.get(Calendar.YEAR)
                 );
                 mailSender.sendMime(user.getEmail(), "CRAFT. Заявка на добавление в пару", massage);
             } catch (MessagingException e) {
@@ -169,19 +179,44 @@ public class CompetitionService {
             }
         });
         pair.getRequestToJoin().add(player);
-       return competitionPairRepo.save(pair);
+        return competitionPairRepo.save(pair);
     }
+
+    public CompetitionPair rejectRequestJoin(UUID competitionPairId, String username) throws ModelNotFoundException {
+        CompetitionPair pair = competitionPairRepo.findById(competitionPairId).orElseThrow(() -> new ModelNotFoundException("По данному id пара не найдена"));
+        BaseUser user = baseUserRepo.findByUsername(username).orElseThrow(() -> new ModelNotFoundException("По данному id пользователь не найден"));
+        if (
+                !getUsernameOfRequester().equals(username) &&
+                !getUsernameOfRequester().equals(pair.getPlayers().iterator().next().getUsername())
+        ) throw new ModelNotFoundException("Вы не можете изменять данные другого пользователя");
+        pair.getRequestToJoin().remove(user);
+        return competitionPairRepo.save(pair);
+    }
+
+    public CompetitionPair rejectRequestInvite(UUID competitionPairId, String username) throws ModelNotFoundException {
+        CompetitionPair pair = competitionPairRepo.findById(competitionPairId).orElseThrow(() -> new ModelNotFoundException("По данному id пара не найдена"));
+        BaseUser user = baseUserRepo.findByUsername(username).orElseThrow(() -> new ModelNotFoundException("По данному id пользователь не найден"));
+        System.out.println(getUsernameOfRequester());
+        System.out.println(pair.getPlayers().iterator().next().getUsername());
+        if (
+                !getUsernameOfRequester().equals(username) &&
+                !getUsernameOfRequester().equals(pair.getPlayers().iterator().next().getUsername())
+        ) throw new ModelNotFoundException("Вы не можете изменять данные другого пользователя");
+        pair.getRequestToInvite().remove(user);
+        return competitionPairRepo.save(pair);
+    }
+
     public CompetitionPair requestToInviteIntoPair(UUID competitionPairId, String username) throws ModelNotFoundException, MessagingException {
         CompetitionPair pair = competitionPairRepo.findById(competitionPairId)
-              .orElseThrow(()->new ModelNotFoundException("по данному id пара не найдена"));
+                .orElseThrow(() -> new ModelNotFoundException("по данному id пара не найдена"));
         BaseUser reqTo = baseUserRepo.findByUsername(username)
-                .orElseThrow(()->new ModelNotFoundException("по данному username пользователь не найден"));
+                .orElseThrow(() -> new ModelNotFoundException("по данному username пользователь не найден"));
         Competition competition = pair.getCompetition();
-        if(competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(reqTo)))
+        if (competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(reqTo)))
             throw new ModelNotFoundException("Пользователь уже зарегистрирован на соревновании");
-        if(reqTo.getLabId() != null) reqTo.setRating(LabService.getUserRating(reqTo.getLabId()));
+        if (reqTo.getLabId() != null) reqTo.setRating(LabService.getUserRating(reqTo.getLabId()));
         BaseUser creator = pair.getPlayers().iterator().next();
-        if(creator.getUsername().equals(getUsernameOfRequester())) {
+        if (creator.getUsername().equals(getUsernameOfRequester())) {
             try {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(pair.getCompetition().getStartCompetition());
@@ -195,8 +230,8 @@ public class CompetitionService {
                         creator.getFirstName() + " " + creator.getLastName(),
                         pair.getCompetition().getType(),
                         calendar.get(Calendar.DAY_OF_MONTH) + "." +
-                        calendar.get(Calendar.MONTH) + "." +
-                        calendar.get(Calendar.YEAR)
+                                calendar.get(Calendar.MONTH) + "." +
+                                calendar.get(Calendar.YEAR)
                 );
                 mailSender.sendMime(reqTo.getEmail(), "CRAFT. Заявка на добавление в пару", massage);
             } catch (MessagingException e) {
@@ -206,25 +241,27 @@ public class CompetitionService {
         }
         return competitionPairRepo.save(pair);
     }
+
     public Competition findById(UUID id) throws ModelNotFoundException {
-       return competitionRepo.findById(id).orElseThrow(()->new ModelNotFoundException("Нет соревнования с таким id"));
+        return competitionRepo.findById(id).orElseThrow(() -> new ModelNotFoundException("Нет соревнования с таким id"));
     }
 
     private BaseUser getUserByUsername(String username) throws ModelNotFoundException {
         return baseUserRepo.findByUsername(username)
                 .orElseThrow(() -> new ModelNotFoundException("Пользователь с username=" + username + " не найден"));
     }
+
     private String getUsernameOfRequester() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     @Async
-    @Scheduled(fixedDelay = 1000*60*60)//каждый час
-    public void updateCompetitionStatus(){
+    @Scheduled(fixedDelay = 1000 * 60 * 60)//каждый час
+    public void updateCompetitionStatus() {
         List<Competition> competitions = findAllActive();
         Date now = new Date();
         competitions.forEach(competition -> {
-            if(competition.getEndCompetition().after(now))
+            if (competition.getEndCompetition().after(now))
                 competition.setStatus(CompetitionStatus.NOT_ACTIVE);
         });
     }

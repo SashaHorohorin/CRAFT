@@ -1,7 +1,6 @@
 package com.craft.craft.dto;
 
 import com.craft.craft.dto.sport.competiton.CompetitionDto;
-import com.craft.craft.dto.sport.competiton.CompetitionPairDto;
 import com.craft.craft.dto.sport.competiton.CompetitionRequestInProfileDto;
 import com.craft.craft.dto.sport.train.TrainInProfileResponseDto;
 import com.craft.craft.model.user.BaseUser;
@@ -11,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -32,22 +32,27 @@ public class ProfileBaseUserResponseDto {
     public static ProfileBaseUserResponseDto getDtoFromBaseUser(BaseUser user) {
         List<CompetitionRequestInProfileDto> invite = new ArrayList<>();
         List<CompetitionRequestInProfileDto> join = new ArrayList();
-        user.getRequestToInviteCompetition().forEach(r -> {
-                    BaseUser u = r.getPlayers().iterator().next();
-                    invite.add(CompetitionRequestInProfileDto.getRequestDto(
-                            r.getId(),
-                            u,
-                            r.getCompetition()
-                    ));
+        user.getCompetitionPairs().forEach(r -> {
+                    Set<BaseUser> ri = r.getRequestToInvite();
+                    ri.forEach(u -> {
+                        invite.add(CompetitionRequestInProfileDto.getRequestDto(
+                                r.getId(),
+                                u,
+                                r.getCompetition()
+                        ));
+                    });
+
                 }
         );
-        user.getRequestToJoinCompetition().forEach(r -> {
-                    BaseUser u = r.getPlayers().iterator().next();
-                    join.add(CompetitionRequestInProfileDto.getRequestDto(
-                            r.getId(),
-                            u,
-                            r.getCompetition()
-                    ));
+        user.getCompetitionPairs().forEach(r -> {
+                    r.getRequestToJoin().forEach(pj -> {
+                        join.add(CompetitionRequestInProfileDto.getRequestDto(
+                                r.getId(),
+                                pj,
+                                r.getCompetition()
+                        ));
+                    });
+
                 }
         );
         return new ProfileBaseUserResponseDto(

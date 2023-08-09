@@ -70,7 +70,9 @@ public class JwtSecurityConfig {
                                 "/api/v1/competition/pair/{competitionPairId}/accept-invite-request",
                                 "/api/v1/competition/pair/{competitionPairId}/request-to-join",
                                 "/api/v1/competition/pair/{competitionPairId}/request-to-invite/{username}",
-                                "/api/v1/competition/delete-pair/{pairId}"
+                                "/api/v1/competition/delete-pair/{pairId}",
+                                "/api/v1/competition/pair/{competitionPairId}/reject-invite-request",
+                                "/api/v1/competition/pair/{competitionPairId}/reject-join-request"
                         ).authenticated()
                         .antMatchers("/api/v1/competition/**").hasAuthority(RoleName.ADMIN.name())
                         //trains------------------------------------------------------------------------------------------
