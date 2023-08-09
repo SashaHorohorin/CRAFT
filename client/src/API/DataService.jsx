@@ -74,6 +74,27 @@ export default class DataService {
             obj
         );
     }
+    static async postRejectInvitePair(competitionPairId, obj) {
+        return await $api.post(
+            `api/v1/competition/pair/${competitionPairId}/reject-invite-request
+        `,
+            obj
+        );
+    }
+    static async postRejectJoinPair(competitionPairId, obj) {
+        return await $api.post(
+            `api/v1/competition/pair/${competitionPairId}/reject-join-request
+        `,
+            obj
+        );
+    }
+    static async postAcceptJoinPair(competitionPairId, obj) {
+        return await $api.post(
+            `api/v1/competition/pair/${competitionPairId}/accept-join-request
+        `,
+            obj
+        );
+    }
     static async getAllUsers() {
         return await $api.get(`api/v1/profile/find-all`);
     }
