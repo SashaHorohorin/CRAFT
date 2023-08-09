@@ -64,7 +64,7 @@ public class ProfileBaseUserResponseDto {
 
         user.getCompetitionPairs().forEach(r -> {
                     r.getRequestToJoin().forEach(pj -> {
-                        fromJoin.add(CompetitionRequestInProfileDto.getRequestDto(
+                        toJoin.add(CompetitionRequestInProfileDto.getRequestDto(
                                 r.getId(),
                                 pj,
                                 r.getCompetition(),
@@ -75,7 +75,7 @@ public class ProfileBaseUserResponseDto {
                 }
         );
         user.getRequestToJoinCompetition().forEach(r -> {
-            toJoin.add(
+            fromJoin.add(
                     CompetitionRequestInProfileDto.getRequestDto(
                             r.getId(),
                             r.getPlayers().iterator().next(),
