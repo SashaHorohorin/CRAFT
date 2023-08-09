@@ -75,7 +75,7 @@ const InviteItem = ({ type, request, func }) => {
                 ) : (
                     <div
                         onClick={() =>
-                            func[0](request.pairId, request.request.username)
+                            func[0](request.pairId, localStorage.getItem('username'))
                         }
                         className="btns-join__btn"
                     >

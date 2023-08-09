@@ -14,6 +14,64 @@ const PersonalPage = () => {
     const [requestToInvite, setRequestToInvite] = useState([]);
     const [requestToJoin, setRequestToJoin] = useState([]);
 
+    const updateItemsFromInvites = (id, obj)=>{
+        setRequestToInvite(
+            requestToInvite.filter((request) => {
+                if(request.typeOfRequest == 'INVITE'){
+                    return (request.request.username != obj.username ||
+                        request.pairId != id
+                    )
+                } else{
+                    return (localStorage.getItem('username') != obj.username ||
+                        request.pairId != id
+                    )
+                }
+               
+                    
+            })
+        );
+        setRequestToJoin(
+            requestToJoin.filter((request) => {
+                if(request.typeOfRequest == 'INVITE'){
+                   return (localStorage.getItem('username') != obj.username ||
+                        request.pairId != id
+                    )
+                } else{
+                    console.log(request.request.username);
+                    console.log(obj.username);
+                    return (request.request.username != obj.username ||
+                        request.pairId != id
+                    )
+                }
+               
+                    
+            })
+        );
+
+    }
+
+    const updateItemsFromJoin = (id, obj)=>{
+
+        setRequestToJoin(
+            requestToJoin.filter((request) => {
+                if(request.typeOfRequest == 'INVITE'){
+                    return (localStorage.getItem('username') != obj.username ||
+                        request.pairId != id
+                    )
+                } else{
+                    console.log(request.request.username);
+                    console.log(obj.username);
+                    return (request.request.username != obj.username ||
+                        request.pairId != id
+                    )
+                }
+               
+                    
+            })
+        );
+    }
+
+
     const [fetchingProfile, isLoadingProfile, errorProfile] = useFetching(
         async (username) => {
             // console.log('saskfhjahfshahfjshfkjshkj');
@@ -34,12 +92,9 @@ const PersonalPage = () => {
     );
     const [fetchingDeletePair, isLoadingDeletePair, errorDeletePair] =
         useFetching(async (id) => {
-            // console.log('saskfhjahfshahfjshfkjshkj');
             const response = await DataService.postDeletePair(id);
-            console.log(response.data);
             setCompetitions(
                 competitions.filter((competition) => {
-                    // console.log(request.request.username + ' : ' + obj.username);
                     return (
                         competition.id != response.data.id
                     );
@@ -51,60 +106,28 @@ const PersonalPage = () => {
         isLoadingDeleteInvitePair,
         errorDeleteInvitePair,
     ] = useFetching(async (id, obj) => {
-        // console.log('saskfhjahfshahfjshfkjshkj');
         const response = await DataService.postRejectInvitePair(id, obj);
-        // console.log(response.data.fromRequestsToInvite);
-
-        console.log(response.data);
-        // console.log();
-        setRequestToInvite(
-            requestToInvite.filter((request) => {
-                // console.log(request.request.username + ' : ' + obj.username);
-                return (
-                    request.request.username != obj.username ||
-                    request.pairId != id
-                );
-            })
-        );
-        // setCompetitions(response.data.competitions);
+        updateItemsFromInvites(id,obj);
     });
     const [
         fetchingDeleteJoinPair,
         isLoadingDeleteJoinPair,
         errorDeleteJoinPair,
     ] = useFetching(async (id, obj) => {
-        // console.log('saskfhjahfshahfjshfkjshkj');
         const response = await DataService.postRejectJoinPair(id, obj);
-        console.log(response.data);
-        // setCompetitions(response.data.competitions);
-        setRequestToJoin(
-            requestToJoin.filter((request) => {
-                // console.log(request.request.username + ' : ' + obj.username);
-                return (
-                    request.request.username != obj.username ||
-                    request.pairId != id
-                );
-            })
-        );
+        updateItemsFromInvites(id,obj);
+       
     });
     const [
         fetchingAcceptJoinPair,
         isLoadingAcceptJoinPair,
         errorAcceptJoinPair,
     ] = useFetching(async (id, obj) => {
-        // console.log('saskfhjahfshahfjshfkjshkj');
         const response = await DataService.postAcceptJoinPair(id, obj);
-        console.log(response.data);
-        setCompetitions([...competitions, response.data]);
-        setRequestToJoin(
-            requestToJoin.filter((request) => {
-                // console.log(request.request.username + ' : ' + obj.username);
-                return (
-                    request.request.username != obj.username ||
-                    request.pairId != id
-                );
-            })
-        );
+        if(competitions.filter(c => c.id == response.data.id).length == 0){
+            setCompetitions([...competitions, response.data]);
+        }
+        updateItemsFromJoin(id,obj);
     });
 
     const [
@@ -116,18 +139,10 @@ const PersonalPage = () => {
             competitionPairId,
             obj
         );
-        console.log(response.data);
-        setCompetitions([...competitions, response.data]);
-
-        setRequestToInvite(
-            requestToInvite.filter((request) => {
-                // console.log(request.request.username + ' : ' + obj.username);
-                return (
-                    request.request.username != obj.username ||
-                    request.pairId != competitionPairId
-                );
-            })
-        );
+        if(competitions.filter(c => c.id == response.data.id).length == 0){
+            setCompetitions([...competitions, response.data]);
+        }
+        updateItemsFromJoin(competitionPairId,obj);
     });
 
     const deletePair = (pairId) => {
