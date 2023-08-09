@@ -3,6 +3,7 @@ package com.craft.craft.service;
 import com.craft.craft.dto.SetLabIdDto;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.error.exeption.UserIsAlreadyExistException;
+import com.craft.craft.model.sport.CompetitionPair;
 import com.craft.craft.model.user.BaseUser;
 import com.craft.craft.model.user.Role;
 import com.craft.craft.model.user.RoleName;
@@ -13,7 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -84,5 +87,15 @@ public class UserService {
                 () -> new ModelNotFoundException("По данному username пользователь не найден"));
         user.setLabId(dto.getLabID());
         return userRepo.save(user);
+    }
+
+    public List<BaseUser> findAllWithoutPair(UUID competitionId){
+        List<BaseUser> users = userRepo.findAll();
+        return users.stream().filter(u -> {
+            Set<CompetitionPair> pairs = u.getCompetitionPairs();
+            long count = pairs.stream().filter(p -> p.getCompetition().getId().equals(competitionId)).count();
+            return count <= 0;
+        }).collect(Collectors.toList());
+
     }
 }

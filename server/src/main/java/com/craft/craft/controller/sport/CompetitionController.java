@@ -71,8 +71,8 @@ public class CompetitionController {
     }
 
     @GetMapping("/pair/{competitionPairId}/request-to-invite/{username}")
-    public void requestToInvite(@PathVariable UUID competitionPairId, @PathVariable String username) throws ModelNotFoundException, MessagingException {
-        competitionService.requestToInviteIntoPair(competitionPairId, username);
+    public CompetitionDto requestToInvite(@PathVariable UUID competitionPairId, @PathVariable String username) throws ModelNotFoundException, MessagingException {
+        return CompetitionDto.getDtoFromCompetition(competitionService.requestToInviteIntoPair(competitionPairId, username).getCompetition());
     }
 
     @GetMapping("/{id}")

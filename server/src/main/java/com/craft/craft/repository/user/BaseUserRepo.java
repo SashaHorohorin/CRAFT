@@ -3,6 +3,7 @@ package com.craft.craft.repository.user;
 import com.craft.craft.model.user.BaseUser;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional

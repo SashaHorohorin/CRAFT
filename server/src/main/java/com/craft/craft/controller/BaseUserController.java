@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -40,7 +41,7 @@ public class BaseUserController {
     }
 
     @GetMapping("/find-all-in-competition-without-pair/{competitionId}")
-    public List<FindUserDto> getAllWithoutPair(){
-        return userService.findAll().stream().map(FindUserDto::getDtoFromUser).collect(Collectors.toList());
+    public List<FindUserDto> getAllWithoutPair(@PathVariable UUID competitionId){
+        return userService.findAllWithoutPair(competitionId).stream().map(FindUserDto::getDtoFromUser).collect(Collectors.toList());
     }
 }

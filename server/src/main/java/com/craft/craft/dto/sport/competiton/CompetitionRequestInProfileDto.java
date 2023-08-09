@@ -25,18 +25,19 @@ public class CompetitionRequestInProfileDto {
     private Date startCompetition;
     private int maxParticipant;
     private int nowParticipant;
+    private RequestTypeDto typeOfRequest;
 
-    public static CompetitionRequestInProfileDto getRequestDto(UUID id, BaseUser user, Competition competition) {
+    public static CompetitionRequestInProfileDto getRequestDto(UUID pairId, BaseUser user, Competition competition, RequestTypeDto typeOfRequest) {
         return new CompetitionRequestInProfileDto(
-                id,
+                pairId,
                 SportsmenDto.getDtoFromBaseUser(user),
                 competition.getId(),
                 competition.getSportComplex(),
                 competition.getType(),
                 competition.getStartCompetition(),
                 competition.getMaxPair(),
-                competition.getNowPair()
-
+                competition.getNowPair(),
+                typeOfRequest
         );
     }
 

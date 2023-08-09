@@ -1,7 +1,9 @@
 package com.craft.craft.dto;
 
 import com.craft.craft.dto.sport.competiton.CompetitionDto;
+import com.craft.craft.dto.sport.competiton.CompetitionPairDto;
 import com.craft.craft.dto.sport.competiton.CompetitionRequestInProfileDto;
+import com.craft.craft.dto.sport.competiton.RequestTypeDto;
 import com.craft.craft.dto.sport.train.TrainInProfileResponseDto;
 import com.craft.craft.model.user.BaseUser;
 import lombok.AllArgsConstructor;
@@ -24,37 +26,64 @@ public class ProfileBaseUserResponseDto {
     protected String username;
     private List<TrainInProfileResponseDto> trains;
     private List<CompetitionDto> competitions;
-    private List<CompetitionRequestInProfileDto> requestToInvite;
-    private List<CompetitionRequestInProfileDto> requestToJoin;
+    private List<CompetitionRequestInProfileDto> fromRequestsToInvite;
+    private List<CompetitionRequestInProfileDto> fromRequestsToJoin;
+    private List<CompetitionRequestInProfileDto> toRequestToInvite;
+    private List<CompetitionRequestInProfileDto> toRequestToJoin;
     private Integer rating;
     private Integer labId;
 
     public static ProfileBaseUserResponseDto getDtoFromBaseUser(BaseUser user) {
-        List<CompetitionRequestInProfileDto> invite = new ArrayList<>();
-        List<CompetitionRequestInProfileDto> join = new ArrayList();
+        List<CompetitionRequestInProfileDto> fromInvite = new ArrayList<>();
+        List<CompetitionRequestInProfileDto> toInvite = new ArrayList<>();
+        List<CompetitionRequestInProfileDto> fromJoin = new ArrayList();
+        List<CompetitionRequestInProfileDto> toJoin = new ArrayList();
         user.getCompetitionPairs().forEach(r -> {
                     Set<BaseUser> ri = r.getRequestToInvite();
                     ri.forEach(u -> {
-                        invite.add(CompetitionRequestInProfileDto.getRequestDto(
+                        fromInvite.add(CompetitionRequestInProfileDto.getRequestDto(
                                 r.getId(),
                                 u,
-                                r.getCompetition()
+                                r.getCompetition(),
+                                RequestTypeDto.INVITE
                         ));
                     });
 
                 }
         );
+        user.getRequestToInviteCompetition().forEach(r -> {
+                    toInvite.add(
+                            CompetitionRequestInProfileDto.getRequestDto(
+                                    r.getId(),
+                                    r.getPlayers().iterator().next(),
+                                    r.getCompetition(),
+                                    RequestTypeDto.INVITE
+                            ));
+                }
+        );
+
         user.getCompetitionPairs().forEach(r -> {
                     r.getRequestToJoin().forEach(pj -> {
-                        join.add(CompetitionRequestInProfileDto.getRequestDto(
+                        fromJoin.add(CompetitionRequestInProfileDto.getRequestDto(
                                 r.getId(),
                                 pj,
-                                r.getCompetition()
+                                r.getCompetition(),
+                                RequestTypeDto.JOIN
                         ));
                     });
 
                 }
         );
+        user.getRequestToJoinCompetition().forEach(r -> {
+            toJoin.add(
+                    CompetitionRequestInProfileDto.getRequestDto(
+                            r.getId(),
+                            r.getPlayers().iterator().next(),
+                            r.getCompetition(),
+                            RequestTypeDto.JOIN
+                    ));
+        });
+
         return new ProfileBaseUserResponseDto(
                 user.getFirstName(),
                 user.getLastName(),
@@ -65,8 +94,10 @@ public class ProfileBaseUserResponseDto {
                 user.getCompetitionPairs().stream().map(pair ->
                         CompetitionDto.getDtoFromCompetition(pair.getCompetition())
                 ).collect(Collectors.toList()),
-                invite,
-                join,
+                fromInvite,
+                fromJoin,
+                toInvite,
+                toJoin,
                 user.getRating(),
                 user.getLabId()
         );
