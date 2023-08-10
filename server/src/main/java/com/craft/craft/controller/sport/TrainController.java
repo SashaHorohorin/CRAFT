@@ -31,7 +31,7 @@ public class TrainController {
         return TrainInfoDto.getDtoFromTrain(trainService.addUserToTrain(trainId, username.getUsername()));
     }
 
-    @GetMapping
+    @GetMapping("/get-all")
     public List<TrainInfoDto> getAll(){
         return trainService.findAll().stream().map(TrainInfoDto::getDtoFromTrain).collect(Collectors.toList());
     }
