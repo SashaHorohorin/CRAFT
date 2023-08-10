@@ -129,6 +129,9 @@ public class TrainService {
         return new TrainCalendarBySportComplexDto(alexeeva, dinamit, impuls);
     }
 
+    public List<Train> findAll(){
+        return trainRepo.findAll();
+    }
 
     private List<Train> getTrainsAtDayOfWeek(int dayOfWeek, List<Train> allTrains) {
         return allTrains.stream().filter(train -> {

@@ -10,7 +10,9 @@ import com.craft.craft.service.sport.TrainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/train")
@@ -27,6 +29,11 @@ public class TrainController {
     @PostMapping("/{trainId}/add-user")
     public TrainInfoDto addUserToTrain(@PathVariable UUID trainId, @RequestBody UserToTrainRequest username) throws ModelNotFoundException, FullTrainException {
         return TrainInfoDto.getDtoFromTrain(trainService.addUserToTrain(trainId, username.getUsername()));
+    }
+
+    @GetMapping
+    public List<TrainInfoDto> getAll(){
+        return trainService.findAll().stream().map(TrainInfoDto::getDtoFromTrain).collect(Collectors.toList());
     }
 
     @PostMapping("/{trainId}/remove-user")

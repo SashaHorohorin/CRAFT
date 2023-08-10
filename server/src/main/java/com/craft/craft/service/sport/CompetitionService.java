@@ -185,6 +185,8 @@ public class CompetitionService {
     public CompetitionPair rejectRequestJoin(UUID competitionPairId, String username) throws ModelNotFoundException {
         CompetitionPair pair = competitionPairRepo.findById(competitionPairId).orElseThrow(() -> new ModelNotFoundException("По данному id пара не найдена"));
         BaseUser user = baseUserRepo.findByUsername(username).orElseThrow(() -> new ModelNotFoundException("По данному id пользователь не найден"));
+        System.out.println(username);
+        System.out.println(getUsernameOfRequester());
         if (
                 !getUsernameOfRequester().equals(username) &&
                 !getUsernameOfRequester().equals(pair.getPlayers().iterator().next().getUsername())

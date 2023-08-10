@@ -4,12 +4,15 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 -------------------------------users---------------------------------------------
 INSERT INTO baseuser (id, created, updated, first_name, last_name, email, phone_number, password, username, status, activation_code, agreement_data_processing, agreement_mailing, lab_id) VALUES
     (uuid_generate_v4(),now(),now(),'Никита', 'Пирогов', 'nikita-pirogov-artur@mail.ru', '8(111)111-11-11', crypt('123', gen_salt('bf',8)), 'nikita', 'ACTIVE', null, true, true, 19439),
-    (uuid_generate_v4(),now(),now(),'ADMIN', 'ADMIN', 'admin@mail.ru', '8(999)999-99-99', crypt('123', gen_salt('bf',8)), 'admin', 'ACTIVE', null, true, true, 19369);
+    (uuid_generate_v4(),now(),now(),'ADMIN', 'ADMIN', 'admin@mail.ru', '8(999)999-99-99', crypt('123', gen_salt('bf',8)), 'admin', 'ACTIVE', null, true, true, 19369),
+    (uuid_generate_v4(),now(),now(),'Sasha', 'Horohorin', 'sashahorohorin5555@gmail.com', '8(999)999-99-12', crypt('123', gen_salt('bf',8)), 'sasha', 'ACTIVE', null, true, true, 19369);
 INSERT INTO role (id, created, updated, name) VALUES
     (uuid_generate_v4(), now(),now(),'BASE'),
     (uuid_generate_v4(),now(),now(),'ADMIN');
 INSERT INTO user_roles (user_id, role_id)
     select u.id, r.id from baseuser u join role r on (u.username = 'nikita' and r.name = 'BASE');
+INSERT INTO user_roles (user_id, role_id)
+select u.id, r.id from baseuser u join role r on (u.username = 'sasha' and r.name = 'BASE');
 INSERT INTO user_roles (user_id, role_id)
     select u.id, r.id from baseuser u join role r on (u.username = 'admin' and r.name = 'ADMIN');
 INSERT INTO admin (id)
