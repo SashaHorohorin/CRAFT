@@ -207,6 +207,7 @@
     }
 
     &__bg {
+        display: none;
         position: fixed;
         z-index: 0;
         left: 0;
@@ -215,6 +216,9 @@
         height: 100vh;
         background: rgba(217, 217, 217, 0.95);
         z-index: 49;
+        &.active{
+            display: block;
+        }
     }
 
     label {

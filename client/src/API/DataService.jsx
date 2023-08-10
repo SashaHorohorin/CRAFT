@@ -107,4 +107,16 @@ export default class DataService {
     static async getRequestToJoin(competitionPairId) {
         return await $api.get(`api/v1/competition/pair/${competitionPairId}/request-to-join`);
     }
+    static async postCreateTrain(obj) {
+        return await $api.post(
+            `api/v1/train/create`, obj);
+    }
+    static async postDeleteTrain(trainId) {
+        return await $api.delete(
+            `api/v1/train/${trainId}`);
+    }
+    static async postChangeTrain(trainId, obj) {
+        return await $api.post(
+            `api/v1/change/${trainId}`, obj);
+    }
 }

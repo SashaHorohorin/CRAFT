@@ -5,6 +5,7 @@ import InputSelect from "../../components/AdminComponent/InputSelect";
 import InputText from "../../components/AdminComponent/InputText";
 
 const AdminPage = () => {
+    const [flag, setFlag] = useState(false)
     const sportComplex = ["Динамит", "Алексеева", "Импульс"];
     const trainers = ["Хорохорин А.И.", "Решетников Д.В.", " Умеренкова А.Г."];
     const [dateTrain, setDateTrain] = useState({
@@ -69,9 +70,15 @@ const AdminPage = () => {
         event.preventDefault();
     };
 
+    const closeModal = (e) => {
+        if(!(e.target.closest(".modal-create-training"))){
+           setFlag(false); 
+        };
+    }
+
     return (
         <div className="admin">
-            <div className="modal-create-training__bg">
+            <div onClick={(e) => closeModal(e)} className={flag ? "modal-create-training__bg active" : "modal-create-training__bg"}>
                 <div className="modal-create-training">
                     <div className="modal-create-training__title">
                         Редактирование тренировки
@@ -160,7 +167,7 @@ const AdminPage = () => {
                     </div>
 
                     <div className="admin__main">
-                        <div className="admin__create-btn">Создать</div>
+                        <div onClick={() => setFlag(true)} className="admin__create-btn">Создать</div>
                         <div className="admin__items">
                             <Training />
                             <Training />
