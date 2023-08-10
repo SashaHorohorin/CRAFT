@@ -83,7 +83,7 @@ public class JwtSecurityConfig {
                         .antMatchers(
                                 "/api/v1/train/{trainId}/add-user",
                                 "/api/v1/train/{trainId}/remove-user",
-                                "/api/v1/train/{trainId}//get-all"
+                                "/api/v1/train/get-all"
                         ).authenticated()
                         .antMatchers("/api/v1/train/**").hasAuthority(RoleName.ADMIN.name())
                         //trains------------------------------------------------------------------------------------------
