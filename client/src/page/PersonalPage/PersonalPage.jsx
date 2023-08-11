@@ -163,7 +163,7 @@ const PersonalPage = () => {
 
     return (
         <>
-            {localStorage.getItem("username") == "admin" ? (
+            {localStorage.getItem("roles") == "ADMIN" ? (
                 <AdminPage />
             ) : (
                 <div className="personal">
