@@ -107,6 +107,7 @@ public class TrainService {
         );
         train.setStartTrain(updateDto.getStartTrain());
         train.setEndTrain(updateDto.getEndTrain());
+        train.setType(updateDto.getType());
         return trainRepo.save(train);
     }
 
