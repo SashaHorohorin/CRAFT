@@ -83,6 +83,7 @@ const Workouts = ({ workouts, date }) => {
     };
 
     const getTime = (date) => {
+        
         let d = new Date(date);
         let time = `${d.getHours()}:${d.getMinutes()}`;
         return time;
@@ -100,9 +101,9 @@ const Workouts = ({ workouts, date }) => {
                             ? `0${date.getDate()}`
                             : date.getDate()
                     }.${
-                        date.getMonth() < 10
-                            ? `0${date.getMonth()}`
-                            : date.getMonth()
+                        date.getMonth() < 9
+                            ? `0${date.getMonth() + 1}`
+                            : date.getMonth() + 1
                     }`}</div>
                 </div>
                 <div className="workouts__items">

@@ -175,10 +175,18 @@
 }
 
 .card-subscription {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
     &__img {
+        position: relative;
         // width: 100%;
         // height: 100%;
+        @media (max-width: 760px) {
+            text-align: center;
+            max-width: 424px;
+        }
         
         img {
             // width: 100%;
@@ -191,6 +199,9 @@
         position: absolute;
         top: 85px;
         left: 55px;
+        // @media (max-width: 760px) {
+        //     left: 200px;
+        // }
     }
 
     &__date {
@@ -200,6 +211,9 @@
         color: #5b5b5b;
         font-size: 20px;
         font-weight: 700;
+        // @media (max-width: 760px) {
+        //     left: 185px;
+        // }
     }
 
     &__name {
@@ -209,6 +223,9 @@
         color: #5b5b5b;
         font-size: 24px;
         font-weight: 700;
+        // @media (max-width: 760px) {
+        //     left: 390px;
+        // }
         // @media (max-width: 1160px) {
         //     bottom: 35px;
         //     right: 145px;

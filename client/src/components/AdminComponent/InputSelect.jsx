@@ -6,11 +6,21 @@ const InputSelect = ({handleFunction, optionValue, ...arg}) => {
             {
                 arg.id == 'trainer' ? (
                     optionValue.map((val, index) => (
-                        <option key={index} value={val.id}>{val.name}</option>
+                        index == 0 ? (
+                            <option selected key={index} value={val.id}>{val.name}</option>
+                        ) : (
+                            <option key={index} value={val.id}>{val.name}</option>
+                        )
+                        
                     ))
                 ) : (
                     optionValue.map((val, index) => (
-                        <option key={index} value={val}>{val}</option>
+                        index == 0 ? (
+                            <option selected key={index} value={val}>{val}</option>
+                        ) : (
+                            <option key={index} value={val}>{val}</option>
+                        )
+
                     ))
                 )
             }

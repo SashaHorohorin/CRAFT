@@ -168,7 +168,9 @@ const PersonalPage = () => {
             ) : (
                 <div className="personal">
                     <div className="container">
-                        <div className="personal__title">Панель администратора</div>
+                        <div className="personal__title">
+                            Личный кабинет 
+                        </div>
                         <div className="personal__row">
                             <ul className="personal__nav nav-personal">
                                 <li className="nav-personal__link">Профиль</li>
@@ -213,20 +215,20 @@ const PersonalPage = () => {
                                                 src="./images/PersonalPage/card.svg"
                                                 alt=""
                                             />
-                                        </div>
-                                        <div className="card-subscription__count count-card">
-                                            <div className="count-card__count">
-                                                17
+                                            <div className="card-subscription__count count-card">
+                                                <div className="count-card__count">
+                                                    17
+                                                </div>
+                                                <div className="count-card__label">
+                                                    Тренировок
+                                                </div>
                                             </div>
-                                            <div className="count-card__label">
-                                                Тренировок
+                                            <div className="card-subscription__date">
+                                                до 20.09.23
                                             </div>
-                                        </div>
-                                        <div className="card-subscription__date">
-                                            до 20.09.23
-                                        </div>
-                                        <div className="card-subscription__name">
-                                            Абонемент
+                                            <div className="card-subscription__name">
+                                                Абонемент
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="subscription-profile__progressbars">

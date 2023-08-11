@@ -117,7 +117,7 @@ export default class DataService {
     }
     static async postChangeTrain(trainId, obj) {
         return await $api.post(
-            `api/v1/change/${trainId}`, obj);
+            `api/v1/train/change/${trainId}`, obj);
     }
     static async getTrainingAll() {
         return await $api.get(`/api/v1/train/get-all`);
