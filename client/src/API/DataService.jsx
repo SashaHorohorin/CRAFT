@@ -119,4 +119,10 @@ export default class DataService {
         return await $api.post(
             `api/v1/change/${trainId}`, obj);
     }
+    static async getTrainingAll() {
+        return await $api.get(`/api/v1/train/get-all`);
+    }
+    static async getTrainerAll() {
+        return await $api.get(`api/v1/trainer/get-all`);
+    }
 }

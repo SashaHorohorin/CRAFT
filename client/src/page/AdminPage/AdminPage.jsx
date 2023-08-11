@@ -1,13 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AdminPage.scss";
 import Training from "../../components/AdminComponent/Training";
 import InputSelect from "../../components/AdminComponent/InputSelect";
 import InputText from "../../components/AdminComponent/InputText";
+import { useFetching } from "../../hooks/useFetching";
+import DataService from "../../API/DataService";
 
 const AdminPage = () => {
-    const [flag, setFlag] = useState(false)
-    const sportComplex = ["Динамит", "Алексеева", "Импульс"];
-    const trainers = ["Хорохорин А.И.", "Решетников Д.В.", " Умеренкова А.Г."];
+    const [flag, setFlag] = useState(false);
+    const sportComplex = ["DINAMIT", "ALEKSEEVA", "IMPULS"];
+    const typeTrain = [
+        "Игровая с тренером",
+        "Тренировка для начинающих и продолжающих",
+        "Игровая",
+    ];
+    const [trainers, setTrainers] = useState([]);
+    const [training, setTraining] = useState([]);
+
+    const [fetchingTrainers, isLoadingTrainers, errorTrainers] = useFetching(
+        async () => {
+            const response = await DataService.getTrainerAll();
+            console.log(response.data);
+            setTrainers(response.data);
+        }
+    );
+    const [fetchingTraining, isLoadingTraining, errorTraining] = useFetching(
+        async () => {
+            const response = await DataService.getTrainingAll();
+            console.log(response.data);
+            setTraining(response.data);
+        }
+    );
+    const [fetchingDeleteTrain, isLoadingDeleteTrain, errorDeleteTrain] = useFetching(
+        async (trainId) => {
+            const response = await DataService.postDeleteTrain(trainId);
+            console.log(response.data);
+            setTraining(training.filter((train) => (trainId !== train.id)));
+        }
+    );
+    const [fetchinChangeTrain, isLoadinChangeTrain, erroChangeTrain] = useFetching(
+        async (trainId, obj) => {
+            const response = await DataService.postChangeTrain(trainId, obj);
+            console.log(response.data);
+            // setTraining(training.filter((train) => (trainId !== train.id)));
+        }
+    );
+
     const [dateTrain, setDateTrain] = useState({
         date: "",
         toTime: "",
@@ -17,10 +55,15 @@ const AdminPage = () => {
         type: "",
         maxParticipant: "",
         trainersId: "",
-        startDate: "",
-        startTime: "",
-        endTime: "",
+        startTrain: "",
+        endTrain: "",
+        sportComplex: "",
     });
+
+    useEffect(() => {
+        fetchingTrainers();
+        fetchingTraining();
+    }, [])
 
     const handleFunction = (e) => {
         // e.preventDefault();
@@ -62,6 +105,12 @@ const AdminPage = () => {
             Date.UTC(d2[0], --d2[1], d2[2], t2[0], t2[1])
         );
         console.log(new Date(utcDateEnd));
+        let newObj = {
+            ...obj,
+            startTrain: utcDateStart,
+            endTrain: utcDateEnd,
+        };
+        setObj(newObj);
         // console.log(utcDateStart, utcDateEnd);
     };
 
@@ -71,14 +120,21 @@ const AdminPage = () => {
     };
 
     const closeModal = (e) => {
-        if(!(e.target.closest(".modal-create-training"))){
-           setFlag(false); 
-        };
-    }
+        if (!e.target.closest(".modal-create-training")) {
+            setFlag(false);
+        }
+    };
 
     return (
         <div className="admin">
-            <div onClick={(e) => closeModal(e)} className={flag ? "modal-create-training__bg active" : "modal-create-training__bg"}>
+            <div
+                onClick={(e) => closeModal(e)}
+                className={
+                    flag
+                        ? "modal-create-training__bg active"
+                        : "modal-create-training__bg"
+                }
+            >
                 <div className="modal-create-training">
                     <div className="modal-create-training__title">
                         Редактирование тренировки
@@ -93,6 +149,15 @@ const AdminPage = () => {
                             <InputSelect
                                 name="type"
                                 id="type"
+                                handleFunction={(e) => handleFunction(e)}
+                                optionValue={typeTrain}
+                            />
+                        </label>
+                        <label htmlFor="sportComplex">
+                            Тип:
+                            <InputSelect
+                                name="sportComplex"
+                                id="sportComplex"
                                 handleFunction={(e) => handleFunction(e)}
                                 optionValue={sportComplex}
                             />
@@ -167,11 +232,18 @@ const AdminPage = () => {
                     </div>
 
                     <div className="admin__main">
-                        <div onClick={() => setFlag(true)} className="admin__create-btn">Создать</div>
+                        <div
+                            onClick={() => setFlag(true)}
+                            className="admin__create-btn"
+                        >
+                            Создать
+                        </div>
                         <div className="admin__items">
-                            <Training />
-                            <Training />
-                            <Training />
+                            {
+                                training.map((train, index) => (
+                                    <Training deleteTrain={(trainId) => fetchingDeleteTrain(trainId)} key={train.id} train={train}/>
+                                ))
+                            }
                         </div>
                     </div>
                 </div>
