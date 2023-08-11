@@ -50,6 +50,10 @@ public class Train extends BaseEntity {
     )
     private Set<BaseUser> sportsmen = new HashSet<>();
 
-
+    @PreRemove
+    public void preRemove(){
+        trainers.forEach(t -> t.getTrains().remove(this));
+        sportsmen.forEach(s -> s.getTrains().remove(this));
+    }
 
 }

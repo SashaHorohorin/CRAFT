@@ -45,7 +45,7 @@ public class Competition extends BaseEntity {
 //    )
 //    private Set<BaseUser> sportsmen = new HashSet<>();
 
-    @OneToMany(mappedBy = "competition", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @OneToMany(mappedBy = "competition", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private Set<CompetitionPair> competitionPairs = new HashSet<>();
 
 }
