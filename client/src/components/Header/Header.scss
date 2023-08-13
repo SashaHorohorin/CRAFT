@@ -23,8 +23,9 @@
     }
     &__burger-container {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
         display: none;
         padding: 15px 10px;
         background: #ff6969;
@@ -33,6 +34,8 @@
         transition: all 1s ease 0s;
 
         &.active {
+            top: 0;
+            transform: translateY(0);
             .header__burger::after {
                 transform: rotate(45deg);
                 bottom: 9px;
@@ -45,7 +48,8 @@
                 transform: scale(0);
             }
             &{
-                width: 300px;
+                max-width: 250px;
+                width: 100%;
                 padding-left: 20px;
                 
             }
@@ -53,8 +57,9 @@
                 display: block;
             }
         }
-        @media (max-width: 1200px) {
+        @media (max-width: 1000px) {
             display: inline-block;
+            
         }
     }
     &__burger {
@@ -119,8 +124,11 @@
 
 .menu-burger{
     display: none;
-    padding: 40px 0 20px 0;
+    padding: 30px 0 0px 0;
     &__list{
+        display: flex;
+        align-items: start;
+        flex-direction: column;
 
     }
     &__link{
@@ -128,6 +136,21 @@
         font-weight: bold;
         color: #fff;
         margin-bottom: 20px;
+        text-decoration: none;
+    }
+    &__user-exit{
+        cursor: pointer;
+        margin-right: 24px;
+        text-decoration: none;
+        color: #fff;
+    }
+
+    &__profile{
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        border-radius: 10px;
+        background: url('../../../public/images/HomePage/user.svg') center no-repeat #fff;
     }
 }
 
@@ -138,7 +161,7 @@
     border: 1px solid #000000;
     background: #ffffff;
     border-radius: 10px;
-    @media (max-width: 1200px) {
+    @media (max-width: 1000px) {
         display: none;
     }
 

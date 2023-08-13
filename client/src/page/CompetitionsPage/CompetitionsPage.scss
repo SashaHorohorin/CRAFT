@@ -79,7 +79,7 @@
             font-size: 12px;
         }
         @media (max-width: 440px) {
-            font-size: 10px;
+            font-size: 8px;
         }
     }
 
@@ -116,6 +116,8 @@
     }
 
     &__list {
+        cursor: pointer;
+        text-align: center;
         padding: 15px 20px;
         color: #fff;
         font-size: 16px;

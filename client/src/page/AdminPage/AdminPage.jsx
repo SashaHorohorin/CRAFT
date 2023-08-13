@@ -160,8 +160,8 @@ const AdminPage = () => {
         console.log(new Date(utcDateEnd));
         let newObj = {
             ...obj,
-            startTrain: utcDateStart,
-            endTrain: utcDateEnd,
+            startTrain: utcDateStart - 10800000,
+            endTrain: utcDateEnd - 10800000,
         };
         console.log(newObj);
 

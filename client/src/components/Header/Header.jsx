@@ -48,24 +48,60 @@ const Header = () => {
                             </div>
                             <div className="burger__menu menu-burger">
                                 <div className="menu-burger__list">
-                                    <div className="menu-burger__link">
-                                        <Link to="training">Расписание</Link>
-                                    </div>
-                                    <div className="menu-burger__link">
-                                        <Link to="competitions">Соревнования</Link>
-                                    </div>
-                                    <div className="menu-burger__link">
-                                        Команда
-                                    </div>
-                                    <div className="menu-burger__link">
+                                    <Link
+                                        to="training"
+                                        className="menu-burger__link"
+                                    >
+                                        Расписание
+                                    </Link>
+                                    <Link
+                                        to="competitions"
+                                        className="menu-burger__link"
+                                    >
+                                        Соревнования
+                                    </Link>
+
+                                    <Link
+                                        to="events"
+                                        className="menu-burger__link"
+                                    >
                                         Мероприятия
-                                    </div>
-                                    <div className="menu-burger__link">
+                                    </Link>
+
+                                    <Link
+                                        to="prices"
+                                        className="menu-burger__link"
+                                    >
                                         Цены
-                                    </div>
-                                    <div className="menu-burger__link">
-                                        Контакты
-                                    </div>
+                                    </Link>
+                                    {!store.isAuth ? (
+                                        <div className="navigation__buttons buttons">
+                                            <Link
+                                                className="buttons__log-in"
+                                                to="auth/login"
+                                            >
+                                                Вход
+                                            </Link>
+                                            <Link
+                                                className="buttons__register"
+                                                to="auth/registration"
+                                            >
+                                                Регистрация
+                                            </Link>
+                                        </div>
+                                    ) : (
+                                        <div className="navigation__buttons buttons">
+                                            <div
+                                                onClick={() => store.logout()}
+                                                className="menu-burger__user-exit"
+                                            >
+                                                Выход
+                                            </div>
+                                            <Link to="profile">
+                                                <div className="menu-burger__profile"></div>
+                                            </Link>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -80,13 +116,18 @@ const Header = () => {
                                     Расписание
                                 </Link>
                                 {/* </div> */}
-                                <Link className="navigation__link" to="competitions">Соревнования</Link>
+                                <Link
+                                    className="navigation__link"
+                                    to="competitions"
+                                >
+                                    Соревнования
+                                </Link>
                                 <Link to="events" className="navigation__link">
                                     Мероприятия
                                 </Link>
-                                <Link to="prices" className="navigation__link">Цены</Link>
-                                <div className="navigation__link">Контакты</div>
-
+                                <Link to="prices" className="navigation__link">
+                                    Цены
+                                </Link>
                             </div>
                             {!store.isAuth ? (
                                 <div className="navigation__buttons buttons">
@@ -105,8 +146,15 @@ const Header = () => {
                                 </div>
                             ) : (
                                 <div className="navigation__buttons buttons">
-                                    <div onClick={() => store.logout()} className="buttons__exit">Выход</div>
-                                    <Link to='profile'><div className="buttons__user"></div></Link>
+                                    <div
+                                        onClick={() => store.logout()}
+                                        className="buttons__exit"
+                                    >
+                                        Выход
+                                    </div>
+                                    <Link to="profile">
+                                        <div className="buttons__user"></div>
+                                    </Link>
                                 </div>
                             )}
                         </div>

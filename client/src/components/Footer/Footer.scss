@@ -87,6 +87,10 @@
     }
 
     &__link {
+        display: block;
+        color: #fff;
+        // background: transparent;
+        text-decoration: none;
         margin-bottom: 10px;
     }
 }
@@ -116,7 +120,7 @@
     &__img {
         display: flex;
         align-items: center;
-        img {
+        a {
             margin-right: 10px;
             &:last-child {
                 margin: 0;

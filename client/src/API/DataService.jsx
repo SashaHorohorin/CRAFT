@@ -1,7 +1,8 @@
 import axios from "axios";
 import $api from "../http";
 
-const host = "localhost:9005";
+const host = "http://localhost:9005";
+// const host = "craft-bc-backend.online:9005";
 export default class DataService {
     static async getCardWhy() {
         const response = await axios.get(

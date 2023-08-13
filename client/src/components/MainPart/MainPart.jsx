@@ -30,12 +30,15 @@ const MainPart = () => {
                     />
                     <div className="home__social social-home">
                         <div className="social-home__column">
-                            <img src="./images/HomePage/google.png" alt="" />
-                            <img src="./images/HomePage/whatsapp.png" alt="" />
+                            <a href="mailto:Alexisbest1@mail.ru"><img src="./images/HomePage/google.png" alt="" /></a>
+                            <a href="https://wa.me/79030975817"><img src="./images/HomePage/whatsapp.png" alt="" /></a>
                         </div>
                         <div className="social-home__column">
-                            <img src="./images/HomePage/instagram.png" alt="" />
-                            <img src="./images/HomePage/vk.png" alt="" />
+                            <a href="https://www.instagram.com/craftbadminton/">
+                                <img src="./images/HomePage/instagram.png" alt="" />
+                            </a>
+                            <a href="https://vk.com/craftbadmclub"><img src="./images/HomePage/vk.png" alt="" /></a>
+                            
                         </div>
                     </div>
                 </div>

@@ -51,10 +51,10 @@ const PersonalTraining = ({ train, setWorkoutTrain, workoutTrain }) => {
                 {getTime(train.startTrain) + " - " + getTime(train.endTrain)}
             </div>
             <div className="workout-profile__active">
-                <PeopleAction
+                {/* <PeopleAction
                     classAdd="workout-profile__people"
                     sportsmens={train.sportsmens}
-                />
+                /> */}
                 <button
                     onClick={() => unFollowTrain(train.id)}
                     className="workout-profile__follow"
