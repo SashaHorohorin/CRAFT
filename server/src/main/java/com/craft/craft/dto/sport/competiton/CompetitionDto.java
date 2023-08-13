@@ -28,6 +28,7 @@ public class CompetitionDto {
     private int nowParticipant;
     private Set<CompetitionPairDto> competitionPairs = new HashSet<>();
     private CompetitionStatus status;
+    private String info;
 
     public static CompetitionDto getDtoFromCompetition(Competition competition){
         return new CompetitionDto(
@@ -39,7 +40,8 @@ public class CompetitionDto {
                 competition.getMaxPair(),
                 competition.getNowPair(),
                 competition.getCompetitionPairs().stream().map(CompetitionPairDto::getDtoFromCompetitionPair).collect(Collectors.toSet()),
-                competition.getStatus()
+                competition.getStatus(),
+                competition.getInfo()
         );
     }
 }

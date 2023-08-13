@@ -36,6 +36,8 @@ public class Competition extends BaseEntity {
     @NotNull
     @Enumerated(EnumType.STRING)
     private CompetitionStatus status;
+    @Column(length = 1024)
+    private String info;
 //
 //    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 //    @JoinTable(
