@@ -21,6 +21,10 @@ import CompetitionsPage from './page/CompetitionsPage/CompetitionsPage'
 import PricesPage from "./page/PricesPage/PricesPage";
 import PersonalPage from "./page/PersonalPage/PersonalPage";
 import Applications from "./page/Applications/Applications";
+import AdminPage from "./page/AdminPage/AdminPage";
+import TrainingChange from "./components/AdminComponent/AdminInPage/TrainingChange";
+import CompetitionChange from "./components/AdminComponent/AdminInPage/CompetitionChange";
+import EventChange from "./components/AdminComponent/AdminInPage/EventChange";
 
 function App() {
     const {store} = useContext(Context);
@@ -51,6 +55,11 @@ function App() {
                         <Route path="prices" element={<PricesPage/>} />
                         <Route path="profile" element={<PersonalPage/>} />
                         <Route path="competitions/applications/:id" element={<Applications/>} />
+                        <Route path="admin-page" element={<AdminPage/>} >
+                            <Route path="training-change" element={<TrainingChange/>} />
+                            <Route path="competition-change" element={<CompetitionChange/>} />
+                            <Route path="event-change" element={<EventChange/>} />
+                        </Route>
                     </Route>
                     <Route path="auth/:sign" element={<RegistrationPage />} />
                     <Route path="activate-account/:code" element={<ActivatePage/>}/>

@@ -7,6 +7,7 @@ import DataService from "../../API/DataService";
 import PersonalTraining from "../../components/PersonalComponent/PersonalTraining";
 import InviteItem from "../../components/PersonalComponent/InviteItem";
 import AdminPage from "../AdminPage/AdminPage";
+import { Navigate } from "react-router";
 
 const PersonalPage = () => {
     const [profileData, setProfileData] = useState({});
@@ -164,7 +165,7 @@ const PersonalPage = () => {
     return (
         <>
             {localStorage.getItem("roles") == "ADMIN" ? (
-                <AdminPage />
+                <Navigate to="/admin-page/training-change"/>
             ) : (
                 <div className="personal">
                     <div className="container">

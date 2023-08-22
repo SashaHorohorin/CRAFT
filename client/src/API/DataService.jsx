@@ -126,4 +126,44 @@ export default class DataService {
     static async getTrainerAll() {
         return await $api.get(`api/v1/trainer/get-all`);
     }
+
+    // ===================================================<COMPETITION>
+
+    static async postCreateCompetition(obj) {
+        return await $api.post(
+            `api/v1/competition/create`, obj);
+    }
+    static async postDeleteCompetition(competitionId) {
+        return await $api.post(
+            `api/v1/competition/delete/${competitionId}`);
+    }
+    static async postChangeCompetition(competitionId, obj) {
+        return await $api.post(
+            `api/v1/competition/update/${competitionId}`, obj);
+    }
+    static async getCompetitionAll() {
+        return await $api.get(`api/v1/competition/get-all`);
+    }
+
+    // ===================================================<COMPETITION>
+    // ===================================================<EVENT>
+
+    static async postCreateEvent(obj) {
+        return await $api.post(
+            `api/v1/news/create`, obj);
+    }
+    static async postDeleteEvent(id) {
+        return await $api.post(
+            `api/v1/news/delete/${id}`);
+    }
+    static async postChangeEvent(id, obj) {
+        return await $api.post(
+            `api/v1/news/update/${id}`, obj);
+    }
+    static async getEventsAll(countPage) {
+        return await $api.get(`api/v1/news?page=${countPage}&size=6`);
+    }
+
+    // ===================================================<EVENT>
+    
 }

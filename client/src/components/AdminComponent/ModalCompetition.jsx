@@ -2,10 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import InputSelect from "./InputSelect";
 import InputText from "./InputText";
 import { Context } from "../..";
-import { observer } from "mobx-react-lite";
 
-
-const ModalTrain = ({
+const ModalCompetition = ({
     handleFunctionDate,
     train,
     trainers,
@@ -16,51 +14,35 @@ const ModalTrain = ({
     flag,
     setFlag,
 }) => {
-    const { trainingChange } = useContext(Context);
+    const { competitionChange } = useContext(Context);
 
     const sportComplex = ["DINAMIT", "ALEKSEEVA", "IMPULS"];
-    const typeTrain = [
-        "Игровая с тренером",
-        "Тренировка для начинающих и продолжающих",
-        "Игровая",
-    ];
+    const typeCompetition = ['PAIR', 'TWO', 'THREE'];
+    
     const [obj, setObj] = useState({
-        type: '',
-        maxParticipant: '',
-        trainersId: [],
-        startTrain: '',
-        endTrain: '',
-        sportCompex: '',
+        type: "",
+        maxPair: "",
+        startCompetition: "",
+        sportCompex: "",
     });
-
-    let idTrainers = () => {
-        let ids = trainingChange?.trainChange?.trainers;
-        
-        return ids?.map((trainer, index) => (trainer.id))
-    }
 
     useEffect(() => {
         setObj({
-            type: trainingChange.trainChange.type,
-            maxParticipant: trainingChange.trainChange.maxParticipant,
-            trainersId: trainingChange?.trainChange?.trainers?.map((trainer, index) => (trainer.id)),
-            startTrain: trainingChange.trainChange.startTrain,
-            endTrain: trainingChange.trainChange.endTrain,
-            sportCompex: trainingChange.trainChange.sportComplex,
-        })
+            type: competitionChange.competitionChange.type,
+            maxPair: competitionChange.competitionChange.maxParticipant,
+            startCompetition: competitionChange.competitionChange.startCompetition,
+            sportCompex: competitionChange.competitionChange.sportComplex,
+        });
         setDateTrain({
-            date: getDateYear(trainingChange.trainChange.startTrain),
-            toTime: getTime(trainingChange.trainChange.startTrain),
-            fromTime: getTime(trainingChange.trainChange.endTrain),
-        })
+            date: getDateYear( competitionChange.competitionChange.startCompetition),
+            toTime: getTime( competitionChange.competitionChange.startCompetition),
+        });
         // setObj(trainingChange.trainChange);
-    }, [trainingChange.trainChange])
-
+    }, [competitionChange.competitionChange]);
 
     const [dateTrain, setDateTrain] = useState({
-        date: '',
-        toTime: '',
-        fromTime: '',
+        date: "",
+        toTime: "",
     });
     const closeModal = (e) => {
         if (!e.target.closest(".modal-create-training")) {
@@ -73,13 +55,17 @@ const ModalTrain = ({
     };
     const getDateYear = (date) => {
         let d = new Date(date);
-        let time = `${d.getFullYear()}-${d.getMonth() < 9 ? `0${d.getMonth() + 1}` : d.getMonth() + 1}-${d.getDate() < 10 ? `0${d.getDate()}` : d.getDate()}`;
+        let time = `${d.getFullYear()}-${
+            d.getMonth() < 9 ? `0${d.getMonth() + 1}` : d.getMonth() + 1
+        }-${d.getDate() < 10 ? `0${d.getDate()}` : d.getDate()}`;
         return time;
     };
 
     const getTime = (date) => {
         let d = new Date(date);
-        let time = `${d.getHours() < 10 ? `0${d.getHours()}`:d.getHours()}:${d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()}`;
+        let time = `${d.getHours() < 10 ? `0${d.getHours()}` : d.getHours()}:${
+            d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()
+        }`;
         return time;
     };
 
@@ -90,19 +76,12 @@ const ModalTrain = ({
         console.log("name: " + name);
         console.log("value: " + value);
         let newObj = {};
-        if (name == "trainersId") {
-            newObj = {
-                ...obj,
-                trainersId: [value],
-            };
-        } else {
+
             newObj = {
                 ...obj,
                 [name]: value,
             };
-        }
         setObj(newObj);
-        // console.log(obj);
     };
 
     const handleFunctionDateChange = (e) => {
@@ -118,11 +97,10 @@ const ModalTrain = ({
     };
     const logConsol = () => {
         console.log(obj);
-    }
+    };
 
     return (
         <div
-            
             onClick={(e) => closeModal(e)}
             className={
                 flag
@@ -134,8 +112,8 @@ const ModalTrain = ({
                 <div className="modal-create-training">
                     <div className="modal-create-training__title">
                         {type == "create"
-                            ? "Создание тренировки"
-                            : "Редактирование тренировки"}
+                            ? "Создание соревнований"
+                            : "Редактирование соревнований"}
                     </div>
                     <form
                         onSubmit={handleSubmit}
@@ -143,40 +121,31 @@ const ModalTrain = ({
                         action=""
                     >
                         <label htmlFor="type">
-                            Тип:
+                            Название соревнований:
                             <InputSelect
                                 name="type"
                                 id="type"
                                 handleFunction={(e) => handleFunction(e)}
-                                optionValue={typeTrain}
+                                optionValue={typeCompetition}
                             />
                         </label>
                         <label htmlFor="sportCompex">
-                            Тип:
+                            Спорткомплекс:
                             <InputSelect
-                                name="sportCompex"
+                                name="sportComplex"
                                 id="sportCompex"
                                 handleFunction={(e) => handleFunction(e)}
                                 optionValue={sportComplex}
                             />
                         </label>
                         <label htmlFor="people-max">
-                            Макс. кол-во чел.:
+                            Макс. кол-во пар:
                             <InputText
                                 handleFunction={(e) => handleFunction(e)}
                                 value={maxParticipant}
-                                name="maxParticipant"
+                                name="maxPair"
                                 type="number"
                                 id="people-max"
-                            />
-                        </label>
-                        <label htmlFor="trainer">
-                            Тренер:
-                            <InputSelect
-                                name="trainersId"
-                                id="trainer"
-                                handleFunction={(e) => handleFunction(e)}
-                                optionValue={trainers}
                             />
                         </label>
                         <label htmlFor="date">
@@ -190,17 +159,10 @@ const ModalTrain = ({
                             />
                         </label>
                         <label htmlFor="time">
-                            Время проведения:
+                            Время начала:
                             <InputText
                                 handleFunction={(e) => handleFunctionDate(e)}
                                 name="toTime"
-                                type="time"
-                                id="time"
-                            />
-                            -
-                            <InputText
-                                handleFunction={(e) => handleFunctionDate(e)}
-                                name="fromTime"
                                 type="time"
                                 id="time"
                             />
@@ -222,11 +184,14 @@ const ModalTrain = ({
                     </div>
                 </div>
             ) : (
-                <div onClick={() => logConsol()} className="modal-create-training">
+                <div
+                    onClick={() => logConsol()}
+                    className="modal-create-training"
+                >
                     <div className="modal-create-training__title">
                         {type == "create"
-                            ? "Создание тренировки"
-                            : "Редактирование тренировки"}
+                            ? "Создание соревнований"
+                            : "Редактирование соревнований"}
                     </div>
                     <form
                         onSubmit={handleSubmit}
@@ -234,17 +199,17 @@ const ModalTrain = ({
                         action=""
                     >
                         <label htmlFor="type">
-                            Тип:
+                            Название соревнований:
                             <InputSelect
                                 name="type"
                                 id="type"
                                 handleFunction={(e) => handleFunctionChange(e)}
-                                optionValue={typeTrain}
+                                optionValue={typeCompetition}
                                 value={obj.type}
                             />
                         </label>
                         <label htmlFor="sportCompex">
-                            Тип:
+                            Спорткомплекс:
                             <InputSelect
                                 name="sportCompex"
                                 id="sportCompex"
@@ -254,24 +219,13 @@ const ModalTrain = ({
                             />
                         </label>
                         <label htmlFor="people-max">
-                            Макс. кол-во чел.:
+                            Макс. кол-во пар:
                             <InputText
                                 handleFunction={(e) => handleFunctionChange(e)}
-                                value={obj.maxParticipant}
-                                name="maxParticipant"
+                                value={obj.maxPair}
+                                name="maxPair"
                                 type="number"
                                 id="people-max"
-
-                            />
-                        </label>
-                        <label htmlFor="trainer">
-                            Тренер:
-                            <InputSelect
-                                name="trainersId"
-                                id="trainer"
-                                handleFunction={(e) => handleFunctionChange(e)}
-                                optionValue={trainers}
-                                value={obj?.trainersId?.slice(0).shift()}
                             />
                         </label>
                         <label htmlFor="date">
@@ -282,24 +236,17 @@ const ModalTrain = ({
                                 type="date"
                                 id="date"
                                 value={dateTrain.date}
+                                // value="2013-01-08"s
                             />
                         </label>
                         <label htmlFor="time">
-                            Время проведения:
+                            Время начала:
                             <InputText
                                 handleFunction={(e) => handleFunctionDateChange(e)}
                                 name="toTime"
                                 type="time"
                                 id="time"
                                 value={dateTrain.toTime}
-                            />
-                            -
-                            <InputText
-                                handleFunction={(e) => handleFunctionDateChange(e)}
-                                name="fromTime"
-                                type="time"
-                                id="time"
-                                value={dateTrain.fromTime}
                             />
                         </label>
                     </form>
@@ -323,4 +270,4 @@ const ModalTrain = ({
     );
 };
 
-export default observer(ModalTrain);
+export default ModalCompetition;
