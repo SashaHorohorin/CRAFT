@@ -38,6 +38,10 @@ const ModalInvitePair = ({text, title, sendFunc, flag, setFlag}) => {
     const handleSubmit = (event) => {
         event.preventDefault();
     };
+    const closeModalAfterSend = () => {
+        sendFunc(valueName, valueRating);
+        eventStore.setFlagOpenModalAddPair(false)
+    }
 
     return (
         <div
@@ -70,12 +74,12 @@ const ModalInvitePair = ({text, title, sendFunc, flag, setFlag}) => {
                                 <ol className="mine-applications__instruction">
                                     <li className="mine-applications__item item-instruction">
                                         <div className="item-instruction__text">
-                                            Перейдите на сайт и в поиске введите
+                                            Перейдите на <a href="https://badminton4u.ru/" target="_blank">САЙТ</a> и в поиске введите
                                             фамилию и имя. И выберите себя.
                                         </div>
                                         <div className="item-instruction__img">
                                             <img
-                                                src="../images/CompetitionPage/01.png"
+                                                src="/images/CompetitionPage/01.png"
                                                 alt=""
                                             />
                                         </div>
@@ -88,8 +92,8 @@ const ModalInvitePair = ({text, title, sendFunc, flag, setFlag}) => {
                                         </div>
                                         <div className="item-instruction__img">
                                             <img
-                                                src="../images/CompetitionPage/02.png"
-                                                alt=""
+                                                src="/images/CompetitionPage/02.png"
+                                                alt="нет катринки"
                                             />
                                         </div>
                                     </li>
@@ -130,7 +134,7 @@ const ModalInvitePair = ({text, title, sendFunc, flag, setFlag}) => {
                                 />
                             </form>
                             <button
-                                onClick={() => sendFunc(valueName, valueRating)}
+                                onClick={() => closeModalAfterSend()}
                                 className="find-person__button"
                             >
                                 Записаться

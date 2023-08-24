@@ -75,7 +75,7 @@ const PersonalPage = () => {
         async (username) => {
             // console.log('saskfhjahfshahfjshfkjshkj');
             const response = await DataService.getProfile(username);
-            console.log(response.data);
+            // console.log(response.data);
             setProfileData(response.data);
             setWorkoutTrain(response.data.trains);
             setCompetitions(response.data.competitions);
@@ -92,6 +92,7 @@ const PersonalPage = () => {
     const [fetchingDeletePair, isLoadingDeletePair, errorDeletePair] =
         useFetching(async (id) => {
             const response = await DataService.postDeletePair(id);
+            console.log(response.data);
             setCompetitions(
                 competitions.filter((competition) => {
                     return competition.id != response.data.id;
@@ -141,12 +142,22 @@ const PersonalPage = () => {
         updateItemsFromJoin(competitionPairId, obj);
     });
 
-    const deletePair = (pairId) => {
+    const deletePair = (pairId, competitionId) => {
         fetchingDeletePair(pairId);
+        setRequestToInvite(
+            requestToInvite.filter((request) => {
+                if (request.typeOfRequest == "INVITE") {
+                    return (
+                        request.competitionId != competitionId
+                    );
+                }
+            })
+        );
     };
     const deleteInvite = (pairId, user) => {
         console.log(user);
         fetchingDeleteInvitePair(pairId, { username: user });
+        
     };
     const deleteJoin = (pairId, user) => {
         fetchingDeleteJoinPair(pairId, { username: user });
@@ -165,13 +176,11 @@ const PersonalPage = () => {
     return (
         <>
             {localStorage.getItem("roles") == "ADMIN" ? (
-                <Navigate to="/admin-page/training-change"/>
+                <Navigate to="/admin-page/training-change" />
             ) : (
                 <div className="personal">
                     <div className="container">
-                        <div className="personal__title">
-                            Личный кабинет 
-                        </div>
+                        <div className="personal__title">Личный кабинет</div>
                         <div className="personal__row">
                             <ul className="personal__nav nav-personal">
                                 <li className="nav-personal__link">Профиль</li>
@@ -360,7 +369,7 @@ const PersonalPage = () => {
                                         <Competition
                                             key={competition.id}
                                             deletePair={(pairId) =>
-                                                deletePair(pairId)
+                                                deletePair(pairId, competition.id)
                                             }
                                             competition={competition}
                                             type="delete"

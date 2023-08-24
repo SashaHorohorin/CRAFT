@@ -27,7 +27,7 @@ const Header = () => {
                     <div className="header__column">
                         <Link to="/" className="header__logo">
                             <img
-                                src="./images/HomePage/craft-logo-home.svg"
+                                src="/images/HomePage/craft-logo-home.svg"
                                 alt="craft"
                             />
                         </Link>

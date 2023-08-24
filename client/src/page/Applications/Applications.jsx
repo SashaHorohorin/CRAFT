@@ -5,12 +5,13 @@ import { Context } from "../..";
 import { useFetching } from "../../hooks/useFetching";
 import DataService from "../../API/DataService";
 import { set } from "mobx";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import ModalInvitePair from "../../components/ModalInvitePair/ModalInvitePair";
 
 const Applications = () => {
     const { eventStore } = useContext(Context);
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [valueName, setValueName] = useState("");
     const [valueRating, setValueRating] = useState("");
@@ -90,14 +91,31 @@ const Applications = () => {
     }, []);
 
     let openModal = () => {
-        document.body.classList.add("stop");
-        eventStore.setFlagOpenModalAddPair(true);
+        if (!localStorage.getItem("username")) {
+            navigate("/auth/login");
+        } else {
+            document.body.classList.add("stop");
+            eventStore.setFlagOpenModalAddPair(true);
+        }
     };
     let openModalRequestAddPair = (id) => {
-        setPairId(id);
-        document.body.classList.add("stop");
-        eventStore.setFlagOpenModalRequestAddPair(true);
+        if (!localStorage.getItem("username")) {
+            navigate("/auth/login");
+        } else {
+            setPairId(id);
+            document.body.classList.add("stop");
+            eventStore.setFlagOpenModalRequestAddPair(true);
+        }
     };
+
+    let buttonRequestToJoin = (pairId) => {
+        if (!localStorage.getItem("username")) {
+            navigate("/auth/login");
+        } else {
+            fetchingRequestToJoin(pairId)
+        }
+        
+    }
     let closeModal = (event) => {
         const nameClass = event.target.className;
         if (
@@ -349,14 +367,17 @@ const Applications = () => {
                                     ) : isPlayerInCompetititon() ? (
                                         <button
                                             className="applications__button"
-                                            style={{opacity: '0.3', cursor: 'not-allowed'}}
+                                            style={{
+                                                opacity: "0.3",
+                                                cursor: "not-allowed",
+                                            }}
                                         >
                                             + Предложить сыграть вместе
                                         </button>
                                     ) : (
                                         <button
                                             onClick={() =>
-                                                fetchingRequestToJoin(pair.id)
+                                                buttonRequestToJoin(pair.id)
                                             }
                                             className="applications__button"
                                         >

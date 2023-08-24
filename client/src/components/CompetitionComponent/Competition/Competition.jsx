@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Context } from "../../..";
 
 const Competition = ({competition, type, deletePair}) => {
+    const navigate = useNavigate();
+
 
     const { eventStore } = useContext(Context);
 
@@ -29,6 +31,15 @@ const Competition = ({competition, type, deletePair}) => {
         }
     }
 
+    const openModalAddPair = () => {
+        if(!localStorage.getItem('username')){
+            navigate('/auth/login')
+        }else{
+            navigate(`/competitions/applications/${competition.id}`)
+            eventStore.setFlagOpenModalAddPair(true)
+        }
+    }
+
     return (
         <div className="competitions__event event-competitions">
             <div className="event-competitions__title">{competition.type}</div>
@@ -42,7 +53,7 @@ const Competition = ({competition, type, deletePair}) => {
                         Выписаться
                     </button>
                 ) : (
-                    <button className="event-competitions__follow">
+                    <button onClick={() => openModalAddPair()} className="event-competitions__follow">
                         Записаться
                     </button>
                 )}

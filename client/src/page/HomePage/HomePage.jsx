@@ -8,6 +8,7 @@ import WhyCards from "../../components/WhyCards/WhyCards";
 import Trainers from "../../components/Trainers/Trainers";
 import WhereWe from "../../components/WhereWe/WhereWe";
 import Footer from "../../components/Footer/Footer";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
     // если страница зажружена запускаем воланчик
@@ -15,7 +16,7 @@ const HomePage = () => {
     
     return (
         <div  className="home">
-            <FollowingBtn />
+            <Link to="training"><FollowingBtn /></Link>
             <MainPart />
             <Marquee
                 classAdd="marquee-first"

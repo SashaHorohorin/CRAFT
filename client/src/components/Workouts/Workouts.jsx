@@ -3,10 +3,12 @@ import Carousel from "../Carousel/Carousel";
 import PeopleAction from "../TrainingComponent/PeopleAction/PeopleAction";
 import DataService from "../../API/DataService";
 import { useFetching } from "../../hooks/useFetching";
+import { useNavigate } from "react-router";
 
 const Workouts = ({ workouts, date }) => {
     // console.log(workouts.length);
     const [workoutTrain, setWorkoutTrain] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         console.log("------------");
@@ -68,7 +70,14 @@ const Workouts = ({ workouts, date }) => {
 
         console.log(newObj);
 
-        fetchingFollowTrain(newObj, trainId);
+        if(!localStorage.getItem('username')){
+            navigate('/auth/login')
+        }
+        else{
+            fetchingFollowTrain(newObj, trainId);
+        }
+
+        
     };
 
     const unFollowTrain = (trainId) => {
