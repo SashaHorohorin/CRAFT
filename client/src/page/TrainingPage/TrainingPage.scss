@@ -47,12 +47,14 @@
         height: 100vh;
         background: rgba(217, 217, 217, 0.95);
         z-index: 49;
+        padding: 10px;
         &.active {
             display: block;
         }
     }
 }
 .modal-more-info{
+    color: #fff;
     position: relative;
     z-index: 4;
     position: fixed;
@@ -63,7 +65,7 @@
     max-width: 800px;
     width: 100%;
     background: #ea7777;
-    padding: 30px 60px;
+    padding: 30px 30px;
     border-radius: 20px;
     display: flex;
     // align-items: center;

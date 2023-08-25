@@ -140,7 +140,7 @@ const Workouts = ({ workouts, date, openModal }) => {
                                                 <div className="info-workout__name">
                                                     {workout.type}
                                                 </div>
-                                                <div onClick={() => openModal(workout.type)} className="info-workout__btn btn-workout">
+                                                <div onClick={() => openModal(workout)} className="info-workout__btn btn-workout">
                                                     подробнее
                                                 </div>
                                             </div>

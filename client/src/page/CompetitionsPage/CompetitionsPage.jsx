@@ -7,6 +7,9 @@ import DataService from "../../API/DataService";
 const СompetitionsPage = () => {
     const [competitions, setСompetitions] = useState([])
 
+    const [moreInfoFlag, setMoreInfoFlag] = useState(false);
+    const [modalCompetition, setModalCompetition] = useState({});
+
     const [fetchingCompetition, isLoadingCompetition, errorCompetition] = useFetching(
         async () => {
             // console.log('saskfhjahfshahfjshfkjshkj');
@@ -14,6 +17,7 @@ const СompetitionsPage = () => {
             console.log(response.data);
             setСompetitions(response.data)
             // let complex = [...response.data];
+
         }
     );
 
@@ -25,6 +29,7 @@ const СompetitionsPage = () => {
 
     return (
         <div className="competitions">
+            <div className="competitions__bg"></div>
             
             <div className="container">
                 <div className="competitions__container">
