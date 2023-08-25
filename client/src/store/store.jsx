@@ -56,6 +56,9 @@ export default class Store{
             setTimeout(()=> {
                 this.setMessageError(error?.response?.data?.message)
                 this.setFlagError(true);
+                setTimeout(() => {
+                    this.setFlagError(false);
+                }, 4000)
             }, 500)
             
         }

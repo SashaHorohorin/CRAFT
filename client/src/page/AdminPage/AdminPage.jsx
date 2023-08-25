@@ -12,10 +12,11 @@ import { Context } from "../..";
 import { Outlet } from "react-router";
 import { Link } from "react-router-dom";
 import ModalCompetition from "../../components/AdminComponent/ModalCompetition";
+import ModalEvent from "../../components/AdminComponent/ModalEvent";
 
 const AdminPage = () => {
-    const { trainingChange, competitionChange } = useContext(Context);
-
+    const { trainingChange, competitionChange, eventChange } =
+        useContext(Context);
 
     const sportComplex = ["DINAMIT", "ALEKSEEVA", "IMPULS"];
     const typeTrain = [
@@ -23,7 +24,7 @@ const AdminPage = () => {
         "Тренировка для начинающих и продолжающих",
         "Игровая",
     ];
-    const typeCompetition = ['PAIR', 'TWO', 'THREE'];
+    const typeCompetition = ["PAIR", "TWO", "THREE"];
     const [trainers, setTrainers] = useState([]);
 
     const [fetchingTrainers, isLoadingTrainers, errorTrainers] = useFetching(
@@ -50,7 +51,9 @@ const AdminPage = () => {
             const response = await DataService.postChangeTrain(trainId, obj);
             console.log(response.data);
             trainingChange.setTraining([
-                ...trainingChange.training.filter((train) => trainId !== train.id),
+                ...trainingChange.training.filter(
+                    (train) => trainId !== train.id
+                ),
                 response.data,
             ]);
         });
@@ -58,7 +61,10 @@ const AdminPage = () => {
         useFetching(async (obj) => {
             const response = await DataService.postCreateTrain(obj);
             console.log(response.data);
-            trainingChange.setTraining([...trainingChange.training, response.data]);
+            trainingChange.setTraining([
+                ...trainingChange.training,
+                response.data,
+            ]);
             // setTraining(training.filter((train) => (trainId !== train.id)));
         });
 
@@ -178,32 +184,41 @@ const AdminPage = () => {
         sportComplex: sportComplex[0],
     });
 
-    const [fetchingCompetition, isLoadingCompetition, errorCompetition] = useFetching(
-        async () => {
+    const [fetchingCompetition, isLoadingCompetition, errorCompetition] =
+        useFetching(async () => {
             const response = await DataService.getCompetitionAll();
             console.log(response.data);
             competitionChange.setCompetitions(response.data);
-        }
-    );
-
-    const [fetchinChangeCompetition, isLoadinChangeCompetition, erroChangeCompetition] =
-        useFetching(async (trainId, obj) => {
-            const response = await DataService.postChangeCompetition(trainId, obj);
-            console.log(response.data);
-            competitionChange.setCompetitions([
-                ...competitionChange.competitions.filter((train) => trainId !== train.id),
-                response.data,
-            ]);
         });
 
-    const [fetchinCreateCompetition, isLoadinCreateCompetition, erroCreateCompetition] =
-        useFetching(async (obj) => {
-            const response = await DataService.postCreateCompetition(obj);
-            console.log(response.data);
-            competitionChange.setCompetitions([...competitionChange.competitions, response.data]);
-            // setTraining(training.filter((train) => (trainId !== train.id)));
-        }
-    );
+    const [
+        fetchinChangeCompetition,
+        isLoadinChangeCompetition,
+        erroChangeCompetition,
+    ] = useFetching(async (trainId, obj) => {
+        const response = await DataService.postChangeCompetition(trainId, obj);
+        console.log(response.data);
+        competitionChange.setCompetitions([
+            ...competitionChange.competitions.filter(
+                (train) => trainId !== train.id
+            ),
+            response.data,
+        ]);
+    });
+
+    const [
+        fetchinCreateCompetition,
+        isLoadinCreateCompetition,
+        erroCreateCompetition,
+    ] = useFetching(async (obj) => {
+        const response = await DataService.postCreateCompetition(obj);
+        console.log(response.data);
+        competitionChange.setCompetitions([
+            ...competitionChange.competitions,
+            response.data,
+        ]);
+        // setTraining(training.filter((train) => (trainId !== train.id)));
+    });
     const handleFunctionCompetition = (e) => {
         // e.preventDefault();
         const name = e.target.name;
@@ -212,10 +227,10 @@ const AdminPage = () => {
         console.log("value: " + value);
         let newObj = {};
 
-            newObj = {
-                ...objCompetition,
-                [name]: value,
-            };
+        newObj = {
+            ...objCompetition,
+            [name]: value,
+        };
         setObjCompetition(newObj);
         // console.log(obj);
     };
@@ -260,11 +275,11 @@ const AdminPage = () => {
     const changeCompetition = (obj, dateTrain) => {
         let d1 = dateTrain.date.split(/\D/);
         let t1 = dateTrain.toTime.split(":");
-        
+
         const utcDateStart = new Date(
             Date.UTC(d1[0], --d1[1], d1[2], t1[0], t1[1])
         );
-        
+
         // console.log(new Date(utcDateEnd));
         let newObj = {
             ...objCompetition,
@@ -278,11 +293,112 @@ const AdminPage = () => {
 
         competitionChange.setOpenModalCompetitionChange(false);
     };
-        
+
     // ===========================================================<COMPETITION>
     // ===========================================================<EVENT>
+    const [fetchingEvent, isLoadingEvent, errorEvent] = useFetching(
+        async (count) => {
+            const response = await DataService.getEventsAll(count);
+            console.log(response.data);
+            eventChange.setEvents(response.data.news);
+            eventChange.setTotalCountPage(response.date.totalPages)
+        }
+    );
+    const [fetchinChangeEvent, isLoadinChangeEvent, erroChangeEvent] =
+        useFetching(async (eventId, obj) => {
+            const response = await DataService.postChangeEvent(eventId, obj);
+            console.log(response.data);
+            eventChange.setEvents([
+                ...eventChange.events.filter((event) => eventId !== event.id),
+                response.data,
+            ]);
+        });
+    const [fetchinCreateEvent, isLoadinCreateEvent, erroCreateEvent] =
+        useFetching(async (obj) => {
+            const response = await DataService.postCreateEvent(obj);
+            console.log(response.data);
+            eventChange.setEvents([...eventChange.events, response.data]);
+        });
 
+    const [dateEvent, setDateEvent] = useState({
+        date: "",
+        toTime: "",
+    });
 
+    const [objEvent, setObjEvent] = useState({
+        type: '',
+        title: '',
+        eventDate: "",
+        text: '',
+        photoUrl: ''
+    });
+    const handleFunctionEvent = (e) => {
+        // e.preventDefault();
+        const name = e.target.name;
+        let value = e.target.value;
+        console.log("name: " + name);
+        console.log("value: " + value);
+        let newObj = {};
+            newObj = {
+                ...objEvent,
+                [name]: value,
+            };
+        setObjEvent(newObj);
+        // console.log(obj);
+    };
+
+    const handleFunctionDateEvent = (e) => {
+        const name = e.target.name;
+        let value = e.target.value;
+        console.log("name: " + name);
+        console.log("value: " + value);
+        let newObjDate = {
+            ...dateEvent,
+            [name]: value,
+        };
+        setDateEvent(newObjDate);
+    };
+    const createEvent = () => {
+        // console.log(dateTrain);
+        // let d = new Date(Date.UTC(dateTrain.date[0], -dateTrain.date[1], dateTrain.date[2],dateTrain.toTime[0], dateTrain.toTime[1]));
+        let d1 = dateEvent.date.split(/\D/);
+        let t1 = dateEvent.toTime.split(":");
+        const utcDateStart = new Date(
+            Date.UTC(d1[0], --d1[1], d1[2], t1[0], t1[1])
+        );
+        // console.log(new Date(utcDateEnd));
+        let newObj = {
+            ...objEvent,
+            eventDate: utcDateStart - 10800000,
+        };
+        console.log(newObj);
+
+        fetchinCreateEvent(newObj); // ======
+
+        setObjEvent(newObj);
+        eventChange.setOpenModalEventCreate(false);
+    };
+    const changeEvent = (obj, dateEvent) => {
+        // console.log(dateTrain);
+        // let d = new Date(Date.UTC(dateTrain.date[0], -dateTrain.date[1], dateTrain.date[2],dateTrain.toTime[0], dateTrain.toTime[1]));
+        let d1 = dateEvent.date.split(/\D/);
+        let t1 = dateEvent.toTime.split(":");
+        const utcDateStart = new Date(
+            Date.UTC(d1[0], --d1[1], d1[2], t1[0], t1[1])
+        );
+        
+        // console.log(new Date(utcDateEnd));
+        let newObj = {
+            ...obj,
+            eventDate: utcDateStart - 10800000,
+        };
+        console.log(newObj);
+
+        fetchinChangeEvent(eventChange.eventIdChange, newObj);
+
+        // setObj(newObj);
+        eventChange.setOpenModalEventChange(false)
+    };
 
     // ===========================================================<EVENT>
 
@@ -290,6 +406,7 @@ const AdminPage = () => {
         fetchingTrainers();
         fetchingTraining();
         fetchingCompetition();
+        fetchingEvent(eventChange.countPage);
     }, []);
 
     return (
@@ -302,7 +419,9 @@ const AdminPage = () => {
                 funcBtn={() => createPost()}
                 flag={trainingChange.openModalTrainingCreate}
                 trainers={trainers}
-                setFlag={(bool) => trainingChange.setOpenModalTrainingCreate(bool)}
+                setFlag={(bool) =>
+                    trainingChange.setOpenModalTrainingCreate(bool)
+                }
             />
             <ModalTrain
                 handleFunctionDate={(e) => handleFunctionDate(e)}
@@ -313,9 +432,10 @@ const AdminPage = () => {
                 funcBtn={(sendObj, dateTrain) => changePost(sendObj, dateTrain)}
                 flag={trainingChange.openModalTrainingChange}
                 trainers={trainers}
-                setFlag={(bool) => trainingChange.setOpenModalTrainingChange(bool)}
+                setFlag={(bool) =>
+                    trainingChange.setOpenModalTrainingChange(bool)
+                }
             />
-
 
             <ModalCompetition
                 handleFunctionDate={(e) => handleFunctionDateCompetition(e)}
@@ -324,7 +444,9 @@ const AdminPage = () => {
                 maxParticipant={objCompetition.maxPair} // ====
                 funcBtn={() => createCompetition()}
                 flag={competitionChange.openModalCompetitionCreate}
-                setFlag={(bool) => competitionChange.setOpenModalCompetitionCreate(bool)}
+                setFlag={(bool) =>
+                    competitionChange.setOpenModalCompetitionCreate(bool)
+                }
             />
             <ModalCompetition
                 handleFunctionDate={(e) => handleFunctionDateCompetition(e)}
@@ -332,25 +454,77 @@ const AdminPage = () => {
                 maxParticipant={objCompetition.maxPair}
                 type="change"
                 train={competitionChange.competitionChange}
-                funcBtn={(sendObj, dateTrain) => changeCompetition(sendObj, dateTrain)}
+                funcBtn={(sendObj, dateTrain) =>
+                    changeCompetition(sendObj, dateTrain)
+                }
                 flag={competitionChange.openModalCompetitionChange}
-                setFlag={(bool) => competitionChange.setOpenModalCompetitionChange(bool)}
+                setFlag={(bool) =>
+                    competitionChange.setOpenModalCompetitionChange(bool)
+                }
             />
+            <ModalEvent
+                handleFunctionDate={(e) => handleFunctionDateEvent(e)}
+                handleFunction={(e) => handleFunctionEvent(e)}
+                type="create"
+                text={objEvent.text}
+                funcBtn={() => createEvent()}
+                flag={eventChange.openModalEventCreate}
+                title={objEvent.title}
+                setFlag={(bool) =>
+                    eventChange.setOpenModalEventCreate(bool)
+                }
+            />
+            <ModalEvent
+                handleFunctionDate={(e) => handleFunctionDateEvent(e)}
+                handleFunction={(e) => handleFunctionEvent(e)}
+                type="change"
+                text={objEvent.text}
+                title={objEvent.title}
+                funcBtn={(sendObj, dateEvent) =>
+                    changeEvent(sendObj, dateEvent)
+                }
+                flag={eventChange.openModalEventChange}
+                setFlag={(bool) =>
+                    eventChange.setOpenModalEventChange(bool)
+                }
+            />
+
+
+                
+
+            
 
             <div className="container">
                 <div className="admin__title">Панель администратора</div>
                 <div className="admin__row">
                     <div className="admin__nav nav-admin">
-                        <div className="nav-admin__title">Модели</div>
+                        <div
+                            onClick={() => console.log(eventChange.events)}
+                            className="nav-admin__title"
+                        >
+                            Модели
+                        </div>
                         <ul className="nav-admin__links">
-                            <Link to="training-change" className="nav-admin__link">Тренировки</Link>
-                            <Link to="competition-change" className="nav-admin__link">Соревнования</Link>
-                            <Link to="event-change" className="nav-admin__link">Новости</Link>
+                            <Link
+                                to="training-change"
+                                className="nav-admin__link"
+                            >
+                                Тренировки
+                            </Link>
+                            <Link
+                                to="competition-change"
+                                className="nav-admin__link"
+                            >
+                                Соревнования
+                            </Link>
+                            <Link to="event-change" className="nav-admin__link">
+                                Мероприятия
+                            </Link>
                             <li className="nav-admin__link">Тренеры</li>
                         </ul>
                     </div>
                     <div className="admin__main">
-                        <Outlet/>
+                        <Outlet />
                     </div>
                 </div>
             </div>

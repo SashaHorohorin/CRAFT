@@ -144,6 +144,9 @@
     padding: 10px;
     border-radius: 10px;
     background: #ff6969;
+    &.change-event{
+        top: -5px;
+    }
     &__header {
         display: flex;
         align-items: center;
@@ -180,7 +183,7 @@
     position: relative;
     z-index: 4;
     position: fixed;
-    top: 10%;
+    top: 5%;
     left: 50%;
     transform: translate(-50%);
     z-index: 50;
@@ -218,7 +221,7 @@
         height: 100vh;
         background: rgba(217, 217, 217, 0.95);
         z-index: 49;
-        &.active{
+        &.active {
             display: block;
         }
     }
@@ -261,9 +264,9 @@
         margin-left: 20px;
         padding: 5px 10px;
     }
-    input[type=time]{
+    input[type="time"] {
         margin-right: 20px;
-        &:last-child(){
+        &:last-child() {
             margin-right: 0;
         }
     }
@@ -298,4 +301,57 @@
         font-weight: 400;
         text-transform: uppercase;
     }
+}
+.admin-events{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 15px;
+    grid-row-gap: 15px;
+    margin-bottom: 20px;
+}
+
+.admin-event {
+    // width: 33%;
+    position: relative;
+    padding: 15px;
+    border-radius: 10px;
+    background: #5a5a5a;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    &__header {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
+
+    &__lable {
+        
+    }
+
+    &__func {
+    }
+
+    &__title {
+        margin-bottom: 25px;
+    }
+
+    &__timelab {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__date {
+    }
+
+    &__time {
+    }
+}
+
+textarea{
+    margin-top: 10px;
+    width: 100%;
+    height: 150px;
 }

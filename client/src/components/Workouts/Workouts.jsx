@@ -9,12 +9,18 @@ const Workouts = ({ workouts, date }) => {
     // console.log(workouts.length);
     const [workoutTrain, setWorkoutTrain] = useState([]);
     const navigate = useNavigate();
-
+    let weightWin = window.innerWidth;
+    let day = ['ВС', 'ПН','ВТ','СР','ЧТ','ПТ','СБ']
     useEffect(() => {
+        
         console.log("------------");
         workouts.sort((a, b) => (a.startTime < b.startTime ? 1 : -1));
         setWorkoutTrain(workouts);
     }, [workouts]);
+
+    // const widthWindow = () => {
+    //     console.log(window.innerWidth);
+    // }
 
     const [fetchingFollowTrain, isLoadingFollowTrain, errorFollowTrain] =
         useFetching(async (obj, trainId) => {
@@ -97,6 +103,7 @@ const Workouts = ({ workouts, date }) => {
         let time = `${d.getHours() < 10 ? `0${d.getHours()}`:d.getHours()}:${d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()}`;
         return time;
     };
+    
     return (
         <>
             {/* {isLoadingFollowTrain ? (
@@ -104,7 +111,7 @@ const Workouts = ({ workouts, date }) => {
             ) : ( */}
             <div className="workouts">
                 <div className="workouts__date date-workouts">
-                    <div className="date-workouts__week">ПН</div>
+                    <div className="date-workouts__week">{day[date.getDay()]}</div>
                     <div className="date-workouts__day">{`${
                         date.getDate() < 10
                             ? `0${date.getDate()}`
@@ -115,8 +122,12 @@ const Workouts = ({ workouts, date }) => {
                             : date.getMonth() + 1
                     }`}</div>
                 </div>
-                <div className="workouts__items">
-                    {workoutTrain.length > 3 ? (
+                <div className="workouts__items" style={weightWin > 1148 ? (workoutTrain.length > 3 ? {
+                    overflowX:'scroll'
+                } : null) : (workoutTrain.length > 2 ? {
+                    overflowX:'scroll'
+                } : null)}>
+                    {/* {workoutTrain.length > 3 ? (
                         <Carousel>
                             {workoutTrain.map((workout, index) => (
                                 <div
@@ -298,7 +309,97 @@ const Workouts = ({ workouts, date }) => {
                                 </div>
                             ))}
                         </div>
-                    )}
+                    )} */}
+                    <div className="workouts__container">
+                            {workoutTrain.map((workout, index) => (
+                                <div
+                                    key={workout.id}
+                                    className="workouts__item workout"
+                                >
+                                    <div className="workout__row">
+                                        <div className="workout__column">
+                                            <div className="workout__info info-workout">
+                                                <div className="info-workout__name">
+                                                    {workout.type}
+                                                </div>
+                                                <div className="info-workout__btn btn-workout">
+                                                    подробнее
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="workout__column">
+                                            <div className="workout__time time-workout">
+                                                <div className="time-workout__label">
+                                                    Время
+                                                </div>
+                                                <div className="time-workout__interval">
+                                                    {getTime(
+                                                        workout.startTrain
+                                                    ) +
+                                                        " - " +
+                                                        getTime(
+                                                            workout.endTrain
+                                                        )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="workout__column">
+                                            <div className="workout__trainer trainer-workout">
+                                                <div
+                                                    onClick={() =>
+                                                        workLog(workout)
+                                                    }
+                                                    className="trainer-workout__label"
+                                                >
+                                                    Тренер
+                                                </div>
+                                                <div className="trainer-workout__name">
+                                                    {workout.trainers[0].name}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="workout__column">
+                                            <div className="workout__actions actions-workout">
+                                                <PeopleAction
+                                                    sportsmens={
+                                                        workout.sportsmens
+                                                    }
+                                                />
+                                                {workout.sportsmens.filter(
+                                                    (sportsmen) =>
+                                                        sportsmen.username ==
+                                                        localStorage.getItem(
+                                                            "username"
+                                                        )
+                                                ).length == 0 ? (
+                                                    <div
+                                                        onClick={() =>
+                                                            followTrain(
+                                                                workout.id
+                                                            )
+                                                        }
+                                                        className="actions-workout__btn btn-workout"
+                                                    >
+                                                        Записаться
+                                                    </div>
+                                                ) : (
+                                                    <div
+                                                        onClick={() =>
+                                                            unFollowTrain(
+                                                                workout.id
+                                                            )
+                                                        }
+                                                        className="actions-workout__btn btn-workout"
+                                                    >
+                                                        Выписаться
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                 </div>
             </div>
             {/* )} */}

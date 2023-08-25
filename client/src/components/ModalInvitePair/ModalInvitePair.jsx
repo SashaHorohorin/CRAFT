@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
-const ModalInvitePair = ({text, title, sendFunc, flag, setFlag}) => {
+const ModalInvitePair = ({text, changeFlagNotification,  title, sendFunc, flag, setFlag}) => {
     const [flagOpenModalAddPair, setFlagOpenModalAddPair] = useState(false);
     const [valueName, setValueName] = useState("");
     const [valueRating, setValueRating] = useState("");
@@ -15,7 +15,8 @@ const ModalInvitePair = ({text, title, sendFunc, flag, setFlag}) => {
                 nameClass.includes("modal-applications") ||
                 nameClass.includes("mine-applications") ||
                 nameClass.includes("item-instruction") ||
-                nameClass.includes("find-person")
+                nameClass.includes("find-person") ||
+                nameClass.includes("find-users")
             ) ||
             nameClass.includes("modal-applications__close") ||
             nameClass.includes("modal-applications__bg")
@@ -30,8 +31,28 @@ const ModalInvitePair = ({text, title, sendFunc, flag, setFlag}) => {
         // console.log(valueName);
     };
 
+    const polsevat = ['Никита Пирогов', 'Никита Пирогов', 'Никита Пирогов', 'Никита Пирогов', 'Никита Пирогов', 'Никита Гарыныч', 'Стас Пирогов', 'Александр Хорохорин', 'Ника Пирон', 'Алекс Пирог']
+    const [users, setUsers] = useState([])
+
     const handleNameChange = (event) => {
+        let arrUserFind = []
+        let reg;
+        if(!(event.target.value == '?' || event.target.value == '\\')){
+            reg = new RegExp(`${event.target.value}`);
+        }
         setValueName(event.target.value);
+
+        if (event.target.value){
+            for(let i = 0; i < polsevat.length; i++){
+                if(polsevat[i].match(reg)){
+                    arrUserFind.push(polsevat[i])
+                    // console.log(arrUserFind);
+    
+                }
+            }
+        }
+
+        setUsers(arrUserFind)
         // console.log(valueName);
     };
 
@@ -41,6 +62,14 @@ const ModalInvitePair = ({text, title, sendFunc, flag, setFlag}) => {
     const closeModalAfterSend = () => {
         sendFunc(valueName, valueRating);
         eventStore.setFlagOpenModalAddPair(false)
+        changeFlagNotification(true)
+        setTimeout(() => {
+            changeFlagNotification(false)
+        }, 2000)
+    }
+    const selectUser = (user) => {
+        setValueName(user);
+        setUsers([]);
     }
 
     return (
@@ -132,6 +161,14 @@ const ModalInvitePair = ({text, title, sendFunc, flag, setFlag}) => {
                                     className="find-person__input"
                                     type="text"
                                 />
+                                {users.length != 0 ? (
+                                    <ul className="find-users">
+                                        {users.map((user, index)=> (
+                                            <li onClick={() => selectUser(user)} className="find-users__user">{user}</li>
+                                        ))}
+                                    </ul>
+                                ) : null}
+                                
                             </form>
                             <button
                                 onClick={() => closeModalAfterSend()}

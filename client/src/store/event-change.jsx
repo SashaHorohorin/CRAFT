@@ -7,6 +7,7 @@ export default class EventsChange{
     eventIdChange = -1
     eventChange = {}
     countPage = 0;
+    totalCountPage = 0;
 
 
     constructor(){
@@ -21,7 +22,7 @@ export default class EventsChange{
         this.openModalEventCreate = bool;
     }
     setOpenModalEventChange(bool){
-        this.openModalCEventChange = bool;
+        this.openModalEventChange = bool;
     }
 
     setEventIdChange(id){
@@ -34,6 +35,9 @@ export default class EventsChange{
 
     setCountPage(){
         this.countPage = this.countPage + 1;
+    }
+    setTotalCountPage(total) {
+        this.totalCountPage = total
     }
 
 

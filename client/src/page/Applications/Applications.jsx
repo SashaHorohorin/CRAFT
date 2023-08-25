@@ -19,6 +19,7 @@ const Applications = () => {
     const [competition, setCompetition] = useState({});
     const [pairId, setPairId] = useState("");
     const [flagSucces, setFlagSucces] = useState(false);
+    const [flagNotification, setFlagNotification] = useState(false);
 
     const [
         fetchingCreateAndInvite,
@@ -112,10 +113,9 @@ const Applications = () => {
         if (!localStorage.getItem("username")) {
             navigate("/auth/login");
         } else {
-            fetchingRequestToJoin(pairId)
+            fetchingRequestToJoin(pairId);
         }
-        
-    }
+    };
     let closeModal = (event) => {
         const nameClass = event.target.className;
         if (
@@ -185,7 +185,7 @@ const Applications = () => {
     };
 
     const requestToInvite = async (valueName) => {
-        console.log();
+        console.log("to");
         for (let i = 0; i < user.length; i++) {
             let fullName = user[i].firstName + " " + user[i].lastName;
             if (fullName === valueName) {
@@ -226,12 +226,31 @@ const Applications = () => {
         return false;
     };
 
+    const closeModalWindow = () => {
+        setFlagNotification(false);
+    }
+
     return (
         <div className="applications">
+            <div
+                className={
+                    flagNotification ? "modal-window active" : "modal-window"
+                }
+            >
+                <div
+                    onClick={() => closeModalWindow()}
+                    className="modal-window__close"
+                >
+                    <span></span>
+                    <span></span>
+                </div>
+                <div className="modal-window__title">Заявка отправлена</div>
+            </div>
             <ModalInvitePair
                 setFlag={(bool) => eventStore.setFlagOpenModalAddPair(bool)}
                 flag={eventStore.flagOpenModalAddPair}
                 sendFunc={sendCreateAndInvite}
+                changeFlagNotification={(bool) => setFlagNotification(bool)}
             />
             <ModalInvitePair
                 title="Приглашение в пару"
@@ -240,6 +259,7 @@ const Applications = () => {
                     eventStore.setFlagOpenModalRequestAddPair(bool)
                 }
                 flag={eventStore.flagOpenModalRequestAddPair}
+                changeFlagNotification={(bool) => setFlagNotification(bool)}
                 sendFunc={requestToInvite}
             />
             <div

@@ -25,6 +25,7 @@ const СompetitionsPage = () => {
 
     return (
         <div className="competitions">
+            
             <div className="container">
                 <div className="competitions__container">
                     <div className="competitions__title">Соревнования</div>

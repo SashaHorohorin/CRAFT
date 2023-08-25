@@ -5,6 +5,8 @@ import { useFetching } from "../../hooks/useFetching";
 import Workouts from "../../components/Workouts/Workouts";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
+import TrainingTabs from "../../components/TrainingTabs/TrainingTabs";
+import TrainingTabsMobile from "../../components/TrainingTabsMobile/TrainingTabsMobile";
 
 const TrainingPage = () => {
     const [arrDate, setArrDate] = useState([]);
@@ -74,85 +76,8 @@ const TrainingPage = () => {
                     <div className="container">
                         <div className="trainingPage__title">Расписание</div>
 
-                        <div className="trainingPage__tabs tabs-info">
-                            <ul className="tabs-info__labels">
-                                {training.map((tab, index) => (
-                                    <li
-                                        key={index}
-                                        className={
-                                            index === activeTabIndex
-                                                ? "tabs-info__tab active"
-                                                : "tabs-info__tab"
-                                        }
-                                        onClick={() => activate(index)}
-                                    >
-                                        {tab[0]}
-                                    </li>
-                                ))}
-                            </ul>
-                            <div className="tabs-info__content">
-                                {/* {training[activeTabIndex] ? (training[activeTabIndex][1]?.sunday[0]?.type) : null} */}
-                                {training[activeTabIndex] ? (
-                                    <Workouts
-                                        workouts={
-                                            training[activeTabIndex][1]?.monday
-                                        }
-                                        date={arrDate[0]}
-                                    />
-                                ) : null}
-                                {training[activeTabIndex] ? (
-                                    <Workouts
-                                        workouts={
-                                            training[activeTabIndex][1]?.tuesday
-                                        }
-                                        date={arrDate[1]}
-                                    />
-                                ) : null}
-                                {training[activeTabIndex] ? (
-                                    <Workouts
-                                        workouts={
-                                            training[activeTabIndex][1]
-                                                ?.wednesday
-                                        }
-                                        date={arrDate[2]}
-                                    />
-                                ) : null}
-                                {training[activeTabIndex] ? (
-                                    <Workouts
-                                        workouts={
-                                            training[activeTabIndex][1]
-                                                ?.thursday
-                                        }
-                                        date={arrDate[3]}
-                                    />
-                                ) : null}
-                                {training[activeTabIndex] ? (
-                                    <Workouts
-                                        workouts={
-                                            training[activeTabIndex][1]?.friday
-                                        }
-                                        date={arrDate[4]}
-                                    />
-                                ) : null}
-                                {training[activeTabIndex] ? (
-                                    <Workouts
-                                        workouts={
-                                            training[activeTabIndex][1]
-                                                ?.saturday
-                                        }
-                                        date={arrDate[5]}
-                                    />
-                                ) : null}
-                                {training[activeTabIndex] ? (
-                                    <Workouts
-                                        workouts={
-                                            training[activeTabIndex][1]?.sunday
-                                        }
-                                        date={arrDate[6]}
-                                    />
-                                ) : null}
-                            </div>
-                        </div>
+                        <TrainingTabs training={training} arrDate={arrDate}/>
+                        <TrainingTabsMobile training={training} arrDate={arrDate}/>
                     </div>
                     <ul className="people-actions__list">
                         <div className="people-actions__exit">

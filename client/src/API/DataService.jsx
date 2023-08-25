@@ -153,7 +153,7 @@ export default class DataService {
             `api/v1/news/create`, obj);
     }
     static async postDeleteEvent(id) {
-        return await $api.post(
+        return await $api.delete(
             `api/v1/news/delete/${id}`);
     }
     static async postChangeEvent(id, obj) {

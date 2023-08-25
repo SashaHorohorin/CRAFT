@@ -26,6 +26,15 @@
     }
 
     &__tabs {
+        @media (max-width: 866px) {
+            display: none;
+        }
+    }
+    &__mobile{
+        display: none;
+        @media (max-width: 866px) {
+            display: block;
+        }
     }
 }
 .tabs-info {
@@ -40,6 +49,7 @@
         list-style: none;
     }
     &__tab {
+        // display: block;
         position: relative;
         font-size: 24px;
         font-weight: 300;
@@ -74,31 +84,80 @@
                 height: 33px;
             }
         }
+        
+        
     }
+
+    
 
     &__content {
         background: #eaeaea;
-        padding: 3px;
+        padding: 3px 35px 3px 3px;
         border-radius: 10px;
+        // &.active{
+        //     display: none;
+        // }
     }
 }
 
+// .workouts {
+//     position: relative;
+//     z-index: 4;
+//     display: flex;
+//     align-items: center;
+//     margin-bottom: 3px;
+//     ~ &:last-child {
+//         margin: 0;
+//     }
+//     &__date {
+//         margin-right: 60px;
+//     }
+
+//     &__items {
+//         // display: flex;
+//         // align-items: center;
+//     }
+
+//     &__item {
+//     }
+
+//     &__container {
+//         display: flex;
+//         align-items: center;
+//         flex-direction: row;
+//     }
+// }
 .workouts {
     position: relative;
     z-index: 4;
     display: flex;
     align-items: center;
+    
     margin-bottom: 3px;
+    overflow: hidden;
+    @media (max-width: 866px) {
+        flex-direction: column;
+        // align-items: center;
+    }
     ~ &:last-child {
         margin: 0;
     }
     &__date {
         margin-right: 60px;
+        @media (max-width: 866px) {
+            margin-right: 0;
+            margin-bottom: 30px;
+        }
     }
 
     &__items {
         // display: flex;
         // align-items: center;
+        // overflow-x: scroll;
+        @media (max-width: 866px) {
+            // width: 100%;
+            // align-items: center;
+        }
     }
 
     &__item {
@@ -108,11 +167,17 @@
         display: flex;
         align-items: center;
         flex-direction: row;
+        @media (max-width: 866px) {
+            flex-direction: column;
+        }
+        
     }
 }
 
 .date-workouts {
     max-width: 60px;
+    // width: 60px;
+    flex: 1 0 60px;
     height: 198px;
     background: #ea7777;
     border-radius: 10px;
@@ -120,6 +185,13 @@
     align-items: center;
     flex-direction: column;
     overflow: hidden;
+    @media (max-width: 866px) {
+
+        max-width: 100%;
+        width: 100%;
+        flex: 0 0 50%;
+        flex-direction: row;
+    }
     &__week {
         padding: 15px 10px 15px 10px;
         font-weight: 600;
@@ -128,6 +200,11 @@
         border-bottom: 1px solid #eaeaea;
         width: 100%;
         color: #eaeaea;
+        @media (max-width: 866px) {
+            text-align: center;
+            border-right: 1px solid #eaeaea;
+            border-bottom: none;
+        }
     }
 
     &__day {
@@ -141,6 +218,10 @@
         font-weight: 600;
         font-size: 24px;
         color: #eaeaea;
+        @media (max-width: 866px) {
+            transform: rotate(0);
+            flex: 0 0 50%;
+        }
     }
 }
 
@@ -151,6 +232,14 @@
     // box-shadow: 0px 0px 31px 0px rgba(0, 0, 0, 0.25);
     // overflow: hidden;
     margin-right: 30px;
+    @media (max-width: 866px) {
+        min-width: none;
+        max-width: 100%;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 30px;
+        // align-items: center;
+    }
 
     &__row {
     }
@@ -401,4 +490,35 @@
     color: #eaeaea;
     padding: 5px 10px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+// ========<MOBILE>
+
+
+.mobile-info{
+    position: relative;
+    z-index: 3;
+    &__row{
+        display: flex;
+        align-items: end;
+        justify-content: space-around;
+        margin-bottom: 20px;
+    }
+    &__container{
+
+    }
+    &__label{
+        margin-bottom: 10px;
+        font-weight: 700;
+        font-size: 15px;
+        // padding: 7px;
+    }
+    &__select{
+        padding: 7px;
+        font-size: 18px;
+        border-radius: 10px;
+    }
+    &__tab{}
+
+    &__content{}
 }

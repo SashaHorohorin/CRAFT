@@ -274,7 +274,7 @@
         border: 0;
         width: 100%;
         outline: none;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     &__button {
@@ -287,5 +287,27 @@
         background: #5a5a5a;
         padding: 10px 20px;
         border: 0;
+    }
+}
+
+.find-users{
+    list-style: none;
+    font-size: 18px;
+    color: #fff;
+    // background: #c3c3c3;
+    border: 1px solid #fff;
+    padding: 3px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    max-height: 191px;
+    overflow: hidden;
+    &__user{
+        padding: 10px;
+        background: #db5555;
+        margin-bottom: 5px;
+        border-radius: 10px;
+        &:last-child{
+            margin: 0;
+        }
     }
 }
