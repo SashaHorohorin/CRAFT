@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+#  nginx:
+#    container_name: nginx
+#    image: nginx:1.13
+#    restart: always
+#    ports:
+#      - 80:80
+#    volumes:
+#      -  ./nginx/conf.d:/etc/nginx/conf.d
+#      - web-root:/var/www/html
+#      - certbot-etc:/etc/letsencrypt
+#      - certbot-var:/var/lib/letsencrypt
+#    networks:
+#      - app-network
+#
+#  certbot:
+#    image: certbot/certbot
+#    depends_on:
+#      - nginx
+#    container_name: certbot
+#    volumes:
+#      - certbot-etc:/etc/letsencrypt
+#      - certbot-var:/var/lib/letsencrypt
+#      - web-root:/var/www/html
+#    command: certonly --webroot --webroot-path=/var/www/html --email nikita-pirogov-artur@gmail.com --agree-tos --no-eff-email --staging -d craft-bc-backend.online -d www.craft-bc-backend.online
+
+  db:
+    image: postgres
+    container_name: craft1-java-postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=nikita
+      - POSTGRES_DB=craft
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+#    networks:
+#      - app-network
+
+  app:
+    build: ./
+    container_name: craft1-java-app
+    ports:
+      - "9005:9005"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/craft
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=nikita
+    depends_on:
+      - "db"
+#    networks:
+#      - app-network
+
+#volumes:
+#  certbot-etc:
+#  certbot-var:
+#  web-root:
+#
+#networks:
+#  app-network:
+#    driver: bridge
