@@ -16,6 +16,7 @@ target/
 ### IntelliJ IDEA ###
 .idea
 /client
+/server/src/main/resources/*.properties
 *.iws
 *.iml
 *.ipr
@@ -29,6 +30,7 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+
 
 ### VS Code ###
 .vscode/
