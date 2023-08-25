@@ -16,7 +16,7 @@ target/
 ### IntelliJ IDEA ###
 .idea
 /client
-/server/src/main/resources/.properties
+*.properties
 *.iws
 *.iml
 *.ipr
