@@ -26,8 +26,8 @@ public class CompetitionDto {
     private Set<CompetitionPairDto> competitionPairs = new HashSet<>();
     private CompetitionStatus status;
     private String info;
-    private int ratingUp;
-    private int ratingDown;
+    private Integer ratingUp;
+    private Integer ratingDown;
     private CategoryOfCompetition category;
 
     public static CompetitionDto getDtoFromCompetition(Competition competition){
