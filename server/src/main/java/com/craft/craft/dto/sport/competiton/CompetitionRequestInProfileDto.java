@@ -1,6 +1,7 @@
 package com.craft.craft.dto.sport.competiton;
 
 import com.craft.craft.dto.sport.SportsmenDto;
+import com.craft.craft.model.sport.CategoryOfCompetition;
 import com.craft.craft.model.sport.Competition;
 import com.craft.craft.model.sport.CompetitionType;
 import com.craft.craft.model.sport.SportComplex;
@@ -26,6 +27,7 @@ public class CompetitionRequestInProfileDto {
     private int maxParticipant;
     private int nowParticipant;
     private RequestTypeDto typeOfRequest;
+    private CategoryOfCompetition category;
 
     public static CompetitionRequestInProfileDto getRequestDto(UUID pairId, BaseUser user, Competition competition, RequestTypeDto typeOfRequest) {
         return new CompetitionRequestInProfileDto(
@@ -37,7 +39,8 @@ public class CompetitionRequestInProfileDto {
                 competition.getStartCompetition(),
                 competition.getMaxPair(),
                 competition.getNowPair(),
-                typeOfRequest
+                typeOfRequest,
+                competition.getCategory()
         );
     }
 

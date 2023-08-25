@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public enum  TrainType  {
     @JsonProperty("Игровая")
     GAME,
-    @JsonProperty("Игровая с тренером")
+    @JsonProperty("Тактическая игровая")
+    TACTIC_GAME,
+    @JsonProperty("Тренировка с тренером")
     GAME_WITH_TRAINER,
-    @JsonProperty("Тренировка для начинающих и продолжающих")
-    TRAIN_FOR_LOW_SKILL,
 }

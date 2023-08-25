@@ -49,6 +49,14 @@ public class CompetitionService {
         competition.setType(createCompetitionDto.getType());
         competition.setStatus(CompetitionStatus.ACTIVE);
         competition.setEndCompetition(new Date(competition.getStartCompetition().getTime() + (1000 * 60 * 60 * 24)));//end на день больше чем start
+        competition.setCategory(createCompetitionDto.getCategory());
+        switch (competition.getCategory()){
+            case AB: competition.setRatingDown(700);
+            case BC: competition.setRatingDown(600);
+            case CD: competition.setRatingUp(600);
+            case DE: competition.setRatingUp(450);
+            case EF: competition.setRatingUp(350);
+        }
         return competitionRepo.save(competition);
     }
 

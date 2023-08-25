@@ -36,12 +36,12 @@ public class  NewsController {
     }
 
     @PostMapping("/create")
-    public NewsResponseDto createNews(CreateNewsDto newsDto){
+    public NewsResponseDto createNews(@RequestBody CreateNewsDto newsDto){
         return NewsResponseDto.getDtoFromNews(newsService.create(newsDto));
     }
 
     @PostMapping("/update/{id}")
-    public NewsResponseDto updateNews(@PathVariable UUID id, CreateNewsDto newsDto) throws ModelNotFoundException {
+    public NewsResponseDto updateNews(@PathVariable UUID id,@RequestBody CreateNewsDto newsDto) throws ModelNotFoundException {
         return NewsResponseDto.getDtoFromNews(newsService.update(id, newsDto));
     }
 

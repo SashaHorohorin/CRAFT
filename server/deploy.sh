@@ -14,6 +14,7 @@ echo 'Restart server...'
 
 ssh -i ~/.ssh/id_rsa root@77.222.53.22 << EOF
     docker compose down
+    docker compose build --pull --no-cache
     docker compose up -d
 EOF
 

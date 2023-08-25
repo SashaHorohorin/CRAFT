@@ -1,9 +1,6 @@
 package com.craft.craft.dto.sport.competiton;
 
-import com.craft.craft.model.sport.Competition;
-import com.craft.craft.model.sport.CompetitionStatus;
-import com.craft.craft.model.sport.CompetitionType;
-import com.craft.craft.model.sport.SportComplex;
+import com.craft.craft.model.sport.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +26,9 @@ public class CompetitionDto {
     private Set<CompetitionPairDto> competitionPairs = new HashSet<>();
     private CompetitionStatus status;
     private String info;
+    private int ratingUp;
+    private int ratingDown;
+    private CategoryOfCompetition category;
 
     public static CompetitionDto getDtoFromCompetition(Competition competition){
         return new CompetitionDto(
@@ -41,7 +41,10 @@ public class CompetitionDto {
                 competition.getNowPair(),
                 competition.getCompetitionPairs().stream().map(CompetitionPairDto::getDtoFromCompetitionPair).collect(Collectors.toSet()),
                 competition.getStatus(),
-                competition.getInfo()
+                competition.getInfo(),
+                competition.getRatingUp(),
+                competition.getRatingDown(),
+                competition.getCategory()
         );
     }
 }

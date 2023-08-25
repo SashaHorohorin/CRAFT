@@ -41,20 +41,6 @@ public class CompetitionPair extends BaseEntity {
     private Set<BaseUser> requestToInvite = new HashSet<>();
     @ManyToOne
     private Competition competition;
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-//    @JoinTable(
-//            name = "user_request_join_to_competition_pair",
-//            joinColumns = {@JoinColumn(name = "competition_pair_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "user_id")}
-//    )
-//    private Set<BaseUser> requestsToJoin = new HashSet<>();
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-//    @JoinTable(
-//            name = "user_request_join_to_competition_pair",
-//            joinColumns = {@JoinColumn(name = "competition_pair_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "user_id")}
-//    )
-//    private Set<BaseUser> requestsToInvites = new HashSet<>();
 
     @Override
     public int hashCode() {

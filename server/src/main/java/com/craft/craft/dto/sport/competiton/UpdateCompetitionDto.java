@@ -1,5 +1,6 @@
 package com.craft.craft.dto.sport.competiton;
 
+import com.craft.craft.model.sport.CategoryOfCompetition;
 import com.craft.craft.model.sport.CompetitionType;
 import com.craft.craft.model.sport.SportComplex;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -21,4 +23,7 @@ public class UpdateCompetitionDto {
     private int maxPair;
     @NonNull
     private CompetitionType type;
+    @NotNull
+    private CategoryOfCompetition category;
+
 }
