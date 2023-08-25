@@ -33,7 +33,7 @@ const EventChange = () => {
         <div className="admin__main">
             <div
                 onClick={() => eventChange.setOpenModalEventCreate(true)}
-                className="admin__create-btn"
+                className="admin__create-btn btn-event"
             >
                 Создать
             </div>

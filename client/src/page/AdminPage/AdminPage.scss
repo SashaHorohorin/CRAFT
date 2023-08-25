@@ -47,7 +47,10 @@
         font-weight: 200;
         border-radius: 9px;
         background: #ff6969;
-        margin-bottom: 35px;
+        &.btn-event{
+            margin-bottom: 35px;
+        }
+        
     }
 
     &__main {
@@ -61,6 +64,25 @@
 
     &__item {
     }
+    &__send-btn{
+        padding: 5px;
+        max-width: 200px;
+        width: 100%;
+        color: #fff;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 200;
+        border-radius: 9px;
+        background: #ff6969;
+    }
+
+    &__btns{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 35px;
+    }
+    
 }
 
 .nav-admin {

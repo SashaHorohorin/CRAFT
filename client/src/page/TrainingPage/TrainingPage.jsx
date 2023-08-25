@@ -14,6 +14,9 @@ const TrainingPage = () => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const { eventStore } = useContext(Context);
 
+    const [moreInfoFlag, setMoreInfoFlag] = useState(false);
+    const [modalType, setModalType] = useState("");
+
     const [fetchingTraining, isLoadingTraining, errorTraining] = useFetching(
         async () => {
             // console.log('saskfhjahfshahfjshfkjshkj');
@@ -67,17 +70,57 @@ const TrainingPage = () => {
         console.log(event.target);
     };
 
+    const openModal = (type) => {
+        console.log(type);
+        setModalType(type);
+        setMoreInfoFlag(true);
+    };
+
     return (
         <>
             {isLoadingTraining ? (
                 <div>Грузится</div>
             ) : (
-                <div onClick={(event) => eventStore.closePlaers(event)} className="trainingPage">
+                <div
+                    onClick={(event) => eventStore.closePlaers(event)}
+                    className="trainingPage"
+                >
+                    <div
+                        onClick={() => setMoreInfoFlag(false)}
+                        className={
+                            moreInfoFlag
+                                ? "trainingPage__bg active"
+                                : "trainingPage__bg"
+                        }
+                    >
+                        <div className="trainingPage__modal modal-more-info">
+                            {modalType == "Игровая" ? (
+                                <div>{`Описание
+                                 игровой`}</div>
+                            ) : modalType == "Игровая с тренером" ? (
+                                <p>Описание игровой с тренером</p>
+                            ) : (
+                                <p>
+                                    Описание тренировки для начинающих и
+                                    продолжающих
+                                </p>
+                            )}
+                        </div>
+                    </div>
+
                     <div className="container">
                         <div className="trainingPage__title">Расписание</div>
 
-                        <TrainingTabs training={training} arrDate={arrDate}/>
-                        <TrainingTabsMobile training={training} arrDate={arrDate}/>
+                        <TrainingTabs
+                            openModal={(type) => openModal(type)}
+                            training={training}
+                            arrDate={arrDate}
+                        />
+                        <TrainingTabsMobile
+                            openModal={(type) => openModal(type)}
+                            training={training}
+                            arrDate={arrDate}
+                        />
                     </div>
                     <ul className="people-actions__list">
                         <div className="people-actions__exit">

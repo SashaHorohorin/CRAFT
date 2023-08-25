@@ -36,6 +36,38 @@
             display: block;
         }
     }
+
+    &__bg{
+        display: none;
+        position: fixed;
+        z-index: 0;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(217, 217, 217, 0.95);
+        z-index: 49;
+        &.active {
+            display: block;
+        }
+    }
+}
+.modal-more-info{
+    position: relative;
+    z-index: 4;
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 50;
+    max-width: 800px;
+    width: 100%;
+    background: #ea7777;
+    padding: 30px 60px;
+    border-radius: 20px;
+    display: flex;
+    // align-items: center;
+    flex-direction: column;
 }
 .tabs-info {
     position: relative;
@@ -281,6 +313,7 @@
     }
 
     &__btn {
+        cursor: pointer;
     }
 }
 
@@ -347,6 +380,7 @@
 }
 
 .people-actions {
+    cursor: pointer;
     position: relative;
     border-radius: 54px;
     background: #d9d9d9;
@@ -483,6 +517,7 @@
 }
 
 .btn-workout {
+    cursor: pointer;
     border-radius: 10px;
     background: #ea7777;
     font-size: 10px;

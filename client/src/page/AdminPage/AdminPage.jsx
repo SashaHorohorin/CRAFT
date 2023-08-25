@@ -19,9 +19,14 @@ const AdminPage = () => {
         useContext(Context);
 
     const sportComplex = ["DINAMIT", "ALEKSEEVA", "IMPULS"];
+    // const typeTrain = [
+    //     "Игровая с тренером",
+    //     "Тренировка для начинающих и продолжающих",
+    //     "Игровая",
+    // ];
     const typeTrain = [
-        "Игровая с тренером",
-        "Тренировка для начинающих и продолжающих",
+        "Тактическая игровая",
+        "Тренировка с тренером",
         "Игровая",
     ];
     const typeCompetition = ["PAIR", "TWO", "THREE"];

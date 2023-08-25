@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Workouts from "../Workouts/Workouts";
 
-const TrainingTabsMobile = ({ training, arrDate }) => {
+const TrainingTabsMobile = ({ training, arrDate, openModal }) => {
     const [activeTabIndexComplex, setActiveTabIndexComplex] = useState(0);
     const [activeTabIndexDay, setActiveTabIndexDay] = useState(0);
 
@@ -87,6 +87,7 @@ const TrainingTabsMobile = ({ training, arrDate }) => {
                                 dayTraining[activeTabIndexDay]
                             ]
                         }
+                        openModal={(type) => openModal(type)}
                         date={arrDate[activeTabIndexDay]}
                     />
                 ) : null}

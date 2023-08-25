@@ -30,11 +30,18 @@ const TrainingChange = () => {
 
     return (
         <div className="admin__main">
-            <div
-                onClick={() => trainingChange.setOpenModalTrainingCreate(true)}
-                className="admin__create-btn"
-            >
-                Создать
+            <div className="admin__btns">
+                <div
+                    onClick={() =>
+                        trainingChange.setOpenModalTrainingCreate(true)
+                    }
+                    className="admin__create-btn"
+                >
+                    Создать
+                </div>
+                <div className="admin__send-btn">
+                    Сделать расылку
+                </div>
             </div>
             <div className="admin__items">
                 {trainingChange.training.map((train, index) => (

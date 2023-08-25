@@ -5,7 +5,7 @@ import DataService from "../../API/DataService";
 import { useFetching } from "../../hooks/useFetching";
 import { useNavigate } from "react-router";
 
-const Workouts = ({ workouts, date }) => {
+const Workouts = ({ workouts, date, openModal }) => {
     // console.log(workouts.length);
     const [workoutTrain, setWorkoutTrain] = useState([]);
     const navigate = useNavigate();
@@ -127,189 +127,7 @@ const Workouts = ({ workouts, date }) => {
                 } : null) : (workoutTrain.length > 2 ? {
                     overflowX:'scroll'
                 } : null)}>
-                    {/* {workoutTrain.length > 3 ? (
-                        <Carousel>
-                            {workoutTrain.map((workout, index) => (
-                                <div
-                                    key={workout.id}
-                                    className="workouts__item workout"
-                                >
-                                    <div className="workout__row">
-                                        <div className="workout__column">
-                                            <div className="workout__info info-workout">
-                                                <div className="info-workout__name">
-                                                    {workout.type}
-                                                </div>
-                                                <div className="info-workout__btn btn-workout">
-                                                    подробнее
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="workout__column">
-                                            <div className="workout__time time-workout">
-                                                <div className="time-workout__label">
-                                                    Время
-                                                </div>
-                                                <div className="time-workout__interval">
-                                                    {getTime(
-                                                        workout.startTrain
-                                                    ) +
-                                                        " - " +
-                                                        getTime(
-                                                            workout.endTrain
-                                                        )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="workout__column">
-                                            <div className="workout__trainer trainer-workout">
-                                                <div
-                                                    onClick={() =>
-                                                        workLog(workout)
-                                                    }
-                                                    className="trainer-workout__label"
-                                                >
-                                                    Тренер
-                                                </div>
-                                                <div className="trainer-workout__name">
-                                                    {workout.trainers[0].name}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="workout__column">
-                                            <div className="workout__actions actions-workout">
-                                                <PeopleAction
-                                                    sportsmens={
-                                                        workout.sportsmens
-                                                    }
-                                                />
-                                                {workout.sportsmens.filter(
-                                                    (sportsmen) =>
-                                                        sportsmen.username ==
-                                                        localStorage.getItem(
-                                                            "username"
-                                                        )
-                                                ).length == 0 ? (
-                                                    <div
-                                                        onClick={() =>
-                                                            followTrain(
-                                                                workout.id
-                                                            )
-                                                        }
-                                                        className="actions-workout__btn btn-workout"
-                                                    >
-                                                        Записаться
-                                                    </div>
-                                                ) : (
-                                                    <div
-                                                        onClick={() =>
-                                                            unFollowTrain(
-                                                                workout.id
-                                                            )
-                                                        }
-                                                        className="actions-workout__btn btn-workout"
-                                                    >
-                                                        Выписаться
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </Carousel>
-                    ) : (
-                        <div className="workouts__container">
-                            {workoutTrain.map((workout, index) => (
-                                <div
-                                    key={workout.id}
-                                    className="workouts__item workout"
-                                >
-                                    <div className="workout__row">
-                                        <div className="workout__column">
-                                            <div className="workout__info info-workout">
-                                                <div className="info-workout__name">
-                                                    {workout.type}
-                                                </div>
-                                                <div className="info-workout__btn btn-workout">
-                                                    подробнее
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="workout__column">
-                                            <div className="workout__time time-workout">
-                                                <div className="time-workout__label">
-                                                    Время
-                                                </div>
-                                                <div className="time-workout__interval">
-                                                    {getTime(
-                                                        workout.startTrain
-                                                    ) +
-                                                        " - " +
-                                                        getTime(
-                                                            workout.endTrain
-                                                        )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="workout__column">
-                                            <div className="workout__trainer trainer-workout">
-                                                <div
-                                                    onClick={() =>
-                                                        workLog(workout)
-                                                    }
-                                                    className="trainer-workout__label"
-                                                >
-                                                    Тренер
-                                                </div>
-                                                <div className="trainer-workout__name">
-                                                    {workout.trainers[0].name}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="workout__column">
-                                            <div className="workout__actions actions-workout">
-                                                <PeopleAction
-                                                    sportsmens={
-                                                        workout.sportsmens
-                                                    }
-                                                />
-                                                {workout.sportsmens.filter(
-                                                    (sportsmen) =>
-                                                        sportsmen.username ==
-                                                        localStorage.getItem(
-                                                            "username"
-                                                        )
-                                                ).length == 0 ? (
-                                                    <div
-                                                        onClick={() =>
-                                                            followTrain(
-                                                                workout.id
-                                                            )
-                                                        }
-                                                        className="actions-workout__btn btn-workout"
-                                                    >
-                                                        Записаться
-                                                    </div>
-                                                ) : (
-                                                    <div
-                                                        onClick={() =>
-                                                            unFollowTrain(
-                                                                workout.id
-                                                            )
-                                                        }
-                                                        className="actions-workout__btn btn-workout"
-                                                    >
-                                                        Выписаться
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )} */}
+                    
                     <div className="workouts__container">
                             {workoutTrain.map((workout, index) => (
                                 <div
@@ -322,7 +140,7 @@ const Workouts = ({ workouts, date }) => {
                                                 <div className="info-workout__name">
                                                     {workout.type}
                                                 </div>
-                                                <div className="info-workout__btn btn-workout">
+                                                <div onClick={() => openModal(workout.type)} className="info-workout__btn btn-workout">
                                                     подробнее
                                                 </div>
                                             </div>

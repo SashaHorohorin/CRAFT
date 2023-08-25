@@ -30,11 +30,18 @@ const CompetitionChange = () => {
 
     return (
         <div className="admin__main">
-            <div
-                onClick={() => competitionChange.setOpenModalCompetitionCreate(true)}
-                className="admin__create-btn"
-            >
-                Создать
+            <div className="admin__btns">
+                <div
+                    onClick={() =>
+                        competitionChange.setOpenModalCompetitionCreate(true)
+                    }
+                    className="admin__create-btn"
+                >
+                    Создать
+                </div>
+                <div className="admin__send-btn">
+                    Сделать расылку
+                </div>
             </div>
             <div className="admin__items">
                 {competitionChange.competitions.map((competition, index) => (
