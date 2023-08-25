@@ -33,8 +33,6 @@ public class News extends BaseEntity {
     @NonNull
     @Column(length = 2048)
     private String text;
-    @NotNull
-    @NonNull
     private String photoUrl;
 
 }
