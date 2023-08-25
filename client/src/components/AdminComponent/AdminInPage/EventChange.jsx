@@ -3,6 +3,7 @@ import { Context } from "../../..";
 import Event from "../Event";
 import DataService from "../../../API/DataService";
 import { useFetching } from "../../../hooks/useFetching";
+import { observer } from "mobx-react-lite";
 
 const EventChange = () => {
     const { eventChange } = useContext(Context);
@@ -27,6 +28,7 @@ const EventChange = () => {
         }
         // console.log(trainingChange.trainIdChange);
     };
+
     return (
         <div className="admin__main">
             <div
@@ -38,21 +40,23 @@ const EventChange = () => {
             <div className="admin__items admin-events">
                 {eventChange.events.map((event, index) => (
                     <Event
-                      deleteEvent={() => fetchingDeleteEvent(event.id)}
-                      changeModalOpen={() => openModalChange(event.id, event)}
-                      key={event.id}
-                      event={event}
+                        deleteEvent={() => fetchingDeleteEvent(event.id)}
+                        changeModalOpen={() => openModalChange(event.id, event)}
+                        key={event.id}
+                        event={event}
                     />
                 ))}
             </div>
-            <div
-                onClick={() => eventChange.setOpenModalEventCreate(true)}
-                className="admin__create-btn"
-            >
-                Показать ещё
-            </div>
+            {eventChange.countPage != eventChange.totalCountPage - 1 ? (
+                <div
+                    onClick={() => eventChange.setCountPage()}
+                    className="admin__create-btn"
+                >
+                    Показать ещё
+                </div>
+            ) : null}
         </div>
     );
 };
 
-export default EventChange;
+export default observer(EventChange);

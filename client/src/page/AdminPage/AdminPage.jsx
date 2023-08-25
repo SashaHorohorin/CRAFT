@@ -282,7 +282,7 @@ const AdminPage = () => {
 
         // console.log(new Date(utcDateEnd));
         let newObj = {
-            ...objCompetition,
+            ...obj,
             startCompetition: utcDateStart - 10800000,
         };
         // console.log(newObj);
@@ -296,12 +296,14 @@ const AdminPage = () => {
 
     // ===========================================================<COMPETITION>
     // ===========================================================<EVENT>
+    
     const [fetchingEvent, isLoadingEvent, errorEvent] = useFetching(
         async (count) => {
             const response = await DataService.getEventsAll(count);
-            console.log(response.data);
-            eventChange.setEvents(response.data.news);
-            eventChange.setTotalCountPage(response.date.totalPages)
+            console.log(response.data.news);
+            eventChange.setEvents([...eventChange.events, ...response.data.news]);
+            // setEvents([...eventChange.events, ...response.data.news])
+            eventChange.setTotalCountPage(response.data.totalPages)
         }
     );
     const [fetchinChangeEvent, isLoadinChangeEvent, erroChangeEvent] =
@@ -401,13 +403,19 @@ const AdminPage = () => {
     };
 
     // ===========================================================<EVENT>
-
+    useEffect(() => {
+        fetchingEvent(eventChange.countPage);
+        console.log(eventChange.countPage + ' ' + eventChange.totalCountPage);
+    }, [eventChange.countPage])
+    
     useEffect(() => {
         fetchingTrainers();
         fetchingTraining();
         fetchingCompetition();
-        fetchingEvent(eventChange.countPage);
+        // fetchingEvent(eventChange.countPage);
     }, []);
+
+    
 
     return (
         <div className="admin">
