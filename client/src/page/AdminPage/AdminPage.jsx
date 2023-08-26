@@ -15,6 +15,8 @@ import ModalCompetition from "../../components/AdminComponent/ModalCompetition";
 import ModalEvent from "../../components/AdminComponent/ModalEvent";
 import axios from "axios";
 import $api from "../../http";
+import FormData from 'form-data'
+
 
 const AdminPage = () => {
     const { trainingChange, competitionChange, eventChange } =
@@ -350,17 +352,21 @@ const AdminPage = () => {
 
     const handleFunctionEvent = (e) => {
         // e.preventDefault();
-        console.log('hey');
+        // console.log('hey');
         const name = e.target.name;
         let value = e.target.value;
+        
+        // console.log(e.target.files);
         if(name == 'file'){
+            let file = e.target.files[0];
             let formData = new FormData();
-            let imagefile = document. querySelector('#file');
-            console.log(imagefile);
-            formData. append ("image", value);
-            let response = $api.post(' upload_file', formData, {
+            // console.log(formData);
+            formData.append("file", file);
+            // console.log(formData);
+            let response = axios.post('http://localhost:9005/api/v1/file/upload', formData, {
                 headers: {
-                    ' Content- Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer_${localStorage.getItem('accessToken')}`
                 }
             })
             console.log(response.data);
