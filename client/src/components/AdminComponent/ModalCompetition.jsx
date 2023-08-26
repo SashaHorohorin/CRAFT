@@ -17,21 +17,24 @@ const ModalCompetition = ({
     const { competitionChange } = useContext(Context);
 
     const sportComplex = ["DINAMIT", "ALEKSEEVA", "IMPULS"];
-    const typeCompetition = ['PAIR', 'TWO', 'THREE'];
+    const typeCompetition = ["Пара", "Микст", "Все против всех"];
+    const categoryCompetition = ['EF', 'DE', 'CD', 'BC', 'AB']
     
     const [obj, setObj] = useState({
         type: "",
+        category: "",
         maxPair: "",
         startCompetition: "",
-        sportCompex: "",
+        sportComplex: "",
     });
 
     useEffect(() => {
         setObj({
             type: competitionChange.competitionChange.type,
+            category: competitionChange.competitionChange.category,
             maxPair: competitionChange.competitionChange.maxParticipant,
             startCompetition: competitionChange.competitionChange.startCompetition,
-            sportCompex: competitionChange.competitionChange.sportComplex,
+            sportComplex: competitionChange.competitionChange.sportComplex,
         });
         setDateTrain({
             date: getDateYear( competitionChange.competitionChange.startCompetition),
@@ -129,11 +132,20 @@ const ModalCompetition = ({
                                 optionValue={typeCompetition}
                             />
                         </label>
-                        <label htmlFor="sportCompex">
+                        <label htmlFor="category">
+                            Категория:
+                            <InputSelect
+                                name="category"
+                                id="category"
+                                handleFunction={(e) => handleFunction(e)}
+                                optionValue={categoryCompetition}
+                            />
+                        </label>
+                        <label htmlFor="sportComplex">
                             Спорткомплекс:
                             <InputSelect
                                 name="sportComplex"
-                                id="sportCompex"
+                                id="sportComplex"
                                 handleFunction={(e) => handleFunction(e)}
                                 optionValue={sportComplex}
                             />
@@ -208,14 +220,24 @@ const ModalCompetition = ({
                                 value={obj.type}
                             />
                         </label>
-                        <label htmlFor="sportCompex">
+                        <label htmlFor="category">
+                            Категория:
+                            <InputSelect
+                                name="category"
+                                id="category"
+                                handleFunction={(e) => handleFunctionChange(e)}
+                                optionValue={categoryCompetition}
+                                value={obj.category}
+                            />
+                        </label>
+                        <label htmlFor="sportComplex">
                             Спорткомплекс:
                             <InputSelect
-                                name="sportCompex"
-                                id="sportCompex"
+                                name="sportComplex"
+                                id="sportComplex"
                                 handleFunction={(e) => handleFunctionChange(e)}
                                 optionValue={sportComplex}
-                                value={obj.sportCompex}
+                                value={obj.sportComplex}
                             />
                         </label>
                         <label htmlFor="people-max">

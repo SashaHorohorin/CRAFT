@@ -13,10 +13,14 @@ import { Outlet } from "react-router";
 import { Link } from "react-router-dom";
 import ModalCompetition from "../../components/AdminComponent/ModalCompetition";
 import ModalEvent from "../../components/AdminComponent/ModalEvent";
+import axios from "axios";
+import $api from "../../http";
 
 const AdminPage = () => {
     const { trainingChange, competitionChange, eventChange } =
         useContext(Context);
+
+    
 
     const sportComplex = ["DINAMIT", "ALEKSEEVA", "IMPULS"];
     // const typeTrain = [
@@ -29,7 +33,8 @@ const AdminPage = () => {
         "Тренировка с тренером",
         "Игровая",
     ];
-    const typeCompetition = ["PAIR", "TWO", "THREE"];
+    const typeCompetition = ["Пара", "Микст", "Все против всех"];
+    const categoryCompetition = ['EF', 'DE', 'CD', 'BC', 'AB']
     const [trainers, setTrainers] = useState([]);
 
     const [fetchingTrainers, isLoadingTrainers, errorTrainers] = useFetching(
@@ -85,7 +90,7 @@ const AdminPage = () => {
         trainersId: [],
         startTrain: "",
         endTrain: "",
-        sportCompex: sportComplex[0],
+        sportComplex: sportComplex[0],
     });
 
     const handleFunction = (e) => {
@@ -184,6 +189,7 @@ const AdminPage = () => {
     });
     const [objCompetition, setObjCompetition] = useState({
         type: typeCompetition[0],
+        category: categoryCompetition[0],
         maxPair: 9,
         startCompetition: "",
         sportComplex: sportComplex[0],
@@ -339,10 +345,26 @@ const AdminPage = () => {
         text: '',
         photoUrl: ''
     });
+
+    
+
     const handleFunctionEvent = (e) => {
         // e.preventDefault();
+        console.log('hey');
         const name = e.target.name;
         let value = e.target.value;
+        if(name == 'file'){
+            let formData = new FormData();
+            let imagefile = document. querySelector('#file');
+            console.log(imagefile);
+            formData. append ("image", value);
+            let response = $api.post(' upload_file', formData, {
+                headers: {
+                    ' Content- Type': 'multipart/form-data'
+                }
+            })
+            console.log(response.data);
+        }
         console.log("name: " + name);
         console.log("value: " + value);
         let newObj = {};
@@ -408,6 +430,7 @@ const AdminPage = () => {
     };
 
     // ===========================================================<EVENT>
+    const [count, setCount] = useState(0)
     useEffect(() => {
         fetchingEvent(eventChange.countPage);
         console.log(eventChange.countPage + ' ' + eventChange.totalCountPage);

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
-const ModalInvitePair = ({text, changeFlagNotification,  title, sendFunc, flag, setFlag}) => {
+const ModalInvitePair = ({text, changeFlagNotification,  title, sendFunc, flag, setFlag, usersNotRegisterCompetition}) => {
     const [flagOpenModalAddPair, setFlagOpenModalAddPair] = useState(false);
     const [valueName, setValueName] = useState("");
     const [valueRating, setValueRating] = useState("");
@@ -31,7 +31,7 @@ const ModalInvitePair = ({text, changeFlagNotification,  title, sendFunc, flag, 
         // console.log(valueName);
     };
 
-    const polsevat = ['Никита Пирогов', 'Никита Пирогов', 'Никита Пирогов', 'Никита Пирогов', 'Никита Пирогов', 'Никита Гарыныч', 'Стас Пирогов', 'Александр Хорохорин', 'Ника Пирон', 'Алекс Пирог']
+    // const polsevat = ['Никита Пирогов', 'Никита Пирогов', 'Никита Пирогов', 'Никита Пирогов', 'Никита Пирогов', 'Никита Гарыныч', 'Стас Пирогов', 'Александр Хорохорин', 'Ника Пирон', 'Алекс Пирог']
     const [users, setUsers] = useState([])
 
     const handleNameChange = (event) => {
@@ -43,9 +43,9 @@ const ModalInvitePair = ({text, changeFlagNotification,  title, sendFunc, flag, 
         setValueName(event.target.value);
 
         if (event.target.value){
-            for(let i = 0; i < polsevat.length; i++){
-                if(polsevat[i].match(reg)){
-                    arrUserFind.push(polsevat[i])
+            for(let i = 0; i < usersNotRegisterCompetition.length; i++){
+                if(usersNotRegisterCompetition[i].match(reg)){
+                    arrUserFind.push(usersNotRegisterCompetition[i])
                     // console.log(arrUserFind);
     
                 }

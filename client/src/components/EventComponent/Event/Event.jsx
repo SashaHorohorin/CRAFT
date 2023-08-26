@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 const Event = ({ event }) => {
     const { eventStore } = useContext(Context);
     const [flagOpenModal, setFlagOpenModal] = useState(false);
+    
     let openModal = () => {
         document.body.classList.add("stop");
         setFlagOpenModal(true);
@@ -25,21 +26,23 @@ const Event = ({ event }) => {
     };
     const getTime = (date) => {
         let d = new Date(date);
-        let time = `${d.getHours()}:${d.getMinutes()}`;
+        let time = `${d.getHours() < 10 ? `0${d.getHours()}`:d.getHours()}:${d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()}`;
         return time;
     };
     let closeModal = () => {
+        console.log(event);
         document.body.classList.remove("stop");
         setFlagOpenModal(false);
     };
+
+
     return (
         <>
             <div className="events__event event">
                 <div className="event__content content-event">
                     <div className="content-event__header">
                         <div className="content-event__title">
-                            Друзья! Приглашаем вас на парный турнир CDСК в
-                            Динамит.
+                            {event.title}
                         </div>
                         <div
                             onClick={() => openModal()}
@@ -49,7 +52,7 @@ const Event = ({ event }) => {
                         </div>
                     </div>
                     <div className="content-event__img">
-                        <img src="./images/EventPage/1.png" alt="" />
+                        <img src="https://drive.google.com/uc?export=view&id=1jJTXC-JGjEa_C_5cj-wAX0AXEj-hI783" alt="" />
                     </div>
                     <div className="content-event__time time-event">
                         <div className="time-event__time">
@@ -62,9 +65,9 @@ const Event = ({ event }) => {
                 </div>
                 <div className="event__info info-event">
                     <div className="info-event__left left-info">
-                        <div className="left-info__label">{event.title}</div>
+                        <div className="left-info__label">{event.type}</div>
                         <div className="left-info__start">
-                            {event.smallTitle}
+                            Начало {getDate(event.eventDate)} в {getTime(event.eventDate)}
                         </div>
                     </div>
                     <div className="info-event__right right-info">
@@ -72,7 +75,7 @@ const Event = ({ event }) => {
                             event.eventDate
                         )}`}</div>
                         <div className="right-info__label">
-                            {event.textUnderDate}
+                            Дата проведения
                         </div>
                     </div>
                 </div>
@@ -94,10 +97,10 @@ const Event = ({ event }) => {
                 >
                     <div className="modal-window-event__info info-modal">
                         <div className="info-modal__title">
-                            Вчера завершился 5 этап Гран-При "Петербург Опен"
+                            {event.title}
                         </div>
                         <div className="info-modal__date date-modal">
-                            <div className="date-modal__date">20.06</div>
+                            <div className="date-modal__date">{getDate(event.eventDate)}</div>
                             <div className="date-modal__label">
                                 Дата проведения
                             </div>
@@ -105,50 +108,21 @@ const Event = ({ event }) => {
                     </div>
                     <div className="modal-window-event__content content-modal">
                         <div className="content-modal__text">
-                            <p>
-                                Наши игроки и тренеры сыграли со следующими
-                                результатами:
-                                <br />
-                                <br />
-                                Женский одиночный разряд группа B <br />
-                                1 место - Хорохорин А.И. <br />
-                                <br />
-                                Одиночный разряд группа С <br />
-                                1 место - Хорохорин А.И. <br />
-                                <br />
-                                Мужские пары группа С <br />
-                                1 место - Хорохорин А.И. и Хорохорин А.И. <br />
-                                <br />
-                                Женский парный разряд группа А <br />
-                                1 место - Хорохорин А.И. и Хорохорин А.И. <br />
-                                <br />
-                                Женский парный разряд группа С <br />
-                                1 место - Хорохорин А.И. и Хорохорин А.И. <br />
-                                <br />
-                                Смешанный разряд группа А <br />
-                                1 место - Хорохорин А.И. и Хорохорин А.И.
-                                <br />
-                                <br />
-                                Смешанный разряд группа B <br />
-                                1 место - Хорохорин А.И. и Хорохорин А.И.
-                                <br />
-                                <br />
-                                Смешанный разряд группа С <br />
-                                1 место - Хорохорин А.И. и Хорохорин А.И. <br />
-                                <br />
-                                Все большие молодцы! Действительно много хороших
-                                результатов! Впереди длительный перерыв,
-                                следующий этап состоится только в конце
-                                октября.А мы не сбавляем обороты, сохраняем
-                                форму и приглашаем на крафтовые турниры!
-                            </p>
+                            <div>
+                                {event.text.split('\n').map((str, index) => (
+                                    <div key={index}>
+                                        <span>{str}</span>
+                                        <br/>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                         <div className="content-modal__img">
                             <img src="./images/EventPage/1.png" alt="" />
                         </div>
                         <div className="content-modal__time time-modal">
-                            <div className="time-modal__time">18:23</div>
-                            <div className="time-modal__date">21.06.23</div>
+                            <div className="time-modal__time">{getTime(event.createdDate)}</div>
+                            <div className="time-modal__date">{getDateYear(event.createdDate)}</div>
                         </div>
                     </div>
                 </div>

@@ -165,5 +165,14 @@ export default class DataService {
     }
 
     // ===================================================<EVENT>
+
+    
+    // ===================================================<ПОЛУЧЕНИЕ ВСЕХ ПОЛЬЗОВАТЕЛЕЙ НЕ ЗАРЕГЕСТРИРОВАННЫХ НА СОРЕВНОВАНИЯ>
+    
+    static async getUsersNotRegisterCompetition(competitionId) {
+        return await $api.get(`api/v1/profile/find-all-in-competition-without-pair/${competitionId}`);
+    }
+    
+    // ===================================================<ПОЛУЧЕНИЕ ВСЕХ ПОЛЬЗОВАТЕЛЕЙ НЕ ЗАРЕГЕСТРИРОВАННЫХ НА СОРЕВНОВАНИЯ>
     
 }

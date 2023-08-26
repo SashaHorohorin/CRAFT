@@ -86,6 +86,21 @@ const ModalEvent = ({
         setObj(newObj);
         // console.log(obj);
     };
+    const handleFunctionImg = (e) => {
+        // e.preventDefault();
+        // const name = e.target.name;
+        let value = e.target.value;
+        // console.log("name: " + name);
+        console.log("value: " + value);
+        // let newObj = {};
+        // newObj = {
+        //     ...obj,
+        //     [name]: value,
+        // };
+
+        // setObj(newObj);
+        // console.log(obj);
+    };
 
     const handleFunctionDateChange = (e) => {
         const name = e.target.name;
@@ -101,7 +116,6 @@ const ModalEvent = ({
     const logConsol = () => {
         console.log(obj);
     };
-    
 
     return (
         <div
@@ -132,6 +146,21 @@ const ModalEvent = ({
                                 handleFunction={(e) => handleFunction(e)}
                                 optionValue={typeEvent}
                             />
+                        </label>
+                        <label htmlFor="type">
+                            Картинка:
+                            <input
+                                onChange={(e) => handleFunction(e)}
+                                type="file"
+                                id="file"
+                                name="file"
+                            />
+                            {/* <InputSelect
+                                name="type"
+                                id="type"
+                                handleFunction={(e) => handleFunction(e)}
+                                optionValue={typeEvent}
+                            /> */}
                         </label>
                         <label htmlFor="title">
                             Заголовок:

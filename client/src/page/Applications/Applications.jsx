@@ -20,6 +20,7 @@ const Applications = () => {
     const [pairId, setPairId] = useState("");
     const [flagSucces, setFlagSucces] = useState(false);
     const [flagNotification, setFlagNotification] = useState(false);
+    const [usersNotRegisterCompetition, setUsersNotRegisterCompetition] = useState([]);
 
     const [
         fetchingCreateAndInvite,
@@ -86,9 +87,17 @@ const Applications = () => {
         }
     );
 
+    const [fetchingUsersNotRegisterCompetition, isLoadingUsersNotRegisterCompetition, errorUsersNotRegisterCompetition] =
+        useFetching(async (id) => {
+            const response = await DataService.getUsersNotRegisterCompetition(id);
+            console.log(response.data);
+            setUsersNotRegisterCompetition(response.data);
+        });
+
     useEffect(() => {
         fetchingUser();
         fetchingCompetition(id);
+        fetchingUsersNotRegisterCompetition(id)
     }, []);
 
     let openModal = () => {
@@ -251,6 +260,7 @@ const Applications = () => {
                 flag={eventStore.flagOpenModalAddPair}
                 sendFunc={sendCreateAndInvite}
                 changeFlagNotification={(bool) => setFlagNotification(bool)}
+                usersNotRegisterCompetition={usersNotRegisterCompetition}
             />
             <ModalInvitePair
                 title="Приглашение в пару"

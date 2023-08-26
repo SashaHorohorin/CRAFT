@@ -47,6 +47,7 @@ body::-webkit-scrollbar-track {
 }
 .App{
     min-height: 100vh;
+    overflow: hidden;
 }
 
 

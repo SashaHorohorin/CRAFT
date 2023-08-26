@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Context } from "../../..";
 
-const Competition = ({competition, type, deletePair}) => {
+const Competition = ({competition, type, deletePair, openModal}) => {
     const navigate = useNavigate();
 
 
@@ -42,7 +42,7 @@ const Competition = ({competition, type, deletePair}) => {
 
     return (
         <div className="competitions__event event-competitions">
-            <div className="event-competitions__title">{competition.type}</div>
+            <div onClick={() => openModal(competition)} className="event-competitions__title">{competition.type + " " + competition.category}</div>
             {/* <div className="event-competitions__title">{competition.type}</div> */}
             <div className="event-competitions__date">{getDateYear(competition.startCompetition)}</div>
             <div className="event-competitions__time">{getTime(competition.startCompetition)}</div>

@@ -16,7 +16,7 @@ const Competition = ({deleteTrain, competition, changeModalOpen}) => {
 
     return (
         <div className="admin__item item-admin">
-            <div className="item-admin__name">{competition?.type}</div>
+            <div className="item-admin__name">{competition?.type + ' ' + competition.category}</div>
             <div className="item-admin__people">{`${competition?.nowParticipant}/${competition?.maxParticipant}`}</div>
             <div className="item-admin__date">{getDateYear(competition?.startCompetition)}</div>
             <div className="item-admin__time">{`${getTime(competition?.startCompetition)}`}</div>
