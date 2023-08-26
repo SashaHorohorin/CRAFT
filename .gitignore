@@ -16,6 +16,9 @@ target/
 ### IntelliJ IDEA ###
 .idea
 /client
+/upload-files
+/nginx
+/token
 *.properties
 *.iws
 *.iml

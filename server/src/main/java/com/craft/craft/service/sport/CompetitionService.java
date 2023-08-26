@@ -82,6 +82,14 @@ public class CompetitionService {
         competition.setStartCompetition(dto.getStartCompetition());
         competition.setMaxPair(dto.getMaxPair());
         competition.setType(dto.getType());
+        competition.setCategory(dto.getCategory());
+        switch (competition.getCategory()) {
+            case AB: competition.setRatingDown(700);
+            case BC: competition.setRatingDown(600);
+            case CD: competition.setRatingUp(600);
+            case DE: competition.setRatingUp(450);
+            case EF: competition.setRatingUp(350);
+        }
         competition.setEndCompetition(new Date(competition.getStartCompetition().getTime() + (1000 * 60 * 60 * 24)));//end на день больше чем start
         return competition;
     }
