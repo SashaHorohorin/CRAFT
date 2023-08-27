@@ -15,14 +15,12 @@ import ModalCompetition from "../../components/AdminComponent/ModalCompetition";
 import ModalEvent from "../../components/AdminComponent/ModalEvent";
 import axios from "axios";
 import $api from "../../http";
-import FormData from 'form-data'
-
+import FormData from "form-data";
+import { set } from "mobx";
 
 const AdminPage = () => {
     const { trainingChange, competitionChange, eventChange } =
         useContext(Context);
-
-    
 
     const sportComplex = ["DINAMIT", "ALEKSEEVA", "IMPULS"];
     // const typeTrain = [
@@ -36,7 +34,7 @@ const AdminPage = () => {
         "Игровая",
     ];
     const typeCompetition = ["Пара", "Микст", "Все против всех"];
-    const categoryCompetition = ['EF', 'DE', 'CD', 'BC', 'AB']
+    const categoryCompetition = ["EF", "DE", "CD", "BC", "AB"];
     const [trainers, setTrainers] = useState([]);
 
     const [fetchingTrainers, isLoadingTrainers, errorTrainers] = useFetching(
@@ -210,7 +208,7 @@ const AdminPage = () => {
         erroChangeCompetition,
     ] = useFetching(async (trainId, obj) => {
         const response = await DataService.postChangeCompetition(trainId, obj);
-        console.log(response.data);
+        console.log(trainId, response.data);
         competitionChange.setCompetitions([
             ...competitionChange.competitions.filter(
                 (train) => trainId !== train.id
@@ -309,14 +307,18 @@ const AdminPage = () => {
 
     // ===========================================================<COMPETITION>
     // ===========================================================<EVENT>
-    
+    const [file, setFile] = useState({});
+
     const [fetchingEvent, isLoadingEvent, errorEvent] = useFetching(
         async (count) => {
             const response = await DataService.getEventsAll(count);
             console.log(response.data.news);
-            eventChange.setEvents([...eventChange.events, ...response.data.news]);
+            eventChange.setEvents([
+                ...eventChange.events,
+                ...response.data.news,
+            ]);
             // setEvents([...eventChange.events, ...response.data.news])
-            eventChange.setTotalCountPage(response.data.totalPages)
+            eventChange.setTotalCountPage(response.data.totalPages);
         }
     );
     const [fetchinChangeEvent, isLoadinChangeEvent, erroChangeEvent] =
@@ -341,43 +343,42 @@ const AdminPage = () => {
     });
 
     const [objEvent, setObjEvent] = useState({
-        type: '',
-        title: '',
+        type: "",
+        title: "",
         eventDate: "",
-        text: '',
-        photoUrl: ''
+        text: "",
+        photoUrl: "",
     });
 
-    
-
-    const handleFunctionEvent = (e) => {
+    const handleFunctionEvent = async (e) => {
         // e.preventDefault();
         // console.log('hey');
         const name = e.target.name;
         let value = e.target.value;
-        
+
         // console.log(e.target.files);
-        if(name == 'file'){
-            let file = e.target.files[0];
-            let formData = new FormData();
-            // console.log(formData);
-            formData.append("file", file);
-            // console.log(formData);
-            let response = axios.post('http://localhost:9005/api/v1/file/upload', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer_${localStorage.getItem('accessToken')}`
-                }
-            })
-            console.log(response.data);
+        if (name == "file") {
+            setFile(e.target.files[0]);
+            // let file = e.target.files[0];
+            // let formData = new FormData();
+            // // console.log(formData);
+            // formData.append("file", file);
+            // // console.log(formData);
+            // let response = await axios.post('http://localhost:9005/api/v1/file/upload', formData, {
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data',
+            //         'Authorization': `Bearer_${localStorage.getItem('accessToken')}`
+            //     }
+            // })
+            // console.log(response.data);
         }
         console.log("name: " + name);
         console.log("value: " + value);
         let newObj = {};
-            newObj = {
-                ...objEvent,
-                [name]: value,
-            };
+        newObj = {
+            ...objEvent,
+            [name]: value,
+        };
         setObjEvent(newObj);
         // console.log(obj);
     };
@@ -393,7 +394,7 @@ const AdminPage = () => {
         };
         setDateEvent(newObjDate);
     };
-    const createEvent = () => {
+    const createEvent = async () => {
         // console.log(dateTrain);
         // let d = new Date(Date.UTC(dateTrain.date[0], -dateTrain.date[1], dateTrain.date[2],dateTrain.toTime[0], dateTrain.toTime[1]));
         let d1 = dateEvent.date.split(/\D/);
@@ -402,18 +403,40 @@ const AdminPage = () => {
             Date.UTC(d1[0], --d1[1], d1[2], t1[0], t1[1])
         );
         // console.log(new Date(utcDateEnd));
+        
+        console.log(file);
+
+        let formData = new FormData();
+        // console.log(formData);
+        formData.append("file", file);
+        // console.log(formData);
+        let response = await axios.post(
+            "http://localhost:9005/api/v1/file/upload",
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer_${localStorage.getItem(
+                        "accessToken"
+                    )}`,
+                },
+            }
+        );
+        console.log(response.data);
+
         let newObj = {
             ...objEvent,
+            photoUrl: `${response.data}`,
             eventDate: utcDateStart - 10800000,
         };
         console.log(newObj);
 
-        fetchinCreateEvent(newObj); // ======
+        await fetchinCreateEvent(newObj); // ======
 
         setObjEvent(newObj);
         eventChange.setOpenModalEventCreate(false);
     };
-    const changeEvent = (obj, dateEvent) => {
+    const changeEvent = async(obj, dateEvent, fileObj) => {
         // console.log(dateTrain);
         // let d = new Date(Date.UTC(dateTrain.date[0], -dateTrain.date[1], dateTrain.date[2],dateTrain.toTime[0], dateTrain.toTime[1]));
         let d1 = dateEvent.date.split(/\D/);
@@ -422,9 +445,29 @@ const AdminPage = () => {
             Date.UTC(d1[0], --d1[1], d1[2], t1[0], t1[1])
         );
         
+        console.log(fileObj);
+
+        let formData = new FormData();
+        // console.log(formData);
+        formData.append("file", fileObj);
+        // console.log(formData);
+        let response = await axios.post(
+            "http://localhost:9005/api/v1/file/upload",
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer_${localStorage.getItem(
+                        "accessToken"
+                    )}`,
+                },
+            }
+        );
+        console.log(response.data);
         // console.log(new Date(utcDateEnd));
         let newObj = {
             ...obj,
+            photoUrl: `${response.data}`,
             eventDate: utcDateStart - 10800000,
         };
         console.log(newObj);
@@ -432,24 +475,36 @@ const AdminPage = () => {
         fetchinChangeEvent(eventChange.eventIdChange, newObj);
 
         // setObj(newObj);
-        eventChange.setOpenModalEventChange(false)
+        eventChange.setOpenModalEventChange(false);
     };
 
     // ===========================================================<EVENT>
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(0);
+
     useEffect(() => {
-        fetchingEvent(eventChange.countPage);
-        console.log(eventChange.countPage + ' ' + eventChange.totalCountPage);
-    }, [eventChange.countPage])
+        fetchingEvent(count);
+        // console.log((eventChange.countPage === count) + ' ' + '----------------');
+        // setCount(eventChange.countPage)
+    }, [count]);
     
+    useEffect(() => {
+        if(count !== eventChange.countPage){
+            console.log('===============================================');
+
+            setCount(eventChange.countPage);
+        }
+        
+        // console.log((eventChange.countPage === count) + ' ' + '----------------');
+        // setCount(eventChange.countPage)
+    }, [eventChange.countPage]);
+
     useEffect(() => {
         fetchingTrainers();
         fetchingTraining();
         fetchingCompetition();
-        // fetchingEvent(eventChange.countPage);
-    }, []);
+        eventChange.setEvents([]);
 
-    
+    }, []);
 
     return (
         <div className="admin">
@@ -512,29 +567,21 @@ const AdminPage = () => {
                 funcBtn={() => createEvent()}
                 flag={eventChange.openModalEventCreate}
                 title={objEvent.title}
-                setFlag={(bool) =>
-                    eventChange.setOpenModalEventCreate(bool)
-                }
+                setFlag={(bool) => eventChange.setOpenModalEventCreate(bool)}
             />
             <ModalEvent
                 handleFunctionDate={(e) => handleFunctionDateEvent(e)}
                 handleFunction={(e) => handleFunctionEvent(e)}
                 type="change"
+                setFile={(file) => setFile(file)}
                 text={objEvent.text}
                 title={objEvent.title}
-                funcBtn={(sendObj, dateEvent) =>
-                    changeEvent(sendObj, dateEvent)
+                funcBtn={(sendObj, dateEvent, fileObj) =>
+                    changeEvent(sendObj, dateEvent, fileObj)
                 }
                 flag={eventChange.openModalEventChange}
-                setFlag={(bool) =>
-                    eventChange.setOpenModalEventChange(bool)
-                }
+                setFlag={(bool) => eventChange.setOpenModalEventChange(bool)}
             />
-
-
-                
-
-            
 
             <div className="container">
                 <div className="admin__title">Панель администратора</div>

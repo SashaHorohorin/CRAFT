@@ -7,6 +7,9 @@ export default class EventStore {
     flagOpenModal = false;
     players = [];
 
+    flagOpenModalSale = false;
+
+
     competition = {}
 
     constructor() {
@@ -29,6 +32,9 @@ export default class EventStore {
     }
     setPlayers(sportsmens) {
         this.players = sportsmens;
+    }
+    setFlagOpenModalSale(bool){
+        this.flagOpenModalSale = bool;
     }
 
     coord(event, sportsmens) {

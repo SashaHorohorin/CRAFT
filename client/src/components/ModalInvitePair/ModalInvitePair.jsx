@@ -41,7 +41,7 @@ const ModalInvitePair = ({text, changeFlagNotification,  title, sendFunc, flag, 
             reg = new RegExp(`${event.target.value}`);
         }
         setValueName(event.target.value);
-
+        console.log(usersNotRegisterCompetition);
         if (event.target.value){
             for(let i = 0; i < usersNotRegisterCompetition.length; i++){
                 if(usersNotRegisterCompetition[i].match(reg)){

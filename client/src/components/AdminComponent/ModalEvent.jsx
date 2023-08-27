@@ -18,6 +18,7 @@ const ModalEvent = ({
     setFlag,
 }) => {
     const { eventChange } = useContext(Context);
+    const [file, setFile] = useState({})
 
     const typeEvent = ["BASE_NEWS", "START_COMPETITION", "END_COMPETITION"];
 
@@ -75,6 +76,11 @@ const ModalEvent = ({
         // e.preventDefault();
         const name = e.target.name;
         let value = e.target.value;
+        console.log(e.target.files[0]);
+        if (name == "file") {
+            // console.log('----');
+            setFile(e.target.files[0]);
+        }
         console.log("name: " + name);
         console.log("value: " + value);
         let newObj = {};
@@ -155,12 +161,6 @@ const ModalEvent = ({
                                 id="file"
                                 name="file"
                             />
-                            {/* <InputSelect
-                                name="type"
-                                id="type"
-                                handleFunction={(e) => handleFunction(e)}
-                                optionValue={typeEvent}
-                            /> */}
                         </label>
                         <label htmlFor="title">
                             Заголовок:
@@ -243,6 +243,15 @@ const ModalEvent = ({
                                 value={obj.type}
                             />
                         </label>
+                        <label htmlFor="type">
+                            Картинка:
+                            <input
+                                onChange={(e) => handleFunctionChange(e)}
+                                type="file"
+                                id="file"
+                                name="file"
+                            />
+                        </label>
                         <label htmlFor="title">
                             Заголовок:
                             <InputText
@@ -290,7 +299,7 @@ const ModalEvent = ({
                     </form>
                     <div className="modal-create-training__btns btns-create">
                         <div
-                            onClick={() => funcBtn(obj, dateEvent)}
+                            onClick={() => funcBtn(obj, dateEvent, file)}
                             className="btns-create__save"
                         >
                             {type == "create" ? "Создать" : "Сохранить"}

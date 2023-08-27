@@ -91,7 +91,9 @@ const Applications = () => {
         useFetching(async (id) => {
             const response = await DataService.getUsersNotRegisterCompetition(id);
             console.log(response.data);
-            setUsersNotRegisterCompetition(response.data);
+            let people = (response.data).map((username) => (username.lastName + ' ' + username.firstName))
+            setUsersNotRegisterCompetition(people);
+            // console.log(people);
         });
 
     useEffect(() => {

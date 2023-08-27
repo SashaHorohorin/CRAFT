@@ -52,7 +52,7 @@ const Event = ({ event }) => {
                         </div>
                     </div>
                     <div className="content-event__img">
-                        <img src="https://drive.google.com/uc?export=view&id=1jJTXC-JGjEa_C_5cj-wAX0AXEj-hI783" alt="" />
+                        <img src={event.photoUrl} alt="" />
                     </div>
                     <div className="content-event__time time-event">
                         <div className="time-event__time">
@@ -118,7 +118,7 @@ const Event = ({ event }) => {
                             </div>
                         </div>
                         <div className="content-modal__img">
-                            <img src="./images/EventPage/1.png" alt="" />
+                            <img src={event.photoUrl} alt="" />
                         </div>
                         <div className="content-modal__time time-modal">
                             <div className="time-modal__time">{getTime(event.createdDate)}</div>

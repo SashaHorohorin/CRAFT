@@ -24,9 +24,15 @@ const СompetitionsPage = () => {
     }, []);
 
     const openModal = (type) => {
-        console.log(type);
+        console.log(type.type);
         setModalCompetition(type);
         setMoreInfoFlag(true);
+    };
+
+    const getTime = (date) => {
+        let d = new Date(date);
+        let time = `${d.getHours() < 10 ? `0${d.getHours()}`:d.getHours()}:${d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()}`;
+        return time;
     };
 
     return (
@@ -40,7 +46,40 @@ const СompetitionsPage = () => {
                 }
             >
                 <div className="competitions__modal modal-competition-info">
-                    sdlfjldsfj
+                    {modalCompetition.type == 'Пара' ? (
+                        <p>Приглашаем на турнир {`${modalCompetition.category}`} пары<br />
+                        Записаться можно только мужской или женской парой.<br />
+                        Минимальный рейтинг для записи на соревнования {modalCompetition.category == 'AB' || modalCompetition.category == 'AB' ? `${modalCompetition.ratingDown}` : `${modalCompetition.ratingUp}`}
+                        <br />
+                        Стоимость - 750 рублей для тренирующихся в Крафте<br />
+                        Для остальных - 850 рублей.<br /><br />
+                        Место СК {`${modalCompetition.sportComplex}`}, Челиева, 13<br /><br />
+                        Начало турнира в {`${getTime(modalCompetition.startCompetition)}`}
+                        <br/><br/>Оплата соревнований происходит переводом на тинькоф по номеру: <a href="tel:+79030975817">+7(903) 097 58 17</a>
+                        </p>
+                    ) : (modalCompetition.type == 'Микст' ? (
+                        <p>Приглашаем на турнир {`${modalCompetition.category}`} миксты<br />
+                        Записаться можно только микстом.<br />
+                        Минимальный рейтинг для записи на соревнования {modalCompetition.category == 'AB' || modalCompetition.category == 'AB' ? `${modalCompetition.ratingDown}` : `${modalCompetition.ratingUp}`}
+                        <br />
+                        Стоимость - 750 рублей для тренирующихся в Крафте<br />
+                        Для остальных - 850 рублей.<br /><br />
+                        Место СК {`${modalCompetition.sportComplex}`}, Челиева, 13<br /><br />
+                        Начало турнира в {`${getTime(modalCompetition.startCompetition)}`}
+                        <br/><br/>Оплата соревнований происходит переводом на тинькоф по номеру: <a href="tel:+79030975817">+7(903) 097 58 17</a>
+                        </p>
+                    ) : (
+                        <p>Приглашаем на турнир {`${modalCompetition.category}`} все против всех<br />
+                        Записаться можно мужской или женской парой или микстом.<br />
+                        Минимальный рейтинг для записи на соревнования {modalCompetition.category == 'AB' || modalCompetition.category == 'AB' ? `${modalCompetition.ratingDown}` : `${modalCompetition.ratingUp}`}
+                        <br />
+                        Стоимость - 750 рублей для тренирующихся в Крафте<br />
+                        Для остальных - 850 рублей.<br /><br />
+                        Место СК {`${modalCompetition.sportComplex}`}, Челиева, 13<br /><br />
+                        Начало турнира в {`${getTime(modalCompetition.startCompetition)}`}
+                        <br/><br/>Оплата соревнований происходит переводом на тинькоф по номеру: <a href="tel:+79030975817">+7(903) 097 58 17</a>
+                        </p>
+                    ))}
                 </div>
             </div>
 

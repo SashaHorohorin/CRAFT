@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./MainPart.scss";
 import Header from "../Header/Header";
 import Shuttlecocks from "../UI/Shuttlecocks/Shuttlecocks";
 import Button from "../UI/Button/Button";
 import fly from "../../script";
+import { Link } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+import { Context } from "../..";
 
 const MainPart = () => {
+    const { eventStore } = useContext(Context);
     return (
         <div onLoad={() => fly()} className="main-part">
             
@@ -24,10 +28,11 @@ const MainPart = () => {
                             Вместе мы достигнем поставленных целей!
                         </div>
                     </div>
-                    <Button
-                        text="Записаться по акции"
-                        classAdd="home__button"
-                    />
+                    <Link
+                        to='training'
+                        onClick={eventStore.setFlagOpenModalSale(true)}
+                        className="home__button btn"
+                    >Записаться по акции</Link>
                     <div className="home__social social-home">
                         <div className="social-home__column">
                             <a href="mailto:Alexisbest1@mail.ru"><img src="./images/HomePage/google.png" alt="" /></a>
@@ -48,4 +53,4 @@ const MainPart = () => {
     );
 };
 
-export default MainPart;
+export default observer(MainPart);

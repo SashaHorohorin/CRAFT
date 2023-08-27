@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../..";
 import Event from "../Event";
 import DataService from "../../../API/DataService";
@@ -7,7 +7,33 @@ import { observer } from "mobx-react-lite";
 
 const EventChange = () => {
     const { eventChange } = useContext(Context);
-    const num = [1, 2, 3, 4, 5];
+    // const [count, setCount] = useState(0);
+    // const [event, setEvent] = useState([])
+
+    // const [fetchingEvent, isLoadingEvent, errorEvent] = useFetching(
+    //     async (count) => {
+    //         const response = await DataService.getEventsAll(count);
+    //         console.log(response.data);
+    //         console.log(event);
+    //         setEvent([
+    //             ...event,
+    //             ...response.data.news,
+    //         ]);
+    //         // setEvents([...eventChange.events, ...response.data.news])
+    //         eventChange.setTotalCountPage(response.data.totalPages);
+    //         eventChange.setEvents(event)
+    //     }
+    // );
+    // useEffect(() => {
+    //     fetchingEvent(count);
+    //     // console.log((eventChange.countPage === count) + ' ' + '----------------');
+    //     // setCount(eventChange.countPage)
+    // }, [count]);
+    
+    // useEffect(() => {
+    //     fetchingEvent(count);
+    // }, []);
+
     const [fetchingDeleteEvent, isLoadingDeleteEvent, errorDeleteEvent] =
         useFetching(async (eventId) => {
             const response = await DataService.postDeleteEvent(eventId);
@@ -49,7 +75,10 @@ const EventChange = () => {
             </div>
             {eventChange.countPage != eventChange.totalCountPage - 1 ? (
                 <div
-                    onClick={() => eventChange.setCountPage()}
+                    onClick={() => {
+                        eventChange.setCountPage()
+                        // setCount(count + 1);
+                    }}
                     className="admin__create-btn"
                 >
                     Показать ещё

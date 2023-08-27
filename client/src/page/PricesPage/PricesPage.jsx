@@ -88,9 +88,9 @@ const PricesPage = () => {
                                             перьевые воланы
                                         </li>
                                     </ul>
-                                    <button className="info-card__btn">
+                                    {/* <button className="info-card__btn">
                                         Купить
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
                         ))}
