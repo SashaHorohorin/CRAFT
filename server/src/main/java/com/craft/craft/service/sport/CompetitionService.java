@@ -163,16 +163,16 @@ public class CompetitionService {
         if (pair.getPlayers().size() >= 2)
             throw new ModelNotFoundException("Пара уже создана");
         Competition competition = pair.getCompetition();
-        if (competition.getRatingDown()!= null &&competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(player2)))
+        if (competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(player2)))
             throw new ModelNotFoundException("Вы уже зарегистрирован на соревновании");
         player2.setRating(LabService.getUserRating(player2.getLabId()));
         BaseUser player1 = pair.getPlayers().iterator().next();
-        if(competition.getRatingDown()!= null &&competition.getRatingDown() < (player1.getRating() + player2.getRating())){
+        if(competition.getRatingDown()!= null && competition.getRatingDown() < (player1.getRating() + player2.getRating())){
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
             throw new ModelNotFoundException("Суммарный рейтинг пары меньше допустимого на соревновании");
         }
-        if(competition.getRatingDown() > (player1.getRating() + player2.getRating())){
+        if(competition.getRatingDown()!= null && competition.getRatingDown() > (player1.getRating() + player2.getRating())){
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
             throw new ModelNotFoundException("Суммарный рейтинг пары больше заявленного");
