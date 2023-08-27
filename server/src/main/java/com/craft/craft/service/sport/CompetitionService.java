@@ -11,8 +11,8 @@ import com.craft.craft.model.user.BaseUser;
 import com.craft.craft.repository.sport.CompetitionPairRepo;
 import com.craft.craft.repository.sport.CompetitionRepo;
 import com.craft.craft.repository.user.BaseUserRepo;
-import com.craft.craft.service.LabService;
-import com.craft.craft.service.MailSender;
+import com.craft.craft.service.mail.LabService;
+import com.craft.craft.service.mail.MailSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -91,7 +91,8 @@ public class CompetitionService {
             case EF: competition.setRatingUp(350);
         }
         competition.setEndCompetition(new Date(competition.getStartCompetition().getTime() + (1000 * 60 * 60 * 24)));//end на день больше чем start
-        return competition;
+
+        return competitionRepo.save(competition);
     }
 
     public CompetitionPair createPair(UUID competitionId) throws ModelNotFoundException, FullTrainException {

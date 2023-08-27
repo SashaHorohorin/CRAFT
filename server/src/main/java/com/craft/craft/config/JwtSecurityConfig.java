@@ -92,6 +92,7 @@ public class JwtSecurityConfig {
                         .antMatchers("/api/v1/trainer/**").hasAuthority(RoleName.ADMIN.name())
                         //------------------------------------------------------------------------------------------------
                         .antMatchers(" /api/v1/file/**").hasAuthority(RoleName.ADMIN.name())
+                        .antMatchers(" /api/v1/mailing/**").hasAuthority(RoleName.ADMIN.name())
                         //------------------------------------------------------------------------------------------------
                         .anyRequest().authenticated()
                 )

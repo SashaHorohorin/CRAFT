@@ -13,7 +13,6 @@ import com.craft.craft.repository.sport.TrainRepo;
 import com.craft.craft.repository.sport.TrainerRepo;
 import com.craft.craft.repository.user.AdminRepo;
 import com.craft.craft.repository.user.BaseUserRepo;
-import com.craft.craft.service.MailSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,6 @@ public class TrainService {
     private final TrainerRepo trainerRepo;
     private final BaseUserRepo baseUserRepo;
     private final AdminRepo adminRepo;
-    private final MailSender mailSender;
 
     public Train createTrain(TrainUpdateDto trainDto) throws ModelNotFoundException {
         String authorName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -50,20 +48,7 @@ public class TrainService {
                 .collect(Collectors.toSet()));
 
         List<BaseUser> users = baseUserRepo.findAll();
-        users.forEach(user -> {
-            if (!user.isAgreementMailing()) return;
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(train.getStartTrain());
-            String massage = String.format(
-                    "Привет, %s \n" +
-                    "Появилась новая тренировка %s.%s.%s",
-                    user.getFirstName() + " " + user.getLastName(),
-                    calendar.get(Calendar.DAY_OF_MONTH),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.YEAR)
-            );
-            mailSender.send(user.getEmail(), "CRAFT. Появилась новая тренировка", massage);
-        });
+
         return trainRepo.save(train);
     }
 

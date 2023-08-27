@@ -9,6 +9,8 @@ import com.craft.craft.model.user.Role;
 import com.craft.craft.model.user.RoleName;
 import com.craft.craft.model.user.Status;
 import com.craft.craft.repository.user.BaseUserRepo;
+import com.craft.craft.service.mail.LabService;
+import com.craft.craft.service.mail.MailSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

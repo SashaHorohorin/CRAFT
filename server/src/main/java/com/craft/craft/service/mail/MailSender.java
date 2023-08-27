@@ -1,4 +1,4 @@
-package com.craft.craft.service;
+package com.craft.craft.service.mail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
