@@ -16,6 +16,15 @@ const TrainingChange = () => {
                 trainingChange.training.filter((train) => trainId !== train.id)
             );
         });
+    const [
+        fetchingMailingTraining,
+        isLoadingMailingTraining,
+        errorMailingTraining,
+    ] = useFetching(async () => {
+        // console.log('saskfhjahfshahfjshfkjshkj');
+        const response = await DataService.getMailingTraining();
+        // let complex = [...response.data];
+    });
 
     const openModalChange = (trainId, train) => {
         console.log(train);
@@ -39,9 +48,7 @@ const TrainingChange = () => {
                 >
                     Создать
                 </div>
-                <div className="admin__send-btn">
-                    Сделать расылку
-                </div>
+                <div onClick={() => fetchingMailingTraining()} className="admin__send-btn">Сделать расылку</div>
             </div>
             <div className="admin__items">
                 {trainingChange.training.map((train, index) => (

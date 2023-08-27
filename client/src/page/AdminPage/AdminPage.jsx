@@ -609,7 +609,9 @@ const AdminPage = () => {
                             <Link to="event-change" className="nav-admin__link">
                                 Мероприятия
                             </Link>
-                            <li className="nav-admin__link">Тренеры</li>
+                            <Link to="all-users" className="nav-admin__link">
+                            Все пользователи
+                            </Link>
                         </ul>
                     </div>
                     <div className="admin__main">

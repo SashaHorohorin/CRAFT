@@ -84,6 +84,7 @@
     }
     &__tab {
         // display: block;
+        cursor: pointer;
         position: relative;
         font-size: 24px;
         font-weight: 300;
@@ -386,7 +387,7 @@
     position: relative;
     border-radius: 54px;
     background: #d9d9d9;
-    padding: 3px 10px 3px 60px;
+    padding: 7px 10px 7px 10px;
     max-width: 162px;
     width: 100%;
     // z-index: 2;

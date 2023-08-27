@@ -11,16 +11,16 @@ const PeopleAction = ({ classAdd, sportsmens }) => {
                 className={`actions-workout__people people-actions ${classAdd}`}
                 onClick={(event) => eventStore.coord(event, sportsmens)}
             >
-                <div className="people-actions__circles">
+                {/* <div className="people-actions__circles">
                     <div className="people-actions__circle"></div>
                     <div className="people-actions__circle"></div>
                     <div className="people-actions__circle"></div>
-                </div>
+                </div> */}
                 <div className="people-actions__count count-people">
-                    <div className="count-people__title">{`и еще ${sportsmens?.length} человек`}</div>
-                    <div className="count-people__text">
+                    <div className="count-people__title">{`${sportsmens?.length != 1 ? 'Записалось' : 'Записался'} ${sportsmens?.length} ${sportsmens?.length > 1 && sportsmens?.length < 4 ? 'человека' : 'человек'}`}</div>
+                    {/* <div className="count-people__text">
                         пойдут на тренировку
-                    </div>
+                    </div> */}
                 </div>
             </div>
             

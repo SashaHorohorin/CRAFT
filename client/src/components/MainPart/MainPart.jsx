@@ -30,7 +30,7 @@ const MainPart = () => {
                     </div>
                     <Link
                         to='training'
-                        onClick={eventStore.setFlagOpenModalSale(true)}
+                        onClick={() => eventStore.setFlagOpenModalSale(true)}
                         className="home__button btn"
                     >Записаться по акции</Link>
                     <div className="home__social social-home">

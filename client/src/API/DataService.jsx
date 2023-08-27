@@ -99,6 +99,9 @@ export default class DataService {
     static async getAllUsers() {
         return await $api.get(`api/v1/profile/find-all`);
     }
+    static async getAdminUser(username) {
+        return await $api.get(`api/v1/profile/${username}`);
+    }
     static async getCompetitionById(id) {
         return await $api.get(`api/v1/competition/${id}`);
     }
@@ -174,5 +177,17 @@ export default class DataService {
     }
     
     // ===================================================<ПОЛУЧЕНИЕ ВСЕХ ПОЛЬЗОВАТЕЛЕЙ НЕ ЗАРЕГЕСТРИРОВАННЫХ НА СОРЕВНОВАНИЯ>
+
+    // ===================================================<РАССЫЛКИ>
+
+    static async getMailingCompetition() {
+        return await $api.get(`/api/v1/mailing/about-created-competitions`);
+    }
+
+    static async getMailingTraining() {
+        return await $api.get(`/api/v1/mailing/about-created-trains`);
+    }
+
+    // ===================================================<РАССЫЛКИ>
     
 }

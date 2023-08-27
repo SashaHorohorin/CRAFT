@@ -91,7 +91,7 @@ const Applications = () => {
         useFetching(async (id) => {
             const response = await DataService.getUsersNotRegisterCompetition(id);
             console.log(response.data);
-            let people = (response.data).map((username) => (username.lastName + ' ' + username.firstName))
+            let people = (response.data).map((username) => (username.firstName + ' ' + username.lastName))
             setUsersNotRegisterCompetition(people);
             // console.log(people);
         });
@@ -354,7 +354,7 @@ const Applications = () => {
             </div>
             <div className="container">
                 <div className="applications__title">
-                    Заявки на соревнование "Все против всех DE"
+                    {`Заявки на соревнование "${competition.type + ' ' + competition.category}"`}
                 </div>
                 <button
                     onClick={() => openModal()}

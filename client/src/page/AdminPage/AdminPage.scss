@@ -38,6 +38,7 @@
     }
 
     &__create-btn {
+        cursor: pointer;
         padding: 5px;
         max-width: 200px;
         width: 100%;
@@ -65,6 +66,7 @@
     &__item {
     }
     &__send-btn{
+        cursor: pointer;
         padding: 5px;
         max-width: 200px;
         width: 100%;
@@ -82,14 +84,67 @@
         justify-content: space-between;
         margin-bottom: 35px;
     }
+    &__users{
+
+    }
     
 }
 
+.users-admin{
+
+    &__user{}
+
+    &__info{
+        background: #5b5b5b;
+        color: #fff;
+        display: none;
+        margin-bottom: 10px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        
+        &.active{
+            display: block;
+        }
+    }
+    &__text{
+        margin-bottom: 10px;
+        &:last-child{
+            margin: 0;
+        }
+        & span{
+            font-weight: 700;
+        }
+    }
+}
+.admin-user{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: #5b5b5b;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    &__name{
+        font-size: 18px;
+    }
+
+    &__info{
+        cursor: pointer;
+        font-size: 16px;
+        background: #ff6969;
+        padding: 5px 10px;
+        border-radius: 10px;
+    }
+}
 .nav-admin {
     border-radius: 10px;
     background: #ff6969;
     overflow: hidden;
-    max-height: 270px;
+    max-height: 310px;
     &__title {
         color: #fff;
         font-size: 20px;
@@ -104,6 +159,7 @@
     }
 
     &__link {
+        cursor: pointer;
         display: block;
         text-decoration: none;
         color: #fff;
@@ -298,6 +354,7 @@
     display: flex;
     align-items: center;
     &__save {
+        cursor: pointer;
         text-align: center;
         max-width: 224px;
         width: 100%;
@@ -312,6 +369,7 @@
     }
 
     &__cancel {
+        cursor: pointer;
         text-align: center;
         max-width: 224px;
         width: 100%;
@@ -356,6 +414,7 @@
     }
 
     &__func {
+        cursor: pointer;
     }
 
     &__title {

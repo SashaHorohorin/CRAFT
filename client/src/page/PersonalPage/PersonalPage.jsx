@@ -194,12 +194,12 @@ const PersonalPage = () => {
                             <div className="personal__profile profile-personal">
                                 <div className="profile-personal__info info-profile">
                                     <div className="info-profile__person">
-                                        <div className="info-profile__img">
+                                        {/* <div className="info-profile__img">
                                             <img
-                                                src="./images/PersonalPage/1.jpeg"
-                                                alt=""
+                                                src="./images/PersonalPage/1.jpe"
+                                                alt="П"
                                             />
-                                        </div>
+                                        </div> */}
                                         <div className="info-profile__info-person info-person">
                                             <div className="info-person__name">
                                                 {profileData.firstName +
@@ -214,11 +214,11 @@ const PersonalPage = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <button className="info-profile__edit">
-                                        Редактировать
-                                    </button>
+                                    {/* <button className="info-profile__edit">
+                                        Изменить аватар
+                                    </button> */}
                                 </div>
-                                <div className="profile-personal__subscription subscription-profile">
+                                {/* <div className="profile-personal__subscription subscription-profile">
                                     <div className="subscription-profile__card card-subscription">
                                         <div className="card-subscription__img">
                                             <img
@@ -281,7 +281,7 @@ const PersonalPage = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="profile-personal__invite-pair invite-pair">
                                     <div className="invite-pair__title">
                                         Приглашения в пару

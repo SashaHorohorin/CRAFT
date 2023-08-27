@@ -25,6 +25,7 @@ import AdminPage from "./page/AdminPage/AdminPage";
 import TrainingChange from "./components/AdminComponent/AdminInPage/TrainingChange";
 import CompetitionChange from "./components/AdminComponent/AdminInPage/CompetitionChange";
 import EventChange from "./components/AdminComponent/AdminInPage/EventChange";
+import InfoAllUser from "./components/AdminComponent/AdminInPage/InfoAllUser";
 
 function App() {
     const { store } = useContext(Context);
@@ -68,6 +69,10 @@ function App() {
                             <Route
                                 path="event-change"
                                 element={<EventChange />}
+                            />
+                            <Route
+                                path="all-users"
+                                element={<InfoAllUser />}
                             />
                         </Route>
                     </Route>

@@ -16,6 +16,13 @@ const CompetitionChange = () => {
             competitionChange.competitions.filter((competition) => competitionId !== competition.id)
         );
     });
+
+    const [fetchingMailingCompetition, isLoadingMailingCompetition, errorMailingCompetition] =
+        useFetching(async () => {
+            // console.log('saskfhjahfshahfjshfkjshkj');
+            const response = await DataService.getMailingCompetition();
+            // let complex = [...response.data];
+        });
     
     const openModalChange = (trainId, train) => {
         console.log(train);
@@ -39,7 +46,7 @@ const CompetitionChange = () => {
                 >
                     Создать
                 </div>
-                <div className="admin__send-btn">
+                <div onClick={() => fetchingMailingCompetition()} className="admin__send-btn">
                     Сделать расылку
                 </div>
             </div>
