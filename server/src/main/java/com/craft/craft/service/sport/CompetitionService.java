@@ -140,7 +140,7 @@ public class CompetitionService {
             throw new ModelNotFoundException("Суммарный рейтинг пары меньше допустимого на соревновании");
         }
 
-        if(competition.getRatingDown()!= null && competition.getRatingDown() > (player1.getRating() + player2.getRating())){
+        if(competition.getRatingDown()!= null && competition.getRatingUp() > (player1.getRating() + player2.getRating())){
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
             throw new ModelNotFoundException("Суммарный рейтинг пары больше заявленного");
@@ -172,7 +172,7 @@ public class CompetitionService {
             pair.getRequestToJoin().clear();
             throw new ModelNotFoundException("Суммарный рейтинг пары меньше допустимого на соревновании");
         }
-        if(competition.getRatingDown()!= null && competition.getRatingDown() > (player1.getRating() + player2.getRating())){
+        if(competition.getRatingDown()!= null && competition.getRatingUp() > (player1.getRating() + player2.getRating())){
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
             throw new ModelNotFoundException("Суммарный рейтинг пары больше заявленного");
