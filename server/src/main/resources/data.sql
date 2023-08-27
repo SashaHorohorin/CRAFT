@@ -4,7 +4,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 -------------------------------users---------------------------------------------
 INSERT INTO baseuser (id, created, updated, first_name, last_name, email, phone_number, password, username, status, activation_code, agreement_data_processing, agreement_mailing, lab_id) VALUES
     (uuid_generate_v4(),now(),now(),'Никита', 'Пирогов', 'nikita-pirogov-artur@mail.ru', '8(111)111-11-11', crypt('123', gen_salt('bf',8)), 'nikita', 'ACTIVE', null, true, true, 19439),
-    (uuid_generate_v4(),now(),now(),'ADMIN', 'ADMIN', 'admin@mail.ru', '8(999)999-99-99', crypt('123', gen_salt('bf',8)), 'admin', 'ACTIVE', null, true, true, 19369),
+    (uuid_generate_v4(),now(),now(),'ADMIN', 'ADMIN', 'craftbadmclub@gmail.com', '8(999)999-99-99', crypt('123', gen_salt('bf',8)), 'admin', 'ACTIVE', null, true, true, 19369),
     (uuid_generate_v4(),now(),now(),'Sasha', 'Horohorin', 'sashahorohorin5555@gmail.com', '8(999)999-99-12', crypt('123', gen_salt('bf',8)), 'sasha', 'ACTIVE', null, true, true, 19369);
 INSERT INTO role (id, created, updated, name) VALUES
     (uuid_generate_v4(), now(),now(),'BASE'),
@@ -12,7 +12,7 @@ INSERT INTO role (id, created, updated, name) VALUES
 INSERT INTO user_roles (user_id, role_id)
     select u.id, r.id from baseuser u join role r on (u.username = 'nikita' and r.name = 'BASE');
 INSERT INTO user_roles (user_id, role_id)
-select u.id, r.id from baseuser u join role r on (u.username = 'sasha' and r.name = 'BASE');
+    select u.id, r.id from baseuser u join role r on (u.username = 'sasha' and r.name = 'BASE');
 INSERT INTO user_roles (user_id, role_id)
     select u.id, r.id from baseuser u join role r on (u.username = 'admin' and r.name = 'ADMIN');
 INSERT INTO admin (id)
@@ -83,8 +83,13 @@ INSERT INTO train (id, created, updated, end_train, start_train, max_participant
     (uuid_generate_v4(),now(),now(),now()+INTERVAL '+7 DAYS',now()+INTERVAL '+7 DAYS',10,0,'GAME','IMPULS');
 
 INSERT INTO trainer (id, created, updated, name, photourl, status, text_back, text_front) VALUES
-    (uuid_generate_v4(),now(),now(), 'trainer1', 'photoUrl1', 'ACTIVE', 'textBack1', 'textFront1'),
-    (uuid_generate_v4(),now(),now(), 'trainer2', 'photoUrl2', 'ACTIVE', 'textBack2', 'textFront2');
+    (uuid_generate_v4(),now(),now(), 'Хорохорин Александр', 'https://drive.google.com/uc?export=view&id=1PltSoi-VIF82ZUMjc3s84lToxTDW6OWj', 'ACTIVE', 'textBack1', 'textFront1'),
+    (uuid_generate_v4(),now(),now(), 'Решетников Дмитрий', 'https://drive.google.com/uc?export=view&id=1QFqkXq9UDY2_HXAdVfyeRIAzfAHoIv9i', 'ACTIVE', 'textBack1', 'textFront1'),
+    (uuid_generate_v4(),now(),now(), 'Бирюков Алексей', 'https://drive.google.com/uc?export=view&id=101lwCsGsnL-YtTDTOvAh3TGn0DxJQRi5', 'ACTIVE', 'textBack1', 'textFront1'),
+    (uuid_generate_v4(),now(),now(), 'Умеренкова Анастасия', 'https://drive.google.com/uc?export=view&id=1OMkV5lhuEqAsd59_BMrL3NH5S2kYZDL0', 'ACTIVE', 'textBack1', 'textFront1'),
+    (uuid_generate_v4(),now(),now(), 'Иванов Антон', 'https://drive.google.com/uc?export=view&id=16vUE46xeRB1HY8Kc2HMe3KYoD2N9lu5l', 'ACTIVE', 'textBack1', 'textFront1'),
+    (uuid_generate_v4(),now(),now(), 'Онегина Ирина', 'https://drive.google.com/uc?export=view&id=128dd4MWeUnkgpgURqlxrPVm_tGGdc6R1', 'ACTIVE', 'textBack1', 'textFront1'),
+    (uuid_generate_v4(),now(),now(), 'Филиппов Иван', 'https://drive.google.com/uc?export=view&id=', 'ACTIVE', 'textBack1', 'textFront1');
 
 INSERT INTO trainer_trains (trainer_id, train_id)
     select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 10);

@@ -13,12 +13,58 @@ create table baseuser
     agreement_mailing         boolean      not null,
     email                     varchar(255) not null,
     first_name                varchar(255) not null,
+    lab_id                    int4,
     last_name                 varchar(255) not null,
     password                  varchar(255) not null,
     phone_number              varchar(255) not null,
     photo_url                 varchar(255),
+    rating                    int4,
     status                    varchar(255),
     username                  varchar(255),
+    primary key (id)
+);
+create table competition
+(
+    id                uuid         not null,
+    created           timestamp,
+    updated           timestamp,
+    category          int4,
+    end_competition   timestamp,
+    info              varchar(1024),
+    max_pair          int4         not null,
+    now_pair          int4         not null,
+    rating_down       int4,
+    rating_up         int4,
+    sport_complex     varchar(255) not null,
+    start_competition timestamp    not null,
+    status            varchar(255) not null,
+    type              varchar(255) not null,
+    primary key (id)
+);
+create table competition_pair_players
+(
+    user_id             uuid not null,
+    competition_pair_id uuid not null,
+    primary key (competition_pair_id, user_id)
+);
+create table competition_pair_request_to_invite
+(
+    user_id        uuid not null,
+    competition_id uuid not null,
+    primary key (competition_id, user_id)
+);
+create table competition_pair_request_to_join
+(
+    user_id        uuid not null,
+    competition_id uuid not null,
+    primary key (competition_id, user_id)
+);
+create table competition_pair
+(
+    id             uuid not null,
+    created        timestamp,
+    updated        timestamp,
+    competition_id uuid,
     primary key (id)
 );
 create table craft_info_card
@@ -41,7 +87,8 @@ create table news
     created          timestamp,
     updated          timestamp,
     event_date       timestamp,
-    photo_url        varchar(255)  not null,
+    main_title       varchar(255),
+    photo_url        varchar(255),
     text             varchar(2048) not null,
     text_under_date  varchar(255),
     text_under_title varchar(255),
@@ -63,12 +110,13 @@ create table placemark_on_map
 );
 create table price
 (
-    id               uuid not null,
+    id               uuid    not null,
     created          timestamp,
     updated          timestamp,
-    discount         int4 not null,
-    now_price        int4 not null,
-    old_price        int4 not null,
+    active           boolean not null,
+    discount         int4    not null,
+    now_price        int4    not null,
+    old_price        int4    not null,
     sport_complex    varchar(255),
     text_under_price varchar(255),
     title            varchar(255),
@@ -130,30 +178,5 @@ create table user_roles
     role_id uuid not null,
     primary key (user_id, role_id)
 );
-alter table if exists baseuser
-    add constraint UK_pda12xvu7njw7o3it22f12xlu unique (email);
-alter table if exists baseuser
-    add constraint UK_514h6vkteymeh30q4qwa0a1k8 unique (phone_number);
-alter table if exists baseuser
-    add constraint UK_4vlvajd6cgpj5kfax34i0wrdm unique (username);
 create index IDXddicqud2uofuxnapfrlv1v5gg on train (id);
-alter table if exists trainer
-    add constraint UK_3vw0xwsb15ggfkna7fn6f6yam unique (name);
-alter table if exists admin
-    add constraint FKc76wbd1x0jbr9y9dd0ppyd6eu foreign key (id) references baseuser;
-alter table if exists craft_info_card
-    add constraint FK6ygv4gj28mmxeqhfvq38dgw44 foreign key (author_id) references admin;
-alter table if exists services_price
-    add constraint FKkgsroal1nvbvkhv5d6352wwu7 foreign key (id) references price;
-alter table if exists sportsmen_train
-    add constraint FK3qfmk7ih2tqmcnd556j6dwi3r foreign key (train_id) references train;
-alter table if exists sportsmen_train
-    add constraint FKog7m95940s08lrgtoscpcdsgc foreign key (sportsmen_id) references baseuser;
-alter table if exists trainer_trains
-    add constraint FKqee0w8n2l7wotewa9pk9n5h23 foreign key (train_id) references train;
-alter table if exists trainer_trains
-    add constraint FK6olxuspiy934cu13emhsy0svk foreign key (trainer_id) references trainer;
-alter table if exists user_roles
-    add constraint FKrhfovtciq1l558cw6udg0h0d3 foreign key (role_id) references role;
-alter table if exists user_roles
-    add constraint FKey0fkj2qh4bppqrxvdr07thu7 foreign key (user_id) references baseuser;
+
