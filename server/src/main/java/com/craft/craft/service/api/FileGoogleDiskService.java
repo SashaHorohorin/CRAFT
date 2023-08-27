@@ -5,6 +5,7 @@ import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.FileContent;
 import com.google.api.services.drive.Drive;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -18,6 +19,9 @@ public class FileGoogleDiskService implements FileService {
     @Autowired
     private Drive service;
 
+    @Value("${folder.files.upload.id}")
+    private String parentId;
+
     @Override
     public String saveFile(File file) throws IOException {
         //com.google.api.services.drive.model.File result = service.files().get("1K4b-Rlq-nWk2mEf0yLDzB5UO_0ArzrSg").execute();
@@ -26,7 +30,8 @@ public class FileGoogleDiskService implements FileService {
         com.google.api.services.drive.model.File fileMetadata = new com.google.api.services.drive.model.File();
         UUID randomName = UUID.randomUUID();
         fileMetadata.setName(randomName + ".jpg");
-        fileMetadata.setParents(Collections.singletonList("1K4b-Rlq-nWk2mEf0yLDzB5UO_0ArzrSg"));
+        fileMetadata.setParents(Collections.singletonList(parentId));
+        //fileMetadata.setParents(Collections.singletonList("1K4b-Rlq-nWk2mEf0yLDzB5UO_0ArzrSg"));
 
         //java.io.File filePath = new java.io.File("upload-dir/photo.jpg");
         FileContent mediaContent = new FileContent("image/jpeg", file);
