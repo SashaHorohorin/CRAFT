@@ -19,7 +19,7 @@ target/
 /server/upload-files
 /server/nginx
 /server/tokens
-.json
+*.json
 *.properties
 *.iws
 *.iml
