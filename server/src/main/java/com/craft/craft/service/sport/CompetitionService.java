@@ -51,11 +51,11 @@ public class CompetitionService {
         competition.setEndCompetition(new Date(competition.getStartCompetition().getTime() + (1000 * 60 * 60 * 24)));//end на день больше чем start
         competition.setCategory(createCompetitionDto.getCategory());
         switch (competition.getCategory()){
-            case AB: competition.setRatingDown(700);
-            case BC: competition.setRatingDown(600);
-            case CD: competition.setRatingUp(600);
-            case DE: competition.setRatingUp(450);
-            case EF: competition.setRatingUp(350);
+            case AB: {competition.setRatingDown(700); break;}
+            case BC: {competition.setRatingDown(600); break;}
+            case CD: {competition.setRatingUp(600); break;}
+            case DE: {competition.setRatingUp(450); break;}
+            case EF: {competition.setRatingUp(350); break;}
         }
         return competitionRepo.save(competition);
     }
@@ -84,11 +84,11 @@ public class CompetitionService {
         competition.setType(dto.getType());
         competition.setCategory(dto.getCategory());
         switch (competition.getCategory()) {
-            case AB: competition.setRatingDown(700);
-            case BC: competition.setRatingDown(600);
-            case CD: competition.setRatingUp(600);
-            case DE: competition.setRatingUp(450);
-            case EF: competition.setRatingUp(350);
+            case AB: {competition.setRatingDown(700); break;}
+            case BC: {competition.setRatingDown(600); break;}
+            case CD: {competition.setRatingUp(600); break;}
+            case DE: {competition.setRatingUp(450); break;}
+            case EF: {competition.setRatingUp(350); break;}
         }
         competition.setEndCompetition(new Date(competition.getStartCompetition().getTime() + (1000 * 60 * 60 * 24)));//end на день больше чем start
 
@@ -116,7 +116,7 @@ public class CompetitionService {
     }
 
     public CompetitionPair addSecondUserToPairFromRequestJoin(UUID competitionPairId, String username) throws ModelNotFoundException, FullTrainException {
-        String authName = getUsernameOfRequester();
+
         BaseUser player2 = getUserByUsername(username);
 
         if (player2.getLabId() == null) throw new ModelNotFoundException("Необходимо указать id ЛАБ");
@@ -127,10 +127,24 @@ public class CompetitionService {
         Competition competition = pair.getCompetition();
         if (competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(player2)))
             throw new ModelNotFoundException("Пользователь уже зарегистрирован на соревновании");
-
-        if (pair.getPlayers().iterator().next().getUsername().equals(authName))
-            pair.getRequestToJoin().remove(player2);
+//        if (pair.getPlayers().iterator().next().getUsername().equals(authName))
+//            pair.getRequestToJoin().remove(player2);
         player2.setRating(LabService.getUserRating(player2.getLabId()));
+        String authName = getUsernameOfRequester();
+        BaseUser player1 = pair.getPlayers().iterator().next();
+        if(!authName.equals(player1.getUsername()))
+            throw new ModelNotFoundException("Вы не можете принять пользователя не в свою пару");
+        if(competition.getRatingDown() < (player1.getRating() + player2.getRating())){
+            pair.getRequestToInvite().clear();
+            pair.getRequestToJoin().clear();
+            throw new ModelNotFoundException("Суммарный рейтинг пары меньше допустимого на соревновании");
+        }
+
+        if(competition.getRatingDown() > (player1.getRating() + player2.getRating())){
+            pair.getRequestToInvite().clear();
+            pair.getRequestToJoin().clear();
+            throw new ModelNotFoundException("Суммарный рейтинг пары больше заявленного");
+        }
         pair.getPlayers().add(player2);
         if (pair.getPlayers().size() == 2) {
             pair.getRequestToInvite().clear();
@@ -152,6 +166,18 @@ public class CompetitionService {
         if (competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(player2)))
             throw new ModelNotFoundException("Вы уже зарегистрирован на соревновании");
         player2.setRating(LabService.getUserRating(player2.getLabId()));
+        BaseUser player1 = pair.getPlayers().iterator().next();
+        if(competition.getRatingDown() < (player1.getRating() + player2.getRating())){
+            pair.getRequestToInvite().clear();
+            pair.getRequestToJoin().clear();
+            throw new ModelNotFoundException("Суммарный рейтинг пары меньше допустимого на соревновании");
+        }
+        if(competition.getRatingDown() > (player1.getRating() + player2.getRating())){
+            pair.getRequestToInvite().clear();
+            pair.getRequestToJoin().clear();
+            throw new ModelNotFoundException("Суммарный рейтинг пары больше заявленного");
+        }
+
         pair.getRequestToInvite().forEach(user -> {
             if (user.getUsername().equals(username))
                 pair.getPlayers().add(player2);
