@@ -134,13 +134,13 @@ public class CompetitionService {
         BaseUser player1 = pair.getPlayers().iterator().next();
         if(!authName.equals(player1.getUsername()))
             throw new ModelNotFoundException("Вы не можете принять пользователя не в свою пару");
-        if(competition.getRatingDown()!= null && competition.getRatingDown() < (player1.getRating() + player2.getRating())){
+        if(competition.getRatingDown()!= null && competition.getRatingDown() > (player1.getRating() + player2.getRating())){
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
             throw new ModelNotFoundException("Суммарный рейтинг пары меньше допустимого на соревновании");
         }
 
-        if(competition.getRatingUp()!= null && competition.getRatingUp() > (player1.getRating() + player2.getRating())){
+        if(competition.getRatingUp()!= null && competition.getRatingUp() < (player1.getRating() + player2.getRating())){
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
             throw new ModelNotFoundException("Суммарный рейтинг пары больше заявленного");
@@ -167,12 +167,16 @@ public class CompetitionService {
             throw new ModelNotFoundException("Вы уже зарегистрирован на соревновании");
         player2.setRating(LabService.getUserRating(player2.getLabId()));
         BaseUser player1 = pair.getPlayers().iterator().next();
-        if(competition.getRatingDown()!= null && competition.getRatingDown() < (player1.getRating() + player2.getRating())){
+        System.out.println(competition.getRatingDown());
+        System.out.println(competition.getRatingUp());
+        System.out.println(player1.getRating());
+        System.out.println( player2.getRating());
+        if(competition.getRatingDown()!= null && competition.getRatingDown() > (player1.getRating() + player2.getRating())){
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
             throw new ModelNotFoundException("Суммарный рейтинг пары меньше допустимого на соревновании");
         }
-        if(competition.getRatingUp()!= null && competition.getRatingUp() > (player1.getRating() + player2.getRating())){
+        if(competition.getRatingUp()!= null && competition.getRatingUp() < (player1.getRating() + player2.getRating())){
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
             throw new ModelNotFoundException("Суммарный рейтинг пары больше заявленного");
