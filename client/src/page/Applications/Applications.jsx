@@ -20,6 +20,9 @@ const Applications = () => {
     const [pairId, setPairId] = useState("");
     const [flagSucces, setFlagSucces] = useState(false);
     const [flagNotification, setFlagNotification] = useState(false);
+    const [flagNotificationError, setFlagNotificationError] = useState(false);
+    const [error, setError] = useState('');
+    
     const [usersNotRegisterCompetition, setUsersNotRegisterCompetition] = useState([]);
 
     const [
@@ -43,9 +46,16 @@ const Applications = () => {
         const response = await DataService.postAcceptInvitePair(
             competitionPairId,
             obj
-        );
+        ).catch(error => {
+            setError(error.response.data.message);
+            setFlagNotificationError(true)
+            setTimeout(() => {
+                setFlagNotificationError(false)
+            }, 4000)
+        });
         console.log(response.data);
         setCompetition(response.data);
+        // if()
     });
 
     const [fetchingUser, isLoadingUser, errorUser] = useFetching(async () => {
@@ -193,6 +203,7 @@ const Applications = () => {
         fetchingAcceptInvitePair(pairId, {
             username: localStorage.getItem("username"),
         });
+        
     };
 
     const requestToInvite = async (valueName) => {
@@ -240,6 +251,9 @@ const Applications = () => {
     const closeModalWindow = () => {
         setFlagNotification(false);
     }
+    const closeModalWindowError = () => {
+        setFlagNotificationError(false);
+    }
 
     return (
         <div className="applications">
@@ -256,6 +270,20 @@ const Applications = () => {
                     <span></span>
                 </div>
                 <div className="modal-window__title">Заявка отправлена</div>
+            </div>
+            <div
+                className={
+                    flagNotificationError ? "modal-window active" : "modal-window"
+                }
+            >
+                <div
+                    onClick={() => closeModalWindowError()}
+                    className="modal-window__close"
+                >
+                    <span></span>
+                    <span></span>
+                </div>
+                <div className="modal-window__title">{error}</div>
             </div>
             <ModalInvitePair
                 setFlag={(bool) => eventStore.setFlagOpenModalAddPair(bool)}
