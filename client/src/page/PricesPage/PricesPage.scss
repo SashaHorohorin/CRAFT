@@ -1,0 +1,215 @@
+.prices {
+    padding-top: 110px;
+    padding-bottom: 100px;
+    position: relative;
+    &::before {
+        content: " ";
+        display: block;
+        position: absolute;
+        z-index: 0;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        opacity: 0.07;
+        background-image: url("../../../public/images/HomePage/patern.png");
+        background-repeat: repeat;
+        background-position: 50% 0;
+        // background-size: ;
+    }
+    &__title {
+        color: #5b5b5b;
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 50px;
+        @media (max-width: 500px) {
+            font-size: 25px;
+            margin-bottom: 40px;
+        }
+    }
+
+    &__sporthalls {
+    }
+}
+
+.prices-tabs {
+    position: relative;
+    z-index: 4;
+
+    &__labels {
+        list-style: none;
+        // margin-left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 40px;
+    }
+
+    &__tab {
+        cursor: pointer;
+        text-align: center;
+        border: 1px solid #000;
+        padding: 15px;
+        max-width: 300px;
+        width: 100%;    
+        margin-right: 20px;
+        border-radius: 10px;
+        font-size: 20px;
+        font-weight: 400;
+        background: #fff;
+        &:last-child {
+            margin: 0;
+        }
+        &.active{
+            background: #ea7777;
+            color: #fff;
+            border: none;
+        }
+        @media (max-width: 455px) {
+            padding: 10px;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+    }
+
+    &__content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-column-gap: 100px;
+        grid-row-gap: 100px;
+        @media (max-width: 1075px) {
+            grid-column-gap: 50px;
+            grid-row-gap: 50px; 
+        }
+        @media (max-width: 850px) {
+            grid-template-columns: 1fr 1fr;
+            
+        }
+        @media (max-width: 600px) {
+            grid-column-gap: 25px;
+            grid-row-gap: 25px; 
+            
+        }
+        @media (max-width: 520px) {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            
+        }
+    }
+
+    &__card {
+    }
+}
+
+.card-price {
+    position: relative;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2.5px);
+    overflow: hidden;
+    @media (max-width: 520px) {
+        max-width: 300px;
+        width: 100%;
+        
+    }
+    &__info-price {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    &__title {
+        color: #000;
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        @media (max-width: 990px) {
+            font-size: 24px;
+        }
+    }
+
+    &__old-price {
+        color: rgba(0, 0, 0, 0.2);
+        font-size: 24px;
+        font-weight: 400;
+        text-decoration: line-through;
+        @media (max-width: 990px) {
+            font-size: 18px;
+        }
+    }
+
+    &__now-price {
+        position: relative;
+        color: #000;
+        font-size: 32px;
+        font-weight: 400;
+        @media (max-width: 990px) {
+            font-size: 24px;
+        }
+    }
+
+    &__sale {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 400;
+        padding: 7px 7px 7px 20px;
+        border-radius: 15px 0px 0px 15px;
+        background: #ea7777;
+        position: absolute;
+        top: 75px;
+        right: 0;
+        width: 80px;
+    }
+
+    &__label {
+        color: #000;
+        font-size: 24px;
+        font-weight: 400;
+        position: absolute;
+        top: 20px;
+        left: 75px;
+        @media (max-width: 990px) {
+            font-size: 18px;
+            top: 20px;
+            left: 55px;
+        }
+    }
+
+    &__info {
+    }
+}
+
+.info-card {
+    padding: 20px 30px;
+    text-align: center;
+    border-radius: 50px 0px 0px 0px;
+    background: #e5ffe7;
+    &__list {
+        list-style: none;
+    }
+
+    &__label {
+        color: #000;
+        font-size: 24px;
+        font-weight: 200;
+        margin-bottom: 20px;
+        @media (max-width: 990px) {
+            font-size: 18px;
+        }
+    }
+
+    &__btn {
+        cursor: pointer;
+        color: #eaeaea;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 400;
+        max-width: 190px;
+        width: 100%;
+        padding: 15px;
+        border-radius: 10px;
+        background: #ea7777;
+        border: none;
+    }
+}

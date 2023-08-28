@@ -1,0 +1,12 @@
+.btn {
+    cursor: pointer;
+    border-radius: 10px;
+    border: 1px solid #000;
+    transition: box-shadow 0.7s ease;
+    color: #000000;
+    text-decoration: none;
+    text-align: center;
+    &:hover{
+        box-shadow: 5px 5px 0px 0px #000;
+    }
+}
