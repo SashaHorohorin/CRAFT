@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Data
-public class Competition extends BaseEntity {
+public class Competition extends BaseEntity implements ItemInCalendar {
     @NonNull
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -53,4 +53,18 @@ public class Competition extends BaseEntity {
     @OneToMany(mappedBy = "competition", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private Set<CompetitionPair> competitionPairs = new HashSet<>();
 
+    @Override
+    public ItemInCalendarType getItemType() {
+        return ItemInCalendarType.COMPETITION;
+    }
+
+    @Override
+    public Date getStartItem() {
+        return this.startCompetition;
+    }
+
+    @Override
+    public SportComplex getSportComplexOfItem() {
+        return sportComplex;
+    }
 }

@@ -1,6 +1,6 @@
 package com.craft.craft.controller.sport;
 
-import com.craft.craft.dto.sport.TrainCalendarBySportComplexDto;
+import com.craft.craft.dto.sport.train.TrainCalendarBySportComplexDto;
 import com.craft.craft.dto.sport.train.TrainInfoDto;
 import com.craft.craft.dto.sport.train.TrainUpdateDto;
 import com.craft.craft.dto.sport.train.UserToTrainRequest;

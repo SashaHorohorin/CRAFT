@@ -1,6 +1,6 @@
 package com.craft.craft.service.sport;
 
-import com.craft.craft.dto.sport.TrainCalendarBySportComplexDto;
+import com.craft.craft.dto.sport.train.TrainCalendarBySportComplexDto;
 import com.craft.craft.dto.sport.train.TrainCalendarDto;
 import com.craft.craft.dto.sport.train.TrainInfoDto;
 import com.craft.craft.dto.sport.train.TrainUpdateDto;
@@ -96,6 +96,7 @@ public class TrainService {
         return trainRepo.save(train);
     }
 
+    @Deprecated
     public TrainCalendarBySportComplexDto getTrainCalendarOnThisWeek() throws ModelNotFoundException {
 
         LocalDate now = LocalDate.now();
@@ -112,13 +113,14 @@ public class TrainService {
         TrainCalendarDto alexeeva = getTrainCalendarAtSportComplex(SportComplex.ALEKSEEVA, trains);
         TrainCalendarDto dinamit = getTrainCalendarAtSportComplex(SportComplex.DINAMIT, trains);
         TrainCalendarDto impuls = getTrainCalendarAtSportComplex(SportComplex.IMPULS, trains);
-        return new TrainCalendarBySportComplexDto(alexeeva, dinamit, impuls);
+        return new TrainCalendarBySportComplexDto(dinamit, impuls, alexeeva);
     }
 
     public List<Train> findAll(){
         return trainRepo.findAll();
     }
 
+    @Deprecated
     private List<Train> getTrainsAtDayOfWeek(int dayOfWeek, List<Train> allTrains) {
         return allTrains.stream().filter(train -> {
                     Calendar c = Calendar.getInstance();
@@ -129,6 +131,7 @@ public class TrainService {
         ).collect(Collectors.toList());
     }
 
+    @Deprecated
     private TrainCalendarDto getTrainCalendarAtSportComplex(SportComplex complex, List<Train> allTrains) {
         List<TrainInfoDto> monday = getTrainsAtDayOfWeek(Calendar.MONDAY, allTrains).stream()
                 .filter(train -> train.getSportComplex().equals(complex))

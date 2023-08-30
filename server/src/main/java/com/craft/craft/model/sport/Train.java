@@ -15,7 +15,7 @@ import java.util.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Table(indexes = @Index(columnList = "id"))
-public class Train extends BaseEntity {
+public class Train extends BaseEntity implements ItemInCalendar {
     @NonNull
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -56,4 +56,18 @@ public class Train extends BaseEntity {
         sportsmen.forEach(s -> s.getTrains().remove(this));
     }
 
+    @Override
+    public ItemInCalendarType getItemType() {
+        return ItemInCalendarType.TRAIN;
+    }
+
+    @Override
+    public Date getStartItem() {
+        return startTrain;
+    }
+
+    @Override
+    public SportComplex getSportComplexOfItem() {
+        return sportComplex;
+    }
 }

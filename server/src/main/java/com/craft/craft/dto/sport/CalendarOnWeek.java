@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TrainCalendarBySportComplexDto {
+public class CalendarOnWeek {
 
-    @JsonProperty("Алексеева")
-    private TrainCalendarDto alexeeva;
     @JsonProperty("Динамит")
-    private TrainCalendarDto dinamit;
+    private CalendarForSportComplexOnWeek dinamit;
     @JsonProperty("Импульс")
-    private TrainCalendarDto impuls;
+    private CalendarForSportComplexOnWeek impuls;
+    @JsonProperty("Алексеева")
+    private CalendarForSportComplexOnWeek alexeeva;
 }

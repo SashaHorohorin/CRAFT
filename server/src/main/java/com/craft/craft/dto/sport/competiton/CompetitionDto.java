@@ -4,6 +4,7 @@ import com.craft.craft.model.sport.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CompetitionDto {
+public class CompetitionDto implements ItemInCalendar{
 
     private UUID id;
     private SportComplex sportComplex;
@@ -29,6 +30,8 @@ public class CompetitionDto {
     private Integer ratingUp;
     private Integer ratingDown;
     private CategoryOfCompetition category;
+    @NonNull
+    private ItemInCalendarType itemType;
 
     public static CompetitionDto getDtoFromCompetition(Competition competition){
         return new CompetitionDto(
@@ -44,7 +47,23 @@ public class CompetitionDto {
                 competition.getInfo(),
                 competition.getRatingUp(),
                 competition.getRatingDown(),
-                competition.getCategory()
+                competition.getCategory(),
+                ItemInCalendarType.COMPETITION
         );
+    }
+
+    @Override
+    public ItemInCalendarType getItemType() {
+        return ItemInCalendarType.COMPETITION;
+    }
+
+    @Override
+    public Date getStartItem() {
+        return startCompetition;
+    }
+
+    @Override
+    public SportComplex getSportComplexOfItem() {
+        return sportComplex;
     }
 }

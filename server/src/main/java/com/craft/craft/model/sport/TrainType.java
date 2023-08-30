@@ -9,4 +9,6 @@ public enum  TrainType  {
     TACTIC_GAME,
     @JsonProperty("Тренировка с тренером")
     GAME_WITH_TRAINER,
+    @JsonProperty("Детская тренировка")
+    BABY_TRAIN,
 }

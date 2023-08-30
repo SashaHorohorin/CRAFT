@@ -4,7 +4,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 -------------------------------users---------------------------------------------
 INSERT INTO baseuser (id, created, updated, first_name, last_name, email, phone_number, password, username, status, activation_code, agreement_data_processing, agreement_mailing, lab_id) VALUES
 (uuid_generate_v4(),now(),now(),'Никита', 'Пирогов', 'nikita-pirogov-artur@mail.ru', '8(111)111-11-11', crypt('123', gen_salt('bf',8)), 'nikita', 'ACTIVE', null, true, true, 19439),
-(uuid_generate_v4(),now(),now(),'ADMIN', 'ADMIN', 'craftbadmclub@gmail.com', '8(999)999-99-99', crypt('123', gen_salt('bf',8)), 'admin', 'ACTIVE', null, true, true, 19369),
+(uuid_generate_v4(),now(),now(),'ADMIN', 'ADMIN', 'craftbadmclub@gmail.com', '8(999)999-99-99', crypt('sdfSer54ds', gen_salt('bf',8)), 'admin', 'ACTIVE', null, true, true, 19369),
 (uuid_generate_v4(),now(),now(),'Sasha', 'Horohorin', 'sashahorohorin5555@gmail.com', '8(999)999-99-12', crypt('123', gen_salt('bf',8)), 'sasha', 'ACTIVE', null, true, true, 19369);
 INSERT INTO role (id, created, updated, name) VALUES
 (uuid_generate_v4(), now(),now(),'BASE'),
@@ -91,8 +91,8 @@ INSERT INTO trainer (id, created, updated, name, photourl, status, text_back, te
 (uuid_generate_v4(),now(),now(), 'Онегина Ирина', 'https://drive.google.com/uc?export=view&id=128dd4MWeUnkgpgURqlxrPVm_tGGdc6R1', 'ACTIVE', 'textBack1', 'textFront1'),
 (uuid_generate_v4(),now(),now(), 'Филиппов Иван', 'https://drive.google.com/uc?export=view&id=', 'ACTIVE', 'textBack1', 'textFront1');
 
-INSERT INTO trainer_trains (trainer_id, train_id)
-select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 10);
+-- INSERT INTO trainer_trains (trainer_id, train_id)
+-- select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 10);
 -- INSERT INTO trainer_trains (trainer_id, train_id)
 --     select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.max_participant = 11);
 -- INSERT INTO trainer_trains (trainer_id, train_id)
@@ -117,21 +117,21 @@ select t.id, tr.id from trainer t join train tr on (t.name = 'trainer1' and tr.m
 -------------------------------trains---------------------------------------------
 
 -------------------------------News---------------------------------------------
-INSERT INTO news (id, created, updated, type, title,text_under_title,main_title, event_date,text_under_date, text, photo_url) VALUES
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title1','underTitle1','Main title 1', now(),'underDate1','text', 'photoUrl'),
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title2','underTitle2','Main title 1', now(),'underDate2','text', 'photoUrl'),
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title3','underTitle3','Main title 1', now(),'underDate3','text', 'photoUrl'),
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title4','underTitle4','Main title 1', now(),'underDate4','text', 'photoUrl'),
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title5','underTitle5','Main title 1', now(),'underDate5','text', 'photoUrl'),
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title6','underTitle6','Main title 1', now(),'underDate6','text', 'photoUrl'),
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title7','underTitle7','Main title 1', now(),'underDate7','text', 'photoUrl'),
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title8','underTitle8','Main title 1', now(),'underDate8','text', 'photoUrl'),
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title9','underTitle9','Main title 1', now(),'underDate9','text', 'photoUrl'),
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title10','underTitle10','Main title 1', now(),'underDate10','text', 'photoUrl'),
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title11','underTitle11','Main title 1', now(),'underDate11','text', 'photoUrl'),
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title12','underTitle12','Main title 1', now(),'underDate12','text', 'photoUrl'),
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title13','underTitle13','Main title 1', now(),'underDate13','text', 'photoUrl'),
-(uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title14','underTitle14','Main title 1', now(),'underDate14','text', 'photoUrl');
+-- INSERT INTO news (id, created, updated, type, title,text_under_title,main_title, event_date,text_under_date, text, photo_url) VALUES
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title1','underTitle1','Main title 1', now(),'underDate1','text', 'photoUrl'),
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title2','underTitle2','Main title 1', now(),'underDate2','text', 'photoUrl'),
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title3','underTitle3','Main title 1', now(),'underDate3','text', 'photoUrl'),
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title4','underTitle4','Main title 1', now(),'underDate4','text', 'photoUrl'),
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title5','underTitle5','Main title 1', now(),'underDate5','text', 'photoUrl'),
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title6','underTitle6','Main title 1', now(),'underDate6','text', 'photoUrl'),
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title7','underTitle7','Main title 1', now(),'underDate7','text', 'photoUrl'),
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title8','underTitle8','Main title 1', now(),'underDate8','text', 'photoUrl'),
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title9','underTitle9','Main title 1', now(),'underDate9','text', 'photoUrl'),
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title10','underTitle10','Main title 1', now(),'underDate10','text', 'photoUrl'),
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title11','underTitle11','Main title 1', now(),'underDate11','text', 'photoUrl'),
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title12','underTitle12','Main title 1', now(),'underDate12','text', 'photoUrl'),
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title13','underTitle13','Main title 1', now(),'underDate13','text', 'photoUrl'),
+-- (uuid_generate_v4(),now(),now(), 'BASE_NEWS', 'title14','underTitle14','Main title 1', now(),'underDate14','text', 'photoUrl');
 -------------------------------News---------------------------------------------
 -------------------------------competitions---------------------------------------------
 INSERT INTO competition (id, created, updated, sport_complex, type, start_competition, end_competition, max_pair, now_pair,status, info) VALUES

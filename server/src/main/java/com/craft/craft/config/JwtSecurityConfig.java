@@ -91,8 +91,9 @@ public class JwtSecurityConfig {
                         .antMatchers(HttpMethod.OPTIONS,"/api/v1/trainer/**").permitAll()
                         .antMatchers("/api/v1/trainer/**").hasAuthority(RoleName.ADMIN.name())
                         //------------------------------------------------------------------------------------------------
-                        .antMatchers(" /api/v1/file/**").hasAuthority(RoleName.ADMIN.name())
-                        .antMatchers(" /api/v1/mailing/**").hasAuthority(RoleName.ADMIN.name())
+                        .antMatchers("/api/v1/file/**").hasAuthority(RoleName.ADMIN.name())
+                        .antMatchers("/api/v1/mailing/**").hasAuthority(RoleName.ADMIN.name())
+                        .antMatchers("/api/v1/calendar/**").permitAll()
                         //------------------------------------------------------------------------------------------------
                         .anyRequest().authenticated()
                 )

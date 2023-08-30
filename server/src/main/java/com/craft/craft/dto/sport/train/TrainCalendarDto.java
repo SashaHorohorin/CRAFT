@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class TrainCalendarDto {
     private List<TrainInfoDto> monday;
     private List<TrainInfoDto> tuesday;

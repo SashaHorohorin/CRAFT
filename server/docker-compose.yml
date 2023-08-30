@@ -45,6 +45,7 @@ services:
     container_name: craft1-java-app
     ports:
       - "9005:9005"
+      - "9999:9999"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/craft
       - POSTGRES_USER=postgres
