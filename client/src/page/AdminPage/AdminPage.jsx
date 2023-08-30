@@ -32,6 +32,7 @@ const AdminPage = () => {
         "Тактическая игровая",
         "Тренировка с тренером",
         "Игровая",
+        'Детская тренировка'
     ];
     const typeCompetition = ["Пара", "Микст", "Все против всех"];
     const categoryCompetition = ["EF", "DE", "CD", "BC", "AB"];
