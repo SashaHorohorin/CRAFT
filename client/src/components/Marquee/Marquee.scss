@@ -17,9 +17,19 @@
 }
 
 .track > div span {
-    margin-right: 50px !important;
+    
     margin: 20px 0;
     font-size: 36px;
     font-weight: bold;
     text-transform: uppercase;
+}
+
+.text{
+    margin-right: 50px !important;
+}
+.text-in{
+    margin-right: 50px !important;
+    &:last-child{
+        margin: 0 !important;
+    }
 }

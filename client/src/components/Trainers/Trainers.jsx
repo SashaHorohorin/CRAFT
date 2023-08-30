@@ -14,25 +14,27 @@ const Trainers = () => {
         },
         {
             id: 2,
-            name: 'Дмитрий Решетников',
-            photoURL: './images/HomePage/Trainers/2.jpg',
-            textFront: 'Победитель городских соревнований, рейтинг ЛАБ - 901',
-            textBack: '',
-        },
-        {
-            id: 3,
             name: 'Анастасия Умеренкова',
             photoURL: './images/HomePage/Trainers/3.jpg',
             textFront: 'Чемпионка Санкт-Петербурга, рейтинг ЛАБ - 888',
             textBack: '',
         },
         {
-            id: 4,
+            id: 3,
             name: 'Александр Хорохорин',
             photoURL: './images/HomePage/Trainers/4.jpg',
             textFront: 'Победитель городских соревнований, рейтинг ЛАБ - 820',
             textBack: '',
         },
+        {
+            id: 4,
+            name: 'Дмитрий Решетников',
+            photoURL: './images/HomePage/Trainers/2.jpg',
+            textFront: 'Победитель городских соревнований, рейтинг ЛАБ - 901',
+            textBack: '',
+        },
+        
+        
         {
             id: 5,
             name: 'Антон Иванов',

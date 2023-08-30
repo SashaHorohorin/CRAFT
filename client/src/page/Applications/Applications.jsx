@@ -49,6 +49,7 @@ const Applications = () => {
         ).catch(error => {
             setError(error.response.data.message);
             setFlagNotificationError(true)
+            fetchingCompetition(id)
             setTimeout(() => {
                 setFlagNotificationError(false)
             }, 4000)
@@ -301,6 +302,7 @@ const Applications = () => {
                 flag={eventStore.flagOpenModalRequestAddPair}
                 changeFlagNotification={(bool) => setFlagNotification(bool)}
                 sendFunc={requestToInvite}
+                usersNotRegisterCompetition={usersNotRegisterCompetition}
             />
             <div
                 onClick={(event) => closeModalInst(event)}

@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Header.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../..";
 import { observer } from "mobx-react-lite";
 
 const Header = () => {
     const [openBurger, setOpenBurger] = useState(false);
     const [scroll, setScroll] = useState(0);
+    const navigate = useNavigate();
 
     const { store } = useContext(Context);
 
@@ -19,6 +20,11 @@ const Header = () => {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    const logoutBtn = () => {
+        store.logout();
+        navigate("/auth/login");
+    }
 
     return (
         <div className={scroll > 30 ? "header active" : "header"}>
@@ -147,7 +153,7 @@ const Header = () => {
                             ) : (
                                 <div className="navigation__buttons buttons">
                                     <div
-                                        onClick={() => store.logout()}
+                                        onClick={() => logoutBtn()}
                                         className="buttons__exit"
                                     >
                                         Выход

@@ -10,7 +10,7 @@ const ActivatePage = () => {
     const {store} = useContext(Context)
     const activate = async () => {
         console.log(code);
-        const response = axios.get(`http://localhost:9005/api/v1/auth/activate/${code}`);
+        const response = axios.get(`https://craft-bc-backend.online/api/v1/auth/activate/${code}`);
         console.log(response.data);
         store.setActivate(response.data);
 

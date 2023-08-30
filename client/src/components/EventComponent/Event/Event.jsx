@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 const Event = ({ event }) => {
     const { eventStore } = useContext(Context);
     const [flagOpenModal, setFlagOpenModal] = useState(false);
-    
+
     let openModal = () => {
         document.body.classList.add("stop");
         setFlagOpenModal(true);
@@ -26,7 +26,9 @@ const Event = ({ event }) => {
     };
     const getTime = (date) => {
         let d = new Date(date);
-        let time = `${d.getHours() < 10 ? `0${d.getHours()}`:d.getHours()}:${d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()}`;
+        let time = `${d.getHours() < 10 ? `0${d.getHours()}` : d.getHours()}:${
+            d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()
+        }`;
         return time;
     };
     let closeModal = () => {
@@ -34,7 +36,6 @@ const Event = ({ event }) => {
         document.body.classList.remove("stop");
         setFlagOpenModal(false);
     };
-
 
     return (
         <>
@@ -63,21 +64,32 @@ const Event = ({ event }) => {
                         </div>
                     </div>
                 </div>
-                <div className="event__info info-event">
+                <div className="event__info info-event" style={
+                            {background: `${event.type == "Новости"
+                            ? "#E5EFFF" 
+                            : event.type == "Предстоящие соревнования"
+                            ? "#E5FFE7"
+                            : "#FFE5E5"}`}
+                        }>
                     <div className="info-event__left left-info">
                         <div className="left-info__label">{event.type}</div>
-                        <div className="left-info__start">
-                            Начало {getDate(event.eventDate)} в {getTime(event.eventDate)}
-                        </div>
+                        {event.type == "Предстоящие соревнования" ? (
+                            <div className="left-info__start">
+                                Начало {getDate(event.eventDate)} в{" "}
+                                {getTime(event.eventDate)}
+                            </div>
+                        ) : null}
                     </div>
-                    <div className="info-event__right right-info">
-                        <div className="right-info__date">{`${getDate(
-                            event.eventDate
-                        )}`}</div>
-                        <div className="right-info__label">
-                            Дата проведения
+                    {event.type != "Новости" ? (
+                        <div className="info-event__right right-info">
+                            <div className="right-info__date">{`${getDate(
+                                event.eventDate
+                            )}`}</div>
+                            <div className="right-info__label">
+                                Дата проведения
+                            </div>
                         </div>
-                    </div>
+                    ) : null}
                 </div>
             </div>
             <div
@@ -95,24 +107,35 @@ const Event = ({ event }) => {
                             : "modal-window-event"
                     }
                 >
-                    <div className="modal-window-event__info info-modal">
-                        <div className="info-modal__title">
-                            {event.title}
-                        </div>
-                        <div className="info-modal__date date-modal">
-                            <div className="date-modal__date">{getDate(event.eventDate)}</div>
-                            <div className="date-modal__label">
-                                Дата проведения
+                    <div
+                        className="modal-window-event__info info-modal"
+                        style={
+                            {background: `${event.type == "Новости"
+                            ? "#E5EFFF" 
+                            : event.type == "Предстоящие соревнования"
+                            ? "#E5FFE7"
+                            : "#FFE5E5"}`}
+                        }
+                    >
+                        <div className="info-modal__title">{event.title}</div>
+                        {event.type != "Новости" ? (
+                            <div className="info-modal__date date-modal">
+                                <div className="date-modal__date">
+                                    {getDate(event.eventDate)}
+                                </div>
+                                <div className="date-modal__label">
+                                    Дата проведения
+                                </div>
                             </div>
-                        </div>
+                        ) : null}
                     </div>
                     <div className="modal-window-event__content content-modal">
                         <div className="content-modal__text">
                             <div>
-                                {event.text.split('\n').map((str, index) => (
+                                {event.text.split("\n").map((str, index) => (
                                     <div key={index}>
                                         <span>{str}</span>
-                                        <br/>
+                                        <br />
                                     </div>
                                 ))}
                             </div>
@@ -121,8 +144,12 @@ const Event = ({ event }) => {
                             <img src={event.photoUrl} alt="" />
                         </div>
                         <div className="content-modal__time time-modal">
-                            <div className="time-modal__time">{getTime(event.createdDate)}</div>
-                            <div className="time-modal__date">{getDateYear(event.createdDate)}</div>
+                            <div className="time-modal__time">
+                                {getTime(event.createdDate)}
+                            </div>
+                            <div className="time-modal__date">
+                                {getDateYear(event.createdDate)}
+                            </div>
                         </div>
                     </div>
                 </div>

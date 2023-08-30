@@ -12,25 +12,57 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
     // если страница зажружена запускаем воланчик
-    
-    
+
     return (
-        <div  className="home">
-            <Link to="training"><FollowingBtn /></Link>
+        <div className="home">
+            <Link to="training">
+                <FollowingBtn />
+            </Link>
             <MainPart />
             <Marquee
                 classAdd="marquee-first"
-                text="Тренировки по уровням"
-                shift={-599}
+                text={
+                    <>
+                        <span className="text-in">
+                            Игровые и турниры по уровню
+                        </span>
+                        <span className="text-in">
+                            Занятия для начинающих и продвинутых с тренером
+                        </span>
+                    </>
+                }
+                shift={-2024}
+                derection={17}
             />
             <WhyCards />
             <Marquee
                 classAdd="marquee-second"
-                text="BADMINTON CLUB"
-                shift={-405}
+                text={
+                    <>
+                        <span className="text-in">Турниры и сборы</span>
+                        <span className="text-in">Подарочные сертификаты</span>
+                        <span className="text-in">
+                            Тренировки для взрослых и детей
+                        </span>
+                    </>
+                }
+                shift={-1875}
+                derection={17}
             />
             <Trainers />
-            <Marquee classAdd="marquee-third" text="CRAFT" shift={-175} />
+            <Marquee
+                classAdd="marquee-third"
+                text={
+                    <>
+                        <span className="text-in">
+                            Несколько филиалов по городу
+                        </span>
+                        <span className="text-in">Подарочные сертификаты</span>
+                    </>
+                }
+                shift={-1438}
+                derection={15}
+            />
             <WhereWe />
         </div>
     );

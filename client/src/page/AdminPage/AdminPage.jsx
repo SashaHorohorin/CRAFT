@@ -90,7 +90,7 @@ const AdminPage = () => {
         trainersId: [],
         startTrain: "",
         endTrain: "",
-        sportComplex: sportComplex[0],
+        sportCompex: sportComplex[0],
     });
 
     const handleFunction = (e) => {
@@ -411,7 +411,7 @@ const AdminPage = () => {
         formData.append("file", file);
         // console.log(formData);
         let response = await axios.post(
-            "http://localhost:9005/api/v1/file/upload",
+            "https://craft-bc-backend.online/api/v1/file/upload",
             formData,
             {
                 headers: {
@@ -452,7 +452,7 @@ const AdminPage = () => {
         formData.append("file", fileObj);
         // console.log(formData);
         let response = await axios.post(
-            "http://localhost:9005/api/v1/file/upload",
+            "https://craft-bc-backend.online/api/v1/file/upload",
             formData,
             {
                 headers: {

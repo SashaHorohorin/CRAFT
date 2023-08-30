@@ -75,6 +75,7 @@ function App() {
                                 element={<InfoAllUser />}
                             />
                         </Route>
+                        <Route path="*" element={<HomePage />} />
                     </Route>
                     <Route path="auth/:sign" element={<RegistrationPage />} />
                     <Route

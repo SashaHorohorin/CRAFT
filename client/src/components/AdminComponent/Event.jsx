@@ -30,8 +30,8 @@ const Event = ({deleteEvent, changeModalOpen, event}) => {
                 {event?.title}
             </div>
             <div className="admin-event__timelab">
-                <div className="admin-event__date">{getDateYear(event?.eventDate)}</div>
-                <div className="admin-event__time">{getTime(event?.eventDate)}</div>
+                <div className="admin-event__date">{getDateYear(event?.createdDate)}</div>
+                <div className="admin-event__time">{getTime(event?.createdDate)}</div>
             </div>
             <div onClick={() => setFlagMenu(false)} className={flagMenu ? "item-admin__more more-item change-event active" : "item-admin__more more-item change-event"}>
                 <div className="more-item__header">

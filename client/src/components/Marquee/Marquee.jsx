@@ -2,7 +2,7 @@ import React from "react";
 import "./Marquee.scss";
 import { motion } from "framer-motion";
 
-const Marquee = ({ classAdd, text, shift}) => {
+const Marquee = ({ classAdd, text, shift, derection}) => {
     const marqueeVariants = {
         animate: {
             x: [0, shift],
@@ -10,7 +10,7 @@ const Marquee = ({ classAdd, text, shift}) => {
                 x: {
                     repeat: Infinity,
                     repeatType: "loop",
-                    duration: 5,
+                    duration: derection,
                     ease: "linear",
                 },
             },
@@ -23,28 +23,19 @@ const Marquee = ({ classAdd, text, shift}) => {
                 className="track"
                 variants={marqueeVariants}
                 animate="animate"
+                
             >
                 <div>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
-                    <span>{text}</span>
+                    <span className="text">{text}</span>
+                    <span className="text">{text}</span>
+                    <span className="text">{text}</span>
+                    <span className="text">{text}</span>
+                    <span className="text">{text}</span>
+                    <span className="text">{text}</span>
+                    <span className="text">{text}</span>
+                    <span className="text">{text}</span>
+                    <span className="text">{text}</span>
+                    
                 </div>
             </motion.div>
         </div>

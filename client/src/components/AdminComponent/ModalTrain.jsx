@@ -20,8 +20,8 @@ const ModalTrain = ({
 
     const sportComplex = ["DINAMIT", "ALEKSEEVA", "IMPULS"];
     const typeTrain = [
-        "Игровая с тренером",
-        "Тренировка для начинающих и продолжающих",
+        "Тактическая игровая",
+        "Тренировка с тренером",
         "Игровая",
     ];
     const [obj, setObj] = useState({

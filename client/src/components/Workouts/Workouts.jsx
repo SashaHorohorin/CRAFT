@@ -172,7 +172,7 @@ const Workouts = ({ workouts, date, openModal }) => {
                                                     Тренер
                                                 </div>
                                                 <div className="trainer-workout__name">
-                                                    {workout.trainers[0].name}
+                                                    {workout.trainers[0]?.name}
                                                 </div>
                                             </div>
                                         </div>

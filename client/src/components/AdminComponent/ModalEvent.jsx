@@ -18,9 +18,14 @@ const ModalEvent = ({
     setFlag,
 }) => {
     const { eventChange } = useContext(Context);
-    const [file, setFile] = useState({})
+    const [file, setFile] = useState({});
+    const [typeEventSelect, setTypeEventSelect] = useState("");
 
-    const typeEvent = ["BASE_NEWS", "START_COMPETITION", "END_COMPETITION"];
+    const typeEvent = [
+        "Новости",
+        "Предстоящие соревнования",
+        "Результаты соревнований",
+    ];
 
     const [obj, setObj] = useState({
         type: "",
@@ -92,20 +97,13 @@ const ModalEvent = ({
         setObj(newObj);
         // console.log(obj);
     };
-    const handleFunctionImg = (e) => {
+    const handleFunctionSelect = (e) => {
         // e.preventDefault();
         // const name = e.target.name;
         let value = e.target.value;
         // console.log("name: " + name);
-        console.log("value: " + value);
-        // let newObj = {};
-        // newObj = {
-        //     ...obj,
-        //     [name]: value,
-        // };
-
-        // setObj(newObj);
-        // console.log(obj);
+        setTypeEventSelect(value);
+        // console.log("value: " + value);
     };
 
     const handleFunctionDateChange = (e) => {
@@ -149,7 +147,10 @@ const ModalEvent = ({
                             <InputSelect
                                 name="type"
                                 id="type"
-                                handleFunction={(e) => handleFunction(e)}
+                                handleFunction={(e) => {
+                                    handleFunction(e);
+                                    handleFunctionSelect(e);
+                                }}
                                 optionValue={typeEvent}
                             />
                         </label>
@@ -183,25 +184,33 @@ const ModalEvent = ({
                             ></textarea>
                         </label>
 
-                        <label htmlFor="date">
-                            Дата проведения:
-                            <InputText
-                                handleFunction={(e) => handleFunctionDate(e)}
-                                name="date"
-                                type="date"
-                                id="date"
-                                // value="2013-01-08"s
-                            />
-                        </label>
-                        <label htmlFor="time">
-                            Время проведения:
-                            <InputText
-                                handleFunction={(e) => handleFunctionDate(e)}
-                                name="toTime"
-                                type="time"
-                                id="time"
-                            />
-                        </label>
+                        {"Новости" != typeEventSelect ? (
+                            <>
+                                <label htmlFor="date">
+                                    Дата проведения:
+                                    <InputText
+                                        handleFunction={(e) =>
+                                            handleFunctionDate(e)
+                                        }
+                                        name="date"
+                                        type="date"
+                                        id="date"
+                                        // value="2013-01-08"s
+                                    />
+                                </label>
+                                <label htmlFor="time">
+                                    Время проведения:
+                                    <InputText
+                                        handleFunction={(e) =>
+                                            handleFunctionDate(e)
+                                        }
+                                        name="toTime"
+                                        type="time"
+                                        id="time"
+                                    />
+                                </label>
+                            </>
+                        ) : null}
                     </form>
                     <div className="modal-create-training__btns btns-create">
                         <div
@@ -272,34 +281,41 @@ const ModalEvent = ({
                                 id="text"
                             ></textarea>
                         </label>
-                        <label htmlFor="date">
-                            Дата проведения:
-                            <InputText
-                                handleFunction={(e) =>
-                                    handleFunctionDateChange(e)
-                                }
-                                name="date"
-                                type="date"
-                                id="date"
-                                value={dateEvent.date}
-                            />
-                        </label>
-                        <label htmlFor="time">
-                            Время проведения:
-                            <InputText
-                                handleFunction={(e) =>
-                                    handleFunctionDateChange(e)
-                                }
-                                name="toTime"
-                                type="time"
-                                id="time"
-                                value={dateEvent.toTime}
-                            />
-                        </label>
+                        {"Новости" != obj.type ? (
+                            <>
+                                <label htmlFor="date">
+                                    Дата проведения:
+                                    <InputText
+                                        handleFunction={(e) =>
+                                            handleFunctionDateChange(e)
+                                        }
+                                        name="date"
+                                        type="date"
+                                        id="date"
+                                        value={dateEvent.date}
+                                    />
+                                </label>
+                                <label htmlFor="time">
+                                    Время проведения:
+                                    <InputText
+                                        handleFunction={(e) =>
+                                            handleFunctionDateChange(e)
+                                        }
+                                        name="toTime"
+                                        type="time"
+                                        id="time"
+                                        value={dateEvent.toTime}
+                                    />
+                                </label>
+                            </>
+                        ) : null}
                     </form>
                     <div className="modal-create-training__btns btns-create">
                         <div
-                            onClick={() => funcBtn(obj, dateEvent, file)}
+                            onClick={() => {
+                                setFlag(false)
+                                funcBtn(obj, dateEvent, file)
+                            }}
                             className="btns-create__save"
                         >
                             {type == "create" ? "Создать" : "Сохранить"}
