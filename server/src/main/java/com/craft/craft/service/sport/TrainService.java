@@ -13,6 +13,7 @@ import com.craft.craft.repository.sport.TrainRepo;
 import com.craft.craft.repository.sport.TrainerRepo;
 import com.craft.craft.repository.user.AdminRepo;
 import com.craft.craft.repository.user.BaseUserRepo;
+import com.craft.craft.service.mail.MailingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class TrainService {
     private final TrainerRepo trainerRepo;
     private final BaseUserRepo baseUserRepo;
     private final AdminRepo adminRepo;
+    private final MailingService mailingService;
 
     public Train createTrain(TrainUpdateDto trainDto) throws ModelNotFoundException {
         String authorName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -40,7 +42,7 @@ public class TrainService {
                 trainDto.getStartTrain(),
                 trainDto.getEndTrain(),
                 trainDto.getMaxParticipant(),
-                trainDto.getSportCompex()
+                trainDto.getSportComplex()
         );
         train.getTrainers().addAll(trainDto.getTrainersId().stream()
                 .map(trainerId -> trainerRepo.findById(trainerId).orElse(null))
@@ -61,23 +63,37 @@ public class TrainService {
     }
 
     public Train addUserToTrain(UUID trainId, String username) throws ModelNotFoundException, FullTrainException {
-        System.out.println(username);
         BaseUser user = baseUserRepo.findByUsername(username).orElseThrow(() -> new ModelNotFoundException("Пользователь с таким username не найден"));
 //        BaseUser user = baseUserRepo.findByUsername(username).orElse(null);
 //        System.out.println(user);
         Train train = trainRepo.findById(trainId).orElseThrow(() -> new ModelNotFoundException("Тренировка с таким id не найдена"));
         if (train.getMaxParticipant() == train.getNowParticipant())
-            throw new FullTrainException("Достигнуто максимольное количество записавшихся");
+            throw new FullTrainException("Достигнуто максимальное количество записавшихся");
         train.getSportsmen().add(user);
+        if(!user.isHaveFirstTrain()){
+            mailingService.sendToAdminThatUserHaveFirstTrain(user, train);
+            user.setHaveFirstTrain(true);
+        }
         train.setNowParticipant(train.getNowParticipant() + 1);
+        if(user.getPrice() != null){
+            if(user.getPrice().getRemainingTrains() == 0)
+                user.setPrice(null);
+            else
+                user.getPrice().setRemainingTrains(user.getPrice().getRemainingTrains() - 1);
+        }
         return trainRepo.save(train);
     }
 
     public Train removeUserFromTrain(UUID trainId, String username) throws ModelNotFoundException {
         BaseUser user = baseUserRepo.findByUsername(username).orElseThrow(() -> new ModelNotFoundException("Пользователь с таким username не найден"));
         Train train = trainRepo.findById(trainId).orElseThrow(() -> new ModelNotFoundException("Тренировка с таким id не найдена"));
-        train.getSportsmen().remove(user);
-        train.setNowParticipant(train.getNowParticipant() - 1);
+        if(train.getSportsmen().remove(user)) {
+            train.setNowParticipant(train.getNowParticipant() - 1);
+            if(user.getPrice() != null) {
+                if(user.getPrice().getRemainingTrains() < user.getPrice().getMaxTrains())
+                    user.getPrice().setRemainingTrains(user.getPrice().getRemainingTrains() + 1);
+            }
+        }
         return trainRepo.save(train);
     }
 
@@ -93,6 +109,7 @@ public class TrainService {
         train.setStartTrain(updateDto.getStartTrain());
         train.setEndTrain(updateDto.getEndTrain());
         train.setType(updateDto.getType());
+        train.setSportComplex(updateDto.getSportComplex());
         return trainRepo.save(train);
     }
 

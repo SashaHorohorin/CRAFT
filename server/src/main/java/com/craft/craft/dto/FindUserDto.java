@@ -12,12 +12,14 @@ public class FindUserDto {
     private String firstName;
     private String lastName;
     private String username;
+    private boolean haveFirstTrain;
 
     public static FindUserDto getDtoFromUser(BaseUser user){
         return new FindUserDto(
-        user.getFirstName(),
-        user.getLastName(),
-        user.getUsername()
+            user.getFirstName(),
+            user.getLastName(),
+            user.getUsername(),
+            user.isHaveFirstTrain()
         );
     }
 }

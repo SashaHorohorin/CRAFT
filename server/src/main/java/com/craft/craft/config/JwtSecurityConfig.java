@@ -94,6 +94,8 @@ public class JwtSecurityConfig {
                         .antMatchers("/api/v1/file/**").hasAuthority(RoleName.ADMIN.name())
                         .antMatchers("/api/v1/mailing/**").hasAuthority(RoleName.ADMIN.name())
                         .antMatchers("/api/v1/calendar/**").permitAll()
+                        .antMatchers("/api/v1/first-train-form/**").permitAll()
+                        .antMatchers("/api/v1/subscription/cancel-order").hasAuthority(RoleName.ADMIN.name())
                         //------------------------------------------------------------------------------------------------
                         .anyRequest().authenticated()
                 )

@@ -30,13 +30,15 @@ public class CalendarService {
     private final TrainRepo trainRepo;
     private final CompetitionRepo competitionRepo;
 
-    public CalendarOnWeek getTrainCalendarOnWeek(Date startFrom) throws ModelNotFoundException {
+    public CalendarOnWeek getTrainCalendarOnWeek(Date dayOfThisWeek) throws ModelNotFoundException {
 
-        LocalDate now = LocalDate.ofInstant(startFrom.toInstant(), ZoneId.systemDefault());
+        LocalDate now = LocalDate.ofInstant(dayOfThisWeek.toInstant(), ZoneId.systemDefault());
         LocalDate lastWeekStart = now.minusWeeks(0).with(DayOfWeek.MONDAY);
         LocalDate lastWeekEnd = lastWeekStart.plusDays(7);
-        Date start = Date.from(lastWeekStart.atStartOfDay(ZoneId.of("Europe/Moscow")).toInstant());
-        Date end = Date.from(lastWeekEnd.atStartOfDay(ZoneId.of("Europe/Moscow")).toInstant());
+        Date start = Date.from(lastWeekStart.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date end = Date.from(lastWeekEnd.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        System.out.println(start);
+        System.out.println(end);
         List<ItemInCalendar> items = new ArrayList<>();
 
         List<Train> trains = trainRepo.findAllByStartTrainBetween(start, end)
@@ -48,7 +50,7 @@ public class CalendarService {
         CalendarForSportComplexOnWeek alexeeva = getCalendarAtWeekForSportComplex(SportComplex.ALEKSEEVA, items);
         CalendarForSportComplexOnWeek dinamit = getCalendarAtWeekForSportComplex(SportComplex.DINAMIT, items);
         CalendarForSportComplexOnWeek impuls = getCalendarAtWeekForSportComplex(SportComplex.IMPULS, items);
-        return new CalendarOnWeek(dinamit, impuls, alexeeva);
+        return new CalendarOnWeek(dinamit , impuls, alexeeva);
     }
 
     public CalendarForSportComplexOnWeek getCalendarAtWeekForSportComplex(SportComplex sportComplex, List<ItemInCalendar> items) {

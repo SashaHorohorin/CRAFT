@@ -40,7 +40,6 @@ public class UserService {
     public BaseUser createUser(BaseUser user) throws UserIsAlreadyExistException {
 
         if(userRepo.findByEmail(user.getEmail()).isPresent()) throw new UserIsAlreadyExistException("Пользователь с таким email уже существует");
-        if(userRepo.findByPhoneNumber(user.getPhoneNumber()).isPresent()) throw new UserIsAlreadyExistException("Пользователь с таким номером телефона уже существует");
         if(userRepo.findByUsername(user.getUsername()).isPresent()) throw new UserIsAlreadyExistException("Пользователь с таким username телефона уже существует");
 
         user.getRoles().add(new Role(RoleName.BASE));
@@ -56,6 +55,14 @@ public class UserService {
         );
         sender.send(ret.getEmail(), "CRAFT. Активация аккаунта", massage);
         return ret;
+    }
+
+    public BaseUser createUserFromFirstTrainForm(BaseUser user) throws UserIsAlreadyExistException {
+        if(userRepo.findByEmail(user.getEmail()).isPresent()) throw new UserIsAlreadyExistException("Пользователь с таким email уже существует");
+        if(userRepo.findByPhoneNumber(user.getPhoneNumber()).isPresent()) throw new UserIsAlreadyExistException("Пользователь с таким номером телефона уже существует");
+        user.getRoles().add(new Role(RoleName.BASE));
+        user.setStatus(Status.ACTIVE);
+        return userRepo.save(user);
     }
 
     public boolean activateUser(String code){
@@ -96,7 +103,7 @@ public class UserService {
         return users.stream().filter(u -> {
             Set<CompetitionPair> pairs = u.getCompetitionPairs();
             long count = pairs.stream().filter(p -> p.getCompetition().getId().equals(competitionId)).count();
-            return count <= 0;
+            return count <= 0 && !u.getRoles().contains(new Role(RoleName.ADMIN));
         }).collect(Collectors.toList());
 
     }

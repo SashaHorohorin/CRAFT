@@ -7,12 +7,14 @@ import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.model.sport.Competition;
 import com.craft.craft.model.sport.CompetitionPair;
 import com.craft.craft.model.sport.CompetitionStatus;
+import com.craft.craft.model.sport.CompetitionType;
 import com.craft.craft.model.user.BaseUser;
 import com.craft.craft.repository.sport.CompetitionPairRepo;
 import com.craft.craft.repository.sport.CompetitionRepo;
 import com.craft.craft.repository.user.BaseUserRepo;
 import com.craft.craft.service.mail.LabService;
 import com.craft.craft.service.mail.MailSender;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import java.lang.annotation.Annotation;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -50,12 +53,27 @@ public class CompetitionService {
         competition.setStatus(CompetitionStatus.ACTIVE);
         competition.setEndCompetition(new Date(competition.getStartCompetition().getTime() + (1000 * 60 * 60 * 24)));//end на день больше чем start
         competition.setCategory(createCompetitionDto.getCategory());
-        switch (competition.getCategory()){
-            case AB: {competition.setRatingDown(700); break;}
-            case BC: {competition.setRatingDown(600); break;}
-            case CD: {competition.setRatingUp(600); break;}
-            case DE: {competition.setRatingUp(450); break;}
-            case EF: {competition.setRatingUp(350); break;}
+        switch (competition.getCategory()) {
+            case AB: {
+                competition.setRatingDown(700);
+                break;
+            }
+            case BC: {
+                competition.setRatingDown(600);
+                break;
+            }
+            case CD: {
+                competition.setRatingUp(600);
+                break;
+            }
+            case DE: {
+                competition.setRatingUp(450);
+                break;
+            }
+            case EF: {
+                competition.setRatingUp(350);
+                break;
+            }
         }
         return competitionRepo.save(competition);
     }
@@ -84,11 +102,26 @@ public class CompetitionService {
         competition.setType(dto.getType());
         competition.setCategory(dto.getCategory());
         switch (competition.getCategory()) {
-            case AB: {competition.setRatingDown(700); break;}
-            case BC: {competition.setRatingDown(600); break;}
-            case CD: {competition.setRatingUp(600); break;}
-            case DE: {competition.setRatingUp(450); break;}
-            case EF: {competition.setRatingUp(350); break;}
+            case AB: {
+                competition.setRatingDown(700);
+                break;
+            }
+            case BC: {
+                competition.setRatingDown(600);
+                break;
+            }
+            case CD: {
+                competition.setRatingUp(600);
+                break;
+            }
+            case DE: {
+                competition.setRatingUp(450);
+                break;
+            }
+            case EF: {
+                competition.setRatingUp(350);
+                break;
+            }
         }
         competition.setEndCompetition(new Date(competition.getStartCompetition().getTime() + (1000 * 60 * 60 * 24)));//end на день больше чем start
 
@@ -105,7 +138,10 @@ public class CompetitionService {
             throw new FullTrainException("Достигнуто максимальное количество записавшихся пар");
         if (competition.getCompetitionPairs().stream().anyMatch(pair -> pair.getPlayers().contains(player1)))
             throw new ModelNotFoundException("Вы уже записаны на соревнование");
-
+        player1.setRating(LabService.getUserRating(player1.getLabId()));
+        if (competition.getRatingUp() != null && competition.getRatingUp() < (player1.getRating())) {
+            throw new ModelNotFoundException("Ваш рейтинг больше допустимого");
+        }
         CompetitionPair pair = new CompetitionPair();
         player1.setRating(LabService.getUserRating(player1.getLabId()));
         pair.getPlayers().add(player1);
@@ -123,7 +159,7 @@ public class CompetitionService {
         CompetitionPair pair = competitionPairRepo.findById(competitionPairId)
                 .orElseThrow(() -> new ModelNotFoundException("Пара с таким id не найдена"));
         if (pair.getPlayers().size() >= 2)
-            throw new ModelNotFoundException("Пара уже создана");
+            throw new ModelNotFoundException("Пара уже заполнена");
         Competition competition = pair.getCompetition();
         if (competition.getCompetitionPairs().stream().anyMatch(p -> p.getPlayers().contains(player2)))
             throw new ModelNotFoundException("Пользователь уже зарегистрирован на соревновании");
@@ -132,16 +168,16 @@ public class CompetitionService {
         player2.setRating(LabService.getUserRating(player2.getLabId()));
         String authName = getUsernameOfRequester();
         BaseUser player1 = pair.getPlayers().iterator().next();
-        if(!authName.equals(player1.getUsername()))
+        if (!authName.equals(player1.getUsername()))
             throw new ModelNotFoundException("Вы не можете принять пользователя не в свою пару");
-        if(competition.getRatingDown()!= null && competition.getRatingDown() > (player1.getRating() + player2.getRating())){
+        if (competition.getRatingDown() != null && competition.getRatingDown() > (player1.getRating() + player2.getRating())) {
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
             competitionPairRepo.save(pair);
             throw new ModelNotFoundException("Суммарный рейтинг пары меньше допустимого на соревновании");
         }
 
-        if(competition.getRatingUp()!= null && competition.getRatingUp() < (player1.getRating() + player2.getRating())){
+        if (competition.getRatingUp() != null && competition.getRatingUp() < (player1.getRating() + player2.getRating())) {
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
             competitionPairRepo.save(pair);
@@ -169,17 +205,13 @@ public class CompetitionService {
             throw new ModelNotFoundException("Вы уже зарегистрирован на соревновании");
         player2.setRating(LabService.getUserRating(player2.getLabId()));
         BaseUser player1 = pair.getPlayers().iterator().next();
-        System.out.println(competition.getRatingDown());
-        System.out.println(competition.getRatingUp());
-        System.out.println(player1.getRating());
-        System.out.println( player2.getRating());
-        if(competition.getRatingDown()!= null && competition.getRatingDown() > (player1.getRating() + player2.getRating())){
+        if (competition.getRatingDown() != null && competition.getRatingDown() > (player1.getRating() + player2.getRating())) {
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
             competitionPairRepo.save(pair);
             throw new ModelNotFoundException("Суммарный рейтинг пары меньше допустимого на соревновании");
         }
-        if(competition.getRatingUp()!= null && competition.getRatingUp() < (player1.getRating() + player2.getRating())){
+        if (competition.getRatingUp() != null && competition.getRatingUp() < (player1.getRating() + player2.getRating())) {
             pair.getRequestToInvite().clear();
             pair.getRequestToJoin().clear();
             competitionPairRepo.save(pair);
@@ -207,6 +239,15 @@ public class CompetitionService {
             throw new ModelNotFoundException("Вы уже записаны на соревнование");
 
         player.setRating(LabService.getUserRating(player.getLabId()));
+        BaseUser player2 = pair.getPlayers().iterator().next();
+        if (player.getRating() != null) {
+            if (pair.getCompetition().getRatingDown() != null && pair.getCompetition().getRatingDown() > (player.getRating() + player2.getRating())) {
+                throw new ModelNotFoundException("Суммарный рейтинг пары меньше допустимого на соревновании");
+            }
+            if (pair.getCompetition().getRatingUp() != null && pair.getCompetition().getRatingUp() < (player.getRating() + player2.getRating())) {
+                throw new ModelNotFoundException("Суммарный рейтинг пары больше заявленного");
+            }
+        }
         pair.getPlayers().forEach(user -> {
             try {
                 Calendar calendar = Calendar.getInstance();
@@ -236,11 +277,9 @@ public class CompetitionService {
     public CompetitionPair rejectRequestJoin(UUID competitionPairId, String username) throws ModelNotFoundException {
         CompetitionPair pair = competitionPairRepo.findById(competitionPairId).orElseThrow(() -> new ModelNotFoundException("По данному id пара не найдена"));
         BaseUser user = baseUserRepo.findByUsername(username).orElseThrow(() -> new ModelNotFoundException("По данному id пользователь не найден"));
-        System.out.println(username);
-        System.out.println(getUsernameOfRequester());
         if (
                 !getUsernameOfRequester().equals(username) &&
-                !getUsernameOfRequester().equals(pair.getPlayers().iterator().next().getUsername())
+                        !getUsernameOfRequester().equals(pair.getPlayers().iterator().next().getUsername())
         ) throw new ModelNotFoundException("Вы не можете изменять данные другого пользователя");
         pair.getRequestToJoin().remove(user);
         return competitionPairRepo.save(pair);
@@ -249,11 +288,9 @@ public class CompetitionService {
     public CompetitionPair rejectRequestInvite(UUID competitionPairId, String username) throws ModelNotFoundException {
         CompetitionPair pair = competitionPairRepo.findById(competitionPairId).orElseThrow(() -> new ModelNotFoundException("По данному id пара не найдена"));
         BaseUser user = baseUserRepo.findByUsername(username).orElseThrow(() -> new ModelNotFoundException("По данному id пользователь не найден"));
-        System.out.println(getUsernameOfRequester());
-        System.out.println(pair.getPlayers().iterator().next().getUsername());
         if (
                 !getUsernameOfRequester().equals(username) &&
-                !getUsernameOfRequester().equals(pair.getPlayers().iterator().next().getUsername())
+                        !getUsernameOfRequester().equals(pair.getPlayers().iterator().next().getUsername())
         ) throw new ModelNotFoundException("Вы не можете изменять данные другого пользователя");
         pair.getRequestToInvite().remove(user);
         return competitionPairRepo.save(pair);
@@ -269,24 +306,40 @@ public class CompetitionService {
             throw new ModelNotFoundException("Пользователь уже зарегистрирован на соревновании");
         if (reqTo.getLabId() != null) reqTo.setRating(LabService.getUserRating(reqTo.getLabId()));
         BaseUser creator = pair.getPlayers().iterator().next();
+        if (reqTo.getRating() != null) {
+            if (pair.getCompetition().getRatingDown() != null && pair.getCompetition().getRatingDown() > (creator.getRating() + reqTo.getRating())) {
+                throw new ModelNotFoundException("Суммарный рейтинг пары меньше допустимого на соревновании");
+            }
+            if (pair.getCompetition().getRatingUp() != null && pair.getCompetition().getRatingUp() < (creator.getRating() + reqTo.getRating())) {
+                throw new ModelNotFoundException("Суммарный рейтинг пары больше заявленного");
+            }
+        }
         if (creator.getUsername().equals(getUsernameOfRequester())) {
             try {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(pair.getCompetition().getStartCompetition());
+                String type = "type";
+                try {
+                    Annotation[] annotations = CompetitionType.class.getField(pair.getCompetition().getType().name()).getAnnotations();
+                    JsonProperty properties = (JsonProperty) annotations[0];
+                    type = properties.value();
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
                 String massage = String.format(
                         "<html><body><div>" + "Привет, %s.\n" +
-                                "Пользователь %s хочет пригласить вас на соревнование %s, " +
+                                "Пользователь %s хочет пригласить вас на соревнование %s %s, " +
                                 "которое пройдет %s.</div>\n" +
-                                "Вы можете принять заявку в своем личном кабинете" +
+                                "Вы можете принять заявку в своем личном кабинете или во вкладке \"<a href=\"http://craft-bc.online/competitions/applications/%s\">Заявки</a>\"" +
                                 "</body></html>",
                         reqTo.getFirstName() + " " + reqTo.getLastName(),
                         creator.getFirstName() + " " + creator.getLastName(),
-                        pair.getCompetition().getType(),
-                        calendar.get(Calendar.DAY_OF_MONTH) + "." +
-                                calendar.get(Calendar.MONTH) + "." +
-                                calendar.get(Calendar.YEAR)
+                        type, pair.getCompetition().getCategory(),
+                        normalizeDateItemForMessage(calendar.get(Calendar.DAY_OF_MONTH)) + "." +
+                                normalizeDateItemForMessage((calendar.get(Calendar.MONTH) + 1)) + "." +
+                                calendar.get(Calendar.YEAR), pair.getCompetition().getId()
                 );
-                mailSender.sendMime(reqTo.getEmail(), "CRAFT. Заявка на добавление в пару", massage);
+                mailSender.sendMime(reqTo.getEmail(), "CRAFT. Приглашение в пару", massage);
             } catch (MessagingException e) {
                 //письмо не отправлено
             }
@@ -317,6 +370,11 @@ public class CompetitionService {
             if (competition.getEndCompetition().after(now))
                 competition.setStatus(CompetitionStatus.NOT_ACTIVE);
         });
+    }
+
+
+    private String normalizeDateItemForMessage(int date) {
+        return date < 10 ? "0" + date : "" + date;
     }
 
 }

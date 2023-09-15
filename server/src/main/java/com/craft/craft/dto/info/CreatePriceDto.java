@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CreatePriceDto {
     @NonNull
-    private String title;
+    private int title;
     private int oldPrice;
     @NonNull
     private int nowPrice;

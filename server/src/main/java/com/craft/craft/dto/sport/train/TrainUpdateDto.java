@@ -2,7 +2,9 @@ package com.craft.craft.dto.sport.train;
 
 import com.craft.craft.model.sport.SportComplex;
 import com.craft.craft.model.sport.TrainType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,6 +14,8 @@ import java.util.Set;
 import java.util.UUID;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TrainUpdateDto {
     @NotBlank(message = "type должен быть представлен")
     @NotNull(message = "type не может быть null")
@@ -28,9 +32,9 @@ public class TrainUpdateDto {
     @NotNull(message = "endTrain не может быть null")
     @NotBlank(message = "endTrain должен быть представлен")
     private Date endTrain;
-    @NotNull(message = "sportCompex не может быть null")
-    @NotBlank(message = "sportCompex должен быть представлен")
-    private SportComplex sportCompex;
+    @NotNull(message = "sportComplex не может быть null")
+    @NotBlank(message = "sportComplex должен быть представлен")
+    private SportComplex sportComplex;
 
 
 }

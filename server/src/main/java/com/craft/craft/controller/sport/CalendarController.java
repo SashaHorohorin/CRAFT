@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
@@ -23,7 +26,11 @@ public class CalendarController {
     public CalendarOnWeek getCalendar(
             @RequestParam(value = "page", defaultValue = "0") Integer page
     ) throws ModelNotFoundException {
-        Date date = Date.from( new Date().toInstant().plus(7 * page, ChronoUnit.DAYS));
+        Date startDay = Date.from(new Date().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()
+        );
+        Date date = Date.from(startDay.toInstant().plus(7 * page, ChronoUnit.DAYS));
        return calendarService.getTrainCalendarOnWeek(date);
     }
 }

@@ -1,5 +1,6 @@
 package com.craft.craft.dto;
 
+import com.craft.craft.dto.info.PriceSubscriptionDto;
 import com.craft.craft.dto.sport.competiton.CompetitionDto;
 import com.craft.craft.dto.sport.competiton.CompetitionPairDto;
 import com.craft.craft.dto.sport.competiton.CompetitionRequestInProfileDto;
@@ -32,6 +33,8 @@ public class ProfileBaseUserResponseDto {
     private List<CompetitionRequestInProfileDto> toRequestToJoin;
     private Integer rating;
     private Integer labId;
+    private PriceSubscriptionDto priceSubscription;
+
 
     public static ProfileBaseUserResponseDto getDtoFromBaseUser(BaseUser user) {
         List<CompetitionRequestInProfileDto> fromInvite = new ArrayList<>();
@@ -99,7 +102,8 @@ public class ProfileBaseUserResponseDto {
                 toInvite,
                 toJoin,
                 user.getRating(),
-                user.getLabId()
+                user.getLabId(),
+                PriceSubscriptionDto.getDtoFromPriceUser(user.getPrice())
         );
     }
 }

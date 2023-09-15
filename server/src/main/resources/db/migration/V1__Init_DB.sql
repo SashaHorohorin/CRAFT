@@ -11,16 +11,18 @@ create table baseuser
     activation_code           varchar(255),
     agreement_data_processing boolean      not null,
     agreement_mailing         boolean      not null,
+    have_first_train          boolean      not null,
     email                     varchar(255) not null,
     first_name                varchar(255) not null,
     lab_id                    int4,
     last_name                 varchar(255) not null,
     password                  varchar(255) not null,
-    phone_number              varchar(255) not null,
+    phone_number              varchar(255),
     photo_url                 varchar(255),
     rating                    int4,
     status                    varchar(255),
     username                  varchar(255),
+    price                     uuid,
     primary key (id)
 );
 create table competition
@@ -96,6 +98,12 @@ create table news
     type             varchar(255)  not null,
     primary key (id)
 );
+create table order_price_user
+(
+    user_id  uuid not null,
+    price_id uuid not null,
+    primary key (price_id, user_id)
+);
 create table placemark_on_map
 (
     id             uuid   not null,
@@ -115,11 +123,24 @@ create table price
     updated          timestamp,
     active           boolean not null,
     discount         int4    not null,
+    max_trains       int4,
     now_price        int4    not null,
     old_price        int4    not null,
     sport_complex    varchar(255),
     text_under_price varchar(255),
-    title            varchar(255),
+    type             varchar(255),
+    primary key (id)
+);
+create table price_user
+(
+    id               uuid not null,
+    created          timestamp,
+    updated          timestamp,
+    max_trains       int4 not null,
+    remaining_trains int4,
+    time_of_purchase timestamp,
+    price_id         uuid,
+    user_id          uuid,
     primary key (id)
 );
 create table role

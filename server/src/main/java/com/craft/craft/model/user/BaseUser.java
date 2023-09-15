@@ -2,6 +2,8 @@ package com.craft.craft.model.user;
 
 
 import com.craft.craft.model.BaseEntity;
+import com.craft.craft.model.info.Price;
+import com.craft.craft.model.info.PriceUser;
 import com.craft.craft.model.sport.Competition;
 import com.craft.craft.model.sport.CompetitionPair;
 import com.craft.craft.model.sport.Train;
@@ -46,7 +48,7 @@ public class BaseUser extends BaseEntity {
     @NotNull
     @NotBlank(message = "Please enter your phone number")
     @Pattern(regexp = "^((8|\\+7)\\(\\d{3}\\)\\d{3}-\\d{2}-\\d{2})$")
-    @Column(name = "phoneNumber", unique = true)
+    @Column(name = "phoneNumber")
     private String phoneNumber;
     private String photoUrl;
     @NonNull
@@ -93,12 +95,23 @@ public class BaseUser extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "competition_id")}
     )
     private Set<CompetitionPair> requestToInviteCompetition;
+    @OneToOne
+    @JoinColumn(name = "price", referencedColumnName = "id")
+    private PriceUser price;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(
+            name = "order_price_user",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "price_id")}
+    )
+    private Set<Price> ordersPrice = new HashSet<>();
 
     private Integer rating;
     private Integer labId;
     private boolean agreementDataProcessing;
     private boolean agreementMailing;
     private String activationCode;
+    private boolean haveFirstTrain = false;
 
 
     @PrePersist
