@@ -38,7 +38,7 @@ const PersonalTraining = ({ train, setWorkoutTrain, workoutTrain }) => {
 
     const getTime = (date) => {
         let d = new Date(date);
-        let time = `${d.getHours()}:${d.getMinutes()}`;
+        let time = `${d.getHours() < 10 ? `0${d.getHours()}`:d.getHours()}:${d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()}`;
         return time;
     };
     return (

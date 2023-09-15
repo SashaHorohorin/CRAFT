@@ -52,7 +52,7 @@
         border: 1px solid #000;
         padding: 15px;
         max-width: 300px;
-        width: 100%;    
+        width: 100%;
         margin-right: 20px;
         border-radius: 10px;
         font-size: 20px;
@@ -61,7 +61,7 @@
         &:last-child {
             margin: 0;
         }
-        &.active{
+        &.active {
             background: #ea7777;
             color: #fff;
             border: none;
@@ -78,24 +78,22 @@
         grid-template-columns: 1fr 1fr 1fr;
         grid-column-gap: 100px;
         grid-row-gap: 100px;
+        margin-bottom: 30px;
         @media (max-width: 1075px) {
             grid-column-gap: 50px;
-            grid-row-gap: 50px; 
+            grid-row-gap: 50px;
         }
         @media (max-width: 850px) {
             grid-template-columns: 1fr 1fr;
-            
         }
         @media (max-width: 600px) {
             grid-column-gap: 25px;
-            grid-row-gap: 25px; 
-            
+            grid-row-gap: 25px;
         }
         @media (max-width: 520px) {
             display: flex;
             align-items: center;
             flex-direction: column;
-            
         }
     }
 
@@ -103,7 +101,42 @@
     }
 }
 
+.children-prices {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 100px;
+    grid-row-gap: 100px;
+    @media (max-width: 1075px) {
+        grid-column-gap: 50px;
+        grid-row-gap: 50px;
+    }
+    @media (max-width: 850px) {
+        grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 600px) {
+        grid-column-gap: 25px;
+        grid-row-gap: 25px;
+    }
+    @media (max-width: 520px) {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    &__title{
+        color: #5b5b5b;
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 50px;
+        @media (max-width: 500px) {
+            font-size: 25px;
+            margin-bottom: 40px;
+        }
+    }
+}
+
 .card-price {
+    display: flex;
+    flex-direction: column;
     position: relative;
     border-radius: 15px;
     background: #fff;
@@ -113,11 +146,11 @@
     @media (max-width: 520px) {
         max-width: 300px;
         width: 100%;
-        
     }
     &__info-price {
         padding: 20px;
         margin-bottom: 20px;
+        flex: 1 1 100%;
     }
     &__title {
         color: #000;
@@ -168,11 +201,11 @@
         font-weight: 400;
         position: absolute;
         top: 20px;
-        left: 75px;
+        left: 114px;
         @media (max-width: 990px) {
             font-size: 18px;
             top: 20px;
-            left: 55px;
+            left: 83px;
         }
     }
 

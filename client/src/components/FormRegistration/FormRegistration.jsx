@@ -4,16 +4,17 @@ import { Context } from "../..";
 import { observer } from "mobx-react-lite";
 import { useFetching } from "../../hooks/useFetching";
 import DataService from "../../API/DataService";
-import { Navigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 
 const FormRegistration = () => {
     const { store } = useContext(Context);
-
+    const navigate = useNavigate()
     const [regFlag, setRegFlag] = useState(false);
     const [regFlagReset, setRegFlagReset] = useState(false);
     const [flagExeptionReg, setflagExeptionReg] = useState(false);
     const [flagExeptionPassword, setflagExeptionPassword] = useState(false);
     const [flagExeptionDataProcessing, setflagExeptionDataProcessing] = useState(false);
+
 
     const [fetchingLogin, isLoadingLog, errorLog] = useFetching(async (obj) => {
         const response = await DataService.postLogin(obj);
@@ -62,13 +63,7 @@ const FormRegistration = () => {
 
         store.registration(obj);
 
-        store.setFlagError(false);
-        setTimeout(() => {
-            store.setFlagError(true);
-            store.setMessageError(
-                "На почту отправленно сообщение для подтверждения почты"
-            );
-        }, 500);
+        // console.log(rez);
 
         setObjReg({
             firstName: "",
@@ -82,16 +77,12 @@ const FormRegistration = () => {
         });
         // fetchingRegister(obj);
         setRegFlagReset(!regFlagReset);
-        setRegFlag(true);
+        navigate('/auth/login');
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
     };
-
-    if(regFlag === true){
-        return <Navigate to="/auth/login" />
-    }
 
     return (
         <div className="forms-registration__singup singup-form">
@@ -107,6 +98,7 @@ const FormRegistration = () => {
                         setData={(newObj) => setObjReg(newObj)}
                         required
                         autoFocus
+                        autoComplete='off'
                         nameLabel="Имя"
                     />
                     <InputReg
@@ -116,6 +108,7 @@ const FormRegistration = () => {
                         obj={objReg}
                         setData={(newObj) => setObjReg(newObj)}
                         className="form__input"
+                        autoComplete='off'
                         required
                         nameLabel="Фамилия"
                     />
@@ -123,6 +116,7 @@ const FormRegistration = () => {
                         type="text"
                         valueInp={regFlagReset}
                         name="email"
+                        autoComplete='off'
                         obj={objReg}
                         setData={(newObj) => setObjReg(newObj)}
                         classField={flagExeptionReg ? "email" : ""}
@@ -140,6 +134,7 @@ const FormRegistration = () => {
                         valueInp={regFlagReset}
                         name="phoneNumber"
                         obj={objReg}
+                        autoComplete='off'
                         setData={(newObj) => setObjReg(newObj)}
                         className="form__input"
                         required
@@ -154,6 +149,7 @@ const FormRegistration = () => {
                         className="form__input"
                         required
                         nameLabel="Пароль"
+                        autoComplete="new-password"
                     />
                     <InputReg
                         type="password"
@@ -164,6 +160,7 @@ const FormRegistration = () => {
                         classField={flagExeptionPassword ? "email" : ""}
                         className="form__input"
                         required
+                        autoComplete="new-password"
                         nameLabel="Повторите &ensp; пароль"
                     />
                     {flagExeptionPassword ? (
@@ -182,6 +179,7 @@ const FormRegistration = () => {
                             classField={
                                 flagExeptionDataProcessing ? "email" : ""
                             }
+                            
                             className="form__checkbox"
                             nameLabel="Согласен на обработку персональных данных"
                         />

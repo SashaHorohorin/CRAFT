@@ -96,9 +96,9 @@ const FormLogin = ({fromPage}) => {
                     />
                 </div>
                 <div className="form__buttons">
-                    <button type="button" className="form__buttons-forgot">
+                    {/* <button type="button" className="form__buttons-forgot">
                         Забыли пароль?
-                    </button>
+                    </button> */}
                     <input
                         onClick={() => postLogin(objLog)}
                         type="submit"

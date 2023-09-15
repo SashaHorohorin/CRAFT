@@ -31,7 +31,7 @@ const ModalTrain = ({
         trainersId: [],
         startTrain: '',
         endTrain: '',
-        sportCompex: '',
+        sportComplex: '',
     });
 
     let idTrainers = () => {
@@ -47,7 +47,7 @@ const ModalTrain = ({
             trainersId: trainingChange?.trainChange?.trainers?.map((trainer, index) => (trainer.id)),
             startTrain: trainingChange.trainChange.startTrain,
             endTrain: trainingChange.trainChange.endTrain,
-            sportCompex: trainingChange.trainChange.sportComplex,
+            sportComplex: trainingChange.trainChange.sportComplex,
         })
         setDateTrain({
             date: getDateYear(trainingChange.trainChange.startTrain),
@@ -152,11 +152,11 @@ const ModalTrain = ({
                                 optionValue={typeTrain}
                             />
                         </label>
-                        <label htmlFor="sportCompex">
-                            Тип:
+                        <label htmlFor="sportComplex">
+                            Спорткомплекс:
                             <InputSelect
-                                name="sportCompex"
-                                id="sportCompex"
+                                name="sportComplex"
+                                id="sportComplex"
                                 handleFunction={(e) => handleFunction(e)}
                                 optionValue={sportComplex}
                             />
@@ -245,13 +245,13 @@ const ModalTrain = ({
                             />
                         </label>
                         <label htmlFor="sportCompex">
-                            Тип:
+                        Спорткомплекс:
                             <InputSelect
-                                name="sportCompex"
-                                id="sportCompex"
+                                name="sportComplex"
+                                id="sportComplex"
                                 handleFunction={(e) => handleFunctionChange(e)}
                                 optionValue={sportComplex}
-                                value={obj.sportCompex}
+                                value={obj.sportComplex}
                             />
                         </label>
                         <label htmlFor="people-max">

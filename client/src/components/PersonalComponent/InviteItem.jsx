@@ -1,6 +1,6 @@
 import React from "react";
 
-const InviteItem = ({ type, request, func }) => {
+const InviteItem = ({ type, request, func, setFlag, labId}) => {
     const getDateYear = (date) => {
         let d = new Date(date);
         let time = `${d.getDate() < 10 ? `0${d.getDate()}` : d.getDate()}.${
@@ -15,9 +15,26 @@ const InviteItem = ({ type, request, func }) => {
         return time;
     };
 
+    const funcAcceptInvite = async() => {
+        if(localStorage.getItem('labId') == 'null'){
+            setFlag(true)
+        }else{
+            await func[3](request.pairId, localStorage.getItem('username'));
+            // console.log(flagSucces);
+        }
+    }
+    const funcAcceptInviteJoin = async() => {
+        if(localStorage.getItem('labId') == 'null'){
+            setFlag(true)
+        }else{
+            await func[2](request.pairId, localStorage.getItem('username'));
+            // console.log(flagSucces);
+        }
+    }
+
     return (
         <div className="invite-pair__item item-invite">
-            <div className="item-invite__title">{request.type}</div>
+            <div className="item-invite__title">{request.type + ' ' + request.category}</div>
             <div className="item-invite__date date-item">
                 <div className="date-item__label">Дата:</div>
                 <div className="date-item__date">
@@ -54,12 +71,12 @@ const InviteItem = ({ type, request, func }) => {
                 {type == "join" ? (
                     request.typeOfRequest == "INVITE" ? (
                         <>
-                            <div onClick={() => func[3](request.pairId, localStorage.getItem('username'))} className="btns-item__btn">Принять</div>
+                            <div onClick={() => funcAcceptInvite()} className="btns-item__btn">Принять</div>
                             <div onClick={() => func[1](request.pairId, localStorage.getItem('username'))} className="btns-item__btn">Отклонить</div>
                         </>
                     ) : (
                         <>
-                            <div onClick={() => func[2](request.pairId, request.request.username)} className="btns-item__btn">Принять</div>
+                            <div onClick={() => funcAcceptInviteJoin()} className="btns-item__btn">Принять</div>
                             <div onClick={() => func[0](request.pairId, request.request.username)} className="btns-item__btn">Отклонить</div>
                         </>
                     )

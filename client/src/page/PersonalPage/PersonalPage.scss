@@ -60,12 +60,14 @@
     background: #ff6969;
     max-height: 170px;
     list-style: none;
+    display: flex;
+    flex-direction: column;
     @media (max-width: 1160px) {
         display: none;
     }
 
     &__link {
-        
+        cursor: pointer;
         color: #fff;
         font-size: 18px;
         font-weight: 400;
@@ -373,6 +375,9 @@
             font-size: 9px;
         }
     }
+}
+.progressbar-competition{
+    right: -22px;
 }
 
 .myworkouts-profile {

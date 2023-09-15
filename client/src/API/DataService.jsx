@@ -11,8 +11,8 @@ export default class DataService {
         // console.log('uqweruwqr');
         return response;
     }
-    static async getTrainingCalendar() {
-        return await $api.get(`api/v1/train/get-calendar-by-sport-complex`);
+    static async getTrainingCalendar(count) {
+        return await $api.get(`/api/v1/calendar/get?page=${count}`);
     }
     static async postRegister(obj) {
         return await $api.post(`/api/v1/auth/register`, obj);
@@ -56,6 +56,12 @@ export default class DataService {
         `,
             obj
         );
+    }
+    static async postCreatePair(competitionId) {
+        // console.log('DataService' + ' : ' + competitionId);
+        return await $api.post(
+            `api/v1/competition/${competitionId}/create-pair
+        `);
     }
     static async postSetLabId(obj) {
         return await $api.post(
@@ -189,5 +195,30 @@ export default class DataService {
     }
 
     // ===================================================<РАССЫЛКИ>
+    // ===================================================<ЦЕНЫ>
+
+    static async postAddOrder(obj) {
+        return await $api.post(
+            `api/v1/subscription/add-order`, obj);
+    }
+    static async postAcceptOrder(obj) {
+        return await $api.post(
+            `api/v1/subscription/accept-order`, obj);
+    }
+    static async postCancelOrder(obj) {
+        return await $api.post(
+            `api/v1/subscription/cancel-order`, obj);
+    }
+    static async getAllOrders() {
+        return await $api.get(`api/v1/subscription/all-orders`);
+    }
+
+    // ===================================================<ЦЕНЫ>
+
+    static async postRegFirstTrain(obj) {
+        return await $api.post(
+            `api/v1/first-train-form/register`, obj);
+    }
+
     
 }

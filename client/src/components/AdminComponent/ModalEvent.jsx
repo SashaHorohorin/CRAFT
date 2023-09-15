@@ -19,7 +19,7 @@ const ModalEvent = ({
 }) => {
     const { eventChange } = useContext(Context);
     const [file, setFile] = useState({});
-    const [typeEventSelect, setTypeEventSelect] = useState("");
+    const [typeEventSelect, setTypeEventSelect] = useState("Новости");
 
     const typeEvent = [
         "Новости",

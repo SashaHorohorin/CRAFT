@@ -26,6 +26,9 @@ import TrainingChange from "./components/AdminComponent/AdminInPage/TrainingChan
 import CompetitionChange from "./components/AdminComponent/AdminInPage/CompetitionChange";
 import EventChange from "./components/AdminComponent/AdminInPage/EventChange";
 import InfoAllUser from "./components/AdminComponent/AdminInPage/InfoAllUser";
+import Subscriptions from "./components/AdminComponent/AdminInPage/Subscriptions";
+import WhereWe from "./components/WhereWe/WhereWe";
+import WherePage from "./page/WherePage/WherePage";
 
 function App() {
     const { store } = useContext(Context);
@@ -51,6 +54,10 @@ function App() {
                             path="competitions"
                             element={<CompetitionsPage />}
                         />
+                        <Route
+                            path="where-we"
+                            element={<WherePage/>}
+                        />
                         <Route path="prices" element={<PricesPage />} />
                         <Route path="profile" element={<PersonalPage />} />
                         <Route
@@ -73,6 +80,10 @@ function App() {
                             <Route
                                 path="all-users"
                                 element={<InfoAllUser />}
+                            />
+                            <Route
+                                path="subscriptions"
+                                element={<Subscriptions />}
                             />
                         </Route>
                         <Route path="*" element={<HomePage />} />

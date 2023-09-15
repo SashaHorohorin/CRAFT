@@ -61,13 +61,20 @@
     &__column {
         display: flex;
         align-items: center;
-
+        // background: #000;
         & a {
             cursor: pointer;
             margin-right: 10px;
 
             &:last-child {
                 margin: 0;
+            }
+        }
+        &:first-child{
+            // background: #000;
+            a:first-child > img{
+                // display: block;
+                width: 81%;
             }
         }
     }

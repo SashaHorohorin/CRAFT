@@ -91,9 +91,13 @@
     &__img.left {
         flex: 0 0 270px;
         height: 100%;
+        overflow: hidden;
         border-radius: 30px;
         @media (max-width: 525px) {
             flex: 0 0 170px;
+        }
+        @media (max-width: 405px) {
+            flex: 0 0 140px;
         }
 
         img {
@@ -112,12 +116,19 @@
         font-size: 24px;
         font-weight: 700;
         margin-bottom: 20px;
+        // hyphens: auto;
         @media (max-width: 1200px) {
             font-size: 18px;
         }
-        @media (max-width: 425px) {
+        @media (max-width: 440px) {
             margin-bottom: 10px;
             font-size: 15px;
+        }
+        @media (max-width: 372px) {
+            hyphens: auto;
+        }
+        @media (max-width: 352px) {
+            font-size: 13px;
         }
 
     }
@@ -130,10 +141,14 @@
         @media (max-width: 1200px) {
             font-size: 14px;
         }
-        @media (max-width: 425px) {
+        @media (max-width: 525px) {
             margin-bottom: 15px;
             font-size: 12px;
         }
+        @media (max-width: 352px) {
+            font-size: 10px;
+        }
+
     }
 
     &__btn {
@@ -144,6 +159,12 @@
             padding: 10px 40px 10px 10px;
             background: url("../../../../public/images/HomePage/why-club/more-info.svg")
             100px center no-repeat;
+        }
+        @media (max-width: 352px) {
+            padding: 10px 40px 10px 10px;
+            background: url("../../../../public/images/HomePage/why-club/more-info.svg")
+            83px center no-repeat;
+            font-size: 10px;
         }
     }
 }
@@ -163,11 +184,19 @@
         font-size: 20px;
         font-weight: 700;
         margin-right: 30px;
+        hyphens: auto;
         @media (max-width: 1200px) {
             font-size: 18px;
         }
         @media (max-width: 425px) {
             font-size: 15px;
+        }
+        @media (max-width: 372px) {
+            margin-right: 10px;
+            hyphens: auto;
+        }
+        @media (max-width: 372px) {
+            font-size: 13px;
         }
     }
 
@@ -179,6 +208,12 @@
             padding: 10px 40px 10px 10px;
             background: url("../../../../public/images/HomePage/why-club/more-info.svg")
             100px center no-repeat;
+        }
+        @media (max-width: 352px) {
+            padding: 10px 40px 10px 10px;
+            background: url("../../../../public/images/HomePage/why-club/more-info.svg")
+            83px center no-repeat;
+            font-size: 10px;
         }
     }
 }
@@ -192,7 +227,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+    @media (max-width: 390px) {
+        // align-items: start;
+        
+        padding: 10px 10px;
+    }
     &__title {
         font-size: 24px;
         font-weight: 700;
@@ -201,8 +240,12 @@
             font-size: 18px;
         }
         @media (max-width: 525px) {
-            font-size: 16px;
+            font-size: 15px;
         }
+        @media (max-width: 390px) {
+            margin-bottom: 10px;
+        }
+        
     }
 
     &__text {

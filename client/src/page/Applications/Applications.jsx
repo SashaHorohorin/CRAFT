@@ -7,23 +7,27 @@ import DataService from "../../API/DataService";
 import { set } from "mobx";
 import { useNavigate, useParams } from "react-router";
 import ModalInvitePair from "../../components/ModalInvitePair/ModalInvitePair";
+import ModalEvent from "../../components/AdminComponent/ModalEvent";
+import ModalLabId from "../../components/ModalLabId/ModalLabId";
 
 const Applications = () => {
     const { eventStore } = useContext(Context);
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [valueName, setValueName] = useState("");
-    const [valueRating, setValueRating] = useState("");
     const [user, setUser] = useState([]);
     const [competition, setCompetition] = useState({});
     const [pairId, setPairId] = useState("");
     const [flagSucces, setFlagSucces] = useState(false);
     const [flagNotification, setFlagNotification] = useState(false);
     const [flagNotificationError, setFlagNotificationError] = useState(false);
-    const [error, setError] = useState('');
-    
-    const [usersNotRegisterCompetition, setUsersNotRegisterCompetition] = useState([]);
+    const [error, setError] = useState("");
+    const [labId, setLabId] = useState("");
+
+    const [flagModalLabId, setFlagModalLabId] = useState(false);
+
+    const [usersNotRegisterCompetition, setUsersNotRegisterCompetition] =
+        useState([]);
 
     const [
         fetchingCreateAndInvite,
@@ -33,7 +37,32 @@ const Applications = () => {
         const response = await DataService.postCreateAndInvite(
             obj,
             competitionId
-        );
+        ).catch((error) => {
+            setError(error.response.data.message);
+            setFlagNotificationError(true);
+            // fetchingCompetition(id)
+            setTimeout(() => {
+                setFlagNotificationError(false);
+            }, 4000);
+        });
+        console.log(response.data);
+        setCompetition(response.data);
+    });
+    const [
+        fetchingCreatePair,
+        isLoadingCreatePair,
+        errorCreatePair,
+    ] = useFetching(async (competitionId) => {
+        const response = await DataService.postCreatePair(
+            competitionId
+        ).catch((error) => {
+            setError(error.response.data.message);
+            setFlagNotificationError(true);
+            // fetchingCompetition(id)
+            setTimeout(() => {
+                setFlagNotificationError(false);
+            }, 4000);
+        });
         console.log(response.data);
         setCompetition(response.data);
     });
@@ -46,13 +75,13 @@ const Applications = () => {
         const response = await DataService.postAcceptInvitePair(
             competitionPairId,
             obj
-        ).catch(error => {
+        ).catch((error) => {
             setError(error.response.data.message);
-            setFlagNotificationError(true)
-            fetchingCompetition(id)
+            setFlagNotificationError(true);
+            fetchingCompetition(id);
             setTimeout(() => {
-                setFlagNotificationError(false)
-            }, 4000)
+                setFlagNotificationError(false);
+            }, 4000);
         });
         console.log(response.data);
         setCompetition(response.data);
@@ -86,9 +115,24 @@ const Applications = () => {
         });
     const [fetchingRequestToJoin, isLoadingRequestToJoin, errorRequestToJoin] =
         useFetching(async (id) => {
-            const response = await DataService.getRequestToJoin(id);
+            const response = await DataService.getRequestToJoin(id).catch(
+                (error) => {
+                    setError(error.response.data.message);
+                    setFlagNotificationError(true);
+                    // fetchingCompetition(id)
+                    setTimeout(() => {
+                        setFlagNotificationError(false);
+                    }, 4000);
+                }
+            );
             console.log(response.data);
             setCompetition(response.data);
+            setError('Предложение отправлено');
+            setFlagNotificationError(true);
+            // fetchingCompetition(id)
+            setTimeout(() => {
+                setFlagNotificationError(false);
+            }, 4000);
         });
     const [fetchingRating, isLoadingRating, errorRating] = useFetching(
         async (obj) => {
@@ -96,21 +140,26 @@ const Applications = () => {
             setFlagSucces(response.data);
             // console.log();
         }
-    );
+    );//bolsojpirog@gmail.com
 
-    const [fetchingUsersNotRegisterCompetition, isLoadingUsersNotRegisterCompetition, errorUsersNotRegisterCompetition] =
-        useFetching(async (id) => {
-            const response = await DataService.getUsersNotRegisterCompetition(id);
-            console.log(response.data);
-            let people = (response.data).map((username) => (username.firstName + ' ' + username.lastName))
-            setUsersNotRegisterCompetition(people);
-            // console.log(people);
-        });
+    const [
+        fetchingUsersNotRegisterCompetition,
+        isLoadingUsersNotRegisterCompetition,
+        errorUsersNotRegisterCompetition,
+    ] = useFetching(async (id) => {
+        const response = await DataService.getUsersNotRegisterCompetition(id);
+        console.log(response.data);
+        let people = response.data.map(
+            (username) => username.firstName + " " + username.lastName
+        );
+        setUsersNotRegisterCompetition(people);
+        // console.log(people);
+    });
 
     useEffect(() => {
         fetchingUser();
         fetchingCompetition(id);
-        fetchingUsersNotRegisterCompetition(id)
+        fetchingUsersNotRegisterCompetition(id);
     }, []);
 
     let openModal = () => {
@@ -131,11 +180,16 @@ const Applications = () => {
         }
     };
 
-    let buttonRequestToJoin = (pairId) => {
+    let buttonRequestToJoin = async (pairId) => {
         if (!localStorage.getItem("username")) {
             navigate("/auth/login");
         } else {
-            fetchingRequestToJoin(pairId);
+            if (localStorage.getItem("labId") == "null") {
+                setFlagModalLabId(true);
+            } else {
+                await fetchingRequestToJoin(pairId);
+                console.log(flagSucces);
+            }
         }
     };
     let closeModal = (event) => {
@@ -175,6 +229,18 @@ const Applications = () => {
             eventStore.setFlagOpenModalInstruction(false);
         }
     };
+    const sendLabId = async (labId) => {
+        setLabId(labId);
+        let newObjLabId = {
+            username: localStorage.getItem("username"),
+            labID: labId,
+        };
+        await fetchingRating(newObjLabId);
+        if (flagSucces) {
+            localStorage.setItem("labId", labId);
+            setFlagSucces(false);
+        }
+    };
 
     const sendCreateAndInvite = async (valueName, valueRating) => {
         // console.log('1234567890');
@@ -187,48 +253,45 @@ const Applications = () => {
             console.log(flagSucces);
             if (flagSucces) {
                 localStorage.setItem("labId", valueRating);
+                setFlagSucces(false);
             }
         }
+        let flagsend = false
         for (let i = 0; i < user.length; i++) {
             let fullName = user[i].firstName + " " + user[i].lastName;
             console.log(valueName);
 
             if (fullName === valueName) {
+                flagsend = true
                 await fetchingCreateAndInvite(id, {
                     username: user[i].username,
                 });
             }
         }
+        if(!flagsend){
+            await fetchingCreatePair(id);
+        }
     };
-    const acceptInvite = (pairId) => {
-        fetchingAcceptInvitePair(pairId, {
-            username: localStorage.getItem("username"),
-        });
-        
-    };
-
-    const requestToInvite = async (valueName) => {
-        console.log("to");
-        for (let i = 0; i < user.length; i++) {
-            let fullName = user[i].firstName + " " + user[i].lastName;
-            if (fullName === valueName) {
-                console.log();
-
-                await fetchingRequestToInvite(pairId, user[i].username);
-            }
+    const acceptInvite = async (pairId) => {
+        if (localStorage.getItem("labId") == "null") {
+            setFlagModalLabId(true);
+        } else {
+            await fetchingAcceptInvitePair(pairId, {
+                username: localStorage.getItem("username"),
+            });
+            console.log(flagSucces);
         }
     };
 
-    const handleNameChange = (event) => {
-        setValueName(event.target.value);
-        // console.log(valueName);
-    };
-    const handleRatingChange = (event) => {
-        setValueRating(event.target.value);
-        // console.log(valueName);
-    };
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const requestToInvite = async (valueName) => {
+
+        for (let i = 0; i < user.length; i++) {
+            let fullName = user[i].firstName + " " + user[i].lastName;
+            if (fullName === valueName) {
+                console.log(pairId, user[i].username);
+                await fetchingRequestToInvite(pairId, user[i].username);
+            }
+        }
     };
 
     const isPlayerInCompetititon = () => {
@@ -249,16 +312,13 @@ const Applications = () => {
         return false;
     };
 
-    const closeModalWindow = () => {
-        setFlagNotification(false);
-    }
     const closeModalWindowError = () => {
         setFlagNotificationError(false);
-    }
+    };
 
     return (
         <div className="applications">
-            <div
+            {/* <div
                 className={
                     flagNotification ? "modal-window active" : "modal-window"
                 }
@@ -271,10 +331,12 @@ const Applications = () => {
                     <span></span>
                 </div>
                 <div className="modal-window__title">Заявка отправлена</div>
-            </div>
+            </div> */}
             <div
                 className={
-                    flagNotificationError ? "modal-window active" : "modal-window"
+                    flagNotificationError
+                        ? "modal-window active"
+                        : "modal-window"
                 }
             >
                 <div
@@ -286,6 +348,11 @@ const Applications = () => {
                 </div>
                 <div className="modal-window__title">{error}</div>
             </div>
+            <ModalLabId
+                setFlag={(bool) => setFlagModalLabId(bool)}
+                flag={flagModalLabId}
+                sendFunc={(labId) => sendLabId(labId)}
+            />
             <ModalInvitePair
                 setFlag={(bool) => eventStore.setFlagOpenModalAddPair(bool)}
                 flag={eventStore.flagOpenModalAddPair}
@@ -384,7 +451,9 @@ const Applications = () => {
             </div>
             <div className="container">
                 <div className="applications__title">
-                    {`Заявки на соревнование "${competition.type + ' ' + competition.category}"`}
+                    {`Заявки на соревнование "${
+                        competition.type + " " + competition.category
+                    }"`}
                 </div>
                 <button
                     onClick={() => openModal()}

@@ -16,7 +16,7 @@ const WhyCard = ({ card, classChange }) => {
         >
             <div className={`card__front ${classChange}`}>
                 <div className={`card__img ${classChange}`}>
-                    <img src={card?.photoURL} alt="" />
+                    <img  src={card?.photoURL} alt="" />
                 </div>
                 <div className={`card__content content-card-${classChange}`}>
                     <div className={`content-card-${classChange}__title`}>

@@ -32,7 +32,7 @@ const AdminPage = () => {
         "Тактическая игровая",
         "Тренировка с тренером",
         "Игровая",
-        'Детская тренировка'
+        "Детская тренировка",
     ];
     const typeCompetition = ["Пара", "Микст", "Все против всех"];
     const categoryCompetition = ["EF", "DE", "CD", "BC", "AB"];
@@ -91,7 +91,7 @@ const AdminPage = () => {
         trainersId: [],
         startTrain: "",
         endTrain: "",
-        sportCompex: sportComplex[0],
+        sportComplex: sportComplex[0],
     });
 
     const handleFunction = (e) => {
@@ -147,7 +147,7 @@ const AdminPage = () => {
             startTrain: utcDateStart - 10800000,
             endTrain: utcDateEnd - 10800000,
         };
-        console.log(obj);
+        console.log(newObj);
 
         fetchinCreateTrain(newObj); // ======
 
@@ -404,7 +404,7 @@ const AdminPage = () => {
             Date.UTC(d1[0], --d1[1], d1[2], t1[0], t1[1])
         );
         // console.log(new Date(utcDateEnd));
-        
+
         console.log(file);
 
         let formData = new FormData();
@@ -437,7 +437,7 @@ const AdminPage = () => {
         setObjEvent(newObj);
         eventChange.setOpenModalEventCreate(false);
     };
-    const changeEvent = async(obj, dateEvent, fileObj) => {
+    const changeEvent = async (obj, dateEvent, fileObj) => {
         // console.log(dateTrain);
         // let d = new Date(Date.UTC(dateTrain.date[0], -dateTrain.date[1], dateTrain.date[2],dateTrain.toTime[0], dateTrain.toTime[1]));
         let d1 = dateEvent.date.split(/\D/);
@@ -445,7 +445,7 @@ const AdminPage = () => {
         const utcDateStart = new Date(
             Date.UTC(d1[0], --d1[1], d1[2], t1[0], t1[1])
         );
-        
+
         console.log(fileObj);
 
         let formData = new FormData();
@@ -458,7 +458,7 @@ const AdminPage = () => {
             {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    "Authorization": `Bearer_${localStorage.getItem(
+                    Authorization: `Bearer_${localStorage.getItem(
                         "accessToken"
                     )}`,
                 },
@@ -487,14 +487,14 @@ const AdminPage = () => {
         // console.log((eventChange.countPage === count) + ' ' + '----------------');
         // setCount(eventChange.countPage)
     }, [count]);
-    
+
     useEffect(() => {
-        if(count !== eventChange.countPage){
-            console.log('===============================================');
+        if (count !== eventChange.countPage) {
+            console.log("===============================================");
 
             setCount(eventChange.countPage);
         }
-        
+
         // console.log((eventChange.countPage === count) + ' ' + '----------------');
         // setCount(eventChange.countPage)
     }, [eventChange.countPage]);
@@ -504,7 +504,6 @@ const AdminPage = () => {
         fetchingTraining();
         fetchingCompetition();
         eventChange.setEvents([]);
-
     }, []);
 
     return (
@@ -611,7 +610,10 @@ const AdminPage = () => {
                                 Мероприятия
                             </Link>
                             <Link to="all-users" className="nav-admin__link">
-                            Все пользователи
+                                Все пользователи
+                            </Link>
+                            <Link to="subscriptions" className="nav-admin__link">
+                                Подтверждение абонементов
                             </Link>
                         </ul>
                     </div>

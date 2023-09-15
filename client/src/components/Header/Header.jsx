@@ -9,7 +9,7 @@ const Header = () => {
     const [scroll, setScroll] = useState(0);
     const navigate = useNavigate();
 
-    const { store } = useContext(Context);
+    const { store, eventStore } = useContext(Context);
 
     const handleScroll = () => {
         // console.log(window.scrollY);
@@ -24,7 +24,13 @@ const Header = () => {
     const logoutBtn = () => {
         store.logout();
         navigate("/auth/login");
-    }
+    };
+    // const scrollToMyRef = () => {console.log(eventStore.ref.current.scrollHeight);}
+
+    // const toWhereWe = () => {
+    //     navigate('/')
+    //     setTimeout(scrollToMyRef, 1000);
+    // }
 
     return (
         <div className={scroll > 30 ? "header active" : "header"}>
@@ -55,30 +61,35 @@ const Header = () => {
                             <div className="burger__menu menu-burger">
                                 <div className="menu-burger__list">
                                     <Link
+                                        onClick={() => setOpenBurger(!openBurger)}
                                         to="training"
                                         className="menu-burger__link"
                                     >
                                         Расписание
                                     </Link>
-                                    <Link
+                                    <Link onClick={() => setOpenBurger(!openBurger)}
                                         to="competitions"
                                         className="menu-burger__link"
                                     >
                                         Соревнования
                                     </Link>
 
-                                    <Link
+                                    <Link onClick={() => setOpenBurger(!openBurger)}
                                         to="events"
                                         className="menu-burger__link"
                                     >
                                         Мероприятия
                                     </Link>
 
-                                    <Link
+                                    <Link onClick={() => setOpenBurger(!openBurger)}
                                         to="prices"
                                         className="menu-burger__link"
                                     >
                                         Цены
+                                    </Link>
+
+                                    <Link onClick={() => setOpenBurger(!openBurger)} to='where-we' className="menu-burger__link">
+                                        Как нас найти
                                     </Link>
                                     {!store.isAuth ? (
                                         <div className="navigation__buttons buttons">
@@ -133,6 +144,9 @@ const Header = () => {
                                 </Link>
                                 <Link to="prices" className="navigation__link">
                                     Цены
+                                </Link>
+                                <Link to='where-we' className="navigation__link">
+                                    Как нас найти
                                 </Link>
                             </div>
                             {!store.isAuth ? (

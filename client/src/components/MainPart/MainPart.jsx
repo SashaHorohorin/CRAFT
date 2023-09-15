@@ -4,7 +4,7 @@ import Header from "../Header/Header";
 import Shuttlecocks from "../UI/Shuttlecocks/Shuttlecocks";
 import Button from "../UI/Button/Button";
 import fly from "../../script";
-import { Link } from "react-router-dom";
+import { Link, animateScroll as scroll } from "react-scroll";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
@@ -29,13 +29,21 @@ const MainPart = () => {
                         </div>
                     </div>
                     <Link
-                        to='training'
-                        onClick={() => eventStore.setFlagOpenModalSale(true)}
+                        // ctiveClass="active"
+                        to="first-train"
+                        spy={true}
+                        smooth={true}
+                        offset={-120}
+                        duration={500}
                         className="home__button btn"
-                    >Записаться по акции</Link>
+                    >
+                        Записаться на пробную тренировку
+                    </Link>
+
                     <div className="home__social social-home">
                         <div className="social-home__column">
-                            <a href="mailto:Alexisbest1@mail.ru"><img src="./images/HomePage/google.png" alt="" /></a>
+                            {/* <a href="mailto:Alexisbest1@mail.ru"><img src="./images/HomePage/google.png" alt="" /></a> */}
+                            <a href="https://t.me/+gAzS3Qhxv-E1MGE6"><img src="./images/HomePage/telegram.png" alt="" /></a>
                             <a href="https://wa.me/79030975817"><img src="./images/HomePage/whatsapp.png" alt="" /></a>
                         </div>
                         <div className="social-home__column">

@@ -410,6 +410,7 @@
     }
 
     &__button {
+        cursor: pointer;
         border-radius: 10px;
         background: #4b4242;
         border: none;
@@ -430,6 +431,7 @@
     }
 
     &__buttons-forgot {
+        cursor: pointer;
         background: transparent;
         border: none;
         font-size: 14px;
@@ -528,7 +530,7 @@
 
 .modal-window{
     padding: 10px 10px 10px 20px;
-    position: absolute;
+    position: fixed;
     z-index: 1000;
     top: 30px;
     border: 1px solid #000;

@@ -4,33 +4,38 @@ import { IMaskInput } from "react-imask";
 const PhoneMask = "+{7}(000)000-00-00";
 const EmailMask = /^\S*@?\S*$/;
 
-const InputReg = ({ classField, nameLabel, setData, valueInp, obj, ...arg }) => {
+const InputReg = ({
+    classField,
+    nameLabel,
+    setData,
+    valueInp,
+    obj,
+    ...arg
+}) => {
     // let valueData = ''
-    
-    const [value, setValue] = useState('');
+
+    const [value, setValue] = useState("");
     let flag = false;
-    if (arg.name === 'agreementMailing'){
+    if (arg.name === "agreementMailing") {
         flag = true;
     }
     // console.log(valueInp);
     const [checked, setChecked] = useState(flag);
 
-    useEffect(()=>{
-        if (arg.name === 'agreementMailing'){
-            setChecked(true)
-        }else{
-            setChecked(false)
+    useEffect(() => {
+        if (arg.name === "agreementMailing") {
+            setChecked(true);
+        } else {
+            setChecked(false);
         }
-        setValue('');
-    }, [valueInp])
+        setValue("");
+    }, [valueInp]);
 
     // valueData = value;
 
-    
-    
-
     const handleFunction = (e) => {
         const name = e.target.name;
+        console.log(e.target.checked);
 
         // let newObj = { ...obj };
         if (arg.type == "checkbox") {
@@ -51,7 +56,9 @@ const InputReg = ({ classField, nameLabel, setData, valueInp, obj, ...arg }) => 
     };
 
     return (
-        <div className={classField ? `form__field ${classField}` : "form__field"}>
+        <div
+            className={classField ? `form__field ${classField}` : "form__field"}
+        >
             {arg.name == "phoneNumber" ? (
                 <IMaskInput
                     {...arg}
@@ -73,7 +80,7 @@ const InputReg = ({ classField, nameLabel, setData, valueInp, obj, ...arg }) => 
                     {...arg}
                     value={value}
                     onChange={(e) => handleFunction(e)}
-                    mask={/^[a-z0-9]+$/i}
+                    // mask={/^[a-z0-9]+$/i}
                     // onAccept={(value, mask) => console.log(value, mask)}
                 />
             ) : arg.type == "checkbox" ? (
@@ -91,25 +98,20 @@ const InputReg = ({ classField, nameLabel, setData, valueInp, obj, ...arg }) => 
                     // onAccept={(value, mask) => console.log(value, mask)}
                 />
             )}
-            {
-                
-                arg.type != "checkbox" ? (
-                    <label onClick={() => test()} className="form__label">
-                    {nameLabel
-                        .split("")
-                        .map((latter, index) => (
-                            <span
-                                key={index}
-                                style={{ transitionDelay: `${index * 50}ms` }}
-                            >
-                                {latter}
-                            </span>
-                        ))}
-                        </label>
-                ) : (<label htmlFor={arg.id}>{nameLabel}</label>)
-            }
-        
-
+            {arg.type != "checkbox" ? (
+                <label onClick={() => test()} className="form__label">
+                    {nameLabel.split("").map((latter, index) => (
+                        <span
+                            key={index}
+                            style={{ transitionDelay: `${index * 50}ms` }}
+                        >
+                            {latter}
+                        </span>
+                    ))}
+                </label>
+            ) : (
+                <label htmlFor={arg.id}>{nameLabel}</label>
+            )}
         </div>
     );
 };

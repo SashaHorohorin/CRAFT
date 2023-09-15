@@ -11,7 +11,7 @@ const Competition = ({competition, type, deletePair, openModal}) => {
 
     const getDateYear = (date) => {
         let d = new Date(date);
-        let time = `${d.getDate() < 10 ? `0${d.getDate()}` : d.getDate()}.${d.getMonth() < 10 ? `0${d.getMonth()}` : d.getMonth()}.${d.getFullYear()}`;
+        let time = `${d.getDate() < 10 ? `0${d.getDate()}` : d.getDate()}.${d.getMonth() < 9 ? `0${d.getMonth() + 1}` : d.getMonth() + 1}.${d.getFullYear()}`;
         return time;
     };
 

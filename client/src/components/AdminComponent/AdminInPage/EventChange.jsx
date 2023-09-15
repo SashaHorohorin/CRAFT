@@ -73,7 +73,7 @@ const EventChange = () => {
                     />
                 ))}
             </div>
-            {eventChange.countPage != eventChange.totalCountPage - 1 ? (
+            {eventChange.countPage < eventChange.totalCountPage - 1 ? (
                 <div
                     onClick={() => {
                         eventChange.setCountPage()

@@ -52,7 +52,7 @@ const EventsPage = () => {
                         ))}
                     </div>
                     <div className="container-btn">
-                        {totalPages - 1 !== countPage ? (
+                        {totalPages - 1 > countPage ? (
                             <div onClick={() => nextPage()} className="events__button">Показать больше</div>
                         ) : null}
                         

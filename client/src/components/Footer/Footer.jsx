@@ -63,6 +63,7 @@ const Footer = () => {
                                 <a href="https://vk.com/craftbadmclub">
                                     <img src="./images/HomePage/vk.png" alt="" />
                                 </a>
+                                <a href="https://t.me/+gAzS3Qhxv-E1MGE6"><img src="./images/HomePage/telegram.png" alt="" /></a>
                             </div>
                         </div>
                     </div>

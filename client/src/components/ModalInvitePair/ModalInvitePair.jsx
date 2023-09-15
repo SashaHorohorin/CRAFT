@@ -61,7 +61,8 @@ const ModalInvitePair = ({text, changeFlagNotification,  title, sendFunc, flag, 
     };
     const closeModalAfterSend = () => {
         sendFunc(valueName, valueRating);
-        eventStore.setFlagOpenModalAddPair(false)
+        setFlag(false)
+        
         changeFlagNotification(true)
         setTimeout(() => {
             changeFlagNotification(false)

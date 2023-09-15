@@ -6,6 +6,13 @@ export default class EventStore {
     flagOpenModalInstruction = false;
     flagOpenModal = false;
     players = [];
+    indexMap = 1
+
+
+    errorCompetition = ''
+    flagErrorCompetition = false
+    errorTraining = ''
+    flagErrorTraining = false
 
     flagOpenModalSale = false;
 
@@ -15,6 +22,23 @@ export default class EventStore {
     constructor() {
         makeAutoObservable(this);
     }
+    setIndexMap(index){
+        this.indexMap = index;
+    }
+
+    setErrorTraining(error){
+        this.errorTraining = error;
+    }
+    setFlagErrorTraining(bool){
+        this.flagErrorTraining = bool;
+    }
+    setErrorCompetition(error){
+        this.errorCompetition = error;
+    }
+    setFlagErrorCompetition(bool){
+        this.flagErrorCompetition = bool;
+    }
+
     setFlagOpenModalRequestAddPair(bool){
         this.flagOpenModalRequestAddPair = bool;
     }
@@ -53,7 +77,7 @@ export default class EventStore {
             // const item = document.querySelector(".people-actions__item");
             // setTimeout(() => {
                 // let heightItem = modal.children[1].getBoundingClientRect().height;
-            modal.style.height = (30 * this.players.length + 21) + 'px'
+            modal.style.height = (37 * this.players.length + 10) + 'px'
 
             // }, 5)
             modal.style.display = "block";

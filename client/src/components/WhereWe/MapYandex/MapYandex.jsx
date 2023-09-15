@@ -1,5 +1,7 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { YMaps, Map, Placemark, Clusterer } from "@pbe/react-yandex-maps";
+import { Context } from "../../..";
+import { observer } from "mobx-react-lite";
 
 // const mapState = ;
 
@@ -31,7 +33,8 @@ const cities = [
     },
 ];
 
-const MapYandex = () => {
+const MapYandex = ({type}) => {
+    const { eventStore } = useContext(Context);
     const [state, setState] = useState({
         center: [59.8891110909296, 30.47772311244199],
         zoom: 14,
@@ -57,6 +60,14 @@ const MapYandex = () => {
         setActiveAdress(id);
         setState({ center: coords});
     };
+    useEffect(() => {
+        // console.log(eventStore.indexMap);
+        if(type == 'page'){
+            // console.log(cities[eventStore.indexMap - 1]?.ongitude, cities[eventStore.indexMap - 1]?.latitude);
+            setActiveAdress(eventStore.indexMap)
+            setState({...state, center: [cities[eventStore.indexMap - 1]?.ongitude, cities[eventStore.indexMap - 1]?.latitude]});
+        }
+    }, [])
     return (
         <YMaps>
             <ul className="where__adresses adress">
@@ -96,4 +107,4 @@ const MapYandex = () => {
     );
 };
 
-export default MapYandex;
+export default observer(MapYandex);

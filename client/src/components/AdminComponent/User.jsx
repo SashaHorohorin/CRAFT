@@ -23,6 +23,10 @@ const User = ({ user }) => {
                 <div className="admin-user__name">
                     {user.firstName + " " + user.lastName}
                 </div>
+                {!user.haveFirstTrain ? (<div className="admin-user__name">
+                    Есть пробная тренировка
+                </div>) : null}
+                
                 <div
                     onClick={() => moreInfo(user.username)}
                     className="admin-user__info"

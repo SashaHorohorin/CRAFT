@@ -32,10 +32,16 @@
         grid-template-columns: 1fr 1fr 1fr;
         grid-column-gap: 35px;
         grid-row-gap: 35px;
+        
         @media (max-width: 1150px) {
             grid-column-gap: 20px;
             grid-row-gap: 20px;
         }
+        // @media (max-width: 1254px) {
+        //     grid-template-columns: 1fr 1fr 1fr;
+        //     grid-column-gap: 20px;
+        //     grid-row-gap: 20px;
+        // }
         @media (max-width: 894px) {
             grid-template-columns: 1fr 1fr;
         }
@@ -69,7 +75,7 @@
     }
     &:hover {
         .info-trainer {
-            bottom: 0;
+            bottom: 0px !important;
         }
     }
     &:nth-child(1) {
@@ -78,6 +84,7 @@
             img {
                 width: 100%;
                 height: 160%;
+                // height: 160%;
                 object-fit: cover;
             }
         }
@@ -98,9 +105,14 @@
             img {
                 width: 105%;
                 height: 130%;
+                // width: 105%;
+                // height: 130%;
                 object-fit: cover;
             }
         }
+        // .info-trainer {
+        //     bottom: -22%;
+        // }
     }
     &:nth-child(4) {
         .card-trainer__img {
@@ -111,6 +123,9 @@
                 object-fit: cover;
             }
         }
+        // .info-trainer {
+        //     bottom: -22%;
+        // }
     }
     &:nth-child(5) {
         .card-trainer__img {
@@ -121,14 +136,15 @@
                 object-fit: cover;
             }
         }
-        .info-trainer {
-            bottom: -25%;
-        }
-        &:hover {
-            .info-trainer {
-                bottom: 0;
-            }
-        }
+        // .info-trainer {
+        //     height: 160px;
+        //     bottom: -25%;
+        // }
+        // &:hover {
+        //     .info-trainer {
+        //         bottom: 0;
+        //     }
+        // }
     }
     &:nth-child(6) {
         .card-trainer__img {
@@ -140,60 +156,78 @@
             }
         }
     }
+    &:nth-child(7) {
+        .card-trainer__img {
+            height: 100%;
+            img {
+                width: 100%;
+                height: 140%;
+                object-fit: cover;
+                // @media (max-width: 1254px) {
+                //     height: 140%;
+
+                // }
+            }
+        }
+    }
 }
 
 .info-trainer {
     position: absolute;
-    bottom: -18%;
+    bottom: -23%;
     left: 0;
     text-align: center;
     width: 100%;
+    height: 170px;
     padding: 20px;
     color: #fff;
     background: #000;
     opacity: 0.72;
     transition: bottom 0.5s ease 0s;
-    @media (max-width: 1111px) {
-        bottom: -60px;
-    }
-    @media (max-width: 926px) {
-        bottom: -75px;
-    }
-    @media (max-width: 894px) {
-        bottom: -60px;
-    }
-    @media (max-width: 650px) {
-        bottom: -60px;
-    }
-    @media (max-width: 559px) {
-        bottom: -75px;
-    }
-    @media (max-width: 440px) {
-        bottom: -35px;
-        padding: 10px;
-    }
-    @media (max-width: 396px) {
-        bottom: -47px;
-        padding: 10px;
-    }
+    // @media (max-width: 1111px) {
+    //     bottom: -60px;
+    // }
+    // @media (max-width: 926px) {
+    //     bottom: -75px;
+    // }
+    // @media (max-width: 894px) {
+    //     bottom: -60px;
+    // }
+    // @media (max-width: 650px) {
+    //     bottom: -60px;
+    // }
+    // @media (max-width: 559px) {
+    //     bottom: -75px;
+    // }
+    // @media (max-width: 440px) {
+    //     bottom: -35px;
+    //     padding: 10px;
+    // }
+    // @media (max-width: 396px) {
+    //     bottom: -47px;
+    //     padding: 10px;
+    // }
 
     &__name {
-        margin-bottom: 20px;
+        padding-bottom: 20px;
         font-size: 24px;
         font-weight: 700;
-        @media (max-width: 1111px) {
-            font-size: 19px;
-        }
-        @media (max-width: 894px) {
-            font-size: 21px;
-        }
-        @media (max-width: 650px) {
-            font-size: 18px;
-        }
-        @media (max-width: 440px) {
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
+        // position: absolute;
+        // top: 0;
+        // left: 0;
+        // @media (max-width: 1111px) {
+        //     font-size: 19px;
+        // }
+        // @media (max-width: 894px) {
+        //     font-size: 21px;
+        // }
+        // @media (max-width: 650px) {
+        //     font-size: 18px;
+        // }
+        // @media (max-width: 440px) {
+        //     font-size: 14px;
+        //     margin-bottom: 10px;
+        // }
     }
 
     &__text {

@@ -78,6 +78,16 @@
             padding: 15px 10px;
         }
     }
+    &__container{
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+.where-page{
+    padding-top: 110px;
 }
 
 .adress {
@@ -135,4 +145,52 @@
             height: 350px;
         }
     }
+}
+.modal-first{
+    // top: 680px !important;
+}
+
+.where-first-train{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    padding: 20px;
+    // border: 1px solid #000;
+    border-radius: 20px;
+    background: #ff6969;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.4);
+    color: #fff;
+    &__row{
+        
+        text-align: center;
+    }
+    &__title{
+        font-size: 30px;
+        margin-bottom: 10px;
+        font-weight: 700;
+        @media (max-width: 600px) {
+            font-size: 20px;
+        }
+    }
+
+    &__text{
+        font-size: 20px;
+        font-weight: 400;
+        margin-bottom: 10px;
+        @media (max-width: 600px) {
+            font-size: 16px;
+        }
+    }
+    &__under-text{
+        font-size: 14px;
+        margin-bottom: 40px;
+        font-weight: 200;
+        @media (max-width: 600px) {
+            font-size: 10px;
+        }
+    }
+
+    &__form{}
 }
