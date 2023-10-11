@@ -367,8 +367,10 @@ public class CompetitionService {
         List<Competition> competitions = findAllActive();
         Date now = new Date();
         competitions.forEach(competition -> {
-            if (competition.getEndCompetition().after(now))
+            if (now.after(competition.getEndCompetition())) {
                 competition.setStatus(CompetitionStatus.NOT_ACTIVE);
+                competitionRepo.save(competition);
+            }
         });
     }
 
