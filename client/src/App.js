@@ -11,7 +11,7 @@ import HomePage from "./page/HomePage/HomePage";
 import RegistrationPage from "./page/RegistrationPage/RegistrationPage";
 import Layout from "./components/Layout/Layout";
 import TrainingPage from "./page/TrainingPage/TrainingPage";
-import { useContext, useEffect } from "react";
+import { Suspense, lazy, useContext, useEffect } from "react";
 import { Context } from ".";
 import { observer } from "mobx-react-lite";
 import ActivatePage from "./page/ActivatePage/ActivatePage";
@@ -29,12 +29,13 @@ import InfoAllUser from "./components/AdminComponent/AdminInPage/InfoAllUser";
 import Subscriptions from "./components/AdminComponent/AdminInPage/Subscriptions";
 import WhereWe from "./components/WhereWe/WhereWe";
 import WherePage from "./page/WherePage/WherePage";
+import Loader from "./components/Loader/Loader";
 
 function App() {
     const { store } = useContext(Context);
 
     const token = localStorage.getItem("accessToken");
-
+    // const HomePage = lazy(() => import('./page/HomePage/HomePage'));
     useEffect(() => {
         if (token) {
             store.checkAuth();
@@ -45,55 +46,57 @@ function App() {
     return (
         <BrowserRouter>
             <div className="App">
-                <Routes>
-                    <Route path="/" element={<Layout />}>
-                        <Route index element={<HomePage />} />
-                        <Route path="training" element={<TrainingPage />} />
-                        <Route path="events" element={<EventsPage />} />
-                        <Route
-                            path="competitions"
-                            element={<CompetitionsPage />}
-                        />
-                        <Route
-                            path="where-we"
-                            element={<WherePage/>}
-                        />
-                        <Route path="prices" element={<PricesPage />} />
-                        <Route path="profile" element={<PersonalPage />} />
-                        <Route
-                            path="competitions/applications/:id"
-                            element={<Applications />}
-                        />
-                        <Route path="admin-page" element={<AdminPage />}>
+                {/* <Suspense fallback={<Loader/>}> */}
+                    <Routes>
+                        <Route path="/" element={<Layout />}>
+                            <Route index element={<HomePage />} />
+                            <Route path="training" element={<TrainingPage />} />
+                            <Route path="events" element={<EventsPage />} />
                             <Route
-                                path="training-change"
-                                element={<TrainingChange />}
+                                path="competitions"
+                                element={<CompetitionsPage />}
                             />
+                            <Route path="where-we" element={<WherePage />} />
+                            <Route path="prices" element={<PricesPage />} />
+                            <Route path="profile" element={<PersonalPage />} />
                             <Route
-                                path="competition-change"
-                                element={<CompetitionChange />}
+                                path="competitions/applications/:id"
+                                element={<Applications />}
                             />
-                            <Route
-                                path="event-change"
-                                element={<EventChange />}
-                            />
-                            <Route
-                                path="all-users"
-                                element={<InfoAllUser />}
-                            />
-                            <Route
-                                path="subscriptions"
-                                element={<Subscriptions />}
-                            />
+                            <Route path="admin-page" element={<AdminPage />}>
+                                <Route
+                                    path="training-change"
+                                    element={<TrainingChange />}
+                                />
+                                <Route
+                                    path="competition-change"
+                                    element={<CompetitionChange />}
+                                />
+                                <Route
+                                    path="event-change"
+                                    element={<EventChange />}
+                                />
+                                <Route
+                                    path="all-users"
+                                    element={<InfoAllUser />}
+                                />
+                                <Route
+                                    path="subscriptions"
+                                    element={<Subscriptions />}
+                                />
+                            </Route>
+                            <Route path="*" element={<HomePage />} />
                         </Route>
-                        <Route path="*" element={<HomePage />} />
-                    </Route>
-                    <Route path="auth/:sign" element={<RegistrationPage />} />
-                    <Route
-                        path="activate-account/:code"
-                        element={<ActivatePage />}
-                    />
-                </Routes>
+                        <Route
+                            path="auth/:sign"
+                            element={<RegistrationPage />}
+                        />
+                        <Route
+                            path="activate-account/:code"
+                            element={<ActivatePage />}
+                        />
+                    </Routes>
+                {/* </Suspense> */}
             </div>
         </BrowserRouter>
     );

@@ -412,7 +412,7 @@ const AdminPage = () => {
         formData.append("file", file);
         // console.log(formData);
         let response = await axios.post(
-            "https://craft-bc-backend.online/api/v1/file/upload",
+            "https://craft-bc-backend.online/google/upload",
             formData,
             {
                 headers: {
@@ -453,7 +453,7 @@ const AdminPage = () => {
         formData.append("file", fileObj);
         // console.log(formData);
         let response = await axios.post(
-            "https://craft-bc-backend.online/api/v1/file/upload",
+            "https://craft-bc-backend.online/google/upload",
             formData,
             {
                 headers: {

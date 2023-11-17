@@ -103,9 +103,8 @@
 // ======================================================================
 
 .modal-applications {
-    // display: none;
     position: fixed;
-    top: 10%;
+    top: 5%;
     left: 50%;
     transform: translate(-50%);
     z-index: 50;
@@ -114,6 +113,13 @@
     background: #ea7777;
     padding: 15px;
     border-radius: 20px;
+    
+    
+    @media (max-width: 760px) {
+        max-height: 590px;
+        overflow-y: scroll;
+    }
+
     &__bg {
         display: none;
         position: fixed;
@@ -128,9 +134,6 @@
             display: block;
         }
     }
-    // &.active {
-    //     display: block;
-    // }
 
     &__row {
     }
@@ -145,6 +148,12 @@
         color: #fff;
         font-size: 24px;
         font-weight: 800;
+        @media (max-width: 760px) {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
     }
 
     &__close {
@@ -180,6 +189,10 @@
         font-size: 20px;
         font-weight: 400;
         margin-bottom: 10px;
+        @media (max-width: 760px) {
+            font-size: 16px;
+            font-weight: 600;
+        }
     }
 
     &__label {
@@ -199,6 +212,11 @@
         padding: 10px;
         border: 0;
         outline: none;
+        @media (max-width: 760px) {
+            font-size: 15px;
+            padding: 7px;
+        }
+
     }
 
     &__instruction {
@@ -233,15 +251,23 @@
         font-size: 16px;
         font-weight: 400;
         margin-bottom: 10px;
+        @media (max-width: 760px) {
+            font-size: 14px;
+        }
     }
 
     &__img {
         // max-height: 100px;
+        height: 100%;
+        width: 100%;
         overflow: hidden;
         img {
             height: 100%;
-            // width: 100%;
+            width: 60%;
             object-fit: fill;
+            // @media (max-width: 760px) {
+            //     width: 40%;
+            // }
         }
     }
 }
@@ -257,6 +283,9 @@
         font-size: 18px;
         font-weight: 400;
         margin-bottom: 20px;
+        @media (max-width: 760px) {
+            font-size: 14px;
+        }
     }
 
     &__form {
@@ -275,6 +304,10 @@
         width: 100%;
         outline: none;
         margin-bottom: 10px;
+        @media (max-width: 760px) {
+            font-size: 15px;
+            padding: 7px;
+        }
     }
 
     &__button {
@@ -288,6 +321,11 @@
         background: #5a5a5a;
         padding: 10px 20px;
         border: 0;
+        @media (max-width: 760px) {
+            font-size: 14px;
+            font-weight: 400;
+            padding: 5px 10px;
+        }
     }
 }
 
@@ -310,5 +348,12 @@
         &:last-child{
             margin: 0;
         }
+        @media (max-width: 760px) {
+            padding: 5px 10px;
+        }
     }
+    @media (max-width: 760px) {
+        font-size: 15px;
+    }
+    
 }

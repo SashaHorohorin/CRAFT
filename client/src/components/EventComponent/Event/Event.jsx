@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../..";
 import { observer } from "mobx-react-lite";
+import { set } from "mobx";
 
-const Event = ({ event }) => {
+const Event = ({ event, setLoader }) => {
     const { eventStore } = useContext(Context);
     const [flagOpenModal, setFlagOpenModal] = useState(false);
 
@@ -53,7 +54,7 @@ const Event = ({ event }) => {
                         </div>
                     </div>
                     <div className="content-event__img">
-                        <img src={event.photoUrl} alt="" />
+                        <img onLoad={setLoader} src={event.photoUrl} alt="" />
                     </div>
                     <div className="content-event__time time-event">
                         <div className="time-event__time">

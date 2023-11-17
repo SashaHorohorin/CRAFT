@@ -153,6 +153,9 @@ export default class DataService {
     static async getCompetitionAll() {
         return await $api.get(`api/v1/competition/get-all`);
     }
+    static async getCompetitionAllActive() {
+        return await $api.get(`api/v1/competition/get-all/active`);
+    }
 
     // ===================================================<COMPETITION>
     // ===================================================<EVENT>

@@ -8,6 +8,10 @@ export default class EventStore {
     players = [];
     indexMap = 1
 
+    maxCountImg = 11
+    currentCountImg = 0
+    // flagLoadAllImg = false;
+
 
     errorCompetition = ''
     flagErrorCompetition = false
@@ -21,6 +25,10 @@ export default class EventStore {
 
     constructor() {
         makeAutoObservable(this);
+    }
+
+    setCurrentCountImg(){
+        this.currentCountImg = this.currentCountImg + 1;
     }
     setIndexMap(index){
         this.indexMap = index;

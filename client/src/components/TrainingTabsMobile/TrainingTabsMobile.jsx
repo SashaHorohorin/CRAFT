@@ -5,6 +5,7 @@ import { useFetching } from "../../hooks/useFetching";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
+import Loader from "../Loader/Loader";
 
 const TrainingTabsMobile = ({ openModal }) => {
     const [activeTabIndexComplex, setActiveTabIndexComplex] = useState(0);
@@ -166,43 +167,49 @@ const TrainingTabsMobile = ({ openModal }) => {
         // console.log(i);
     };
     return (
-        <div className="trainingPage__mobile mobile-info">
-            <Link to="/where-we" className="trainingPage__adress">
-                {cities[activeTabIndexComplex].address}
-            </Link>
-            <div className="trainingPage__description">
-                {cities[activeTabIndexComplex].text}
-            </div>
-            <div className="mobile-info__row">
-                <div className="mobile-info__container">
-                    <div className="mobile-info__label">Выберете спортзал:</div>
-
-                    <select
-                        onChange={(e) => handleFunctionComplex(e)}
-                        className="mobile-info__select"
-                    >
-                        {trainingComplex.map((tab, index) => (
-                            <option
-                                key={index}
-                                className="mobile-info__tab"
-                                // onClick={() => activate(index)}
-                                value={index}
-                            >
-                                {tab}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className="trainingPage__btns">
-                    <div
-                        onClick={() => setCount(count + 1)}
-                        className="trainingPage__more-btn"
-                    >
-                        Добавить следующую неделю
+        <>
+            {(isLoadingTraining && (count == 0)) ? (
+                <Loader />
+            ) : (
+                <div className="trainingPage__mobile mobile-info">
+                    <Link to="/where-we" className="trainingPage__adress">
+                        {cities[activeTabIndexComplex].address}
+                    </Link>
+                    <div className="trainingPage__description">
+                        {cities[activeTabIndexComplex].text}    
                     </div>
-                </div>
-                {/* <div className="mobile-info__container"> */}
-                {/* <div className="mobile-info__label">Выберете дату:</div>
+                    <div className="mobile-info__row">
+                        <div className="mobile-info__container">
+                            <div className="mobile-info__label">
+                                Выберете спортзал:
+                            </div>
+
+                            <select
+                                onChange={(e) => handleFunctionComplex(e)}
+                                className="mobile-info__select"
+                            >
+                                {trainingComplex.map((tab, index) => (
+                                    <option
+                                        key={index}
+                                        className="mobile-info__tab"
+                                        // onClick={() => activate(index)}
+                                        value={index}
+                                    >
+                                        {tab}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="trainingPage__btns">
+                            <div
+                                onClick={() => setCount(count + 1)}
+                                className="trainingPage__more-btn"
+                            >
+                                Добавить следующую неделю
+                            </div>
+                        </div>
+                        {/* <div className="mobile-info__container"> */}
+                        {/* <div className="mobile-info__label">Выберете дату:</div>
                     <select
                         onChange={(e) => handleFunctionDay(e)}
                         className="mobile-info__select"
@@ -218,34 +225,34 @@ const TrainingTabsMobile = ({ openModal }) => {
                             </option>
                         ))}
                     </select> */}
-                {/* </div> */}
-            </div>
+                        {/* </div> */}
+                    </div>
 
-            <div className="mobile-info__content active">
-                {/* {training[activeTabIndex] ? (training[activeTabIndex][1]?.sunday[0]?.type) : null} */}
-                {/* {trainShow(activeTabIndexComplex, activeTabIndexDay)} */}
-                {arrDate.map((day, index) => {
-                    if (indexDay > 5) {
-                        indexDay = -1;
-                        indexWorkout = indexWorkout + 1;
-                    }
-                    indexDay = indexDay + 1;
-
-                    // console.log(indexDay + " " + indexWorkout);
-                    return (
-                        <Workouts
-                            key={index}
-                            workouts={
-                                training[activeTabIndexComplex][indexWorkout]?.[
-                                    dayTraining[indexDay]
-                                ]
+                    <div className="mobile-info__content active">
+                        {/* {training[activeTabIndex] ? (training[activeTabIndex][1]?.sunday[0]?.type) : null} */}
+                        {/* {trainShow(activeTabIndexComplex, activeTabIndexDay)} */}
+                        {arrDate.map((day, index) => {
+                            if (indexDay > 5) {
+                                indexDay = -1;
+                                indexWorkout = indexWorkout + 1;
                             }
-                            date={day}
-                            openModal={(type) => openModal(type)}
-                        />
-                    );
-                })}
-                {/* {training[activeTabIndexComplex] ? (
+                            indexDay = indexDay + 1;
+
+                            // console.log(indexDay + " " + indexWorkout);
+                            return (
+                                <Workouts
+                                    key={index}
+                                    workouts={
+                                        training[activeTabIndexComplex][
+                                            indexWorkout
+                                        ]?.[dayTraining[indexDay]]
+                                    }
+                                    date={day}
+                                    openModal={(type) => openModal(type)}
+                                />
+                            );
+                        })}
+                        {/* {training[activeTabIndexComplex] ? (
                     <Workouts
                         workouts={
                             training[activeTabIndexComplex][1]?.[
@@ -256,7 +263,7 @@ const TrainingTabsMobile = ({ openModal }) => {
                         date={arrDate[activeTabIndexDay]}
                     />
                 ) : null} */}
-                {/* {training[activeTabIndexComplex] ? (
+                        {/* {training[activeTabIndexComplex] ? (
                     <Workouts
                         workouts={training[activeTabIndexComplex][1]?.tuesday}
                         date={arrDate[1]}
@@ -292,16 +299,18 @@ const TrainingTabsMobile = ({ openModal }) => {
                         date={arrDate[6]}
                     />
                 ) : null} */}
-            </div>
-            <div className="trainingPage__btns">
-                <div
-                    onClick={() => setCount(count + 1)}
-                    className="trainingPage__more-btn"
-                >
-                    Добавить следующую неделю
+                    </div>
+                    <div className="trainingPage__btns">
+                        <div
+                            onClick={() => setCount(count + 1)}
+                            className="trainingPage__more-btn"
+                        >
+                            Добавить следующую неделю
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            )}
+        </>
     );
 };
 

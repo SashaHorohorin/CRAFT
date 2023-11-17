@@ -5,8 +5,9 @@ import DataService from "../../API/DataService";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
+import Loader from "../Loader/Loader";
 
-const TrainingTabs = ({openModal }) => {
+const TrainingTabs = ({ openModal }) => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [arrDate, setArrDate] = useState([]);
     const [training, setTraining] = useState([]);
@@ -20,7 +21,7 @@ const TrainingTabs = ({openModal }) => {
         // console.log(training);
         setActiveTabIndex(index);
         // console.log(i);
-        eventStore.setIndexMap(index + 1)
+        eventStore.setIndexMap(index + 1);
     };
     const [fetchingTraining, isLoadingTraining, errorTraining] = useFetching(
         async (count) => {
@@ -81,7 +82,7 @@ const TrainingTabs = ({openModal }) => {
 
     useEffect(() => {
         fetchingTraining(count);
-        eventStore.setIndexMap(1)
+        eventStore.setIndexMap(1);
     }, []);
 
     let dayTraining = [
@@ -121,64 +122,68 @@ const TrainingTabs = ({openModal }) => {
     ];
 
     return (
-        <div className="trainingPage__tabs tabs-info">
-            <Link to='/where-we' className="trainingPage__adress">
-                {cities[activeTabIndex].address}
-            </Link>
-            <div className="trainingPage__description">
-                {cities[activeTabIndex].text}
-            </div>
+        <>
+            {(isLoadingTraining && (count == 0)) ? (
+                <Loader />
+            ) : (
+                <div className="trainingPage__tabs tabs-info">
+                    <Link to="/where-we" className="trainingPage__adress">
+                        {cities[activeTabIndex].address}
+                    </Link>
+                    <div className="trainingPage__description">
+                        {cities[activeTabIndex].text}
+                    </div>
 
-            <ul className="tabs-info__labels">
-                {trainingComplex.map((tab, index) => (
-                    <li
-                        key={index}
-                        className={
-                            index === activeTabIndex
-                                ? "tabs-info__tab active"
-                                : "tabs-info__tab"
-                        }
-                        onClick={() => activate(index)}
-                    >
-                        {tab}
-                    </li>
-                ))}
-            </ul>
-            <div className="tabs-info__content active">
-                {arrDate.map((day, index) => {
-                    if (indexDay > 5) {
-                        indexDay = -1;
-                        indexWorkout = indexWorkout + 1;
-                    }
-                    indexDay = indexDay + 1;
-
-                    // console.log(indexDay + " " + indexWorkout);
-                    return (
-                        <Workouts
-                            key={index}
-                            workouts={
-                                training[activeTabIndex][indexWorkout]?.[
-                                    dayTraining[indexDay]
-                                ]
+                    <ul className="tabs-info__labels">
+                        {trainingComplex.map((tab, index) => (
+                            <li
+                                key={index}
+                                className={
+                                    index === activeTabIndex
+                                        ? "tabs-info__tab active"
+                                        : "tabs-info__tab"
+                                }
+                                onClick={() => activate(index)}
+                            >
+                                {tab}
+                            </li>
+                        ))}
+                    </ul>
+                    <div className="tabs-info__content active">
+                        {arrDate.map((day, index) => {
+                            if (indexDay > 5) {
+                                indexDay = -1;
+                                indexWorkout = indexWorkout + 1;
                             }
-                            date={day}
-                            openModal={(type) => openModal(type)}
-                        />
-                    );
-                })}
-            </div>
-            <div className="trainingPage__btns">
-                <div
-                    onClick={() => setCount(count + 1)}
-                    className="trainingPage__more-btn"
-                >
-                    Показать расписание на следующую неделю
+                            indexDay = indexDay + 1;
+
+                            // console.log(indexDay + " " + indexWorkout);
+                            return (
+                                <Workouts
+                                    key={index}
+                                    workouts={
+                                        training[activeTabIndex][
+                                            indexWorkout
+                                        ]?.[dayTraining[indexDay]]
+                                    }
+                                    date={day}
+                                    openModal={(type) => openModal(type)}
+                                />
+                            );
+                        })}
+                    </div>
+                    <div className="trainingPage__btns">
+                        <div
+                            onClick={() => setCount(count + 1)}
+                            className="trainingPage__more-btn"
+                        >
+                            Показать расписание на следующую неделю
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            )}
+        </>
     );
 };
 
 export default observer(TrainingTabs);
-
-

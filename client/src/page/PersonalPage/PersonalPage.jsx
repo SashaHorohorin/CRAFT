@@ -10,6 +10,7 @@ import AdminPage from "../AdminPage/AdminPage";
 import { Navigate } from "react-router";
 import { Link, animateScroll as scroll } from "react-scroll";
 import ModalLabId from "../../components/ModalLabId/ModalLabId";
+import Loader from "../../components/Loader/Loader";
 
 const PersonalPage = () => {
     const [profileData, setProfileData] = useState({});
@@ -250,372 +251,375 @@ const PersonalPage = () => {
 
     return (
         <>
-            {localStorage.getItem("roles") == "ADMIN" ? (
-                <Navigate to="/admin-page/training-change" />
-            ) : (
-                <div className="personal">
-                    <div
-                        className={
-                            flagModalError
-                                ? "modal-window active"
-                                : "modal-window"
-                        }
-                    >
+            {isLoadingProfile ? (<Loader />) : (
+                localStorage.getItem("roles") == "ADMIN" ? (
+                    <Navigate to="/admin-page/training-change" />
+                ) : (
+                    <div className="personal">
                         <div
-                            onClick={() =>
-                                setFlagModalError(false)
+                            className={
+                                flagModalError
+                                    ? "modal-window active"
+                                    : "modal-window"
                             }
-                            className="modal-window__close"
                         >
-                            <span></span>
-                            <span></span>
-                        </div>
-                        <div className="modal-window__title">
-                            {error}
-                        </div>
-                    </div>
-                    <ModalLabId
-                        setFlag={(bool) => setFlagModalLabId(bool)}
-                        flag={flagModalLabId}
-                        sendFunc={(labId) => sendLabId(labId)}
-                    />
-                    <div className="container">
-                        <div className="personal__title">Личный кабинет</div>
-                        <div className="personal__row">
-                            <ul className="personal__nav nav-personal">
-                                <Link
-                                    // ctiveClass="active"
-                                    to="profile"
-                                    spy={true}
-                                    smooth={true}
-                                    offset={-120}
-                                    duration={500}
-                                    className="nav-personal__link"
-                                >
-                                    Профиль
-                                </Link>
-                                <Link
-                                    // ctiveClass="active"
-                                    to="train"
-                                    spy={true}
-                                    smooth={true}
-                                    offset={-120}
-                                    duration={500}
-                                    className="nav-personal__link"
-                                >
-                                    Тренировки
-                                </Link>
-                                <Link
-                                    // ctiveClass="active"
-                                    to="competition"
-                                    spy={true}
-                                    smooth={true}
-                                    offset={-120}
-                                    duration={500}
-                                    className="nav-personal__link"
-                                >
-                                    Соревнования
-                                </Link>
-                                {/* <li className="nav-personal__link">Профиль</li>
-                                <li className="nav-personal__link">
-                                    Тренировки
-                                </li>
-                                <li className="nav-personal__link">
-                                    Соревнования
-                                </li> */}
-                            </ul>
                             <div
-                                id="profile"
-                                className="personal__profile profile-personal"
+                                onClick={() =>
+                                    setFlagModalError(false)
+                                }
+                                className="modal-window__close"
                             >
-                                <div className="profile-personal__info info-profile">
-                                    <div className="info-profile__person">
-                                        {/* <div className="info-profile__img">
-                                            <img
-                                                src="./images/PersonalPage/1.jpe"
-                                                alt="П"
-                                            />
-                                        </div> */}
-                                        <div className="info-profile__info-person info-person">
-                                            <div className="info-person__name">
-                                                {profileData.firstName +
-                                                    " " +
-                                                    profileData.lastName}
-                                            </div>
-                                            <div className="info-person__email">
-                                                email: {profileData.email}
-                                            </div>
-                                            <div className="info-person__username">
-                                                id: {profileData.username}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* <button className="info-profile__edit">
-                                        Изменить аватар
-                                    </button> */}
-                                </div>
-                                {profileData.priceSubscription ? (
-                                    <div className="profile-personal__subscription subscription-profile">
-                                        <div className="subscription-profile__card card-subscription">
-                                            <div className="card-subscription__img">
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div className="modal-window__title">
+                                {error}
+                            </div>
+                        </div>
+                        <ModalLabId
+                            setFlag={(bool) => setFlagModalLabId(bool)}
+                            flag={flagModalLabId}
+                            sendFunc={(labId) => sendLabId(labId)}
+                        />
+                        <div className="container">
+                            <div className="personal__title">Личный кабинет</div>
+                            <div className="personal__row">
+                                <ul className="personal__nav nav-personal">
+                                    <Link
+                                        // ctiveClass="active"
+                                        to="profile"
+                                        spy={true}
+                                        smooth={true}
+                                        offset={-120}
+                                        duration={500}
+                                        className="nav-personal__link"
+                                    >
+                                        Профиль
+                                    </Link>
+                                    <Link
+                                        // ctiveClass="active"
+                                        to="train"
+                                        spy={true}
+                                        smooth={true}
+                                        offset={-120}
+                                        duration={500}
+                                        className="nav-personal__link"
+                                    >
+                                        Тренировки
+                                    </Link>
+                                    <Link
+                                        // ctiveClass="active"
+                                        to="competition"
+                                        spy={true}
+                                        smooth={true}
+                                        offset={-120}
+                                        duration={500}
+                                        className="nav-personal__link"
+                                    >
+                                        Соревнования
+                                    </Link>
+                                    {/* <li className="nav-personal__link">Профиль</li>
+                                    <li className="nav-personal__link">
+                                        Тренировки
+                                    </li>
+                                    <li className="nav-personal__link">
+                                        Соревнования
+                                    </li> */}
+                                </ul>
+                                <div
+                                    id="profile"
+                                    className="personal__profile profile-personal"
+                                >
+                                    <div className="profile-personal__info info-profile">
+                                        <div className="info-profile__person">
+                                            {/* <div className="info-profile__img">
                                                 <img
-                                                    src="./images/PersonalPage/card.svg"
-                                                    alt=""
+                                                    src="./images/PersonalPage/1.jpe"
+                                                    alt="П"
                                                 />
-                                                <div className="card-subscription__count count-card">
-                                                    <div className="count-card__count">
-                                                        {
-                                                            profileData
-                                                                ?.priceSubscription
-                                                                ?.maxTrains
-                                                        }
-                                                    </div>
-                                                    <div className="count-card__label">
-                                                        Тренировок
-                                                    </div>
+                                            </div> */}
+                                            <div className="info-profile__info-person info-person">
+                                                <div className="info-person__name">
+                                                    {profileData.firstName +
+                                                        " " +
+                                                        profileData.lastName}
                                                 </div>
-                                                <div className="card-subscription__date">
-                                                    до{" "}
-                                                    {getDateYear(
-                                                        profileData
-                                                            ?.priceSubscription
-                                                            ?.endSubscription
-                                                    )}
+                                                <div className="info-person__email">
+                                                    email: {profileData.email}
                                                 </div>
-                                                <div
-                                                    onClick={() =>
-                                                        getTime(
-                                                            profileData
-                                                                ?.priceSubscription
-                                                                ?.startSubscription,
-                                                            profileData
-                                                                ?.priceSubscription
-                                                                ?.endSubscription
-                                                        )
-                                                    }
-                                                    className="card-subscription__name"
-                                                >
-                                                    Абонемент
+                                                <div className="info-person__username">
+                                                    id: {profileData.username}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="subscription-profile__progressbars">
-                                            <div className="subscription-profile__progressbar progressbar-profile">
-                                                <div
-                                                    onClick={() =>
-                                                        console.log(
-                                                            `${
-                                                                100 /
-                                                                profileData
-                                                                    ?.priceSubscription
-                                                                    ?.maxTrains
-                                                            } + %`
-                                                        )
-                                                    }
-                                                    className="progressbar-profile__label"
-                                                >
-                                                    Тренировки
-                                                </div>
-
-                                                <div className="progressbar-profile__bg">
-                                                    <div className="progressbar-profile__start">
-                                                        0
-                                                    </div>
-                                                    <div className="progressbar-profile__end">
-                                                        {
-                                                            profileData
-                                                                ?.priceSubscription
-                                                                ?.maxTrains
-                                                        }
-                                                    </div>
-                                                    <div
-                                                        className="progressbar-profile__line"
-                                                        style={{
-                                                            width: `${
-                                                                100 -
-                                                                (100 /
-                                                                    profileData
-                                                                        ?.priceSubscription
-                                                                        ?.maxTrains) *
-                                                                    (profileData
-                                                                        ?.priceSubscription
-                                                                        ?.maxTrains -
-                                                                        profileData
-                                                                            ?.priceSubscription
-                                                                            ?.remainingTrains)
-                                                            }%`,
-                                                        }}
-                                                    >
-                                                        <div className="progressbar-profile__current progressbar-train">
+                                        {/* <button className="info-profile__edit">
+                                            Изменить аватар
+                                        </button> */}
+                                    </div>
+                                    {profileData.priceSubscription ? (
+                                        <div className="profile-personal__subscription subscription-profile">
+                                            <div className="subscription-profile__card card-subscription">
+                                                <div className="card-subscription__img">
+                                                    <img
+                                                        src="./images/PersonalPage/card.svg"
+                                                        alt=""
+                                                    />
+                                                    <div className="card-subscription__count count-card">
+                                                        <div className="count-card__count">
                                                             {
                                                                 profileData
                                                                     ?.priceSubscription
-                                                                    ?.remainingTrains
+                                                                    ?.maxTrains
                                                             }
                                                         </div>
+                                                        <div className="count-card__label">
+                                                            Тренировок
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div className="subscription-profile__progressbar progressbar-profile">
-                                                <div className="progressbar-profile__label">
-                                                    Срок действия
-                                                </div>
-
-                                                <div className="progressbar-profile__bg">
-                                                    <div className="progressbar-profile__start">
-                                                        {getDate(
-                                                            profileData
-                                                                ?.priceSubscription
-                                                                ?.startSubscription
-                                                        )}
-                                                    </div>
-                                                    <div className="progressbar-profile__end">
-                                                        {getDate(
+                                                    <div className="card-subscription__date">
+                                                        до{" "}
+                                                        {getDateYear(
                                                             profileData
                                                                 ?.priceSubscription
                                                                 ?.endSubscription
                                                         )}
                                                     </div>
                                                     <div
-                                                        className="progressbar-profile__line"
-                                                        style={{
-                                                            width: `${
-                                                                (100 /
-                                                                    (profileData
-                                                                        ?.priceSubscription
-                                                                        ?.endSubscription -
-                                                                        profileData
-                                                                            ?.priceSubscription
-                                                                            ?.startSubscription)) *
-                                                                (new Date() -
+                                                        onClick={() =>
+                                                            getTime(
+                                                                profileData
+                                                                    ?.priceSubscription
+                                                                    ?.startSubscription,
+                                                                profileData
+                                                                    ?.priceSubscription
+                                                                    ?.endSubscription
+                                                            )
+                                                        }
+                                                        className="card-subscription__name"
+                                                    >
+                                                        Абонемент
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="subscription-profile__progressbars">
+                                                <div className="subscription-profile__progressbar progressbar-profile">
+                                                    <div
+                                                        onClick={() =>
+                                                            console.log(
+                                                                `${
+                                                                    100 /
                                                                     profileData
                                                                         ?.priceSubscription
-                                                                        ?.startSubscription)
-                                                            }%`,
-                                                        }}
+                                                                        ?.maxTrains
+                                                                } + %`
+                                                            )
+                                                        }
+                                                        className="progressbar-profile__label"
                                                     >
-                                                        <div className="progressbar-profile__current progressbar-competition">
-                                                            {nowDate()}
+                                                        Тренировки
+                                                    </div>
+    
+                                                    <div className="progressbar-profile__bg">
+                                                        <div className="progressbar-profile__start">
+                                                            0
+                                                        </div>
+                                                        <div className="progressbar-profile__end">
+                                                            {
+                                                                profileData
+                                                                    ?.priceSubscription
+                                                                    ?.maxTrains
+                                                            }
+                                                        </div>
+                                                        <div
+                                                            className="progressbar-profile__line"
+                                                            style={{
+                                                                width: `${
+                                                                    100 -
+                                                                    (100 /
+                                                                        profileData
+                                                                            ?.priceSubscription
+                                                                            ?.maxTrains) *
+                                                                        (profileData
+                                                                            ?.priceSubscription
+                                                                            ?.maxTrains -
+                                                                            profileData
+                                                                                ?.priceSubscription
+                                                                                ?.remainingTrains)
+                                                                }%`,
+                                                            }}
+                                                        >
+                                                            <div className="progressbar-profile__current progressbar-train">
+                                                                {
+                                                                    profileData
+                                                                        ?.priceSubscription
+                                                                        ?.remainingTrains
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="subscription-profile__progressbar progressbar-profile">
+                                                    <div className="progressbar-profile__label">
+                                                        Срок действия
+                                                    </div>
+    
+                                                    <div className="progressbar-profile__bg">
+                                                        <div className="progressbar-profile__start">
+                                                            {getDate(
+                                                                profileData
+                                                                    ?.priceSubscription
+                                                                    ?.startSubscription
+                                                            )}
+                                                        </div>
+                                                        <div className="progressbar-profile__end">
+                                                            {getDate(
+                                                                profileData
+                                                                    ?.priceSubscription
+                                                                    ?.endSubscription
+                                                            )}
+                                                        </div>
+                                                        <div
+                                                            className="progressbar-profile__line"
+                                                            style={{
+                                                                width: `${
+                                                                    (100 /
+                                                                        (profileData
+                                                                            ?.priceSubscription
+                                                                            ?.endSubscription -
+                                                                            profileData
+                                                                                ?.priceSubscription
+                                                                                ?.startSubscription)) *
+                                                                    (new Date() -
+                                                                        profileData
+                                                                            ?.priceSubscription
+                                                                            ?.startSubscription)
+                                                                }%`,
+                                                            }}
+                                                        >
+                                                            <div className="progressbar-profile__current progressbar-competition">
+                                                                {nowDate()}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ) : null}
-                                <div className="profile-personal__invite-pair invite-pair">
-                                    <div className="invite-pair__title">
-                                        Приглашения в пару
-                                    </div>
-                                    <div className="invite-pair__row">
-                                        {requestToInvite?.map(
-                                            (request, index) => (
-                                                <InviteItem
-                                                    func={[
-                                                        (pairId, user) =>
-                                                            deleteJoin(
-                                                                pairId,
-                                                                user
-                                                            ),
-                                                        (pairId, user) =>
-                                                            deleteInvite(
-                                                                pairId,
-                                                                user
-                                                            ),
-                                                    ]}
-                                                    request={request}
-                                                    type="invite"
-                                                />
-                                            )
-                                        )}
-                                    </div>
-                                </div>
-                                <div className="profile-personal__invite-pair invite-pair">
-                                    <div className="invite-pair__title">
-                                        Заявки на вступление в пару
-                                    </div>
-                                    <div className="invite-pair__row">
-                                        {requestToJoin?.map(
-                                            (request, index) => (
-                                                <InviteItem
-                                                    func={[
-                                                        (pairId, user) =>
-                                                            deleteJoin(
-                                                                pairId,
-                                                                user
-                                                            ),
-                                                        (pairId, user) =>
-                                                            deleteInvite(
-                                                                pairId,
-                                                                user
-                                                            ),
-                                                        (pairId, user) =>
-                                                            acceptJoin(
-                                                                pairId,
-                                                                user
-                                                            ),
-                                                        (pairId, user) =>
-                                                            acceptInvite(
-                                                                pairId,
-                                                                user
-                                                            ),
-                                                    ]}
-                                                    request={request}
-                                                    type="join"
-                                                    flag={flagModalLabId}
-                                                    setFlag={(bool) =>
-                                                        setFlagModalLabId(bool)
-                                                    }
-                                                />
-                                            )
-                                        )}
-                                    </div>
-                                </div>
-                                <div
-                                    id="train"
-                                    className="profile-personal__myworkouts myworkouts-profile"
-                                >
-                                    <div className="myworkouts-profile__title">
-                                        Мои тренировки
-                                    </div>
-                                    {workoutTrain?.map((train, index) => (
-                                        <PersonalTraining
-                                            key={index}
-                                            train={train}
-                                            setWorkoutTrain={(workout) =>
-                                                setWorkoutTrain(workout)
-                                            }
-                                            workoutTrain={workoutTrain}
-                                        />
-                                    ))}
-                                </div>
-                                <div
-                                    id="competition"
-                                    className="profile-personal__competitions competitions-profile"
-                                >
-                                    <div className="competitions-profile__title">
-                                        Соревнования
-                                    </div>
-                                    {competitions?.map((competition, index) => (
-                                        <Competition
-                                            key={competition.id}
-                                            deletePair={(pairId) =>
-                                                deletePair(
-                                                    pairId,
-                                                    competition.id
+                                    ) : null}
+                                    <div className="profile-personal__invite-pair invite-pair">
+                                        <div className="invite-pair__title">
+                                            Приглашения в пару
+                                        </div>
+                                        <div className="invite-pair__row">
+                                            {requestToInvite?.map(
+                                                (request, index) => (
+                                                    <InviteItem
+                                                        func={[
+                                                            (pairId, user) =>
+                                                                deleteJoin(
+                                                                    pairId,
+                                                                    user
+                                                                ),
+                                                            (pairId, user) =>
+                                                                deleteInvite(
+                                                                    pairId,
+                                                                    user
+                                                                ),
+                                                        ]}
+                                                        request={request}
+                                                        type="invite"
+                                                    />
                                                 )
-                                            }
-                                            competition={competition}
-                                            type="delete"
-                                        />
-                                    ))}
-                                    {/* <Competition /> */}
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="profile-personal__invite-pair invite-pair">
+                                        <div className="invite-pair__title">
+                                            Заявки на вступление в пару
+                                        </div>
+                                        <div className="invite-pair__row">
+                                            {requestToJoin?.map(
+                                                (request, index) => (
+                                                    <InviteItem
+                                                        func={[
+                                                            (pairId, user) =>
+                                                                deleteJoin(
+                                                                    pairId,
+                                                                    user
+                                                                ),
+                                                            (pairId, user) =>
+                                                                deleteInvite(
+                                                                    pairId,
+                                                                    user
+                                                                ),
+                                                            (pairId, user) =>
+                                                                acceptJoin(
+                                                                    pairId,
+                                                                    user
+                                                                ),
+                                                            (pairId, user) =>
+                                                                acceptInvite(
+                                                                    pairId,
+                                                                    user
+                                                                ),
+                                                        ]}
+                                                        request={request}
+                                                        type="join"
+                                                        flag={flagModalLabId}
+                                                        setFlag={(bool) =>
+                                                            setFlagModalLabId(bool)
+                                                        }
+                                                    />
+                                                )
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div
+                                        id="train"
+                                        className="profile-personal__myworkouts myworkouts-profile"
+                                    >
+                                        <div className="myworkouts-profile__title">
+                                            Мои тренировки
+                                        </div>
+                                        {workoutTrain?.map((train, index) => (
+                                            <PersonalTraining
+                                                key={index}
+                                                train={train}
+                                                setWorkoutTrain={(workout) =>
+                                                    setWorkoutTrain(workout)
+                                                }
+                                                workoutTrain={workoutTrain}
+                                            />
+                                        ))}
+                                    </div>
+                                    <div
+                                        id="competition"
+                                        className="profile-personal__competitions competitions-profile"
+                                    >
+                                        <div className="competitions-profile__title">
+                                            Соревнования
+                                        </div>
+                                        {competitions?.map((competition, index) => (
+                                            <Competition
+                                                key={competition.id}
+                                                deletePair={(pairId) =>
+                                                    deletePair(
+                                                        pairId,
+                                                        competition.id
+                                                    )
+                                                }
+                                                competition={competition}
+                                                type="delete"
+                                            />
+                                        ))}
+                                        {/* <Competition /> */}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )
             )}
+            
         </>
     );
 };

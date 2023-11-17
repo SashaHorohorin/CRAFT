@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Suspense, useContext, useEffect, useState } from "react";
 import "./HomePage.scss";
 import FollowingBtn from "../../components/FollowingBtn/FollowingBtn";
 import MainPart from "../../components/MainPart/MainPart";
@@ -10,25 +10,38 @@ import WhereWe from "../../components/WhereWe/WhereWe";
 import Footer from "../../components/Footer/Footer";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
+import { Context } from "../..";
+import { observer } from "mobx-react-lite";
 
 const HomePage = () => {
     const [isLoad, setIsLoad] = useState(true);
+    const { eventStore } = useContext(Context);
     // если страница зажружена запускаем воланчик
-
-    const loadPage = () => {
-        console.log("Страница загрузилась");
-        setTimeout(() => {
-            setIsLoad(false);
-        }, 1500)
+    // useEffect(() => {
+    //     document.body.classList.add("stop");
+    // }, [])
+    // const loadPage = () => {
+    //     console.log("Страница загрузилась");
+    //     setTimeout(() => {
+    //         document.body.classList.remove("stop");
+    //         setIsLoad(false);
+    //     }, 1500)
         
-    };
+    // };
+
+    useEffect(() => {
+        if (eventStore.currentCountImg == eventStore.maxCountImg){
+            setIsLoad(false)
+            eventStore.currentCountImg = 0;
+        }
+    }, [eventStore.currentCountImg])
+
+
 
     return (
-        <>
-            {isLoad ? (
-                    <Loader/>
-                ) : (null)}
-            <div onLoad={() => loadPage()} className="home">
+        
+            <>
+                <div className="home">
                 <Link to="training">
                     <FollowingBtn />
                 </Link>
@@ -83,8 +96,9 @@ const HomePage = () => {
                 />
                 <WhereWe />
             </div>
-        </>
+            </>
+        
     );
 };
 
-export default HomePage;
+export default observer(HomePage);
