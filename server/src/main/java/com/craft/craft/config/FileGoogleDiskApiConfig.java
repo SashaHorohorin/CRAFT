@@ -23,7 +23,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
 
-@Configuration
+//@Configuration
 public class FileGoogleDiskApiConfig {
 
     private static final String APPLICATION_NAME = "test";

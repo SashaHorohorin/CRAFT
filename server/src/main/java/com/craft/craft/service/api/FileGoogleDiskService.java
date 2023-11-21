@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.UUID;
 
-@Service
+//@Service
 public class FileGoogleDiskService implements FileService {
 
     @Autowired
@@ -24,16 +24,11 @@ public class FileGoogleDiskService implements FileService {
 
     @Override
     public String saveFile(File file) throws IOException {
-        //com.google.api.services.drive.model.File result = service.files().get("1K4b-Rlq-nWk2mEf0yLDzB5UO_0ArzrSg").execute();
-       // System.out.printf("%s (%s)\n", result.getName(), result.getId());
 
         com.google.api.services.drive.model.File fileMetadata = new com.google.api.services.drive.model.File();
         UUID randomName = UUID.randomUUID();
         fileMetadata.setName(randomName + ".jpg");
         fileMetadata.setParents(Collections.singletonList(parentId));
-        //fileMetadata.setParents(Collections.singletonList("1K4b-Rlq-nWk2mEf0yLDzB5UO_0ArzrSg"));
-
-        //java.io.File filePath = new java.io.File("upload-dir/photo.jpg");
         FileContent mediaContent = new FileContent("image/jpeg", file);
         try {
             com.google.api.services.drive.model.File f = service.files().create(fileMetadata, mediaContent)

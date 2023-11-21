@@ -12,8 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/api/v1/file")
+//@RestController
+//@RequestMapping("/api/v1/file")
 public class FileController {
 
     @Autowired
@@ -31,11 +31,11 @@ public class FileController {
             }
             String uuidFile = UUID.randomUUID().toString();
             String resultFilename = uuidFile + '.' + file.getOriginalFilename();
-            File fileOnServer = new File( uploadDir + "/" + resultFilename);
+            File fileOnServer = new File(uploadDir + "/" + resultFilename);
             file.transferTo(fileOnServer);
             id = fileService.saveFile(fileOnServer);
             fileOnServer.delete();
-    }
+        }
         return id;
     }
 

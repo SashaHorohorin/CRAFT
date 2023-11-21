@@ -6,6 +6,8 @@ import com.craft.craft.dto.sport.train.TrainInfoDto;
 import com.craft.craft.dto.sport.train.TrainUpdateDto;
 import com.craft.craft.error.exeption.FullTrainException;
 import com.craft.craft.error.exeption.ModelNotFoundException;
+import com.craft.craft.model.sport.Competition;
+import com.craft.craft.model.sport.CompetitionStatus;
 import com.craft.craft.model.sport.SportComplex;
 import com.craft.craft.model.sport.Train;
 import com.craft.craft.model.user.BaseUser;
@@ -15,6 +17,8 @@ import com.craft.craft.repository.user.AdminRepo;
 import com.craft.craft.repository.user.BaseUserRepo;
 import com.craft.craft.service.mail.MailingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -112,6 +116,19 @@ public class TrainService {
         train.setSportComplex(updateDto.getSportComplex());
         return trainRepo.save(train);
     }
+
+    @Async
+    @Scheduled(fixedDelay = 1000 * 60 * 60)//каждый час
+    public void updateCompetitionStatus() {
+        List<Train> trains = trainRepo.findAll();
+        Date now = new Date();
+        trains.forEach(train -> {
+            if (now.after(train.getEndTrain())) {
+                trainRepo.deleteById(train.getId());
+            }
+        });
+    }
+
 
     @Deprecated
     public TrainCalendarBySportComplexDto getTrainCalendarOnThisWeek() throws ModelNotFoundException {

@@ -11,4 +11,8 @@ public enum  TrainType  {
     GAME_WITH_TRAINER,
     @JsonProperty("Детская тренировка")
     BABY_TRAIN,
+    @JsonProperty("Тренировка для начинающих")
+    GAME_FOR_BEGINERS,
+    @JsonProperty("Тренировка для продолжающих")
+    GAME_FOR_CONTINUES,
 }

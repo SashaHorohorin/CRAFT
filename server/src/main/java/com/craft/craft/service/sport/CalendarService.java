@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,6 +44,7 @@ public class CalendarService {
                 .orElseThrow(() -> new ModelNotFoundException("В указанных датах нет соревнований"));
         items.addAll(trains);
         items.addAll(competitions);
+        items = items.stream().sorted(Comparator.comparing(ItemInCalendar::getStartItem).reversed()).collect(Collectors.toList());
         CalendarForSportComplexOnWeek alexeeva = getCalendarAtWeekForSportComplex(SportComplex.ALEKSEEVA, items);
         CalendarForSportComplexOnWeek dinamit = getCalendarAtWeekForSportComplex(SportComplex.DINAMIT, items);
         CalendarForSportComplexOnWeek impuls = getCalendarAtWeekForSportComplex(SportComplex.IMPULS, items);

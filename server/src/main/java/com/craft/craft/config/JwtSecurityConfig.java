@@ -60,6 +60,7 @@ public class JwtSecurityConfig {
                         //competition-------------------------------------------------------------------------------------
                         .antMatchers(
                                 "/api/v1/competition/get-all",
+                                "/api/v1/competition/get-all/active",
                                 "/api/v1/competition/{id}"
 
                         ).permitAll()
@@ -97,6 +98,7 @@ public class JwtSecurityConfig {
                         .antMatchers("/api/v1/first-train-form/**").permitAll()
                         .antMatchers("/api/v1/subscription/cancel-order").hasAuthority(RoleName.ADMIN.name())
                         //------------------------------------------------------------------------------------------------
+                        .antMatchers("/google/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .apply(new JwtConfigurer(jwtTokenProvider))

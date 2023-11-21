@@ -138,6 +138,7 @@ public class CompetitionService {
             throw new FullTrainException("Достигнуто максимальное количество записавшихся пар");
         if (competition.getCompetitionPairs().stream().anyMatch(pair -> pair.getPlayers().contains(player1)))
             throw new ModelNotFoundException("Вы уже записаны на соревнование");
+
         player1.setRating(LabService.getUserRating(player1.getLabId()));
         if (competition.getRatingUp() != null && competition.getRatingUp() < (player1.getRating())) {
             throw new ModelNotFoundException("Ваш рейтинг больше допустимого");
@@ -364,12 +365,13 @@ public class CompetitionService {
     @Async
     @Scheduled(fixedDelay = 1000 * 60 * 60)//каждый час
     public void updateCompetitionStatus() {
-        List<Competition> competitions = findAllActive();
+        List<Competition> competitions = competitionRepo.findAll();
         Date now = new Date();
         competitions.forEach(competition -> {
             if (now.after(competition.getEndCompetition())) {
-                competition.setStatus(CompetitionStatus.NOT_ACTIVE);
-                competitionRepo.save(competition);
+                competitionRepo.deleteById(competition.getId());
+                //competition.setStatus(CompetitionStatus.NOT_ACTIVE);
+                //competitionRepo.save(competition);
             }
         });
     }

@@ -26,10 +26,12 @@ public class CompetitionController {
     public List<CompetitionDto> getAll() {
         return competitionService.findAll().stream().map(CompetitionDto::getDtoFromCompetition).collect(Collectors.toList());
     }
+
     @GetMapping("/get-all/active")
     public List<CompetitionDto> getAllActive() {
         return competitionService.findAllActive().stream().map(CompetitionDto::getDtoFromCompetition).collect(Collectors.toList());
     }
+
     @PostMapping("/{competitionId}/create-and-invite")
     public CompetitionDto createPairAndSetInvite(@PathVariable UUID competitionId, @RequestBody UsernameDto secondPlayer) throws ModelNotFoundException, FullTrainException, MessagingException {
         CompetitionPair pair = competitionService.createPair(competitionId);
@@ -47,18 +49,21 @@ public class CompetitionController {
                 competitionService.addSecondUserToPairFromRequestJoin(competitionPairId, dto.getUsername())
                         .getCompetition());
     }
+
     @PostMapping("/pair/{competitionPairId}/reject-join-request")
     public CompetitionDto rejectRequestJoin(@PathVariable UUID competitionPairId, @RequestBody UsernameDto dto) throws ModelNotFoundException, FullTrainException {
         return CompetitionDto.getDtoFromCompetition(
                 competitionService.rejectRequestJoin(competitionPairId, dto.getUsername())
                         .getCompetition());
     }
+
     @PostMapping("/pair/{competitionPairId}/accept-invite-request")
     public CompetitionDto addSecondUserToPairFromRequestInvite(@PathVariable UUID competitionPairId, @RequestBody UsernameDto dto) throws ModelNotFoundException {
         return CompetitionDto.getDtoFromCompetition(
                 competitionService.addSecondUserToPairFromRequestInvite(competitionPairId, dto.getUsername())
                         .getCompetition());
-}
+    }
+
     @PostMapping("/pair/{competitionPairId}/reject-invite-request")
     public CompetitionDto rejectRequestInvite(@PathVariable UUID competitionPairId, @RequestBody UsernameDto dto) throws ModelNotFoundException {
         return CompetitionDto.getDtoFromCompetition(
@@ -88,10 +93,12 @@ public class CompetitionController {
     public CompetitionDto createCompetition(@RequestBody CreateCompetitionDto dto) {
         return CompetitionDto.getDtoFromCompetition(competitionService.createCompetition(dto));
     }
+
     @PostMapping("/update/{id}")
     public CompetitionDto updateCompetition(@PathVariable UUID id, @RequestBody UpdateCompetitionDto dto) throws ModelNotFoundException {
-        return  CompetitionDto.getDtoFromCompetition(competitionService.updateCompetition(id, dto));
+        return CompetitionDto.getDtoFromCompetition(competitionService.updateCompetition(id, dto));
     }
+
     @PostMapping("/delete/{id}")
     public boolean deleteCompetition(@PathVariable UUID id) {
         return competitionService.deleteCompetition(id);
@@ -99,7 +106,7 @@ public class CompetitionController {
 
     @PostMapping("/delete-pair/{pairId}")
     public CompetitionDto deletePair(@PathVariable UUID pairId) throws ModelNotFoundException {
-        return  CompetitionDto.getDtoFromCompetition(competitionService.deletePair(pairId));
+        return CompetitionDto.getDtoFromCompetition(competitionService.deletePair(pairId));
     }
 //
 //    @PostMapping("/{trainId}/remove-user")
