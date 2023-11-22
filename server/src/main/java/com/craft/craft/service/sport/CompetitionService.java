@@ -88,6 +88,9 @@ public class CompetitionService {
                 () -> new ModelNotFoundException("Пара по данному id не найдена")
         );
         Competition competition = pair.getCompetition();
+        competition.getCompetitionPairs().remove(pair);
+        competition.setNowPair(competition.getNowPair() - 1);
+        competitionRepo.save(competition);
         competitionPairRepo.deleteById(pairId);
         return competition;
     }
@@ -253,6 +256,14 @@ public class CompetitionService {
             try {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(pair.getCompetition().getStartCompetition());
+                String type = "type";
+                try {
+                    Annotation[] annotations = CompetitionType.class.getField(pair.getCompetition().getType().name()).getAnnotations();
+                    JsonProperty properties = (JsonProperty) annotations[0];
+                    type = properties.value();
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
                 String massage = String.format(
                         "<html><body><div>" + "Привет, %s.\n" +
                                 "Пользователь %s хочет присоединиться к вам в пару на соревнование %s, " +
@@ -261,7 +272,7 @@ public class CompetitionService {
                                 "</body></html>",
                         user.getFirstName() + " " + user.getLastName(),
                         player.getFirstName() + " " + player.getLastName(),
-                        pair.getCompetition().getType(),
+                        type, pair.getCompetition().getCategory(),
                         calendar.get(Calendar.DAY_OF_MONTH) + "." +
                                 calendar.get(Calendar.MONTH) + "." +
                                 calendar.get(Calendar.YEAR)
