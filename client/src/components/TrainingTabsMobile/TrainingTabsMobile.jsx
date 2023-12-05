@@ -18,7 +18,7 @@ const TrainingTabsMobile = ({ openModal }) => {
 
     let indexDay = -1;
     let indexWorkout = 1;
-    let trainingComplex = ["СК Динамит", "СК Импульс", "СК Алексеева"];
+    let trainingComplex = ["СК Динамит", "Арена 300", "СК Алексеева"];
 
     const [fetchingTraining, isLoadingTraining, errorTraining] = useFetching(
         async (count) => {

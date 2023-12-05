@@ -201,7 +201,7 @@ const TrainingPage = () => {
                         >
                             {/* <div className="item-people__img"></div> */}
                             <div className="item-people__name">
-                                {sportsmen.firstName}
+                                {sportsmen.firstName + " " + sportsmen.lastName}
                             </div>
                         </li>
                     ))}
