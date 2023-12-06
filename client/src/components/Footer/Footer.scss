@@ -1,0 +1,133 @@
+.footer {
+    background: #5b5b5b;
+    color: #fff;
+    padding: 40px;
+    &__row {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        @media (max-width: 660px) {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    &__column {
+        margin-right: 20px;
+        &:last-child {
+            margin: 0;
+        }
+    }
+
+    &__phone {
+    }
+
+    &__navigate {
+    }
+
+    &__social {
+    }
+}
+
+.phone-footer {
+    @media (max-width: 915px) {
+        max-width: 200px;
+    }
+    @media (max-width: 770px) {
+        max-width: 150px;
+    }
+    @media (max-width: 660px) {
+        margin-bottom: 30px;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    &__title {
+        font-weight: 600;
+        margin-bottom: 20px;
+        @media (max-width: 770px) {
+            font-size: 14px;
+        }
+        @media (max-width: 660px) {
+            text-align: center;
+        }
+    }
+
+    &__number {
+        text-decoration: none;
+        color: #fff;
+    }
+}
+
+.navigate-footer {
+    font-weight: 600;
+
+    @media (max-width: 770px) {
+        font-size: 14px;
+    }
+    @media (max-width: 660px) {
+        margin-bottom: 30px;
+    }
+    &__row {
+        display: flex;
+        align-items: center;
+    }
+
+    &__column {
+        margin-right: 50px;
+        &:last-child {
+            margin: 0;
+        }
+        @media (max-width: 660px) {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    &__link {
+        display: block;
+        color: #fff;
+        // background: transparent;
+        text-decoration: none;
+        margin-bottom: 10px;
+    }
+}
+
+.social-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    @media (max-width: 915px) {
+        max-width: 100px;
+    }
+    @media (max-width: 660px) {
+        max-width: 100%;
+        align-items: center;
+    }
+    &__title {
+        margin-bottom: 20px;
+        font-weight: 600;
+        @media (max-width: 770px) {
+            font-size: 14px;
+        }
+        @media (max-width: 660px) {
+            text-align: center;
+        }
+    }
+
+    &__img {
+        display: flex;
+        align-items: center;
+        a {
+            margin-right: 10px;
+            &:last-child {
+                margin: 0;
+            }
+        }
+        a:last-child > img{
+            width: 79%;
+        }
+    }
+}

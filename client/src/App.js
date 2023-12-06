@@ -1,14 +1,105 @@
-import './App.css';
-import HomePage from './page/HomePage/HomePage';
-
+import "./App.css";
+import {
+    Routes,
+    Route,
+    Link,
+    RouterProvider,
+    Navigate,
+    BrowserRouter,
+} from "react-router-dom";
+import HomePage from "./page/HomePage/HomePage";
+import RegistrationPage from "./page/RegistrationPage/RegistrationPage";
+import Layout from "./components/Layout/Layout";
+import TrainingPage from "./page/TrainingPage/TrainingPage";
+import { Suspense, lazy, useContext, useEffect } from "react";
+import { Context } from ".";
+import { observer } from "mobx-react-lite";
+import ActivatePage from "./page/ActivatePage/ActivatePage";
+import RequierAuth from "./hoc/RequierAuth";
+import EventsPage from "./page/EventsPage/EventsPage";
+import CompetitionsPage from "./page/CompetitionsPage/CompetitionsPage";
+import PricesPage from "./page/PricesPage/PricesPage";
+import PersonalPage from "./page/PersonalPage/PersonalPage";
+import Applications from "./page/Applications/Applications";
+import AdminPage from "./page/AdminPage/AdminPage";
+import TrainingChange from "./components/AdminComponent/AdminInPage/TrainingChange";
+import CompetitionChange from "./components/AdminComponent/AdminInPage/CompetitionChange";
+import EventChange from "./components/AdminComponent/AdminInPage/EventChange";
+import InfoAllUser from "./components/AdminComponent/AdminInPage/InfoAllUser";
+import Subscriptions from "./components/AdminComponent/AdminInPage/Subscriptions";
+import WhereWe from "./components/WhereWe/WhereWe";
+import WherePage from "./page/WherePage/WherePage";
+import Loader from "./components/Loader/Loader";
 
 function App() {
-  return (
-    <div className="App">
-      <HomePage/>
-      
-    </div>
-  );
+    const { store } = useContext(Context);
+
+    const token = localStorage.getItem("accessToken");
+    // const HomePage = lazy(() => import('./page/HomePage/HomePage'));
+    useEffect(() => {
+        if (token) {
+            store.checkAuth();
+        }
+        console.log(store.isAuth);
+    }, [token]);
+
+    return (
+        <BrowserRouter>
+            <div className="App">
+                {/* <Suspense fallback={<Loader/>}> */}
+                    <Routes>
+                        <Route path="/" element={<Layout />}>
+                            <Route index element={<HomePage />} />
+                            <Route path="training" element={<TrainingPage />} />
+                            <Route path="events" element={<EventsPage />} />
+                            <Route
+                                path="competitions"
+                                element={<CompetitionsPage />}
+                            />
+                            <Route path="where-we" element={<WherePage />} />
+                            <Route path="prices" element={<PricesPage />} />
+                            <Route path="profile" element={<PersonalPage />} />
+                            <Route
+                                path="competitions/applications/:id"
+                                element={<Applications />}
+                            />
+                            <Route path="admin-page" element={<AdminPage />}>
+                                <Route
+                                    path="training-change"
+                                    element={<TrainingChange />}
+                                />
+                                <Route
+                                    path="competition-change"
+                                    element={<CompetitionChange />}
+                                />
+                                <Route
+                                    path="event-change"
+                                    element={<EventChange />}
+                                />
+                                <Route
+                                    path="all-users"
+                                    element={<InfoAllUser />}
+                                />
+                                <Route
+                                    path="subscriptions"
+                                    element={<Subscriptions />}
+                                />
+                            </Route>
+                            <Route path="*" element={<HomePage />} />
+                        </Route>
+                        <Route
+                            path="auth/:sign"
+                            element={<RegistrationPage />}
+                        />
+                        <Route
+                            path="activate-account/:code"
+                            element={<ActivatePage />}
+                        />
+                    </Routes>
+                {/* </Suspense> */}
+            </div>
+        </BrowserRouter>
+    );
 }
 
-export default App;
+export default observer(App);

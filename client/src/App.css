@@ -8,12 +8,16 @@
 .container {
     max-width: 1280px;
     margin: 0 auto;
-    /* padding: 0 10px; */
+    @media (max-width: 1320px) {
+        padding: 0 15px;
+    }
 }
 
 
 
 @import url("https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;600;700&display=swap");
+
+
 
 body {
     /* padding: 40px 0px 0 0px; */
@@ -21,9 +25,15 @@ body {
     overflow-x: hidden;
     /* height: 100vh; */
 }
+
+body.stop{
+    overflow: hidden;
+}
+
 body::-webkit-scrollbar {
     width: 10px;
     background-color: #f9f9fd;
+    /* background-color: transparent; */
 
 }
 body::-webkit-scrollbar-thumb {
@@ -35,10 +45,12 @@ body::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: #f9f9fd;
 }
-
-
-.marquee-first{
-    color: #ffffff;
-    background: #ED696B;
+.App{
+    min-height: 100vh;
+    overflow: hidden;
 }
+
+
+
+
 
