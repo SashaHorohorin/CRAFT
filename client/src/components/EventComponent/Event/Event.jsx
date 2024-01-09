@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Context } from "../../..";
 import { observer } from "mobx-react-lite";
 import { set } from "mobx";
+import Loader from "../../Loader/Loader";
 
 const Event = ({ event, setLoader }) => {
     const { eventStore } = useContext(Context);

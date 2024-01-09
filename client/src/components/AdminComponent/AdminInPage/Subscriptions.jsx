@@ -47,18 +47,20 @@ const Subscriptions = () => {
     const [fetchingAcceptOrder, isLoadingAcceptOrder, errorAcceptOrder] = useFetching(
         async (obj) => {
             const response = await DataService.postAcceptOrder(obj);
-            setSubscriptions(subscriptions.filter(subscription => subscription.priceId != obj.priceId))
+            setSubscriptions(subscriptions.filter(subscription =>  subscription.username !== obj.username))
         }
     );
     const [fetchingCancelOrder, isLoadingCancelOrder, errorCancelOrder] = useFetching(
         async (obj) => {
             const response = await DataService.postCancelOrder(obj);
-            setSubscriptions(subscriptions.filter(subscription => subscription.priceId != obj.priceId))
+            console.log(obj.username);
+            setSubscriptions(subscriptions.filter(subscription => (subscription.username !== obj.username)))
         }
     );
     const [fetchingAllOrders, isLoadingAllOrders, errorAllOrders] = useFetching(
         async () => {
             const response = await DataService.getAllOrders();
+            console.log(response.data);
             setSubscriptions(response.data)
         }
     );

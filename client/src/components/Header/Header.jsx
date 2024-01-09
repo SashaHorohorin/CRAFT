@@ -114,7 +114,7 @@ const Header = () => {
                                             >
                                                 Выход
                                             </div>
-                                            <Link to="profile">
+                                            <Link onClick={() => setOpenBurger(!openBurger)} to="profile">
                                                 <div className="menu-burger__profile"></div>
                                             </Link>
                                         </div>

@@ -18,7 +18,7 @@ const ModalTrain = ({
 }) => {
     const { trainingChange } = useContext(Context);
 
-    const sportComplex = ["DINAMIT", "ALEKSEEVA", "IMPULS"];
+    const sportComplex = ["DINAMIT", "ALEKSEEVA", "ARENA300"];
     const typeTrain = [
         "Тактическая игровая",
         "Тренировка с тренером",

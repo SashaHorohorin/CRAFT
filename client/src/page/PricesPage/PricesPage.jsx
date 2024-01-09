@@ -3,13 +3,15 @@ import "./PricesPage.scss";
 import DataService from "../../API/DataService";
 import { useFetching } from "../../hooks/useFetching";
 import Loader from "../../components/Loader/Loader";
+import { useNavigate } from "react-router";
 
 const PricesPage = () => {
-    const sporthalls = ["СК Динамит", "СК Импульс", "СК Алексеева"];
+    const sporthalls = ["СК Динамит", "Арена 300", "СК Алексеева"];
     const color = ["E5FFE7", "E5FFFC", "E5EFFF"];
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [price, setPrice] = useState([]);
     const [flagInfo, setFlagInfo] = useState(false);
+    const navigate = useNavigate();
 
     const [fetchingPrice, isLoadingPrice, errorPrice] = useFetching(
         async (sportcomplex) => {
@@ -34,7 +36,7 @@ const PricesPage = () => {
 
     const fetchCost = async () => {
         await fetchingPrice("DINAMIT");
-        await fetchingPrice("IMPULS");
+        await fetchingPrice("ARENA300");
         await fetchingPrice("ALEKSEEVA");
     };
 
@@ -101,15 +103,16 @@ const PricesPage = () => {
                             <div className="prices-tabs__content">
                                 {price[activeTabIndex]?.map((cost, index) => {
                                     if (cost.title === 1) {
-                                        return (
-                                            <div className="prices-tabs__card card-price">
+                                        if(cost.sportComplex === "ALEKSEEVA" || cost.sportComplex === "ARENA300"){
+                                            return (
+                                                <div className="prices-tabs__card card-price">
                                                 <div className="card-price__info-price">
                                                     <div className="card-price__title">
                                                         {cost.title} тренировка
                                                     </div>
                                                     <div className="card-price__now-price">
                                                         <span>
-                                                            {cost.nowPrice} ₽
+                                                            1100 - 1300 ₽
                                                         </span>
                                                     </div>
                                                 </div>
@@ -132,7 +135,7 @@ const PricesPage = () => {
                                                     </ul>
                                                     <button
                                                         onClick={() =>
-                                                            addOrder(cost.id)
+                                                            navigate('/training')
                                                         }
                                                         className="info-card__btn"
                                                     >
@@ -140,7 +143,50 @@ const PricesPage = () => {
                                                     </button>
                                                 </div>
                                             </div>
-                                        );
+                                            )
+                                        } else {
+                                            return (
+                                                <div className="prices-tabs__card card-price">
+                                                    <div className="card-price__info-price">
+                                                        <div className="card-price__title">
+                                                            {cost.title} тренировка
+                                                        </div>
+                                                        <div className="card-price__now-price">
+                                                            <span>
+                                                                {cost.nowPrice} ₽
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        style={{
+                                                            background: `#${color[activeTabIndex]}`,
+                                                        }}
+                                                        className="card-price__info info-card"
+                                                    >
+                                                        <ul className="info-card__list">
+                                                            <li className="info-card__label">
+                                                                работа тренера
+                                                            </li>
+                                                            <li className="info-card__label">
+                                                                аренда корта
+                                                            </li>
+                                                            <li className="info-card__label">
+                                                                перьевые воланы
+                                                            </li>
+                                                        </ul>
+                                                        <button
+                                                            onClick={() =>
+                                                                navigate('/training')
+                                                            }
+                                                            className="info-card__btn"
+                                                        >
+                                                            Записаться
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            );
+                                        }
+                                        
                                     } else {
                                         if (!(cost.type === "CHILDREN")) {
                                             return (

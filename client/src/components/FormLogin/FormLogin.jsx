@@ -5,12 +5,14 @@ import { observer } from "mobx-react-lite";
 import { useFetching } from "../../hooks/useFetching";
 import DataService from "../../API/DataService";
 import { useNavigate } from "react-router";
+import ModalForgot from "./ModalForgot/ModalForgot";
+import storeForgot from "../../store/forgot-password";
 
-const FormLogin = ({fromPage}) => {
-    const {store} = useContext(Context)
-    const navigate = useNavigate()
+const FormLogin = ({ fromPage }) => {
+    const { store } = useContext(Context);
+    const navigate = useNavigate();
 
-    const [flagLog, setFlagLog] = useState(false)
+    const [flagLog, setFlagLog] = useState(false);
     const [flagExeptionLog, setflagExeptionLog] = useState(false);
     const [objLog, setObjLog] = useState({
         email: "",
@@ -50,10 +52,10 @@ const FormLogin = ({fromPage}) => {
         });
         setLogFlagReset(!logFlagReset);
         // setTimeout(()=>{
-            if(store.isAuth === true){
-                console.log('-----------IsAuth');
-                navigate(fromPage, {replace: true});
-            }
+        if (store.isAuth === true) {
+            console.log("-----------IsAuth");
+            navigate(fromPage, { replace: true });
+        }
         // },100)
     };
 
@@ -61,53 +63,54 @@ const FormLogin = ({fromPage}) => {
         event.preventDefault();
     };
 
-   
     return (
-        <div className="forms-registration__login login-form">
-            <div className="login-form__title">Войти</div>
-            <form onSubmit={handleSubmit} className="login-form__form form">
-                <div className="form__fieldset">
-                    <InputReg
-                        type="text"
-                        name="email"
-                        valueInp={logFlagReset}
-                        obj={objLog}
-                        setData={(newObj) => setObjLog(newObj)}
-                        classField={flagExeptionLog ? "login-email" : ""}
-                        className="form__input email"
-                        required
-                        nameLabel="Email"
-                    />
-                    {flagExeptionLog ? (
-                        <span className="exeption-email">
-                            Введена неверная почта
-                        </span>
-                    ) : null}
-                    {/* <span className="exeption-email">{}</span> */}
-                    <InputReg
-                        type="password"
-                        name="password"
-                        valueInp={logFlagReset}
-                        obj={objLog}
-                        setData={(newObj) => setObjLog(newObj)}
-                        className="form__input"
-                        required
-                        nameLabel="Пароль"
-                    />
-                </div>
-                <div className="form__buttons">
-                    {/* <button type="button" className="form__buttons-forgot">
-                        Забыли пароль?
-                    </button> */}
-                    <input
-                        onClick={() => postLogin(objLog)}
-                        type="submit"
-                        value="Войти"
-                        className="form__button"
-                    />
-                </div>
-            </form>
-        </div>
+        <>
+            <div className="forms-registration__login login-form">
+                <div className="login-form__title">Войти</div>
+                <form onSubmit={handleSubmit} className="login-form__form form">
+                    <div className="form__fieldset">
+                        <InputReg
+                            type="text"
+                            name="email"
+                            valueInp={logFlagReset}
+                            obj={objLog}
+                            setData={(newObj) => setObjLog(newObj)}
+                            classField={flagExeptionLog ? "login-email" : ""}
+                            className="form__input email"
+                            required
+                            nameLabel="Email"
+                        />
+                        {flagExeptionLog ? (
+                            <span className="exeption-email">
+                                Введена неверная почта
+                            </span>
+                        ) : null}
+                        {/* <span className="exeption-email">{}</span> */}
+                        <InputReg
+                            type="password"
+                            name="password"
+                            valueInp={logFlagReset}
+                            obj={objLog}
+                            setData={(newObj) => setObjLog(newObj)}
+                            className="form__input"
+                            required
+                            nameLabel="Пароль"
+                        />
+                    </div>
+                    <div className="form__buttons">
+                        <button onClick={() => storeForgot.setOpenModalForgot(true)} type="button" className="form__buttons-forgot">
+                            Забыли пароль?
+                        </button>
+                        <input
+                            onClick={() => postLogin(objLog)}
+                            type="submit"
+                            value="Войти"
+                            className="form__button"
+                        />
+                    </div>
+                </form>
+            </div>
+        </>
     );
 };
 

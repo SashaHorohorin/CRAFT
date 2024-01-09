@@ -99,7 +99,7 @@ const TrainingTabs = ({ openModal }) => {
         morning: 1,
         morning: 2,
     };
-    let trainingComplex = ["СК Динамит", "СК Импульс", "СК Алексеева"];
+    let trainingComplex = ["СК Динамит", "Арена 300", "СК Алексеева"];
 
     const cities = [
         {

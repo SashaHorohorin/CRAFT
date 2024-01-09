@@ -75,7 +75,7 @@ const InputReg = ({
                     mask={EmailMask}
                     // onAccept={(value, mask) => console.log(value, mask)}
                 />
-            ) : arg.name == "password" || arg.name == "confirmationPassword" ? (
+            ) : arg.type == "password" ? (
                 <IMaskInput
                     {...arg}
                     value={value}
@@ -88,6 +88,15 @@ const InputReg = ({
                     {...arg}
                     onChange={(e) => handleFunction(e)}
                     checked={checked}
+                />
+            ) : arg.name == 'code' ? (
+                <IMaskInput
+                    {...arg}
+                    value={value}
+                    onChange={(e) => handleFunction(e)}
+                    maxlength="6"
+                    mask={/^[0-9]+$/i}
+                    // onAccept={(value, mask) => console.log(value, mask)}
                 />
             ) : (
                 <IMaskInput

@@ -16,7 +16,7 @@ const ModalCompetition = ({
 }) => {
     const { competitionChange } = useContext(Context);
 
-    const sportComplex = ["DINAMIT", "ALEKSEEVA", "IMPULS"];
+    const sportComplex = ["DINAMIT", "ALEKSEEVA", "ARENA300"];
     const typeCompetition = ["Пара", "Микст", "Все против всех"];
     const categoryCompetition = ['EF', 'DE', 'CD', 'BC', 'AB']
     

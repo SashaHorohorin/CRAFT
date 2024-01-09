@@ -27,7 +27,7 @@ const InviteItem = ({ type, request, func, setFlag, labId}) => {
         if(localStorage.getItem('labId') == 'null'){
             setFlag(true)
         }else{
-            await func[2](request.pairId, localStorage.getItem('username'));
+            await func[2](request.pairId, request.request.username);
             // console.log(flagSucces);
         }
     }

@@ -14,7 +14,7 @@ const EventsPage = () => {
     // const [flagOpenModal, setFlagOpenModal] = useState(false);
     const { eventStore } = useContext(Context);
 
-    const [loaderPage, setLoaderPage] = useState(false);
+    const [loaderPage, setLoaderPage] = useState(true);
 
     const [fetchingEvents, isLoadingEvents, errorEvents] = useFetching(
         async (pageNum) => {
@@ -28,6 +28,7 @@ const EventsPage = () => {
             });
             console.log(response.data);
             setTotalPages(response.data.totalPages);
+            setLoaderPage(false);
             // console.log('saskfhjahfshahfjshfkjshkj');
             // let complex = [...response.data];
         }

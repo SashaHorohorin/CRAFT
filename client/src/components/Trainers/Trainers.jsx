@@ -27,8 +27,8 @@ const Trainers = () => {
         },
         {
             id: 4,
-            name: "Дмитрий Решетников",
-            photoURL: "./images/HomePage/Trainers/2.jpg",
+            name: "Даниил Синяев",
+            photoURL: "./images/HomePage/Trainers/2.png",
             textFront: "Победитель городских соревнований, рейтинг ЛАБ - 901",
             textBack: "",
         },

@@ -223,5 +223,27 @@ export default class DataService {
             `api/v1/first-train-form/register`, obj);
     }
 
+    // ===================================================<Востановление пароля>
+    static async postSendChangePassword(email) {
+        return await $api.post(`api/v1/profile/reset/send-change-password-code`, email, {
+            headers: {
+            "Content-Type": "text/plain"
+            }
+          });
+    }
+    static async postConfirmChangePassword(code) {
+        return await $api.post(`/api/v1/profile/reset/confirm-change-password-code`, code, {
+            headers: {
+            "Content-Type": "text/plain"
+            }
+          });
+    }
+    static async postChangePassword(obj) {
+        return await $api.post(`/api/v1/profile/reset/change-password`, obj);
+    }
+
+    
+    // ===================================================<Востановление пароля>
+
     
 }

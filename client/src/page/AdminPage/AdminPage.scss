@@ -87,6 +87,10 @@
     &__users{
 
     }
+
+    &__search{
+        height: 100%;
+    }
     
 }
 
@@ -510,5 +514,41 @@ textarea{
         background: #ff6969;
         padding: 10px;
         border-radius: 10px;
+    }
+}
+
+.search-admin{
+    display: flex;
+    align-items: center;
+    &__select{
+        height: 30px;
+        margin-right: 10px;
+        padding-left: 10px;
+    }
+    &__data{
+        height: 30px;
+        padding-left: 10px;
+        margin-right: 10px;
+
+
+    }
+
+    &__filter{
+        width: 25px;
+        height: 25px;
+        background-image: url('../../../public/images/AdminImage/search.svg');
+        background-color: transparent;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+    &__reset{
+        height: 30px;
+        padding: 0 10px;
+        background: transparent;
+        border: 1px solid #000;
+        border-radius: 5px;
+        cursor: pointer;
     }
 }

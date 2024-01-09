@@ -10,6 +10,7 @@ import { Context } from "../..";
 import { observer } from "mobx-react-lite";
 import FormRegistration from '../../components/FormRegistration/FormRegistration' ;
 import FormLogin from '../../components/FormLogin/FormLogin' ;
+import ModalForgot from "../../components/FormLogin/ModalForgot/ModalForgot";
 
 const RegistrationPage = (props) => {
     const {store} = useContext(Context)
@@ -33,6 +34,7 @@ const RegistrationPage = (props) => {
 
     return (
         <div className="registration">
+            <ModalForgot/>
             <div className={store.flagError ? "modal-window active" : "modal-window"}>
             
                 <div onClick={() => closeModalWindow()} className="modal-window__close">
