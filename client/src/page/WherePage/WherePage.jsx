@@ -1,8 +1,7 @@
 import React from "react";
 import MapYandex from "../../components/WhereWe/MapYandex/MapYandex";
 
-const WherePage = () => {
-    return (
+const WherePage = () => 
         <div className="where where-page">
             <div className="container">
                 <div className="where__title">Как нас найти?</div>
@@ -12,7 +11,6 @@ const WherePage = () => {
                 </div>
             </div>
         </div>
-    );
-};
+
 
 export default WherePage;

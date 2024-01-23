@@ -112,7 +112,7 @@ const PricesPage = () => {
                                                     </div>
                                                     <div className="card-price__now-price">
                                                         <span>
-                                                            1100 - 1300 ₽
+                                                            1150 - 1350 ₽
                                                         </span>
                                                     </div>
                                                 </div>

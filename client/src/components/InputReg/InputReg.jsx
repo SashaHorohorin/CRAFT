@@ -10,17 +10,22 @@ const InputReg = ({
     setData,
     valueInp,
     obj,
+    flagFill,
     ...arg
 }) => {
     // let valueData = ''
-
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState('');
+    const [valueEdit, setValueEdit] = useState('');
     let flag = false;
     if (arg.name === "agreementMailing") {
         flag = true;
     }
     // console.log(valueInp);
     const [checked, setChecked] = useState(flag);
+
+    useEffect(() => {
+        setValueEdit(obj[arg.name])
+    }, [obj])
 
     useEffect(() => {
         if (arg.name === "agreementMailing") {
@@ -59,7 +64,33 @@ const InputReg = ({
         <div
             className={classField ? `form__field ${classField}` : "form__field"}
         >
-            {arg.name == "phoneNumber" ? (
+            {flagFill ? (
+                arg.name == "phoneNumber" ? (
+                    <IMaskInput
+                        {...arg}
+                        value={valueEdit}
+                        onChange={(e) => handleFunction(e)}
+                        mask={PhoneMask}
+                        // onAccept={(value, mask) => console.log(value, mask)}
+                    />
+                ) : arg.name == "email" ? (
+                    <IMaskInput
+                        {...arg}
+                        value={valueEdit}
+                        onChange={(e) => handleFunction(e)}
+                        mask={EmailMask}
+                        // onAccept={(value, mask) => console.log(value, mask)}
+                    />
+                ) : (
+                    <IMaskInput
+                        {...arg}
+                        value={valueEdit}
+                        onChange={(e) => handleFunction(e)}
+                        mask={/^[a-zа-я]+$/i}
+                        // onAccept={(value, mask) => console.log(value, mask)}
+                    />
+                )
+            ) : arg.name == "phoneNumber" ? (
                 <IMaskInput
                     {...arg}
                     value={value}
@@ -89,7 +120,7 @@ const InputReg = ({
                     onChange={(e) => handleFunction(e)}
                     checked={checked}
                 />
-            ) : arg.name == 'code' ? (
+            ) : arg.name == "code" ? (
                 <IMaskInput
                     {...arg}
                     value={value}
@@ -107,7 +138,18 @@ const InputReg = ({
                     // onAccept={(value, mask) => console.log(value, mask)}
                 />
             )}
-            {arg.type != "checkbox" ? (
+            {flagFill ? (
+                <label onClick={() => test()} className="form__label">
+                    {nameLabel.split("").map((latter, index) => (
+                        <span
+                            key={index}
+                            style={{ transitionDelay: `${index * 50}ms` }}
+                        >
+                            {latter}
+                        </span>
+                    ))}
+                </label>
+            ) : arg.type != "checkbox" ? (
                 <label onClick={() => test()} className="form__label">
                     {nameLabel.split("").map((latter, index) => (
                         <span
