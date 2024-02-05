@@ -1,9 +1,9 @@
 import { makeAutoObservable } from "mobx";
 import DataService from "../API/DataService";
 import axios from "axios";
-import $api from "../http";
+import $api, { HOST } from "../http";
 
-const HOST = "https://craft-bc-backend.online";
+// const HOST = "https://craft-bc-backend.online";
 export default class Store {
     user = "";
     isAuth = Boolean(localStorage.getItem("username")) || false;

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const HOST = "https://craft-bc-backend.online";
+export const HOST = "https://craft-bc-backend.online";
 // const HOST = "http://localhost:9005";
 
 const $api = axios.create({
@@ -49,3 +49,4 @@ $api.interceptors.response.use(
 );
 
 export default $api;
+

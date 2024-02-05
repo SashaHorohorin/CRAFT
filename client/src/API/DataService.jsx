@@ -1,12 +1,12 @@
 import axios from "axios";
-import $api from "../http";
+import $api, { HOST } from "../http";
 
-const host = "https://craft-bc-backend.online";
+// export const host = "https://craft-bc-backend.online";
 // const host = "craft-bc-backend.online:9005";
 export default class DataService {
     static async getCardWhy() {
         const response = await axios.get(
-            `http://${host}/user/get-all-actives-cards`
+            `http://${HOST}/user/get-all-actives-cards`
         );
         // console.log('uqweruwqr');
         return response;

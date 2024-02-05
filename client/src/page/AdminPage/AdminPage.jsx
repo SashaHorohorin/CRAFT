@@ -4,7 +4,6 @@ import Training from "../../components/AdminComponent/Training";
 import InputSelect from "../../components/AdminComponent/InputSelect";
 import InputText from "../../components/AdminComponent/InputText";
 import { useFetching } from "../../hooks/useFetching";
-import DataService from "../../API/DataService";
 import ModalTrain from "../../components/AdminComponent/ModalTrain";
 import TrainingChange from "../../components/AdminComponent/AdminInPage/TrainingChange";
 import { observer } from "mobx-react-lite";
@@ -14,9 +13,10 @@ import { Link } from "react-router-dom";
 import ModalCompetition from "../../components/AdminComponent/ModalCompetition";
 import ModalEvent from "../../components/AdminComponent/ModalEvent";
 import axios from "axios";
-import $api from "../../http";
+import $api, { HOST } from "../../http";
 import FormData from "form-data";
 import { set } from "mobx";
+import DataService from "../../API/DataService";
 
 const AdminPage = () => {
     const { trainingChange, competitionChange, eventChange } =
@@ -412,7 +412,7 @@ const AdminPage = () => {
         formData.append("file", file);
         // console.log(formData);
         let response = await axios.post(
-            "https://craft-bc-backend.online/google/upload",
+            `${HOST}/google/upload`,
             formData,
             {
                 headers: {
@@ -453,7 +453,7 @@ const AdminPage = () => {
         formData.append("file", fileObj);
         // console.log(formData);
         let response = await axios.post(
-            "https://craft-bc-backend.online/google/upload",
+            `${HOST}/google/upload`,
             formData,
             {
                 headers: {

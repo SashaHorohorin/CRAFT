@@ -4,13 +4,15 @@ import { Context } from "../..";
 import { observer } from "mobx-react-lite";
 import axios from "axios";
 import './ActivatePage.scss'
+import { HOST } from "../../http";
+
 
 const ActivatePage = () => {
     const { code } = useParams();
     const {store} = useContext(Context)
     const activate = async () => {
         console.log(code);
-        const response = axios.get(`https://craft-bc-backend.online/api/v1/auth/activate/${code}`);
+        const response = axios.get(`${HOST}/api/v1/auth/activate/${code}`);
         console.log(response.data);
         store.setActivate(response.data);
 
