@@ -65,7 +65,8 @@
 
     &__item {
     }
-    &__send-btn{
+    &__send-btn-change{
+        position: relative;
         cursor: pointer;
         padding: 5px;
         max-width: 200px;
@@ -76,6 +77,25 @@
         font-weight: 200;
         border-radius: 9px;
         background: #ff6969;
+        display: flex;
+        justify-content: space-around;
+        & span{
+            display: block;
+            transform: rotate(90deg);
+            margin-left: 10px;
+            background: #dc5b5b;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+        }
+        &.active{
+            .send-btn-change__block{
+                display: block;
+            }
+            & span{
+                transform: rotate(270deg);
+            }
+        }
     }
 
     &__btns{
@@ -90,6 +110,32 @@
 
     &__search{
         height: 100%;
+    }
+    
+}
+
+.send-btn-change{
+    &__block{
+        display: none;
+        border-radius: 9px;
+        background: #ff6969;
+        position: absolute;
+        top: 40px;
+        z-index: 20;
+        padding: 10px;
+    }
+}
+
+.block-btn{
+    &__custom,
+    &__standart{
+        border-radius: 9px;
+        background: #de4747;
+        font-size: 18px;
+        padding: 5px;
+    }
+    &__custom{
+        margin-bottom: 10px;
     }
     
 }
@@ -552,3 +598,4 @@ textarea{
         cursor: pointer;
     }
 }
+

@@ -249,6 +249,8 @@ export default class DataService {
         return await $api.post(`api/v1/profile/change/data`, obj);
     }
     // ===================================================<Редактирование профиля>
-
+    static async postSendCustomMail(obj) {
+        return await $api.post(`/api/v1/mailing/send-custom-mail`, obj);
+    }
     
 }
