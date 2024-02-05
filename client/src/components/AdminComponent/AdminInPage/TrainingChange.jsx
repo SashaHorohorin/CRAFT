@@ -170,14 +170,14 @@ const TrainingChange = () => {
                                             id="subject"
                                         />
                                     </label>
-                                    <label htmlFor="text">
+                                    <label htmlFor="message">
                                         Текст поста:
                                         <textarea
                                             onChange={(e) => handleFunctionCustom(e)}
                                             // value={text}
-                                            name="text"
+                                            name="message"
                                             type="text"
-                                            id="text"
+                                            id="message"
                                         ></textarea>
                                     </label>
                                 </form>
