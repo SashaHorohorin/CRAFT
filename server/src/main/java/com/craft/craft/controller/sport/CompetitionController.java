@@ -100,7 +100,7 @@ public class CompetitionController {
     }
 
     @PostMapping("/delete/{id}")
-    public boolean deleteCompetition(@PathVariable UUID id) {
+    public boolean deleteCompetition(@PathVariable UUID id) throws ModelNotFoundException {
         return competitionService.deleteCompetition(id);
     }
 

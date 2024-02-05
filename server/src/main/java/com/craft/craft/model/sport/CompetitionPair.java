@@ -16,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Data
+@ToString
 public class CompetitionPair extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(

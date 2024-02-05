@@ -13,8 +13,8 @@ public class CalendarOnWeek {
 
     @JsonProperty("Динамит")
     private CalendarForSportComplexOnWeek dinamit;
-    @JsonProperty("Импульс")
-    private CalendarForSportComplexOnWeek impuls;
+    @JsonProperty("Арена 300")
+    private CalendarForSportComplexOnWeek arena300;
     @JsonProperty("Алексеева")
     private CalendarForSportComplexOnWeek alexeeva;
 }

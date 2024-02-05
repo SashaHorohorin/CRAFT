@@ -165,7 +165,7 @@ public class TestDataController {
         adminService.save(admin);
         Trainer trainer = new Trainer("NAME","URL","textFront", "textBack", InfoCardStatus.ACTIVE);
         //trainer.setAuthor(admin);
-        Train train = new Train(TrainType.GAME, new Date(), new Date(),10, SportComplex.IMPULS);
+        Train train = new Train(TrainType.GAME, new Date(), new Date(),10, SportComplex.ARENA300);
         train.getTrainers().add(trainer);
         trainRepo.save(train);
         return "YEEES";

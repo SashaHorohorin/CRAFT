@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:15
+    container_name: craft1-java-postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=nikita
+      - POSTGRES_DB=craft
+    expose:
+      - "5432"
+    ports:
+      - "5434:5432"
+    volumes:
+      - craft-db-data:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4:6.15
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "15432:80"
+    depends_on:
+      - db
+
+
+volumes:
+  craft-db-data:
+    external: true

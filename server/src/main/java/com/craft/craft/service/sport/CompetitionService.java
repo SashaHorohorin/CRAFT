@@ -23,10 +23,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import java.lang.annotation.Annotation;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -55,30 +52,40 @@ public class CompetitionService {
         competition.setCategory(createCompetitionDto.getCategory());
         switch (competition.getCategory()) {
             case AB: {
-                competition.setRatingDown(700);
+                competition.setRatingUp(10000);
                 break;
             }
             case BC: {
-                competition.setRatingDown(600);
+                competition.setRatingUp(1600);
                 break;
             }
             case CD: {
-                competition.setRatingUp(600);
+                competition.setRatingUp(1200);
                 break;
             }
             case DE: {
-                competition.setRatingUp(450);
+                competition.setRatingUp(800);
                 break;
             }
             case EF: {
-                competition.setRatingUp(350);
+                competition.setRatingUp(600);
                 break;
             }
         }
         return competitionRepo.save(competition);
     }
 
-    public Boolean deleteCompetition(UUID id) {
+    public Boolean deleteCompetition(UUID id) throws ModelNotFoundException {
+        Competition competition = competitionRepo.findById(id).orElseThrow(
+                () -> new ModelNotFoundException("Соревнование по данному id не найдено")
+        );
+        Set<CompetitionPair> pairs = competition.getCompetitionPairs();
+        pairs.forEach(p ->{
+            competition.getCompetitionPairs().remove(p);
+            competition.setNowPair(competition.getNowPair() - 1);
+            competitionRepo.save(competition);
+            competitionPairRepo.deleteById(p.getId());
+        });
         competitionRepo.deleteById(id);
         return true;
     }
@@ -106,23 +113,23 @@ public class CompetitionService {
         competition.setCategory(dto.getCategory());
         switch (competition.getCategory()) {
             case AB: {
-                competition.setRatingDown(700);
+                competition.setRatingUp(10000);
                 break;
             }
             case BC: {
-                competition.setRatingDown(600);
+                competition.setRatingUp(1600);
                 break;
             }
             case CD: {
-                competition.setRatingUp(600);
+                competition.setRatingUp(1200);
                 break;
             }
             case DE: {
-                competition.setRatingUp(450);
+                competition.setRatingUp(800);
                 break;
             }
             case EF: {
-                competition.setRatingUp(350);
+                competition.setRatingUp(600);
                 break;
             }
         }
@@ -380,9 +387,14 @@ public class CompetitionService {
         Date now = new Date();
         competitions.forEach(competition -> {
             if (now.after(competition.getEndCompetition())) {
+                Set<CompetitionPair> pairs = competition.getCompetitionPairs();
+                pairs.forEach(p -> {
+                    competition.getCompetitionPairs().remove(p);
+                    competition.setNowPair(competition.getNowPair() - 1);
+                    competitionRepo.save(competition);
+                    competitionPairRepo.deleteById(p.getId());
+                });
                 competitionRepo.deleteById(competition.getId());
-                //competition.setStatus(CompetitionStatus.NOT_ACTIVE);
-                //competitionRepo.save(competition);
             }
         });
     }

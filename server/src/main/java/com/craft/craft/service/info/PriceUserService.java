@@ -87,6 +87,21 @@ public class PriceUserService {
     }
 
 
+//    @Async
+//    @Scheduled(fixedDelay = 24*1000 * 60 * 60)//каждый день
+//    public void updatePrices() {
+//        List<PriceUser> prices = priceUserRepo.findAll();
+//        Date date = new Date();
+//        prices.forEach(price -> {
+//            // (время покупки) ДО (текущая дата - 45дней) -> обнуляем абонемент
+//            if(price.getTimeOfPurchase().toInstant().isBefore(date.toInstant().minus(45, ChronoUnit.DAYS))){
+//                price.getUser().setPrice(null);
+//                userRepo.save(price.getUser());
+//                priceUserRepo.deleteById(price.getId());
+//            }
+//        });
+//    }
+
     @Async
     @Scheduled(fixedDelay = 24*1000 * 60 * 60)//каждый день
     public void updateCompetitionStatus() {
@@ -102,6 +117,5 @@ public class PriceUserService {
             }
         });
     }
-
 
 }

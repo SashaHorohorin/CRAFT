@@ -8,6 +8,7 @@ import com.craft.craft.model.sport.Competition;
 import com.craft.craft.model.sport.CompetitionPair;
 import com.craft.craft.model.sport.Train;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -112,6 +113,9 @@ public class BaseUser extends BaseEntity {
     private boolean agreementMailing;
     private String activationCode;
     private boolean haveFirstTrain = false;
+    @Length(min=6, max=6)
+    private String changePasswordCode;
+    private Boolean canChangePassword;
 
 
     @PrePersist
@@ -128,4 +132,10 @@ public class BaseUser extends BaseEntity {
     }
 
 
+    @Override
+    public String toString() {
+        return "BaseUser{" +
+                "username='" + username + '\'' +
+                '}';
+    }
 }

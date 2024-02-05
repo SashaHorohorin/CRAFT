@@ -1,8 +1,6 @@
 package com.craft.craft.controller;
 
-import com.craft.craft.dto.FindUserDto;
-import com.craft.craft.dto.SetLabIdDto;
-import com.craft.craft.dto.ProfileBaseUserResponseDto;
+import com.craft.craft.dto.*;
 import com.craft.craft.error.exeption.ModelNotFoundException;
 import com.craft.craft.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +18,8 @@ public class BaseUserController {
     private final UserService userService;
 
     @GetMapping("/{username}")
-    public ProfileBaseUserResponseDto getUserByUsername(@PathVariable String username){
-        return  ProfileBaseUserResponseDto.getDtoFromBaseUser(userService.findByUsername(username));
+    public ProfileBaseUserResponseDto getUserByUsername(@PathVariable String username) {
+        return ProfileBaseUserResponseDto.getDtoFromBaseUser(userService.findByUsername(username));
     }
 
     @GetMapping("/{username}/with-rating")
@@ -36,12 +34,36 @@ public class BaseUserController {
     }
 
     @GetMapping("/find-all")
-    public List<FindUserDto> getAll(){
+    public List<FindUserDto> getAll() {
         return userService.findAll().stream().map(FindUserDto::getDtoFromUser).collect(Collectors.toList());
     }
 
     @GetMapping("/find-all-in-competition-without-pair/{competitionId}")
-    public List<FindUserDto> getAllWithoutPair(@PathVariable UUID competitionId){
+    public List<FindUserDto> getAllWithoutPair(@PathVariable UUID competitionId) {
         return userService.findAllWithoutPair(competitionId).stream().map(FindUserDto::getDtoFromUser).collect(Collectors.toList());
+    }
+
+    @PostMapping("/reset/send-change-password-code")
+    public void sendCodeForChangePassword(@RequestBody String email) throws ModelNotFoundException {
+        System.out.println(email);
+        userService.sendCodeToChangePassword(email);
+    }
+
+    @PostMapping("/reset/confirm-change-password-code")
+    public String confirmCodeForChangePassword(@RequestBody String code) throws ModelNotFoundException {
+        return userService.checkCodeForChangePassword(code);
+    }
+
+    @PostMapping("/reset/change-password")
+    public Boolean changePassword(@RequestBody ChangePasswordDto changePasswordDto) throws ModelNotFoundException {
+        return userService.changePassword(
+                changePasswordDto.getUsername(),
+                changePasswordDto.getPassword(),
+                changePasswordDto.getRepeatedPassword()
+                );
+    }
+    @PostMapping("/change/data")
+    public ProfileBaseUserResponseDto changeProfile(@RequestBody ChangeProfileResponse response) throws ModelNotFoundException {
+        return userService.changeProfile(response);
     }
 }

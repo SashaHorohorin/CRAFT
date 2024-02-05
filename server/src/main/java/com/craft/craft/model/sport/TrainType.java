@@ -15,4 +15,10 @@ public enum  TrainType  {
     GAME_FOR_BEGINERS,
     @JsonProperty("Тренировка для продолжающих")
     GAME_FOR_CONTINUES,
+
+    @JsonProperty("Тренировки для начинающих и продолжающих")
+    GAME_FOR_BEG_AND_CONT,
+
+    @JsonProperty("Мастер+")
+    GAME_FOR_MASTER
 }

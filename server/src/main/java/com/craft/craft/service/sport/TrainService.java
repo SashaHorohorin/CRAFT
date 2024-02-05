@@ -91,6 +91,7 @@ public class TrainService {
     public Train removeUserFromTrain(UUID trainId, String username) throws ModelNotFoundException {
         BaseUser user = baseUserRepo.findByUsername(username).orElseThrow(() -> new ModelNotFoundException("Пользователь с таким username не найден"));
         Train train = trainRepo.findById(trainId).orElseThrow(() -> new ModelNotFoundException("Тренировка с таким id не найдена"));
+        if(train.getStartTrain().getTime() - new Date().getTime() < 6*60*60*1000) throw new ModelNotFoundException("Нельзя выписаться за 6 часов до тренировки");
         if(train.getSportsmen().remove(user)) {
             train.setNowParticipant(train.getNowParticipant() - 1);
             if(user.getPrice() != null) {
@@ -146,8 +147,8 @@ public class TrainService {
 
         TrainCalendarDto alexeeva = getTrainCalendarAtSportComplex(SportComplex.ALEKSEEVA, trains);
         TrainCalendarDto dinamit = getTrainCalendarAtSportComplex(SportComplex.DINAMIT, trains);
-        TrainCalendarDto impuls = getTrainCalendarAtSportComplex(SportComplex.IMPULS, trains);
-        return new TrainCalendarBySportComplexDto(dinamit, impuls, alexeeva);
+        TrainCalendarDto arena300 = getTrainCalendarAtSportComplex(SportComplex.ARENA300, trains);
+        return new TrainCalendarBySportComplexDto(dinamit, arena300, alexeeva);
     }
 
     public List<Train> findAll(){

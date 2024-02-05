@@ -67,4 +67,11 @@ public class Competition extends BaseEntity implements ItemInCalendar {
     public SportComplex getSportComplexOfItem() {
         return sportComplex;
     }
+
+    @Override
+    public String toString() {
+        return "Competition{" +
+                "type=" + type +
+                '}';
+    }
 }

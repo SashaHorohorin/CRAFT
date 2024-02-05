@@ -47,8 +47,8 @@ public class CalendarService {
         items = items.stream().sorted(Comparator.comparing(ItemInCalendar::getStartItem).reversed()).collect(Collectors.toList());
         CalendarForSportComplexOnWeek alexeeva = getCalendarAtWeekForSportComplex(SportComplex.ALEKSEEVA, items);
         CalendarForSportComplexOnWeek dinamit = getCalendarAtWeekForSportComplex(SportComplex.DINAMIT, items);
-        CalendarForSportComplexOnWeek impuls = getCalendarAtWeekForSportComplex(SportComplex.IMPULS, items);
-        return new CalendarOnWeek(dinamit , impuls, alexeeva);
+        CalendarForSportComplexOnWeek arena300 = getCalendarAtWeekForSportComplex(SportComplex.ARENA300, items);
+        return new CalendarOnWeek(dinamit , arena300, alexeeva);
     }
 
     public CalendarForSportComplexOnWeek getCalendarAtWeekForSportComplex(SportComplex sportComplex, List<ItemInCalendar> items) {
