@@ -6,19 +6,22 @@ import EventStore from './store/event-store';
 import TrainingChange from './store/training-change';
 import CompetitionChange from './store/competition-change';
 import EventsChange from './store/event-change';
+import CoachChange from "./store/coach-change";
 
 const store = new Store();
 const eventStore = new EventStore()
 const trainingChange = new TrainingChange()
 const competitionChange = new CompetitionChange()
 const eventChange = new EventsChange()
+const coachChange = new CoachChange()
 
 export const Context = createContext({
     store,
     eventStore,
     trainingChange,
     competitionChange,
-    eventChange
+    eventChange,
+    coachChange
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -28,7 +31,8 @@ root.render(
         eventStore,
         trainingChange,
         competitionChange,
-        eventChange
+        eventChange,
+        coachChange
     }}>
          <App />
     </Context.Provider>

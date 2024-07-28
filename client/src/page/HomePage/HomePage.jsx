@@ -12,10 +12,24 @@ import { Link } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import { Context } from "../..";
 import { observer } from "mobx-react-lite";
+import {fetchingCoaches} from "../AdminPage/AdminPage";
+import {useFetching} from "../../hooks/useFetching";
+import DataService from "../../API/DataService";
 
 const HomePage = () => {
     const [isLoad, setIsLoad] = useState(true);
-    const { eventStore } = useContext(Context);
+    const { eventStore, coachChange } = useContext(Context);
+
+    const [fetchingCoaches, isLoadingCoaches, errorCoaches] =
+        useFetching(async () => {
+            const response = await DataService.getCoachesAll();
+            console.log(response.data);
+            coachChange.setCoaches(response.data);
+        });
+
+    useEffect(() => {
+        fetchingCoaches();
+    }, [])
     // если страница зажружена запускаем воланчик
     // useEffect(() => {
     //     document.body.classList.add("stop");

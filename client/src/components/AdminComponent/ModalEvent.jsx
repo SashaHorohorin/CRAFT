@@ -81,7 +81,7 @@ const ModalEvent = ({
         // e.preventDefault();
         const name = e.target.name;
         let value = e.target.value;
-        console.log(e.target.files[0]);
+        // console.log(e.target.files[0]);
         if (name == "file") {
             // console.log('----');
             setFile(e.target.files[0]);

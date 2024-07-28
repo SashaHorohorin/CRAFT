@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, {useContext, useEffect} from "react";
 import "./Trainers.scss";
 import Trainer from "./Trainer/Trainer";
+import {Context} from "../../index";
 
 const Trainers = () => {
+    const {coachChange } = useContext(Context);
     const trainers = [
         {
             id: 1,
@@ -118,7 +120,7 @@ const Trainers = () => {
             <div className="container">
                 <div className="trainer__title">Наши тренеры</div>
                 <div className="trainer__row">
-                    {trainers.map((trainer, index) => (
+                    {coachChange.coaches.map((trainer, index) => (
                         <Trainer
                             trainer={trainer}
                             key={trainer.id}

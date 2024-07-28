@@ -30,6 +30,7 @@ import Subscriptions from "./components/AdminComponent/AdminInPage/Subscriptions
 import WhereWe from "./components/WhereWe/WhereWe";
 import WherePage from "./page/WherePage/WherePage";
 import Loader from "./components/Loader/Loader";
+import CoachChange from "./components/AdminComponent/AdminInPage/CoachChange";
 
 function App() {
     const { store } = useContext(Context);
@@ -83,6 +84,10 @@ function App() {
                                 <Route
                                     path="subscriptions"
                                     element={<Subscriptions />}
+                                />
+                                <Route
+                                    path="coach"
+                                    element={<CoachChange />}
                                 />
                             </Route>
                             <Route path="*" element={<HomePage />} />

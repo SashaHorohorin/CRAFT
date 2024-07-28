@@ -17,9 +17,10 @@ import $api, { HOST } from "../../http";
 import FormData from "form-data";
 import { set } from "mobx";
 import DataService from "../../API/DataService";
+import ModalCoach from "../../components/AdminComponent/ModalCoach";
 
 const AdminPage = () => {
-    const { trainingChange, competitionChange, eventChange } =
+    const { trainingChange, competitionChange, eventChange, coachChange } =
         useContext(Context);
 
     const sportComplex = ["DINAMIT", "ALEKSEEVA", "IMPULS"];
@@ -480,6 +481,125 @@ const AdminPage = () => {
     };
 
     // ===========================================================<EVENT>
+    // ===========================================================<COACH>
+
+    const [fetchingCoaches, isLoadingCoaches, errorCoaches] =
+        useFetching(async () => {
+            const response = await DataService.getCoachesAll();
+            console.log(response.data);
+            coachChange.setCoaches(response.data);
+        });
+
+    const [fetchingChangeCoach, isLoadingChangeCoach, errorChangeCoach] =
+        useFetching(async (obj) => {
+            const response = await DataService.postChangeCoach(obj);
+        });
+
+    const [fetchingCreateCoach, isLoadingCreateCoach, errorCreateCoach] =
+        useFetching(async (obj) => {
+            const response = await DataService.postCreateCoach(obj);
+        });
+
+    const [objCoach, setObjCoach] = useState({
+        name: "",
+        textFront: "",
+        photoUrl: "",
+    });
+
+    const handleFunctionCoach = async (e) => {
+        const name = e.target.name;
+        let value = e.target.value;
+
+        if (name == "file") {
+            setFile(e.target.files[0]);
+        } else {
+            let newObj = {};
+            newObj = {
+                ...objCoach,
+                [name]: value,
+            };
+            setObjCoach(newObj);
+        }
+    };
+
+    const createCoach = async () => {
+
+        let formData = new FormData();
+
+        formData.append("file", file);
+
+        let response = await axios.post(
+            `${HOST}/google/upload`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer_${localStorage.getItem(
+                        "accessToken"
+                    )}`,
+                },
+            }
+        );
+
+        let newObj = {
+            ...objCoach,
+            photoUrl: `${response.data}`,
+        };
+        (async () => {
+            await fetchingCreateCoach(newObj);
+        })().then(() => fetchingCoaches())
+        setObjCoach(newObj);
+        coachChange.setOpenModalCoachCreate(false);
+    };
+
+    const changeCoach = async (obj, fileObj) => {
+        if(!!fileObj){
+            console.log('{EEEEEEEQ')
+            let formData = new FormData();
+
+            formData.append("file", fileObj);
+
+            let response = await axios.post(
+                `${HOST}/google/upload`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Authorization: `Bearer_${localStorage.getItem(
+                            "accessToken"
+                        )}`,
+                    },
+                }
+            );
+
+            let newObj = {
+                ...obj,
+                id: coachChange.coachChange.id,
+                photoURL: `${response.data}`,
+            };
+
+
+            (async () => {
+                await fetchingChangeCoach(newObj);
+            })().then(() => fetchingCoaches())
+
+            coachChange.setOpenModalCoachChange(false);
+        }else{
+            let newObj = {
+                ...obj,
+                id: coachChange.coachChange.id,
+                photoURL: coachChange.coachChange.photoURL
+            };
+            (async () => {
+                await fetchingChangeCoach(newObj);
+            })().then(() => fetchingCoaches())
+
+            coachChange.setOpenModalCoachChange(false);
+        }
+
+    };
+
+    // ===========================================================<COACH>
     const [count, setCount] = useState(0);
 
     useEffect(() => {
@@ -503,6 +623,7 @@ const AdminPage = () => {
         fetchingTrainers();
         fetchingTraining();
         fetchingCompetition();
+        fetchingCoaches();
         eventChange.setEvents([]);
     }, []);
 
@@ -583,6 +704,28 @@ const AdminPage = () => {
                 setFlag={(bool) => eventChange.setOpenModalEventChange(bool)}
             />
 
+            <ModalCoach
+                handleFunction={(e) => handleFunctionCoach(e)}
+                type="create"
+                name={objCoach.name}
+                text={objCoach.textFront}
+                funcBtn={() => createCoach()}
+                flag={coachChange.openModalCoachCreate}
+                setFlag={(bool) => coachChange.setOpenModalCoachCreate(bool)}
+            />
+            <ModalCoach
+                handleFunction={(e) => handleFunctionCoach(e)}
+                type="change"
+                setFile={(file) => setFile(file)}
+                text={objCoach.textFront}
+                name={objCoach.name}
+                funcBtn={(sendObj, fileObj) =>
+                    changeCoach(sendObj, fileObj)
+                }
+                flag={coachChange.openModalCoachChange}
+                setFlag={(bool) => coachChange.setOpenModalCoachChange(bool)}
+            />
+
             <div className="container">
                 <div className="admin__title">Панель администратора</div>
                 <div className="admin__row">
@@ -614,6 +757,9 @@ const AdminPage = () => {
                             </Link>
                             <Link to="subscriptions" className="nav-admin__link">
                                 Подтверждение абонементов
+                            </Link>
+                            <Link to="coach" className="nav-admin__link">
+                                Тренеры
                             </Link>
                         </ul>
                     </div>

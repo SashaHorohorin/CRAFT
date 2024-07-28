@@ -252,5 +252,20 @@ export default class DataService {
     static async postSendCustomMail(obj) {
         return await $api.post(`/api/v1/mailing/send-custom-mail`, obj);
     }
-    
+
+    static async postCreateCoach(obj) {
+        return await $api.post(
+            `api/v1/trainer/create`, obj);
+    }
+    static async fetchDeleteCoach(id) {
+        return await $api.delete(
+            `api/v1/trainer/delete/?id=${id}`);
+    }
+    static async postChangeCoach(obj) {
+        return await $api.put(
+            `api/v1/trainer/change`, obj);
+    }
+    static async getCoachesAll(countPage) {
+        return await $api.get(`api/v1/trainer/get-all-for-cart`);
+    }
 }
